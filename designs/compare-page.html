@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ORBITAL COMMAND | SATELLITE RECONNAISSANCE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#003642",
+                        "surface-container-low": "#1a1c1e",
+                        "primary-fixed": "#b4ebff",
+                        "tertiary-fixed-dim": "#ffb4a2",
+                        "on-secondary-container": "#a9bbca",
+                        "on-secondary": "#21323e",
+                        "outline-variant": "#3c494e",
+                        "surface-tint": "#3cd7ff",
+                        "surface-container-highest": "#333537",
+                        "on-surface": "#e2e2e5",
+                        "surface-variant": "#333537",
+                        "secondary-fixed-dim": "#b7c9d8",
+                        "primary-fixed-dim": "#3cd7ff",
+                        "inverse-on-surface": "#2f3033",
+                        "primary": "#a8e8ff",
+                        "outline": "#859398",
+                        "secondary-container": "#3a4b58",
+                        "inverse-surface": "#e2e2e5",
+                        "surface-bright": "#38393c",
+                        "tertiary-container": "#ffaf9b",
+                        "surface-container": "#1e2022",
+                        "tertiary-fixed": "#ffdad2",
+                        "on-tertiary-container": "#9a2100",
+                        "inverse-primary": "#00677e",
+                        "on-primary-fixed-variant": "#004e5f",
+                        "surface": "#121416",
+                        "on-tertiary": "#621100",
+                        "on-primary-container": "#00586b",
+                        "primary-container": "#00d4ff",
+                        "secondary": "#b7c9d8",
+                        "on-tertiary-fixed-variant": "#8a1d00",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-lowest": "#0c0e10",
+                        "error-container": "#93000a",
+                        "tertiary": "#ffd5cb",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed": "#3c0700",
+                        "surface-container-high": "#282a2c",
+                        "on-secondary-fixed-variant": "#384955",
+                        "secondary-fixed": "#d3e5f4",
+                        "background": "#121416",
+                        "surface-dim": "#121416",
+                        "on-surface-variant": "#bbc9cf",
+                        "on-error": "#690005",
+                        "on-secondary-fixed": "#0b1d28",
+                        "on-primary-fixed": "#001f27",
+                        "on-background": "#e2e2e5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Space Grotesk"],
+                        "label": ["Space Grotesk"],
+                        "mono": ["JetBrains Mono"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glowing-border {
+            box-shadow: 0 0 8px rgba(0, 212, 255, 0.2);
+        }
+        .scanline {
+            background: linear-gradient(to bottom, transparent 0%, rgba(0, 212, 255, 0.05) 50%, transparent 100%);
+            height: 100px;
+            width: 100%;
+            position: absolute;
+            z-index: 10;
+            pointer-events: none;
+        }
+        .grid-dots {
+            background-image: radial-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+        .corner-bracket-tl { border-top: 1px solid #00d4ff; border-left: 1px solid #00d4ff; width: 12px; height: 12px; position: absolute; top: -1px; left: -1px; }
+        .corner-bracket-tr { border-top: 1px solid #00d4ff; border-right: 1px solid #00d4ff; width: 12px; height: 12px; position: absolute; top: -1px; right: -1px; }
+        .corner-bracket-bl { border-bottom: 1px solid #00d4ff; border-left: 1px solid #00d4ff; width: 12px; height: 12px; position: absolute; bottom: -1px; left: -1px; }
+        .corner-bracket-br { border-bottom: 1px solid #00d4ff; border-right: 1px solid #00d4ff; width: 12px; height: 12px; position: absolute; bottom: -1px; right: -1px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body overflow-hidden h-screen flex flex-col">
+<!-- TOP APP BAR -->
+<header class="bg-[#121416] text-[#00d4ff] font-['Space_Grotesk'] uppercase tracking-[0.1em] docked full-width top-0 border-b-0 border-b-[0.5px] border-[#00d4ff]/30 shadow-[0_0_8px_rgba(0,212,255,0.2)] flex justify-between items-center w-full px-6 h-16 z-50">
+<div class="flex items-center gap-8">
+<h1 class="text-xl font-bold text-[#00d4ff] tracking-widest">ORBITAL COMMAND</h1>
+<div class="flex items-center gap-2 bg-[#00d4ff]/5 border border-[#00d4ff]/20 px-4 py-1.5 transition-all duration-150 ease-in-out hover:bg-[#00d4ff]/10">
+<span class="material-symbols-outlined text-sm">factory</span>
+<span class="text-xs font-mono">GIGA TEXAS</span>
+<span class="material-symbols-outlined text-sm">arrow_drop_down</span>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-6 h-full">
+<a class="text-[#00d4ff] border-b-2 border-[#00d4ff] pb-1 h-full flex items-center transition-all duration-150 ease-in-out" href="#">FACTORY SELECTOR</a>
+<a class="text-[#00d4ff]/60 hover:bg-[#00d4ff]/10 hover:text-[#00d4ff] px-2 py-1 transition-all duration-150 ease-in-out" href="#">TELEMETRY</a>
+<a class="text-[#00d4ff]/60 hover:bg-[#00d4ff]/10 hover:text-[#00d4ff] px-2 py-1 transition-all duration-150 ease-in-out" href="#">ARCHIVE</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined hover:bg-[#00d4ff]/10 p-2 transition-all duration-150">settings</button>
+<button class="material-symbols-outlined hover:bg-[#00d4ff]/10 p-2 transition-all duration-150">notifications</button>
+<div class="w-8 h-8 border border-[#00d4ff]/50 p-0.5">
+<img alt="Operator Avatar" class="w-full h-full object-cover" data-alt="close-up portrait of a futuristic military operator with technical HUD elements reflected in their eyes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7XOKJDsVifzs3F9zxitXl_yz8wuRw_TUyWi5LM6dMR0Txkv3JRCIdVxl1dBk8Vvpf6slx1HZstjPMn5X_9wnSLa060lJSRZ9TB8zHSJAY6jI0GW5HRQYz6CVpsVfuzyWVETHArY3jpMuABPXywbVeMbzYPtGKFZWIu8URVWFqk38rSJyeC2sC-YTYATNqMsrhQvDi_sQFjUmHh0t4GvXznosqEEskp0ElLCzSGmqjUCN-KjHr7C7MOtFnnV1o_f5I3Mgig8le2qMa"/>
+</div>
+</div>
+</header>
+<main class="flex flex-1 relative overflow-hidden">
+<!-- SIDE NAV BAR -->
+<aside class="bg-[#121416]/80 backdrop-blur-xl text-[#00d4ff] font-['JetBrains_Mono'] text-xs fixed left-0 top-16 h-[calc(100vh-112px)] flex flex-col items-center py-8 w-20 border-r-[0.5px] border-[#00d4ff]/30 z-40">
+<div class="mb-8 text-center opacity-40">
+<div class="text-[10px] uppercase font-bold">MODALITY</div>
+<div class="text-[8px]">SAT-4492-B</div>
+</div>
+<div class="flex flex-col gap-6 w-full items-center flex-1">
+<button class="flex flex-col items-center gap-1 w-full py-3 text-[#00d4ff]/40 hover:bg-[#00d4ff]/5 transition-all scale-95 active:scale-90">
+<span class="material-symbols-outlined">thermostat</span>
+<span class="text-[8px] uppercase">Thermal</span>
+</button>
+<button class="flex flex-col items-center gap-1 w-full py-3 text-[#00d4ff] bg-[#00d4ff]/10 border-l-4 border-[#00d4ff] transition-all scale-95 active:scale-90">
+<span class="material-symbols-outlined">visibility</span>
+<span class="text-[8px] uppercase">Optical</span>
+</button>
+<button class="flex flex-col items-center gap-1 w-full py-3 text-[#00d4ff]/40 hover:bg-[#00d4ff]/5 transition-all scale-95 active:scale-90">
+<span class="material-symbols-outlined">radar</span>
+<span class="text-[8px] uppercase">Radar</span>
+</button>
+</div>
+<div class="flex flex-col gap-4 w-full items-center mt-auto border-t border-[#00d4ff]/10 pt-6">
+<button class="text-[#00d4ff]/40 hover:bg-[#00d4ff]/5 w-full py-2 flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-lg">show_chart</span>
+<span class="text-[8px] uppercase">Telemetry</span>
+</button>
+<button class="text-[#00d4ff]/40 hover:bg-[#00d4ff]/5 w-full py-2 flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-lg">terminal</span>
+<span class="text-[8px] uppercase">Logs</span>
+</button>
+<button class="mt-4 bg-primary-container text-on-primary-container px-2 py-3 text-[10px] font-bold uppercase w-full">LOCK</button>
+</div>
+</aside>
+<!-- SATELLITE VIEWER CANVAS -->
+<div class="flex-1 ml-20 relative bg-surface-container-lowest grid-dots overflow-hidden">
+<div class="scanline"></div>
+<!-- Comparison Layout -->
+<div class="absolute inset-0 flex">
+<!-- Left Side: Sentinel-2 -->
+<div class="relative w-1/2 h-full overflow-hidden border-r border-[#00d4ff]/30">
+<img class="w-full h-full object-cover sepia-[0.4] contrast-125 brightness-75" data-alt="High angle satellite view of a massive industrial complex in a desert landscape with muted earth tones and heavy sepia filters" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGqGKTs2fp4Pz4s-mN_-Srp3dj025EvqSo2AKtGcvJjEv5R32h0Y_yKqAVQ0reD2Cdq5AaDAdEecCcb23F4Yn7lvMRTgm_AqibsZYHYMqtYgDINTtMdpIqhkMVFQxmWzpQ7ieVDVLj10DO9K4MicltX0E1loCEOWA2hYU_yCDoNG2qaXEVn6wnhT_l-I-9H3HhOQVEsKn6IrArH0KIxXUO-Z4_tusAYx_Ri-tPJOZiSml-h9jNmeBZj221VM474a-jfHgjoXyLHbxd"/>
+<div class="absolute top-8 left-8 z-20">
+<div class="bg-black/60 border-l-2 border-[#00d4ff] p-3 backdrop-blur-md">
+<h3 class="font-mono text-xs text-[#00d4ff] font-bold">SENTINEL-2 — 2023 Annual Composite</h3>
+<p class="font-mono text-[10px] text-white/40 mt-1 uppercase tracking-tighter">SOURCE: ESA / COPERNICUS HUB</p>
+</div>
+</div>
+<!-- Reticle Overlay -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-40">
+<div class="w-32 h-32 border border-[#00d4ff]/50 rounded-full flex items-center justify-center">
+<div class="w-1 h-1 bg-[#00d4ff]"></div>
+<div class="absolute top-0 h-4 border-l border-[#00d4ff]"></div>
+<div class="absolute bottom-0 h-4 border-l border-[#00d4ff]"></div>
+<div class="absolute left-0 w-4 border-t border-[#00d4ff]"></div>
+<div class="absolute right-0 w-4 border-t border-[#00d4ff]"></div>
+</div>
+</div>
+</div>
+<!-- Right Side: ESRI Latest -->
+<div class="relative w-1/2 h-full overflow-hidden">
+<img class="w-full h-full object-cover hue-rotate-[180deg] saturate-150 contrast-110" data-alt="Sharp high-resolution satellite imagery of the same industrial complex with vivid cyan and blue color correction showing new construction phases" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGEFSUkQOmNzPIs2fS6ubR4NDhqDdEN4fF7XzJe4kbB8Yf1uN_D2yV0ajSegqacVS5vNnyIsFvZeX3Gszb0a1_G-9Jpd6WPRZst9JhXKOVMkFB-iqwmG1QD6MCy1ReksOF0G54Bi37MdIDky7E_QtC6WgvSw6tLurrhpgnNXfoIv5KuDwgDsuk0ZiI2KfKOMEIEFWO2n5vvlPmW-TTka_faPkOV5NfapxNNvq4cNvAa-lFwOwahWWsYks-9OVQQd1YvYIyf4BSgzlp"/>
+<div class="absolute top-8 right-8 z-20 text-right">
+<div class="bg-black/60 border-r-2 border-[#00d4ff] p-3 backdrop-blur-md">
+<h3 class="font-mono text-xs text-[#00d4ff] font-bold">ESRI — Latest (updated ~3-6 months)</h3>
+<p class="font-mono text-[10px] text-white/40 mt-1 uppercase tracking-tighter">REF: WORLD IMAGERY CLARITY SERVICE</p>
+</div>
+</div>
+<!-- Scanlines effect for high-res -->
+<div class="absolute inset-0 pointer-events-none opacity-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,212,255,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10" style="background-size: 100% 2px, 3px 100%;"></div>
+</div>
+</div>
+<!-- Vertical Divider Handle -->
+<div class="absolute top-0 bottom-0 left-1/2 w-px bg-[#00d4ff] z-30 shadow-[0_0_15px_#00d4ff]">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 border border-[#00d4ff] rounded-full flex items-center justify-center bg-background/80 backdrop-blur-lg cursor-ew-resize">
+<span class="material-symbols-outlined text-[#00d4ff]">unfold_more_double</span>
+</div>
+</div>
+<!-- Corners / Greebles -->
+<div class="absolute top-4 right-4 w-48 h-24 border border-outline-variant/30 pointer-events-none p-2 flex flex-col gap-1">
+<div class="corner-bracket-tl"></div>
+<div class="corner-bracket-tr"></div>
+<div class="text-[8px] font-mono text-[#00d4ff]/60 flex justify-between">
+<span>SECTOR_ID:</span>
+<span>TX-44-A</span>
+</div>
+<div class="h-1 bg-[#00d4ff]/10 w-full relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-[#00d4ff] w-2/3"></div>
+</div>
+<div class="text-[8px] font-mono text-[#00d4ff]/40 mt-auto">SYSTEM_SYNC: ACTIVE</div>
+</div>
+<!-- HUD Action Buttons -->
+<div class="absolute bottom-12 right-12 flex flex-col gap-2 z-40">
+<button class="w-10 h-10 bg-[#121416]/80 border border-[#00d4ff]/40 flex items-center justify-center text-[#00d4ff] hover:bg-[#00d4ff]/20">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="w-10 h-10 bg-[#121416]/80 border border-[#00d4ff]/40 flex items-center justify-center text-[#00d4ff] hover:bg-[#00d4ff]/20">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<button class="w-10 h-10 bg-[#121416]/80 border border-[#00d4ff]/40 flex items-center justify-center text-[#00d4ff] hover:bg-[#00d4ff]/20">
+<span class="material-symbols-outlined">my_location</span>
+</button>
+</div>
+</div>
+</main>
+<!-- BOTTOM NAV BAR (INFO STRIP) -->
+<footer class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 border-t border-[#00d4ff]/20 h-12 bg-[#121416] text-[#00d4ff] font-['JetBrains_Mono'] text-[10px] uppercase border-t-[0.5px] bg-gradient-to-t from-[#00d4ff]/10 to-transparent">
+<div class="flex gap-8 items-center h-full">
+<div class="flex flex-col">
+<span class="text-[#00d4ff]/50 text-[8px]">ALTITUDE</span>
+<span class="text-[#00d4ff] font-bold">442.1 KM</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[#00d4ff]/50 text-[8px]">LATITUDE</span>
+<span class="text-[#00d4ff] font-bold">30.2241° N</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[#00d4ff]/50 text-[8px]">LONGITUDE</span>
+<span class="text-[#00d4ff] font-bold">97.6258° W</span>
+</div>
+</div>
+<div class="hidden lg:flex items-center gap-6 text-[#00d4ff]/40 border-l border-r border-[#00d4ff]/20 px-12 h-full">
+<span class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-[#00d4ff] animate-pulse"></span> SIGNAL: STABLE</span>
+<span>ZOOM: 18.5Z</span>
+<span>FOV: 0.15°</span>
+</div>
+<div class="flex gap-8 items-center h-full">
+<div class="flex flex-col items-end">
+<span class="text-[#00d4ff]/50 text-[8px]">VELOCITY</span>
+<span class="text-[#00d4ff] font-bold">7.66 KM/S</span>
+</div>
+<button class="bg-[#00d4ff]/10 px-4 py-1 border border-[#00d4ff]/30 text-[#00d4ff] hover:bg-[#00d4ff]/20 transition-colors">EXPORT_DATA</button>
+</div>
+</footer>
+<!-- FAB Suppression: Contextual logic applies, FAB hidden for high-density reconnaissance interface -->
+</body></html>

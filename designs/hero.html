@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GIGASCOPE | Orbital Intelligence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#92001c",
+                    "on-secondary-container": "#ffb8b5",
+                    "tertiary": "#dbdfe7",
+                    "on-tertiary-fixed": "#171c22",
+                    "tertiary-fixed": "#dfe3eb",
+                    "on-primary": "#003642",
+                    "outline-variant": "#3c494e",
+                    "surface-tint": "#3cd7ff",
+                    "error-container": "#93000a",
+                    "secondary-container": "#ad0224",
+                    "inverse-primary": "#00677e",
+                    "surface-container-lowest": "#0d0e11",
+                    "secondary": "#ffb3b1",
+                    "secondary-fixed-dim": "#ffb3b1",
+                    "surface": "#121316",
+                    "surface-container-low": "#1b1b1f",
+                    "outline": "#859398",
+                    "background": "#121316",
+                    "on-background": "#e3e2e6",
+                    "on-surface-variant": "#bbc9cf",
+                    "secondary-fixed": "#ffdad8",
+                    "surface-variant": "#343538",
+                    "surface-container": "#1f1f23",
+                    "on-secondary-fixed": "#410007",
+                    "surface-container-highest": "#343538",
+                    "on-tertiary-container": "#4c5057",
+                    "tertiary-container": "#bfc3cb",
+                    "on-error": "#690005",
+                    "surface-dim": "#121316",
+                    "inverse-surface": "#e3e2e6",
+                    "primary-fixed-dim": "#3cd7ff",
+                    "on-primary-container": "#00586b",
+                    "on-surface": "#e3e2e6",
+                    "on-tertiary": "#2c3137",
+                    "tertiary-fixed-dim": "#c2c7ce",
+                    "surface-container-high": "#292a2d",
+                    "on-tertiary-fixed-variant": "#42474e",
+                    "primary": "#a8e8ff",
+                    "inverse-on-surface": "#2f3034"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk", "sans-serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["Space Grotesk", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .grid-overlay {
+            background-image: linear-gradient(to right, rgba(0, 212, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
+            background-size: 80px 80px;
+        }
+        .radial-glow {
+            background: radial-gradient(circle at 50% 50%, rgba(0, 212, 255, 0.08) 0%, rgba(18, 19, 22, 0) 70%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 w-full flex justify-between items-center z-50 px-12 bg-transparent h-24">
+<div class="flex items-center gap-2">
+<span class="text-2xl font-bold tracking-tighter text-cyan-400 font-headline">GIGASCOPE</span>
+</div>
+<div class="hidden md:flex items-center space-x-12">
+<a class="font-space-grotesk tracking-widest uppercase text-sm text-cyan-300 border-b-2 border-cyan-400 pb-1" href="#">OPERATIONS</a>
+<a class="font-space-grotesk tracking-widest uppercase text-sm text-slate-500 hover:text-cyan-200 transition-colors" href="#">NETWORK</a>
+<a class="font-space-grotesk tracking-widest uppercase text-sm text-slate-500 hover:text-cyan-200 transition-colors" href="#">SECURITY</a>
+<a class="font-space-grotesk tracking-widest uppercase text-sm text-slate-500 hover:text-cyan-200 transition-colors" href="#">EXPORT</a>
+</div>
+<div class="flex items-center space-x-6">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="satellite_alt">satellite_alt</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen flex flex-col items-center py-8 z-40 bg-[#0d0e11]/80 backdrop-blur-xl h-full w-20 border-r border-cyan-400/10">
+<div class="mb-12 mt-16">
+<div class="w-10 h-10 bg-surface-container rounded-sm flex items-center justify-center border border-cyan-400/20">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="rocket_launch">rocket_launch</span>
+</div>
+</div>
+<div class="flex flex-col gap-8 flex-1">
+<div class="group relative flex flex-col items-center gap-1 border-l-2 border-cyan-400 bg-cyan-400/5 text-cyan-400 px-4 py-2 transition-all duration-500 ease-in-out">
+<span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
+<span class="font-space-grotesk text-[10px] tracking-widest">OPS</span>
+</div>
+<div class="group relative flex flex-col items-center gap-1 text-slate-600 hover:bg-cyan-400/10 hover:text-cyan-300 px-4 py-2 transition-all duration-500 ease-in-out">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+<span class="font-space-grotesk text-[10px] tracking-widest">NET</span>
+</div>
+<div class="group relative flex flex-col items-center gap-1 text-slate-600 hover:bg-cyan-400/10 hover:text-cyan-300 px-4 py-2 transition-all duration-500 ease-in-out">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span class="font-space-grotesk text-[10px] tracking-widest">SEC</span>
+</div>
+<div class="group relative flex flex-col items-center gap-1 text-slate-600 hover:bg-cyan-400/10 hover:text-cyan-300 px-4 py-2 transition-all duration-500 ease-in-out">
+<span class="material-symbols-outlined" data-icon="ios_share">ios_share</span>
+<span class="font-space-grotesk text-[10px] tracking-widest">EXP</span>
+</div>
+</div>
+<div class="mt-auto">
+<button class="p-3 text-cyan-400 border border-cyan-400/30 rounded-sm hover:bg-cyan-400 hover:text-on-primary transition-all">
+<span class="material-symbols-outlined" data-icon="emergency_recording">emergency_recording</span>
+</button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="relative min-h-screen bg-[#08090c]">
+<!-- Hero Background Elements -->
+<div class="absolute inset-0 grid-overlay opacity-20 pointer-events-none"></div>
+<div class="absolute inset-0 radial-glow pointer-events-none"></div>
+<!-- Hero Section -->
+<section class="relative h-screen flex flex-col items-center justify-center px-4 overflow-hidden">
+<!-- Central Orbital UI -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] pointer-events-none opacity-40">
+<svg class="w-full h-full" viewbox="0 0 100 100">
+<!-- Concentric Rings -->
+<circle class="text-cyan-400/20" cx="50" cy="50" fill="none" r="48" stroke="currentColor" stroke-width="0.1"></circle>
+<circle class="text-cyan-400/30" cx="50" cy="50" fill="none" r="38" stroke="currentColor" stroke-width="0.1"></circle>
+<circle class="text-cyan-400/40" cx="50" cy="50" fill="none" r="28" stroke="currentColor" stroke-dasharray="1 3" stroke-width="0.2"></circle>
+<!-- Radar Sweep -->
+<g transform="rotate(45 50 50)">
+<rect fill="url(#sweepGradient)" height="48" width="0.2" x="50" y="2"></rect>
+<defs>
+<lineargradient id="sweepGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#00d4ff"></stop>
+<stop offset="100%" stop-color="transparent"></stop>
+</lineargradient>
+</defs>
+</g>
+<!-- Orbiting Points -->
+<circle cx="98" cy="50" fill="#00d4ff" r="0.8"></circle>
+<circle cx="2" cy="50" fill="#00d4ff" r="0.8"></circle>
+<circle cx="50" cy="2" fill="#e63946" r="0.5"></circle>
+</svg>
+</div>
+<!-- Floating Data Chips (Asymmetric Positioning) -->
+<div class="absolute top-[25%] left-[20%] z-10">
+<div class="bg-surface-container/40 backdrop-blur-md border border-cyan-400/10 px-4 py-2 rounded-sm shadow-[0_0_20px_rgba(0,212,255,0.1)]">
+<div class="flex items-center gap-3">
+<div class="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse"></div>
+<span class="font-mono text-xs tracking-tighter text-cyan-400 uppercase">8 FACTORIES</span>
+</div>
+</div>
+</div>
+<div class="absolute top-[35%] right-[15%] z-10">
+<div class="bg-surface-container/40 backdrop-blur-md border border-cyan-400/10 px-4 py-2 rounded-sm shadow-[0_0_20px_rgba(0,212,255,0.1)]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[14px] text-cyan-400" data-icon="public">public</span>
+<span class="font-mono text-xs tracking-tighter text-cyan-400 uppercase">4 COUNTRIES</span>
+</div>
+</div>
+</div>
+<div class="absolute bottom-[25%] left-[15%] z-10">
+<div class="bg-surface-container/40 backdrop-blur-md border border-cyan-400/10 px-4 py-2 rounded-sm shadow-[0_0_20px_rgba(0,212,255,0.1)]">
+<div class="flex items-center gap-3">
+<span class="font-mono text-xs tracking-tighter text-cyan-400 uppercase">$56B+ INVESTED</span>
+</div>
+</div>
+</div>
+<div class="absolute bottom-[30%] right-[22%] z-10">
+<div class="bg-secondary-container/20 backdrop-blur-md border border-secondary/20 px-4 py-2 rounded-sm">
+<div class="flex items-center gap-3">
+<div class="w-1.5 h-1.5 bg-secondary rounded-full"></div>
+<span class="font-mono text-xs tracking-tighter text-secondary uppercase">LIVE TRACKING</span>
+</div>
+</div>
+</div>
+<!-- Hero Content -->
+<div class="z-20 text-center max-w-5xl">
+<div class="inline-flex items-center gap-4 mb-6 px-4 py-1 border border-outline-variant/30 bg-surface-container-low/50 backdrop-blur-sm rounded-full">
+<span class="font-mono text-[10px] tracking-[0.2em] text-on-surface-variant uppercase">SATELLITE LINK ESTABLISHED</span>
+<div class="w-1 h-1 bg-cyan-400 rounded-full"></div>
+<span class="font-mono text-[10px] tracking-[0.2em] text-cyan-400 uppercase">ORBIT_049</span>
+</div>
+<h1 class="text-7xl md:text-9xl font-headline font-bold tracking-tighter mb-4 bg-gradient-to-b from-white via-cyan-100 to-cyan-400 bg-clip-text text-transparent">
+                    GIGASCOPE
+                </h1>
+<p class="text-xl md:text-2xl font-body font-light text-[#e8ecf4] tracking-tight mb-12 opacity-90">
+                    Satellite-powered factory intelligence for the orbital age.
+                </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+<button class="group relative px-8 py-4 bg-gradient-to-br from-primary to-primary-container text-on-primary font-headline font-bold text-sm tracking-widest uppercase overflow-hidden transition-all hover:shadow-[0_0_30px_rgba(0,212,255,0.3)]">
+<span class="relative z-10">INITIATE MISSION</span>
+<div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+</button>
+<button class="px-8 py-4 border border-outline-variant/50 text-on-surface font-headline font-medium text-sm tracking-widest uppercase hover:bg-white/5 transition-colors">
+                        VIEW NETWORK MAP
+                    </button>
+</div>
+</div>
+<!-- Scroll Indicator -->
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+<span class="font-mono text-[10px] tracking-[0.3em] text-on-surface-variant uppercase">SCROLL FOR TELEMETRY</span>
+<div class="w-5 h-10 border border-outline-variant/50 rounded-full flex justify-center p-1">
+<div class="w-1 h-2 bg-cyan-400 rounded-full animate-bounce"></div>
+</div>
+</div>
+</section>
+<!-- Secondary Section (Brief Data Insight) -->
+<section class="relative py-32 px-12 md:pl-32">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Module 1 -->
+<div class="bg-surface-container/30 backdrop-blur-xl border-l border-cyan-400/20 p-8 flex flex-col gap-6">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-cyan-400 text-3xl" data-icon="visibility">visibility</span>
+<span class="font-mono text-[10px] text-on-surface-variant">01 // OBSERVATION</span>
+</div>
+<div>
+<h3 class="font-headline text-xl font-bold mb-2">Visual Verification</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Multi-spectral imaging monitors inventory movement and production line efficiency from 500km above.</p>
+</div>
+</div>
+<!-- Module 2 -->
+<div class="bg-surface-container/30 backdrop-blur-xl border-l border-cyan-400/20 p-8 flex flex-col gap-6">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-cyan-400 text-3xl" data-icon="query_stats">query_stats</span>
+<span class="font-mono text-[10px] text-on-surface-variant">02 // ANALYSIS</span>
+</div>
+<div>
+<h3 class="font-headline text-xl font-bold mb-2">Predictive Throughput</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Neural networks process heat signatures to predict factory downtime before it impacts the supply chain.</p>
+</div>
+</div>
+<!-- Module 3 -->
+<div class="bg-surface-container/30 backdrop-blur-xl border-l border-cyan-400/20 p-8 flex flex-col gap-6">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-cyan-400 text-3xl" data-icon="shield">shield</span>
+<span class="font-mono text-[10px] text-on-surface-variant">03 // SECURITY</span>
+</div>
+<div>
+<h3 class="font-headline text-xl font-bold mb-2">Global Vigilance</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Encrypted end-to-end telemetry ensures that mission-critical data remains within your command loop.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Meta-Data Overlay -->
+<footer class="fixed bottom-0 right-0 p-8 pointer-events-none z-50">
+<div class="flex flex-col items-end text-right space-y-1">
+<span class="font-mono text-[10px] text-cyan-400/60 uppercase">LAT: 34.0522° N</span>
+<span class="font-mono text-[10px] text-cyan-400/60 uppercase">LON: 118.2437° W</span>
+<span class="font-mono text-[10px] text-cyan-400/60 uppercase">SYSTEM_STATE: STABLE</span>
+</div>
+</footer>
+</body></html>
