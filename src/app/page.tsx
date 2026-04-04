@@ -114,20 +114,20 @@ export default function Home() {
       <section className="relative z-10 py-24 px-4 sm:px-8">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { icon: "🛰️", num: "01", label: "OBSERVATION", title: "Satellite Comparison", desc: "Before/after imagery from Sentinel-2 and ESRI World Imagery to track construction changes over time." },
-            { icon: "📊", num: "02", label: "ANALYSIS", title: "Progress Tracking", desc: "Milestone timelines, year-by-year progress charts, and capacity projections for all 8 global factories." },
-            { icon: "🌐", num: "03", label: "INTELLIGENCE", title: "Global Network", desc: "From Terafab's 2nm chip fab to Giga Shanghai's 950K capacity — every factory on one orbital dashboard." },
+            { icon: "🛰️", num: "01", label: "OBSERVATION", title: "Satellite Comparison", desc: "Before/after imagery from Sentinel-2 and ESRI World Imagery to track construction changes over time.", href: "/compare" },
+            { icon: "📊", num: "02", label: "ANALYSIS", title: "Progress Tracking", desc: "Milestone timelines, year-by-year progress charts, and capacity projections for all 8 global factories.", href: "/timeline" },
+            { icon: "🌐", num: "03", label: "INTELLIGENCE", title: "Global Network", desc: "From Terafab's 2nm chip fab to Giga Shanghai's 950K capacity — every factory on one orbital dashboard.", href: "#factories" },
           ].map((m) => (
-            <div key={m.num} className="glass-card border-l-2 border-l-accent-cyan/30 border-t-0 border-r-0 border-b-0 rounded-none p-7 flex flex-col gap-5">
+            <a key={m.num} href={m.href} className="glass-card border-l-2 border-l-accent-cyan/30 border-t-0 border-r-0 border-b-0 rounded-none p-7 flex flex-col gap-5 group hover:border-l-accent-cyan transition-colors cursor-pointer">
               <div className="flex justify-between items-start">
                 <span className="text-2xl">{m.icon}</span>
                 <span className="font-mono text-[9px] text-dim">{m.num} // {m.label}</span>
               </div>
               <div>
-                <h3 className="text-lg font-bold mb-2">{m.title}</h3>
+                <h3 className="text-lg font-bold mb-2 group-hover:text-accent-cyan transition-colors">{m.title}</h3>
                 <p className="text-xs text-dim leading-relaxed">{m.desc}</p>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </section>
