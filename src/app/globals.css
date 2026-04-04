@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #08090c;
-  --surface: #0f1117;
-  --surface2: #161922;
-  --border: #1c2030;
-  --text: #e8ecf4;
-  --dim: #4e5669;
+  --bg: #0c0d12;
+  --surface: #13151d;
+  --surface2: #1a1d28;
+  --border: #252a38;
+  --text: #f0f2f8;
+  --dim: #6b7280;
   --red: #e63946;
   --green: #2ec4b6;
   --blue: #3a86ff;
@@ -76,7 +76,7 @@ body {
   filter: blur(150px);
   pointer-events: none;
   z-index: -1;
-  opacity: 0.3;
+  opacity: 0.35;
 }
 
 .aurora-1 {
@@ -144,15 +144,16 @@ body {
 
 /* ── Glassmorphism Card ── */
 .glass-card {
-  background: rgba(15, 17, 23, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(19, 21, 29, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   backdrop-filter: blur(20px);
-  transition: border-color 0.3s, transform 0.3s;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
 .glass-card:hover {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(0, 212, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.03);
 }
 
 /* ── Gradient Text ── */

@@ -44,12 +44,31 @@ export default function RootLayout({
         {/* Navbar */}
         <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border-custom bg-surface/80 backdrop-blur-xl">
           <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
-            <a href="/" className="flex items-center gap-2">
-              <span className="w-7 h-7 rounded-md bg-gradient-to-br from-accent-cyan to-accent-blue flex items-center justify-center text-xs font-black text-white">
-                GS
-              </span>
-              <span className="text-sm font-bold tracking-widest">
-                GIGA<span className="text-accent-cyan">SCOPE</span>
+            <a href="/" className="flex items-center gap-3 group">
+              {/* Orbital scope icon */}
+              <svg width="28" height="28" viewBox="0 0 32 32" fill="none" className="flex-shrink-0">
+                {/* Outer orbit ring */}
+                <circle cx="16" cy="16" r="14" stroke="url(#logoGrad)" strokeWidth="1.5" opacity="0.6" />
+                {/* Inner scope crosshair */}
+                <circle cx="16" cy="16" r="6" stroke="#00d4ff" strokeWidth="1.5" />
+                {/* Core dot */}
+                <circle cx="16" cy="16" r="2.5" fill="#00d4ff" />
+                {/* Orbiting satellite dot */}
+                <circle cx="28" cy="10" r="2" fill="#e63946" />
+                {/* Crosshair lines */}
+                <line x1="16" y1="2" x2="16" y2="8" stroke="#00d4ff" strokeWidth="0.8" opacity="0.4" />
+                <line x1="16" y1="24" x2="16" y2="30" stroke="#00d4ff" strokeWidth="0.8" opacity="0.4" />
+                <line x1="2" y1="16" x2="8" y2="16" stroke="#00d4ff" strokeWidth="0.8" opacity="0.4" />
+                <line x1="24" y1="16" x2="30" y2="16" stroke="#00d4ff" strokeWidth="0.8" opacity="0.4" />
+                <defs>
+                  <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32">
+                    <stop offset="0%" stopColor="#00d4ff" />
+                    <stop offset="100%" stopColor="#3a86ff" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <span className="text-sm font-bold tracking-[0.2em] group-hover:text-accent-cyan transition-colors">
+                GIGASCOPE
               </span>
             </a>
             <div className="hidden sm:flex items-center gap-6 text-xs font-medium tracking-wide text-dim">
