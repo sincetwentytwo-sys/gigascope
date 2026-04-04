@@ -29,10 +29,6 @@ export default function TimelinePage() {
     <div className="max-w-5xl mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-12">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-2 h-2 bg-accent-cyan rounded-full" />
-          <span className="font-mono text-[9px] tracking-[0.2em] text-dim uppercase">MISSION CHRONOLOG</span>
-        </div>
         <h1 className="text-3xl sm:text-4xl font-black mb-2">Global Timeline</h1>
         <p className="text-dim text-sm">
           All milestones across {factories.length} factories — past and projected.

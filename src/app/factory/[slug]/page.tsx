@@ -162,24 +162,51 @@ export default async function FactoryPage({
         </div>
       </div>
 
-      {/* Products */}
-      <div className="glass-card p-5">
-        <h3 className="text-[0.65rem] font-semibold text-dim tracking-widest uppercase mb-3">
-          Products
-        </h3>
-        <div className="flex flex-wrap gap-2">
-          {factory.products.split(",").map((p) => (
-            <span
-              key={p}
-              className="px-3 py-1.5 rounded-full text-xs font-medium"
-              style={{
-                background: `${factory.color}15`,
-                color: factory.color,
-              }}
+      {/* Products + Links */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="glass-card p-5">
+          <h3 className="text-[0.65rem] font-semibold text-dim tracking-widest uppercase mb-3">
+            Products
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {factory.products.split(",").map((p) => (
+              <span
+                key={p}
+                className="px-3 py-1.5 rounded-full text-xs font-medium"
+                style={{
+                  background: `${factory.color}15`,
+                  color: factory.color,
+                }}
+              >
+                {p.trim()}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="glass-card p-5">
+          <h3 className="text-[0.65rem] font-semibold text-dim tracking-widest uppercase mb-3">
+            Links
+          </h3>
+          <div className="flex flex-col gap-2">
+            <a
+              href={`/compare`}
+              className="text-xs text-accent-cyan hover:underline font-mono"
             >
-              {p.trim()}
+              Compare satellite imagery →
+            </a>
+            <a
+              href={`https://www.google.com/maps/@${factory.lat},${factory.lng},1000m/data=!3m1!1e3`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-dim hover:text-text font-mono"
+            >
+              Open in Google Maps ↗
+            </a>
+            <span className="text-[9px] text-dim font-mono mt-1">
+              {factory.lat.toFixed(4)}°N, {factory.lng.toFixed(4)}°W
             </span>
-          ))}
+          </div>
         </div>
       </div>
     </div>

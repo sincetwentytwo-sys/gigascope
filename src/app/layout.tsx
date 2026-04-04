@@ -84,10 +84,14 @@ export default function RootLayout({
               <a href="/about" className="hover:text-text transition-colors">
                 ABOUT
               </a>
-              <span className="flex items-center gap-1.5 text-accent-green">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent-green animate-pulse" />
-                LIVE
-              </span>
+              <a
+                href="https://github.com/sincetwentytwo-sys/gigascope"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-text transition-colors"
+              >
+                GITHUB
+              </a>
             </div>
           </div>
         </nav>

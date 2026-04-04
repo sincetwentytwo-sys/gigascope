@@ -3,14 +3,17 @@ import FactoryCard from "@/components/FactoryCard";
 import GlobeWrapper from "@/components/GlobeWrapper";
 
 export default function Home() {
+  // Separate featured (Terafab) from the rest
+  const featured = factories.filter((f) => f.featured);
+  const rest = factories.filter((f) => !f.featured);
+
   return (
     <>
-      {/* ── HERO: Stitch-designed orbital command center ── */}
+      {/* ── HERO: Compact, data-first ── */}
       <section
-        className="relative h-screen flex flex-col items-center justify-center overflow-hidden"
+        className="relative h-[85vh] flex flex-col items-center justify-center overflow-hidden"
         style={{ contain: "strict" }}
       >
-        {/* Radial glow background */}
         <div className="absolute inset-0 radial-glow pointer-events-none" />
 
         {/* 3D Globe */}
@@ -18,148 +21,124 @@ export default function Home() {
           <GlobeWrapper />
         </div>
 
-        {/* Radar scope SVG overlay */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] sm:w-[600px] sm:h-[600px] pointer-events-none opacity-30 z-[1]">
-          <svg className="w-full h-full animate-[spin_60s_linear_infinite]" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(0,212,255,0.15)" strokeWidth="0.1" />
-            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(0,212,255,0.2)" strokeWidth="0.1" />
-            <circle cx="50" cy="50" r="28" fill="none" stroke="rgba(0,212,255,0.25)" strokeWidth="0.2" strokeDasharray="1 3" />
-            <circle cx="50" cy="50" r="18" fill="none" stroke="rgba(0,212,255,0.15)" strokeWidth="0.1" strokeDasharray="0.5 2" />
-            {/* Sweep line */}
-            <rect x="50" y="2" width="0.3" height="48" fill="url(#sweepGrad)" />
-            <defs>
-              <linearGradient id="sweepGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#00d4ff" />
-                <stop offset="100%" stopColor="transparent" />
-              </linearGradient>
-            </defs>
+        {/* Minimal radar rings (subtle, not cosplay) */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] sm:w-[550px] sm:h-[550px] pointer-events-none opacity-15 z-[1]">
+          <svg className="w-full h-full animate-[spin_90s_linear_infinite]" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="48" fill="none" stroke="#00d4ff" strokeWidth="0.1" />
+            <circle cx="50" cy="50" r="35" fill="none" stroke="#00d4ff" strokeWidth="0.08" strokeDasharray="1 4" />
           </svg>
         </div>
 
-        {/* Floating data chips (asymmetric, Stitch-style) */}
-        <div className="absolute top-[22%] left-[8%] sm:left-[18%] z-10 pointer-events-none">
-          <div className="bg-surface/40 backdrop-blur-md border border-accent-cyan/10 px-4 py-2 rounded-sm shadow-[0_0_20px_rgba(0,212,255,0.08)]">
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 bg-accent-cyan rounded-full animate-pulse" />
-              <span className="font-mono text-[10px] tracking-widest text-accent-cyan">8 FACTORIES</span>
-            </div>
-          </div>
-        </div>
-        <div className="absolute top-[32%] right-[6%] sm:right-[14%] z-10 pointer-events-none">
-          <div className="bg-surface/40 backdrop-blur-md border border-accent-cyan/10 px-4 py-2 rounded-sm shadow-[0_0_20px_rgba(0,212,255,0.08)]">
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-[10px] tracking-widest text-accent-cyan">4 COUNTRIES</span>
-            </div>
-          </div>
-        </div>
-        <div className="absolute bottom-[28%] left-[10%] sm:left-[16%] z-10 pointer-events-none">
-          <div className="bg-surface/40 backdrop-blur-md border border-accent-green/10 px-4 py-2 rounded-sm shadow-[0_0_20px_rgba(46,196,182,0.08)]">
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-[10px] tracking-widest text-accent-green">{getTotalInvestment()} INVESTED</span>
-            </div>
-          </div>
-        </div>
-        <div className="absolute bottom-[22%] right-[8%] sm:right-[20%] z-10 pointer-events-none">
-          <div className="bg-accent-red/10 backdrop-blur-md border border-accent-red/20 px-4 py-2 rounded-sm">
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 bg-accent-red rounded-full animate-pulse" />
-              <span className="font-mono text-[10px] tracking-widest text-accent-red">LIVE TRACKING</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Hero content */}
-        <div className="z-20 text-center max-w-5xl px-4">
-          {/* Satellite link badge */}
-          <div className="inline-flex items-center gap-3 mb-6 px-4 py-1.5 border border-border-custom bg-surface/50 backdrop-blur-sm rounded-full">
-            <span className="font-mono text-[9px] tracking-[0.2em] text-dim uppercase">SATELLITE LINK ESTABLISHED</span>
-            <div className="w-1 h-1 bg-accent-cyan rounded-full animate-pulse" />
-            <span className="font-mono text-[9px] tracking-[0.2em] text-accent-cyan uppercase">ORBIT_049</span>
-          </div>
-
-          <h1 className="text-7xl sm:text-8xl md:text-9xl font-black tracking-tighter mb-4 bg-gradient-to-b from-white via-cyan-100 to-cyan-400 bg-clip-text text-transparent leading-none">
+        {/* Hero content — direct, no fluff */}
+        <div className="z-20 text-center max-w-4xl px-4">
+          <h1 className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tighter mb-3 bg-gradient-to-b from-white to-white/60 bg-clip-text text-transparent leading-none">
             GIGASCOPE
           </h1>
-          <p className="text-lg sm:text-xl font-light text-text/80 tracking-tight mb-10">
-            Satellite-powered factory intelligence for the orbital age.
+          <p className="text-base sm:text-lg text-dim tracking-tight mb-8 max-w-lg mx-auto">
+            Track Tesla&apos;s global factory construction with satellite imagery.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pointer-events-auto">
+          {/* Real stats — not decoration */}
+          <div className="inline-flex items-center gap-6 sm:gap-10 mb-8 pointer-events-none">
+            {[
+              { value: "8", label: "Factories" },
+              { value: getTotalInvestment(), label: "Invested" },
+              { value: "4", label: "Countries" },
+            ].map((s) => (
+              <div key={s.label} className="text-center">
+                <div className="text-xl sm:text-2xl font-bold font-mono text-accent-cyan">{s.value}</div>
+                <div className="text-[9px] text-dim tracking-widest uppercase mt-0.5">{s.label}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pointer-events-auto">
             <a
               href="#factories"
-              className="group relative px-8 py-3.5 bg-gradient-to-br from-accent-cyan to-accent-blue text-bg font-bold text-xs tracking-widest uppercase overflow-hidden transition-all hover:shadow-[0_0_30px_rgba(0,212,255,0.3)]"
+              className="px-7 py-3 bg-accent-cyan text-bg font-bold text-xs tracking-widest uppercase hover:bg-accent-cyan/90 transition-colors"
             >
-              <span className="relative z-10">EXPLORE FACTORIES</span>
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              VIEW FACTORIES
             </a>
             <a
               href="/compare"
-              className="px-8 py-3.5 border border-border-custom text-text font-medium text-xs tracking-widest uppercase hover:bg-white/5 transition-colors"
+              className="px-7 py-3 border border-border-custom text-text text-xs tracking-widest uppercase hover:bg-white/5 transition-colors"
             >
-              COMPARE SATELLITE
+              SATELLITE COMPARE
             </a>
           </div>
         </div>
 
-        {/* Scroll indicator (Stitch-style) */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10">
-          <span className="font-mono text-[9px] tracking-[0.3em] text-dim uppercase">SCROLL FOR TELEMETRY</span>
-          <div className="w-5 h-9 border border-border-custom rounded-full flex justify-center p-1">
-            <div className="w-1 h-2 bg-accent-cyan rounded-full animate-bounce" />
-          </div>
+        {/* Scroll indicator — minimal */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
+          <div className="w-px h-10 bg-gradient-to-b from-dim/50 to-transparent" />
         </div>
       </section>
 
-      {/* ── Feature modules (Stitch 3-column layout) ── */}
-      <section className="relative z-10 py-24 px-4 sm:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            { icon: "🛰️", num: "01", label: "OBSERVATION", title: "Satellite Comparison", desc: "Before/after imagery from Sentinel-2 and ESRI World Imagery to track construction changes over time.", href: "/compare" },
-            { icon: "📊", num: "02", label: "ANALYSIS", title: "Progress Tracking", desc: "Milestone timelines, year-by-year progress charts, and capacity projections for all 8 global factories.", href: "/timeline" },
-            { icon: "🌐", num: "03", label: "INTELLIGENCE", title: "Global Network", desc: "From Terafab's 2nm chip fab to Giga Shanghai's 950K capacity — every factory on one orbital dashboard.", href: "#factories" },
-          ].map((m) => (
-            <a key={m.num} href={m.href} className="glass-card border-l-2 border-l-accent-cyan/30 border-t-0 border-r-0 border-b-0 rounded-none p-7 flex flex-col gap-5 group hover:border-l-accent-cyan transition-colors cursor-pointer">
-              <div className="flex justify-between items-start">
-                <span className="text-2xl">{m.icon}</span>
-                <span className="font-mono text-[9px] text-dim">{m.num} // {m.label}</span>
+      {/* ── TERAFAB SPOTLIGHT — the most important thing first ── */}
+      {featured.map((f) => (
+        <section key={f.id} className="relative z-10 border-y border-accent-pink/20 bg-accent-pink/[0.02]">
+          <div className="max-w-7xl mx-auto px-4 py-10">
+            <a href={`/factory/${f.slug}`} className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 group">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-[9px] font-bold px-2 py-0.5 bg-accent-pink text-white tracking-wider animate-pulse">NEW</span>
+                  <span className="font-mono text-[9px] text-dim tracking-widest">ANNOUNCED MAR 21, 2026</span>
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-black group-hover:text-accent-pink transition-colors">
+                  {f.flag} {f.name}
+                </h2>
+                <p className="text-sm text-dim mt-1 max-w-xl">{f.aka} — {f.products}</p>
               </div>
-              <div>
-                <h3 className="text-lg font-bold mb-2 group-hover:text-accent-cyan transition-colors">{m.title}</h3>
-                <p className="text-xs text-dim leading-relaxed">{m.desc}</p>
+              <div className="flex items-center gap-6">
+                <div className="text-right">
+                  <div className="font-mono text-3xl font-black text-accent-pink">{f.investment}</div>
+                  <div className="text-[9px] text-dim tracking-widest">INVESTMENT</div>
+                </div>
+                <div className="text-right">
+                  <div className="font-mono text-3xl font-black text-accent-cyan">{f.capacity}</div>
+                  <div className="text-[9px] text-dim tracking-widest">CAPACITY</div>
+                </div>
+                <span className="text-dim group-hover:text-text transition-colors text-2xl">→</span>
               </div>
             </a>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Factory Grid ── */}
-      <section id="factories" className="relative z-10 max-w-7xl mx-auto px-4 pb-20">
-        <div className="flex items-end justify-between mb-8">
-          <div>
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-2 h-2 bg-accent-cyan rounded-full" />
-              <span className="font-mono text-[9px] tracking-[0.2em] text-dim uppercase">ACTIVE NETWORK</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-bold">Global Factories</h2>
           </div>
-          <span className="font-mono text-xs text-dim hidden sm:block">
-            {factories.length} NODES ONLINE
-          </span>
+        </section>
+      ))}
+
+      {/* ── FACTORY GRID — no filler, just data ── */}
+      <section id="factories" className="relative z-10 max-w-7xl mx-auto px-4 py-14">
+        <div className="flex items-end justify-between mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold">All Factories</h2>
+          <div className="flex gap-4">
+            <a href="/timeline" className="text-xs text-dim hover:text-accent-cyan transition-colors font-mono tracking-wider">TIMELINE →</a>
+            <a href="/compare" className="text-xs text-dim hover:text-accent-cyan transition-colors font-mono tracking-wider">COMPARE →</a>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {factories.map((f) => (
+          {rest.map((f) => (
             <FactoryCard key={f.id} factory={f} />
           ))}
         </div>
       </section>
 
-      {/* Coordinates overlay (Stitch-style footer detail) */}
-      <div className="fixed bottom-4 right-4 z-50 pointer-events-none hidden sm:flex flex-col items-end gap-0.5">
-        <span className="font-mono text-[8px] text-accent-cyan/40 uppercase">LAT: 30.2223° N</span>
-        <span className="font-mono text-[8px] text-accent-cyan/40 uppercase">LON: 97.6171° W</span>
-        <span className="font-mono text-[8px] text-accent-cyan/40 uppercase">SYS: NOMINAL</span>
-      </div>
+      {/* ── Quick links — functional, not decorative ── */}
+      <section className="relative z-10 border-t border-border-custom">
+        <div className="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <a href="/compare" className="glass-card p-5 group hover:border-accent-cyan/30">
+            <div className="text-sm font-bold mb-1 group-hover:text-accent-cyan transition-colors">Satellite Compare</div>
+            <p className="text-xs text-dim">Before/after imagery from two satellite sources.</p>
+          </a>
+          <a href="/timeline" className="glass-card p-5 group hover:border-accent-cyan/30">
+            <div className="text-sm font-bold mb-1 group-hover:text-accent-cyan transition-colors">Global Timeline</div>
+            <p className="text-xs text-dim">Every milestone across 8 factories, chronologically.</p>
+          </a>
+          <a href="/about" className="glass-card p-5 group hover:border-accent-cyan/30">
+            <div className="text-sm font-bold mb-1 group-hover:text-accent-cyan transition-colors">Data Sources</div>
+            <p className="text-xs text-dim">ESRI, Sentinel-2, and how this tracker works.</p>
+          </a>
+        </div>
+      </section>
     </>
   );
 }
