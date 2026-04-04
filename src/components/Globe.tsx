@@ -18,7 +18,6 @@ export default function Globe() {
     import("globe.gl").then((mod) => {
       if (!container) return;
 
-      // globe.gl exports a factory function (not a class)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const createGlobe = (mod as any).default || mod;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,17 +26,12 @@ export default function Globe() {
       try {
         globe = new createGlobe(container);
       } catch {
-        // If not a constructor, try as function
         globe = createGlobe(container);
       }
 
       globe
-        .globeImageUrl(
-          "//unpkg.com/three-globe/example/img/earth-dark.jpg"
-        )
-        .bumpImageUrl(
-          "//unpkg.com/three-globe/example/img/earth-topology.png"
-        )
+        .globeImageUrl("//unpkg.com/three-globe/example/img/earth-dark.jpg")
+        .bumpImageUrl("//unpkg.com/three-globe/example/img/earth-topology.png")
         .backgroundImageUrl("")
         .backgroundColor("#00000000")
         .atmosphereColor("#3a86ff")
@@ -50,6 +44,7 @@ export default function Globe() {
           const f = d as (typeof factories)[number];
           const el = document.createElement("div");
           el.style.cursor = "pointer";
+          el.style.pointerEvents = "auto";
           el.innerHTML = `
             <div style="position:relative;width:20px;height:20px;">
               <div style="position:absolute;inset:0;background:${f.color};border-radius:50%;opacity:0.2;animation:pulse-ring 2s infinite;"></div>
@@ -66,14 +61,8 @@ export default function Globe() {
         .htmlLng((d: unknown) => (d as (typeof factories)[number]).lng)
         .htmlAltitude(0.01);
 
-      // Force globe.gl's internal wrapper to not break layout
-      // Use MutationObserver since globe.gl creates the div async
-      const fixInternalDiv = () => {
-        // Fix ALL descendants to not capture events or break layout
-        container.querySelectorAll("*").forEach((el) => {
-          const htmlEl = el as HTMLElement;
-          htmlEl.style.pointerEvents = "none";
-        });
+      // Fix layout: globe.gl's internal wrapper must not push content down
+      const fixLayout = () => {
         const children = container.children;
         for (let i = 0; i < children.length; i++) {
           const child = children[i] as HTMLElement;
@@ -83,28 +72,39 @@ export default function Globe() {
           child.style.overflow = "hidden";
         }
       };
-      fixInternalDiv();
-      const observer = new MutationObserver(fixInternalDiv);
-      observer.observe(container, { childList: true, subtree: true });
+      fixLayout();
+      const observer = new MutationObserver(fixLayout);
+      observer.observe(container, { childList: true });
 
-      // Completely dispose OrbitControls to prevent scroll hijacking
+      // Keep OrbitControls alive for drag rotation, but disable zoom (wheel)
       try {
         const controls = globe.controls();
         if (controls) {
-          controls.dispose();
+          controls.autoRotate = true;
+          controls.autoRotateSpeed = 0.4;
+          controls.enableZoom = false; // disable wheel zoom → wheel events pass to page
+          controls.enablePan = false;  // disable right-click pan
+          controls.enableRotate = true; // keep drag rotation!
         }
       } catch {
-        // controls not ready
+        // fallback
       }
 
-      // Manual auto-rotation via animation frame
-      let angle = 0;
-      const autoRotate = () => {
-        angle += 0.15;
-        globe.pointOfView({ lat: 25, lng: -40 + angle, altitude: 2.2 });
-        requestAnimationFrame(autoRotate);
-      };
-      autoRotate();
+      // Intercept wheel events on the canvas and let them pass through to page scroll
+      const canvas = container.querySelector("canvas");
+      if (canvas) {
+        canvas.addEventListener("wheel", (e) => {
+          e.stopPropagation();
+          // Re-dispatch the wheel event on the document so the page scrolls
+          const newEvent = new WheelEvent("wheel", {
+            deltaX: e.deltaX,
+            deltaY: e.deltaY,
+            deltaMode: e.deltaMode,
+            bubbles: true,
+          });
+          document.documentElement.dispatchEvent(newEvent);
+        }, { passive: true });
+      }
 
       const handleResize = () => {
         if (container) {
@@ -121,7 +121,6 @@ export default function Globe() {
     <div
       ref={containerRef}
       className="globe-container absolute inset-0 overflow-hidden"
-      style={{ pointerEvents: "none" }}
     />
   );
 }
