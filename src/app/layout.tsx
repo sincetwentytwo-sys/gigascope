@@ -1,16 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "GIGASCOPE — Tesla Factory Construction Tracker",
@@ -36,7 +25,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
       <body className="min-h-full flex flex-col bg-bg text-text">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:text-bg focus:px-4 focus:py-2 focus:text-sm focus:font-bold">
@@ -92,9 +81,8 @@ export default function RootLayout({
 
         {/* Footer */}
         <footer className="border-t border-border-custom py-6 px-4 pb-20 sm:pb-6">
-          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-dim">
-            <span>GIGASCOPE — Community project. Not affiliated with Tesla, Inc.</span>
-            <span className="font-mono">ESRI + Sentinel-2 + CartoDB</span>
+          <div className="max-w-7xl mx-auto text-center text-xs text-dim">
+            GIGASCOPE — Community project. Not affiliated with Tesla, Inc.
           </div>
         </footer>
       </body>

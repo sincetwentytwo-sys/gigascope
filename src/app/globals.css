@@ -3,7 +3,6 @@
 :root {
   --bg: #0c0d12;
   --surface: #13151d;
-  --surface2: #1a1d28;
   --border: #252a38;
   --text: #f0f2f8;
   --dim: #6b7280;
@@ -19,7 +18,6 @@
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
-  --color-surface2: var(--surface2);
   --color-border-custom: var(--border);
   --color-text: var(--text);
   --color-dim: var(--dim);
@@ -30,8 +28,8 @@
   --color-accent-purple: var(--purple);
   --color-accent-cyan: var(--cyan);
   --color-accent-pink: var(--pink);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", monospace;
 }
 
 * {
@@ -69,7 +67,6 @@ body {
 
 .progress-fill {
   height: 100%;
-  transition: width 1s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 /* ── Status Badge ── */

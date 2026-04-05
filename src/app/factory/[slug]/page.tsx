@@ -74,7 +74,7 @@ export default async function FactoryPage({
 
         <div className="mt-3 w-full bg-white/5 h-1 overflow-hidden">
           <div
-            className="h-full transition-all duration-700"
+            className="h-full"
             style={{ width: `${factory.progress}%`, background: factory.color }}
           />
         </div>
