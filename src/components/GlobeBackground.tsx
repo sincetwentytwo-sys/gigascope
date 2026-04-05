@@ -104,11 +104,10 @@ export default function GlobeBackground() {
   }, []);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-0 pointer-events-none">
+    <div className="fixed inset-0 flex items-center justify-center pointer-events-none" style={{ zIndex: -1 }}>
       <canvas
         ref={canvasRef}
-        className="w-[700px] h-[700px]"
-        style={{ width: 700, height: 700 }}
+        style={{ width: 700, height: 700, pointerEvents: "none" }}
       />
     </div>
   );
