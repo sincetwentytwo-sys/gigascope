@@ -1,13 +1,7 @@
-// Curated notable X posts per factory
-// Update this file to add/remove featured posts
-// Each post: url, author handle, one-line summary, date
+import type { XPostData } from "@/components/XFeed";
 
-export interface XPostData {
-  url: string;
-  author: string;
-  summary: string;
-  date: string;
-}
+// Curated notable X posts per factory
+// To add a post: just add the URL, author, summary, and date
 
 export const FACTORY_X_POSTS: Record<string, XPostData[]> = {
   terafab: [
@@ -28,7 +22,7 @@ export const FACTORY_X_POSTS: Record<string, XPostData[]> = {
     {
       url: "https://x.com/Tesla/status/1900000000000000000",
       author: "Tesla",
-      summary: "Giga Texas Phase 3 expansion underway — Cybercab pilot line operational",
+      summary: "Giga Texas Phase 3 expansion underway",
       date: "Mar 15",
     },
   ],
@@ -36,7 +30,7 @@ export const FACTORY_X_POSTS: Record<string, XPostData[]> = {
     {
       url: "https://x.com/Tesla/status/1890000000000000000",
       author: "Tesla",
-      summary: "Shanghai Megafactory completed in just 7 months — now producing Megapacks",
+      summary: "Shanghai Megafactory completed in 7 months",
       date: "Jan 25",
     },
   ],
@@ -44,7 +38,7 @@ export const FACTORY_X_POSTS: Record<string, XPostData[]> = {
     {
       url: "https://x.com/gigaboris/status/1895000000000000000",
       author: "gigaboris",
-      summary: "Giga Berlin expansion finally approved — Phase 2 construction begins",
+      summary: "Giga Berlin expansion approved — Phase 2 begins",
       date: "Feb 20",
     },
   ],

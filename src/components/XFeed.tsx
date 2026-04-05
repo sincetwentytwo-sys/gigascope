@@ -1,50 +1,96 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 declare global {
   interface Window {
     twttr?: {
       widgets: {
-        load: (el?: HTMLElement) => void;
+        createTweet: (
+          id: string,
+          el: HTMLElement,
+          options?: Record<string, string>
+        ) => Promise<HTMLElement>;
       };
     };
   }
 }
 
-function loadTwitterScript() {
-  if (document.getElementById("twitter-wjs")) return;
-  const script = document.createElement("script");
-  script.id = "twitter-wjs";
-  script.src = "https://platform.twitter.com/widgets.js";
-  script.async = true;
-  document.head.appendChild(script);
+function getTweetId(url: string): string | null {
+  const match = url.match(/status\/(\d+)/);
+  return match ? match[1] : null;
 }
 
-export function XEmbed({ url }: { url: string }) {
-  const ref = useRef<HTMLDivElement>(null);
+function loadWidgetsJs(): Promise<void> {
+  return new Promise((resolve) => {
+    if (window.twttr) {
+      resolve();
+      return;
+    }
+    if (!document.getElementById("twitter-wjs")) {
+      const script = document.createElement("script");
+      script.id = "twitter-wjs";
+      script.src = "https://platform.twitter.com/widgets.js";
+      script.async = true;
+      script.onload = () => {
+        const check = setInterval(() => {
+          if (window.twttr) {
+            clearInterval(check);
+            resolve();
+          }
+        }, 100);
+      };
+      document.head.appendChild(script);
+    } else {
+      const check = setInterval(() => {
+        if (window.twttr) {
+          clearInterval(check);
+          resolve();
+        }
+      }, 100);
+    }
+  });
+}
+
+function TweetEmbed({ url }: { url: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    loadTwitterScript();
-    const interval = setInterval(() => {
-      if (window.twttr && ref.current) {
-        window.twttr.widgets.load(ref.current);
-        clearInterval(interval);
-      }
-    }, 200);
-    return () => clearInterval(interval);
+    const id = getTweetId(url);
+    if (!id || !containerRef.current) return;
+
+    const el = containerRef.current;
+    el.innerHTML = "";
+
+    loadWidgetsJs().then(() => {
+      if (!window.twttr) return;
+      window.twttr.widgets
+        .createTweet(id, el, { theme: "dark", dnt: "true", width: "500" })
+        .then((result) => {
+          if (!result) setFailed(true);
+        })
+        .catch(() => setFailed(true));
+    });
   }, [url]);
 
-  return (
-    <div ref={ref} className="max-w-full overflow-hidden [&_iframe]:!max-width-full">
-      <blockquote className="twitter-tweet" data-theme="dark" data-dnt="true">
-        <a href={url}>{url}</a>
-      </blockquote>
-    </div>
-  );
+  if (failed) {
+    return (
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block border border-white/10 p-3 text-xs text-dim hover:text-text font-mono"
+      >
+        View post on X &rarr;
+      </a>
+    );
+  }
+
+  return <div ref={containerRef} className="min-h-[100px]" />;
 }
 
-interface XPost {
+export interface XPostData {
   url: string;
   author: string;
   summary: string;
@@ -54,7 +100,7 @@ interface XPost {
 interface XFeedProps {
   query: string;
   factoryName: string;
-  posts?: XPost[];
+  posts?: XPostData[];
 }
 
 export default function XFeed({ query, factoryName, posts }: XFeedProps) {
@@ -62,26 +108,11 @@ export default function XFeed({ query, factoryName, posts }: XFeedProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Curated posts with embeds */}
+      {/* Embedded tweets */}
       {posts && posts.length > 0 && (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2 max-h-[600px] overflow-y-auto">
           {posts.map((post, i) => (
-            <div key={i}>
-              {/* Summary card */}
-              <div className="flex items-baseline gap-2 mb-2">
-                <span className="font-mono text-[9px] text-dim shrink-0">{post.date}</span>
-                <a
-                  href={post.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs text-dim hover:text-text transition-colors leading-snug"
-                >
-                  <span className="font-bold text-text">@{post.author}</span> &mdash; {post.summary}
-                </a>
-              </div>
-              {/* Embedded tweet */}
-              <XEmbed url={post.url} />
-            </div>
+            <TweetEmbed key={i} url={post.url} />
           ))}
         </div>
       )}
