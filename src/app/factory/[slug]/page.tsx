@@ -1,5 +1,9 @@
 import { factories, getFactory, TIMELINE_YEARS } from "@/data/factories";
 import SatelliteMapWrapper from "@/components/SatelliteMapWrapper";
+import { getESRIImageryDate } from "@/lib/satellite-date";
+
+// Revalidate every hour — news feed and satellite dates stay fresh
+export const revalidate = 3600;
 
 export function generateStaticParams() {
   return factories.map((f) => ({ slug: f.slug }));
@@ -36,6 +40,9 @@ export default async function FactoryPage({
     );
   }
 
+  // Fetch satellite imagery date in parallel
+  const imageryDate = await getESRIImageryDate(factory.lat, factory.lng);
+
   const infoCards = [
     { label: "AREA", value: factory.area },
     { label: "CAPACITY", value: factory.capacity },
@@ -59,7 +66,8 @@ export default async function FactoryPage({
               {factory.aka} &middot; {factory.location} &middot; {factory.products}
             </p>
             <p className="font-mono text-[9px] text-dim mt-0.5">
-              Updated {factory.lastUpdated}
+              Data updated {factory.lastUpdated}
+              {imageryDate && <> &middot; Satellite imagery {imageryDate}</>}
             </p>
           </div>
           <div className="flex items-center gap-3">

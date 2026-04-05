@@ -2,6 +2,9 @@ import { factories, getTotalInvestment, DATA_LAST_UPDATED } from "@/data/factori
 import FactoryCard from "@/components/FactoryCard";
 import NewsFeed from "@/components/NewsFeed";
 
+// Revalidate every hour — news feed stays fresh
+export const revalidate = 3600;
+
 export default function Home() {
   return (
     <>
