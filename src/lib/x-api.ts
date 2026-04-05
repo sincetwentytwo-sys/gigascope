@@ -49,7 +49,10 @@ interface TwitterSearchResponse {
 
 export async function searchTweets(query: string, maxResults = 10): Promise<XTweet[]> {
   const token = process.env.X_BEARER_TOKEN;
-  if (!token) return [];
+  if (!token) {
+    console.error("X_BEARER_TOKEN not set");
+    return [];
+  }
 
   try {
     const params = new URLSearchParams({
@@ -61,15 +64,17 @@ export async function searchTweets(query: string, maxResults = 10): Promise<XTwe
       "media.fields": "url,preview_image_url,type",
     });
 
-    const res = await fetch(
-      `https://api.x.com/2/tweets/search/recent?${params}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-        next: { revalidate: 1800 }, // 30min cache
-      }
-    );
+    const url = `https://api.x.com/2/tweets/search/recent?${params}`;
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${token}` },
+      next: { revalidate: 1800 },
+    });
 
-    if (!res.ok) return [];
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error(`X API error ${res.status}: ${errorText}`);
+      return [];
+    }
 
     const json: TwitterSearchResponse = await res.json();
     if (!json.data) return [];
@@ -107,7 +112,8 @@ export async function searchTweets(query: string, maxResults = 10): Promise<XTwe
         images: images.filter(Boolean),
       };
     });
-  } catch {
+  } catch (err) {
+    console.error("X API fetch failed:", err);
     return [];
   }
 }
