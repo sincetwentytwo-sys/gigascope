@@ -2,10 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { factories } from "@/data/factories";
+import { tileSources } from "@/lib/tiles";
 import type { Factory } from "@/data/types";
 
-const ESRI_URL = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
-const SENTINEL_URL = "https://tiles.maps.eox.at/wmts?layer=s2cloudless-2023_3857&style=default&tilematrixset=GoogleMapsCompatible&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/jpeg&TileMatrix={z}&TileCol={x}&TileRow={y}";
+const ESRI_URL = tileSources[1].url;
+const SENTINEL_URL = tileSources[2].url;
 
 export default function CompareSlider() {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -73,7 +74,7 @@ export default function CompareSlider() {
                 : "border border-white/8 text-dim hover:text-text hover:border-white/15"
             }`}
           >
-            {f.flag} {f.name.replace("\u26a1 ", "")}
+            {f.flag} {f.name}
           </button>
         ))}
       </div>
@@ -140,7 +141,7 @@ export default function CompareSlider() {
         {/* Bottom info strip */}
         <div className="absolute bottom-0 left-0 right-0 z-[1000] bg-bg/90 border-t border-white/10 px-3 py-1.5 flex justify-between items-center font-mono text-[10px] text-dim">
           <span>
-            {selected.flag} {selected.name.replace("\u26a1 ", "")} &middot; {selected.location}
+            {selected.flag} {selected.name} &middot; {selected.location}
           </span>
           <span className="hidden sm:inline">
             {selected.lat.toFixed(4)}&deg;N, {selected.lng.toFixed(4)}&deg;W

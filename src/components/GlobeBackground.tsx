@@ -84,7 +84,7 @@ export default function GlobeBackground() {
         ctx.fillStyle = `rgba(0,0,0,${0.3 * p.z})`;
         ctx.fill();
         ctx.fillStyle = `rgba(0,0,0,${0.2 * p.z})`;
-        ctx.fillText(f.name.replace("\u26a1 ", ""), p.x + 5, p.y + 2);
+        ctx.fillText(f.name, p.x + 5, p.y + 2);
       }
 
       animId = requestAnimationFrame(draw);

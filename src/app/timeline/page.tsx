@@ -42,7 +42,7 @@ export default function TimelinePage() {
           {factories.slice(0, 4).map((f) => (
             <div key={f.id} className="flex flex-col gap-2">
               <div className="flex justify-between items-center">
-                <span className="text-xs font-bold">{f.flag} {f.name.replace("⚡ ", "")}</span>
+                <span className="text-xs font-bold">{f.flag} {f.name}</span>
                 <span className="font-mono text-xs" style={{ color: f.color }}>{f.progress}%</span>
               </div>
               <div className="flex gap-0.5 h-6">
@@ -108,7 +108,7 @@ export default function TimelinePage() {
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
                   <div className="flex items-center gap-2">
                     <span className="font-mono text-[10px]" style={{ color: m.factory.color }}>
-                      {m.factory.flag} {m.factory.name.replace("⚡ ", "")}
+                      {m.factory.flag} {m.factory.name}
                     </span>
                     <span className={`badge badge-${m.factory.status}`} style={{ fontSize: "7px" }}>
                       {m.factory.status}

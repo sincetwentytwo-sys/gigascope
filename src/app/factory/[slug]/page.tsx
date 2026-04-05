@@ -140,7 +140,7 @@ export default async function FactoryPage({ params }: { params: Promise<{ slug: 
         </div>
         <div className="bg-surface rounded-xl p-5">
           <h3 className="font-bold mb-3">Community</h3>
-          <XFeed query={xQuery} factoryName={factory.name.replace("\u26a1 ", "")} />
+          <XFeed query={xQuery} factoryName={factory.name} />
         </div>
       </div>
 
