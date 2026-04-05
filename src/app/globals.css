@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0c0d12;
-  --surface: #13151d;
-  --border: #252a38;
-  --text: #f0f2f8;
-  --dim: #6b7280;
+  --bg: #ffffff;
+  --surface: #f5f5f7;
+  --border: #e5e5e7;
+  --text: #1d1d1f;
+  --dim: #86868b;
   --red: #e63946;
-  --green: #2ec4b6;
-  --blue: #3a86ff;
-  --amber: #f4a261;
-  --purple: #9b5de5;
-  --cyan: #00d4ff;
-  --pink: #ff006e;
+  --green: #00875a;
+  --blue: #0066cc;
+  --amber: #bf5600;
+  --purple: #7b2dbd;
+  --cyan: #0077b6;
+  --pink: #e30b5c;
 }
 
 @theme inline {
@@ -28,8 +28,8 @@
   --color-accent-purple: var(--purple);
   --color-accent-cyan: var(--cyan);
   --color-accent-pink: var(--pink);
-  --font-sans: system-ui, -apple-system, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", monospace;
+  --font-sans: -apple-system, "SF Pro Display", system-ui, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, monospace;
 }
 
 * {
@@ -43,19 +43,9 @@ html {
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-sans);
   overflow-x: hidden;
-}
-
-/* ── Card ── */
-.glass-card {
-  background: rgba(19, 21, 29, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: border-color 0.2s;
-}
-
-.glass-card:hover {
-  border-color: rgba(255, 255, 255, 0.15);
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ── Progress Bar ── */
@@ -63,68 +53,63 @@ body {
   height: 4px;
   background: var(--border);
   overflow: hidden;
+  border-radius: 2px;
 }
 
 .progress-fill {
   height: 100%;
+  border-radius: 2px;
 }
 
 /* ── Status Badge ── */
 .badge {
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   font-weight: 600;
-  padding: 0.15rem 0.55rem;
-  letter-spacing: 0.04em;
+  padding: 0.2rem 0.6rem;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
+  border-radius: 100px;
 }
 
 .badge-operational {
-  background: rgba(46, 196, 182, 0.12);
+  background: #e6f4ed;
   color: var(--green);
 }
 .badge-expanding {
-  background: rgba(58, 134, 255, 0.12);
+  background: #e5f0ff;
   color: var(--blue);
 }
 .badge-construction {
-  background: rgba(244, 162, 97, 0.12);
+  background: #fff3e6;
   color: var(--amber);
 }
 .badge-planned {
-  background: rgba(155, 93, 229, 0.12);
+  background: #f3e8ff;
   color: var(--purple);
 }
 .badge-paused {
-  background: rgba(230, 57, 70, 0.12);
+  background: #ffe5e5;
   color: var(--red);
-}
-
-/* ── react-tweet dark theme ── */
-[data-theme="light"] .react-tweet-theme {
-  --tweet-bg-color: var(--surface) !important;
-  --tweet-border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  --tweet-font-color: var(--text) !important;
-  --tweet-font-color-secondary: var(--dim) !important;
-  --tweet-actions-icon-color: var(--dim) !important;
 }
 
 /* ── Leaflet overrides ── */
 .leaflet-container {
-  background: #08090c !important;
+  background: #f5f5f7 !important;
 }
 
 .leaflet-control-zoom a {
-  background: var(--surface) !important;
+  background: white !important;
   color: var(--text) !important;
   border-color: var(--border) !important;
 }
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
 }
 ::-webkit-scrollbar-thumb {
   background: var(--border);
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
