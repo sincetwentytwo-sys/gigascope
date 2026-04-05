@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import GlobeBackground from "@/components/GlobeBackground";
 
 export const metadata: Metadata = {
   title: "GIGASCOPE — Tesla Factory Construction Tracker",
@@ -54,6 +55,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-bg text-text">
+        <GlobeBackground />
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-text focus:text-bg focus:px-4 focus:py-2 focus:text-sm focus:font-bold">
           Skip to content
         </a>
