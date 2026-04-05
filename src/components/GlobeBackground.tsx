@@ -15,9 +15,6 @@ function projectToGlobe(lat: number, lng: number, cx: number, cy: number, r: num
 export default function GlobeBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rotation = useRef(0);
-  const mouseX = useRef<number | null>(null);
-  const dragging = useRef(false);
-  const autoSpeed = useRef(0.15);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -40,9 +37,7 @@ export default function GlobeBackground() {
     let animId: number;
 
     const draw = () => {
-      if (!dragging.current) {
-        rotation.current += autoSpeed.current;
-      }
+      rotation.current += 0.15;
 
       ctx.clearRect(0, 0, 700, 700);
       const color = "rgba(0, 0, 0, 0.15)";
@@ -103,32 +98,8 @@ export default function GlobeBackground() {
 
     draw();
 
-    // Mouse drag to rotate
-    const onMouseDown = (e: MouseEvent) => {
-      dragging.current = true;
-      mouseX.current = e.clientX;
-    };
-    const onMouseMove = (e: MouseEvent) => {
-      if (!dragging.current || mouseX.current === null) return;
-      const dx = e.clientX - mouseX.current;
-      rotation.current += dx * 0.3;
-      mouseX.current = e.clientX;
-    };
-    const onMouseUp = () => {
-      dragging.current = false;
-      mouseX.current = null;
-    };
-
-    canvas.style.pointerEvents = "auto";
-    canvas.addEventListener("mousedown", onMouseDown);
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
-
     return () => {
       cancelAnimationFrame(animId);
-      canvas.removeEventListener("mousedown", onMouseDown);
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
     };
   }, []);
 
@@ -136,7 +107,7 @@ export default function GlobeBackground() {
     <div className="fixed inset-0 flex items-center justify-center z-0 pointer-events-none">
       <canvas
         ref={canvasRef}
-        className="w-[700px] h-[700px] cursor-grab active:cursor-grabbing pointer-events-auto"
+        className="w-[700px] h-[700px]"
         style={{ width: 700, height: 700 }}
       />
     </div>
