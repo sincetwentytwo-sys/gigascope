@@ -22,8 +22,16 @@ export interface Factory {
   employees: string;
   color: string;
   featured?: boolean;
+  lastUpdated: string; // ISO date string (YYYY-MM-DD)
   milestones: Milestone[];
   timeline: number[]; // progress % per year [2020..2026]
+}
+
+export interface NewsItem {
+  title: string;
+  link: string;
+  date: string;
+  source: string;
 }
 
 export interface TileSource {

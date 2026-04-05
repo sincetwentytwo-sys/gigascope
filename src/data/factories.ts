@@ -1,12 +1,14 @@
 import type { Factory } from "./types";
 
+export const DATA_LAST_UPDATED = "2026-04-05";
+
 export const factories: Factory[] = [
   {
     id: "terafab",
     slug: "terafab",
-    name: "⚡ TERAFAB",
-    aka: "Tesla × SpaceX × xAI Chip Fab",
-    flag: "🇺🇸",
+    name: "\u26a1 TERAFAB",
+    aka: "Tesla \u00d7 SpaceX \u00d7 xAI Chip Fab",
+    flag: "\ud83c\uddfa\ud83c\uddf8",
     location: "Austin, TX (Giga Texas North Campus)",
     lat: 30.228,
     lng: -97.612,
@@ -19,6 +21,7 @@ export const factories: Factory[] = [
     employees: "TBD",
     color: "#ff006e",
     featured: true,
+    lastUpdated: "2026-03-21",
     milestones: [
       { date: "2026-03-21", text: "Musk announces Terafab launch", done: true },
       { date: "2026-Q2", text: "Pilot fab site prep begins", done: false },
@@ -33,7 +36,7 @@ export const factories: Factory[] = [
     slug: "giga-texas",
     name: "Gigafactory Texas",
     aka: "Giga Texas",
-    flag: "🇺🇸",
+    flag: "\ud83c\uddfa\ud83c\uddf8",
     location: "Austin, Texas",
     lat: 30.2223,
     lng: -97.6171,
@@ -45,6 +48,7 @@ export const factories: Factory[] = [
     investment: "$10B+",
     employees: "20,000+",
     color: "#3a86ff",
+    lastUpdated: "2026-03-15",
     milestones: [
       { date: "2020-07", text: "Site clearing began", done: true },
       { date: "2021-04", text: "Main structure complete", done: true },
@@ -60,7 +64,7 @@ export const factories: Factory[] = [
     slug: "giga-nevada",
     name: "Gigafactory Nevada",
     aka: "GF1",
-    flag: "🇺🇸",
+    flag: "\ud83c\uddfa\ud83c\uddf8",
     location: "Sparks, Nevada",
     lat: 39.538,
     lng: -119.44,
@@ -72,6 +76,7 @@ export const factories: Factory[] = [
     investment: "$6.2B",
     employees: "11,000+",
     color: "#2ec4b6",
+    lastUpdated: "2026-02-28",
     milestones: [
       { date: "2014-06", text: "Groundbreaking", done: true },
       { date: "2016-07", text: "Grand opening", done: true },
@@ -87,7 +92,7 @@ export const factories: Factory[] = [
     slug: "giga-shanghai",
     name: "Gigafactory Shanghai",
     aka: "GF3",
-    flag: "🇨🇳",
+    flag: "\ud83c\udde8\ud83c\uddf3",
     location: "Shanghai, China",
     lat: 31.097,
     lng: 121.783,
@@ -99,6 +104,7 @@ export const factories: Factory[] = [
     investment: "$7B+",
     employees: "20,000+",
     color: "#e63946",
+    lastUpdated: "2026-03-10",
     milestones: [
       { date: "2019-01", text: "Groundbreaking", done: true },
       { date: "2019-12", text: "First deliveries", done: true },
@@ -114,8 +120,8 @@ export const factories: Factory[] = [
     slug: "giga-berlin",
     name: "Gigafactory Berlin",
     aka: "GF4",
-    flag: "🇩🇪",
-    location: "Grünheide, Germany",
+    flag: "\ud83c\udde9\ud83c\uddea",
+    location: "Gr\u00fcnheide, Germany",
     lat: 52.398,
     lng: 13.787,
     status: "operational",
@@ -126,6 +132,7 @@ export const factories: Factory[] = [
     investment: "$5.8B",
     employees: "12,500+",
     color: "#f4a261",
+    lastUpdated: "2026-03-01",
     milestones: [
       { date: "2020-01", text: "Construction began", done: true },
       { date: "2022-03", text: "First deliveries", done: true },
@@ -141,8 +148,8 @@ export const factories: Factory[] = [
     slug: "giga-mexico",
     name: "Gigafactory Mexico",
     aka: "Giga Mexico",
-    flag: "🇲🇽",
-    location: "Santa Catarina, Nuevo León",
+    flag: "\ud83c\uddf2\ud83c\uddfd",
+    location: "Santa Catarina, Nuevo Le\u00f3n",
     lat: 25.658,
     lng: -100.435,
     status: "construction",
@@ -153,6 +160,7 @@ export const factories: Factory[] = [
     investment: "$5B (est)",
     employees: "TBD",
     color: "#9b5de5",
+    lastUpdated: "2026-02-15",
     milestones: [
       { date: "2023-03", text: "Location announced", done: true },
       { date: "2024-06", text: "Permits approved", done: true },
@@ -167,7 +175,7 @@ export const factories: Factory[] = [
     slug: "fremont",
     name: "Fremont Factory",
     aka: "Tesla HQ Factory",
-    flag: "🇺🇸",
+    flag: "\ud83c\uddfa\ud83c\uddf8",
     location: "Fremont, California",
     lat: 37.492,
     lng: -121.944,
@@ -179,6 +187,7 @@ export const factories: Factory[] = [
     investment: "$2B+",
     employees: "22,000",
     color: "#00d4ff",
+    lastUpdated: "2026-01-20",
     milestones: [
       { date: "2010-05", text: "Tesla acquires NUMMI plant", done: true },
       { date: "2012-06", text: "First Model S delivered", done: true },
@@ -193,7 +202,7 @@ export const factories: Factory[] = [
     slug: "giga-buffalo",
     name: "Gigafactory New York",
     aka: "GF2 / Buffalo",
-    flag: "🇺🇸",
+    flag: "\ud83c\uddfa\ud83c\uddf8",
     location: "Buffalo, New York",
     lat: 42.871,
     lng: -78.799,
@@ -205,6 +214,7 @@ export const factories: Factory[] = [
     investment: "$959M",
     employees: "1,500+",
     color: "#ff006e",
+    lastUpdated: "2026-02-01",
     milestones: [
       { date: "2017-08", text: "Production began", done: true },
       { date: "2019-10", text: "Solar Roof v3", done: true },

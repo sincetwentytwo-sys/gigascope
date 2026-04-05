@@ -1,6 +1,7 @@
-import { factories, getTotalInvestment } from "@/data/factories";
+import { factories, getTotalInvestment, DATA_LAST_UPDATED } from "@/data/factories";
 import FactoryCard from "@/components/FactoryCard";
 import WorldMap from "@/components/WorldMap";
+import NewsFeed from "@/components/NewsFeed";
 
 export default function Home() {
   const featured = factories.filter((f) => f.featured);
@@ -100,6 +101,19 @@ export default function Home() {
           {rest.map((f) => (
             <FactoryCard key={f.id} factory={f} />
           ))}
+        </div>
+      </section>
+
+      {/* ── News Feed ── */}
+      <section className="border-t border-border-custom">
+        <div className="max-w-7xl mx-auto px-4 py-10">
+          <div className="flex items-end justify-between mb-4">
+            <h2 className="text-xl sm:text-2xl font-bold">Latest News</h2>
+            <span className="font-mono text-[9px] text-dim">
+              Data updated {DATA_LAST_UPDATED}
+            </span>
+          </div>
+          <NewsFeed />
         </div>
       </section>
 

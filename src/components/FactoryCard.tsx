@@ -100,10 +100,8 @@ export default function FactoryCard({ factory }: { factory: Factory }) {
           <div className="font-mono text-xs">{factory.capacity}</div>
         </div>
         <div>
-          <div className="font-mono text-[9px] text-dim uppercase">Product</div>
-          <div className="font-mono text-xs truncate">
-            {factory.products.split(",")[0].trim()}
-          </div>
+          <div className="font-mono text-[9px] text-dim uppercase">Updated</div>
+          <div className="font-mono text-xs">{factory.lastUpdated}</div>
         </div>
       </div>
     </a>

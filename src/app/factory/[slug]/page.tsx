@@ -61,6 +61,9 @@ export default async function FactoryPage({
             <p className="text-dim text-sm mt-1">
               {factory.aka} &middot; {factory.location}
             </p>
+            <p className="font-mono text-[9px] text-dim mt-1">
+              Data updated {factory.lastUpdated}
+            </p>
           </div>
           <div className="flex items-center gap-3">
             <span className={`badge badge-${factory.status} text-xs`}>

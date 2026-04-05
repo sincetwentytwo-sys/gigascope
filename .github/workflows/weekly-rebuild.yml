@@ -1,0 +1,23 @@
+name: Weekly Rebuild
+
+# Trigger a Vercel rebuild every Monday at 06:00 UTC
+# This ensures satellite imagery tiles and RSS feeds stay fresh
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch: # Allow manual triggers
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel Deploy Hook
+        run: |
+          if [ -z "${{ secrets.VERCEL_DEPLOY_HOOK }}" ]; then
+            echo "VERCEL_DEPLOY_HOOK secret not set. Skipping."
+            echo "To enable: create a Deploy Hook in Vercel project settings,"
+            echo "then add the URL as a GitHub secret named VERCEL_DEPLOY_HOOK."
+            exit 0
+          fi
+          curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK }}"
+          echo "Deploy triggered."
