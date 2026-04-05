@@ -26,7 +26,7 @@ export default function Home() {
           <a href={`/factory/${featured.slug}`} className="block bg-text text-bg rounded-2xl p-8 sm:p-10 group hover:opacity-95 transition-opacity">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
               <div>
-                <span className="text-[11px] font-semibold px-3 py-1 rounded-full bg-accent-pink text-white">NEW</span>
+                <span className="text-[11px] font-semibold px-3 py-1 rounded-full bg-white/20 text-white">NEW</span>
                 <h2 className="text-2xl sm:text-3xl font-bold mt-3">
                   {featured.flag} {featured.name}
                 </h2>
@@ -34,7 +34,7 @@ export default function Home() {
               </div>
               <div className="flex gap-8">
                 <div className="text-right">
-                  <div className="text-2xl sm:text-3xl font-bold text-accent-pink">{featured.investment}</div>
+                  <div className="text-2xl sm:text-3xl font-bold">{featured.investment}</div>
                   <div className="text-[11px] text-bg/50 mt-0.5">Investment</div>
                 </div>
                 <div className="text-right">
@@ -45,9 +45,9 @@ export default function Home() {
             </div>
             <div className="mt-6 flex items-center gap-3">
               <div className="flex-1 h-1 bg-white/20 rounded-full overflow-hidden">
-                <div className="h-full rounded-full" style={{ width: `${featured.progress}%`, background: featured.color }} />
+                <div className="h-full rounded-full bg-white" style={{ width: `${featured.progress}%` }} />
               </div>
-              <span className="text-sm font-bold" style={{ color: featured.color }}>{featured.progress}%</span>
+              <span className="text-sm font-bold text-white">{featured.progress}%</span>
             </div>
           </a>
         </section>

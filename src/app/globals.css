@@ -71,25 +71,14 @@ body {
   border-radius: 100px;
 }
 
-.badge-operational {
-  background: #e6f4ed;
-  color: var(--green);
-}
-.badge-expanding {
-  background: #e5f0ff;
-  color: var(--blue);
-}
-.badge-construction {
-  background: #fff3e6;
-  color: var(--amber);
-}
-.badge-planned {
-  background: #f3e8ff;
-  color: var(--purple);
-}
+.badge-operational,
+.badge-expanding,
+.badge-construction,
+.badge-planned,
 .badge-paused {
-  background: #ffe5e5;
-  color: var(--red);
+  background: var(--surface);
+  color: var(--dim);
+  border: 1px solid var(--border);
 }
 
 /* ── Leaflet overrides ── */

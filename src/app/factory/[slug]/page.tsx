@@ -70,12 +70,12 @@ export default async function FactoryPage({ params }: { params: Promise<{ slug: 
         </div>
         <div className="flex items-center gap-3">
           <span className={`badge badge-${factory.status}`}>{factory.status}</span>
-          <span className="text-3xl font-bold" style={{ color: factory.color }}>{factory.progress}%</span>
+          <span className="text-3xl font-bold">{factory.progress}%</span>
         </div>
       </div>
 
       <div className="mt-4 h-1.5 bg-surface rounded-full overflow-hidden">
-        <div className="h-full rounded-full" style={{ width: `${factory.progress}%`, background: factory.color }} />
+        <div className="h-full rounded-full bg-text" style={{ width: `${factory.progress}%` }} />
       </div>
 
       {/* Info Cards */}
@@ -101,13 +101,13 @@ export default async function FactoryPage({ params }: { params: Promise<{ slug: 
 
         <div className="bg-surface rounded-xl p-5">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-bold" style={{ color: factory.color }}>Milestones</h3>
+            <h3 className="font-bold">Milestones</h3>
             <span className="text-xs text-dim">{factory.milestones.filter((m) => m.done).length}/{factory.milestones.length}</span>
           </div>
           <div className="relative space-y-4 before:content-[''] before:absolute before:left-[5px] before:top-1 before:bottom-1 before:w-px before:bg-border-custom">
             {factory.milestones.map((m, i) => (
               <div key={i} className={`relative pl-6 ${!m.done ? "opacity-40" : ""}`}>
-                <div className="absolute left-0 top-1 w-3 h-3 rounded-full border-2" style={{ borderColor: m.done ? factory.color : "var(--dim)", background: m.done ? factory.color : "transparent" }} />
+                <div className="absolute left-0 top-1 w-3 h-3 rounded-full border-2" style={{ borderColor: m.done ? "var(--text)" : "var(--border)", background: m.done ? "var(--text)" : "transparent" }} />
                 <div className="text-xs text-dim">{m.date}</div>
                 <p className="text-sm">{m.text}</p>
               </div>
@@ -124,7 +124,7 @@ export default async function FactoryPage({ params }: { params: Promise<{ slug: 
             const isLatest = i === factory.timeline.length - 1;
             return (
               <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                <div className="w-full rounded-t" style={{ height: `${Math.max(4, val)}%`, background: isLatest ? factory.color : `${factory.color}30` }} title={`${TIMELINE_YEARS[i]}: ${val}%`} />
+                <div className="w-full rounded-t" style={{ height: `${Math.max(4, val)}%`, background: isLatest ? "var(--text)" : "var(--border)" }} title={`${TIMELINE_YEARS[i]}: ${val}%`} />
                 <span className={`text-xs ${isLatest ? "font-bold" : "text-dim"}`}>{String(TIMELINE_YEARS[i]).slice(-2)}</span>
               </div>
             );
