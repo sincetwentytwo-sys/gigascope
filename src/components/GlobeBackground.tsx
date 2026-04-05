@@ -83,25 +83,6 @@ export default function GlobeBackground() {
         ctx.stroke();
       }
 
-      // Region labels
-      const labels: [string, number, number][] = [
-        ["N. America", 45, -100],
-        ["S. America", -15, -55],
-        ["Europe", 50, 15],
-        ["Africa", 5, 20],
-        ["Asia", 45, 80],
-        ["Australia", -25, 135],
-      ];
-
-      ctx.font = "9px system-ui, sans-serif";
-      ctx.textAlign = "center";
-      for (const [name, lat, lng] of labels) {
-        const p = project(lat, lng, cx, cy, r, rotation.current);
-        if (p.z <= 0.3) continue;
-        ctx.fillStyle = `rgba(0,0,0,${0.18 * p.z})`;
-        ctx.fillText(name, p.x, p.y);
-      }
-
       // Factory dots + labels
       for (const f of factories) {
         const p = project(f.lat, f.lng, cx, cy, r, rotation.current);
