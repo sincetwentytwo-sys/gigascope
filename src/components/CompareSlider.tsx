@@ -120,25 +120,25 @@ export default function CompareSlider() {
           tabIndex={0}
         >
           <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-white/60" />
-          <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-8 h-8 border border-white/40 flex items-center justify-center bg-bg/80 backdrop-blur-sm cursor-ew-resize">
+          <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-8 h-8 border border-white/40 flex items-center justify-center bg-bg/90 cursor-ew-resize">
             <span className="text-white/60 text-xs font-mono">&harr;</span>
           </div>
         </div>
 
         {/* Source Labels */}
-        <div className="absolute top-3 left-3 z-[1000] bg-black/70 px-2.5 py-1.5 backdrop-blur-sm">
+        <div className="absolute top-3 left-3 z-[1000] bg-black/80 px-2.5 py-1.5">
           <span className="font-mono text-[10px] sm:text-xs text-white/80 font-medium">
             Sentinel-2 &middot; 2023
           </span>
         </div>
-        <div className="absolute top-3 right-3 z-[1000] bg-black/70 px-2.5 py-1.5 backdrop-blur-sm">
+        <div className="absolute top-3 right-3 z-[1000] bg-black/80 px-2.5 py-1.5">
           <span className="font-mono text-[10px] sm:text-xs text-white/80 font-medium">
             ESRI &middot; Latest
           </span>
         </div>
 
         {/* Bottom info strip */}
-        <div className="absolute bottom-0 left-0 right-0 z-[1000] bg-bg/80 backdrop-blur-sm border-t border-white/10 px-3 py-1.5 flex justify-between items-center font-mono text-[10px] text-dim">
+        <div className="absolute bottom-0 left-0 right-0 z-[1000] bg-bg/90 border-t border-white/10 px-3 py-1.5 flex justify-between items-center font-mono text-[10px] text-dim">
           <span>
             {selected.flag} {selected.name.replace("\u26a1 ", "")} &middot; {selected.location}
           </span>

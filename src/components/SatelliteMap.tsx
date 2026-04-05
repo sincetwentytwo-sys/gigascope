@@ -107,14 +107,14 @@ export default function SatelliteMap({
           </div>
         </div>
       )}
-      <div className="absolute top-3 right-3 z-[1000] flex flex-col gap-2">
+      <div className="absolute top-3 right-3 z-[1000] flex flex-col gap-1">
         <button
           onClick={cycleTile}
-          className="glass-card px-3 py-1.5 text-[0.65rem] font-mono text-text hover:border-accent-red/50 cursor-pointer transition-colors"
+          className="bg-bg/80 border border-white/10 px-2.5 py-1 text-[0.65rem] font-mono text-text cursor-pointer"
         >
           {tileSources[tileIdx].label}
         </button>
-        <div className="glass-card px-3 py-1.5 text-[0.55rem] font-mono text-dim">
+        <div className="bg-bg/80 border border-white/10 px-2.5 py-1 text-[0.55rem] font-mono text-dim">
           {tileSources[tileIdx].source}
         </div>
       </div>
