@@ -1,6 +1,7 @@
 import { factories, getTotalInvestment, DATA_LAST_UPDATED } from "@/data/factories";
 import FactoryCard from "@/components/FactoryCard";
 import NewsFeed from "@/components/NewsFeed";
+import GlobeBackground from "@/components/GlobeBackground";
 
 export const revalidate = 3600;
 
@@ -11,11 +12,12 @@ export default function Home() {
   return (
     <>
       {/* Hero — Tesla style, big and bold */}
-      <section className="text-center py-16 sm:py-24 px-6">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4">
+      <section className="relative text-center py-16 sm:py-24 px-6">
+        <GlobeBackground />
+        <h1 className="relative text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4">
           Tesla Factory Tracker
         </h1>
-        <p className="text-lg text-dim max-w-lg mx-auto">
+        <p className="relative text-lg text-dim max-w-lg mx-auto">
           {factories.length} factories &middot; {getTotalInvestment()} invested &middot; 4 countries
         </p>
       </section>
