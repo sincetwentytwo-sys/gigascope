@@ -20,6 +20,7 @@ export default function SatelliteMap({
   const leafletMap = useRef<L.Map | null>(null);
   const tileLayerRef = useRef<L.TileLayer | null>(null);
   const [tileIdx, setTileIdx] = useState(1); // start with satellite
+  const [tileError, setTileError] = useState(false);
 
   useEffect(() => {
     if (!mapRef.current || leafletMap.current) return;
@@ -44,7 +45,11 @@ export default function SatelliteMap({
 
       const tile = L.tileLayer(tileSources[1].url, {
         maxZoom: tileSources[1].maxZoom,
+        errorTileUrl: "",
       }).addTo(map);
+
+      tile.on("tileerror", () => setTileError(true));
+      tile.on("tileload", () => setTileError(false));
 
       // Factory marker
       const icon = L.divIcon({
@@ -89,6 +94,19 @@ export default function SatelliteMap({
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       />
       <div ref={mapRef} className="w-full h-full" />
+      {tileError && (
+        <div className="absolute inset-0 z-[999] flex items-center justify-center bg-bg/60 pointer-events-none">
+          <div className="text-center pointer-events-auto">
+            <p className="font-mono text-xs text-dim mb-2">Satellite tiles failed to load</p>
+            <button
+              onClick={cycleTile}
+              className="font-mono text-xs text-accent-cyan underline cursor-pointer"
+            >
+              Try another source
+            </button>
+          </div>
+        </div>
+      )}
       <div className="absolute top-3 right-3 z-[1000] flex flex-col gap-2">
         <button
           onClick={cycleTile}

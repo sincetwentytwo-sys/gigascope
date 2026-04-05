@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
   },
+  manifest: "/manifest.json",
   openGraph: {
     title: "GIGASCOPE",
     description:
@@ -38,8 +39,12 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-bg text-text">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:text-bg focus:px-4 focus:py-2 focus:text-sm focus:font-bold">
+          Skip to content
+        </a>
+
         {/* Navbar */}
-        <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border-custom bg-bg/90 backdrop-blur-md">
+        <nav aria-label="Main navigation" className="fixed top-0 left-0 right-0 z-50 border-b border-border-custom bg-bg/90 backdrop-blur-md">
           <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
             <a href="/" className="flex items-center gap-3 group">
               <svg width="24" height="24" viewBox="0 0 32 32" fill="none" className="flex-shrink-0">
@@ -63,7 +68,7 @@ export default function RootLayout({
         </nav>
 
         {/* Mobile bottom nav */}
-        <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-bg/90 backdrop-blur-md border-t border-border-custom flex justify-around py-3">
+        <nav aria-label="Mobile navigation" className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-bg/90 backdrop-blur-md border-t border-border-custom flex justify-around py-3">
           <a href="/" className="flex flex-col items-center gap-0.5 text-dim hover:text-text transition-colors">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
             <span className="text-[8px] font-mono uppercase">Home</span>
@@ -83,7 +88,7 @@ export default function RootLayout({
         </nav>
 
         {/* Main content */}
-        <main className="flex-1 relative pt-14">{children}</main>
+        <main id="main-content" className="flex-1 relative pt-14">{children}</main>
 
         {/* Footer */}
         <footer className="border-t border-border-custom py-6 px-4 pb-20 sm:pb-6">

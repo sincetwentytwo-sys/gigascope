@@ -62,7 +62,7 @@ export default function CompareSlider() {
   return (
     <div className="flex flex-col gap-5">
       {/* Factory Selector */}
-      <div className="flex gap-2 flex-wrap">
+      <div role="group" aria-label="Factory selector" className="flex gap-2 flex-wrap">
         {factories.map((f) => (
           <button
             key={f.id}
@@ -108,6 +108,16 @@ export default function CompareSlider() {
           }}
           onMouseDown={() => setDragging(true)}
           onTouchStart={() => setDragging(true)}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowLeft") setSliderPos((p) => Math.max(2, p - 2));
+            if (e.key === "ArrowRight") setSliderPos((p) => Math.min(98, p + 2));
+          }}
+          role="slider"
+          aria-label="Compare slider"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.round(sliderPos)}
+          tabIndex={0}
         >
           <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-white/60" />
           <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-8 h-8 border border-white/40 flex items-center justify-center bg-bg/80 backdrop-blur-sm cursor-ew-resize">
