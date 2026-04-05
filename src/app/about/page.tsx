@@ -81,8 +81,8 @@ export default function AboutPage() {
         <h2 className="text-lg font-bold mb-4">Built With</h2>
         <div className="flex flex-wrap gap-2">
           {[
-            "Next.js 16", "TypeScript", "Tailwind CSS", "globe.gl", "Leaflet",
-            "Google Stitch SDK", "Vercel", "ESRI", "Sentinel-2", "Three.js",
+            "Next.js 16", "TypeScript", "Tailwind CSS", "Leaflet",
+            "Vercel", "ESRI", "Sentinel-2",
           ].map((t) => (
             <span key={t} className="px-3 py-1.5 rounded-full text-xs font-mono glass-card">
               {t}

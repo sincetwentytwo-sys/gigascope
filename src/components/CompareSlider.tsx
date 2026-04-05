@@ -16,7 +16,6 @@ export default function CompareSlider() {
   const leftLayer = useRef<L.TileLayer | null>(null);
   const rightLayer = useRef<L.TileLayer | null>(null);
 
-  // Initialize map
   useEffect(() => {
     if (!mapRef.current || leafletMap.current) return;
 
@@ -30,9 +29,7 @@ export default function CompareSlider() {
         attributionControl: false,
       });
 
-      // Right layer (ESRI - full)
       const right = L.tileLayer(ESRI_URL, { maxZoom: 19 }).addTo(map);
-      // Left layer (Sentinel - full, will be clipped by CSS)
       const left = L.tileLayer(SENTINEL_URL, { maxZoom: 15 }).addTo(map);
 
       leafletMap.current = map;
@@ -41,14 +38,12 @@ export default function CompareSlider() {
     });
   }, []);
 
-  // Update map center when factory changes
   useEffect(() => {
     if (leafletMap.current) {
       leafletMap.current.flyTo([selected.lat, selected.lng], 14, { duration: 1 });
     }
   }, [selected]);
 
-  // Clip left layer based on slider position
   useEffect(() => {
     if (!leftLayer.current) return;
     const container = leftLayer.current.getContainer();
@@ -65,30 +60,34 @@ export default function CompareSlider() {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5">
       {/* Factory Selector */}
-      <div className="flex items-center gap-4 flex-wrap">
-        <span className="font-mono text-[9px] tracking-[0.2em] text-dim uppercase">SELECT TARGET</span>
-        <div className="flex gap-2 flex-wrap">
-          {factories.map((f) => (
-            <button
-              key={f.id}
-              onClick={() => setSelected(f)}
-              className={`px-3 py-1.5 text-xs font-mono rounded transition-all ${
-                selected.id === f.id
-                  ? "bg-accent-cyan/20 text-accent-cyan border border-accent-cyan/40"
-                  : "glass-card text-dim hover:text-text"
-              }`}
-            >
-              {f.flag} {f.name.replace("⚡ ", "")}
-            </button>
-          ))}
-        </div>
+      <div role="group" aria-label="Factory selector" className="flex gap-2 flex-wrap">
+        {factories.map((f) => (
+          <button
+            key={f.id}
+            onClick={() => setSelected(f)}
+            className={`px-3 py-1.5 text-xs font-mono transition-colors ${
+              selected.id === f.id
+                ? "bg-accent-cyan/15 text-accent-cyan border border-accent-cyan/30"
+                : "border border-white/8 text-dim hover:text-text hover:border-white/15"
+            }`}
+          >
+            {f.flag} {f.name.replace("\u26a1 ", "")}
+          </button>
+        ))}
       </div>
 
       {/* Compare Map */}
-      <div className="relative rounded-xl overflow-hidden border border-border-custom" style={{ height: "500px" }}>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+      <div
+        className="relative overflow-hidden border border-white/10"
+        style={{ height: "clamp(350px, calc(100vh - 280px), 700px)" }}
+      >
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        />
+
         <div
           ref={mapRef}
           className="w-full h-full"
@@ -99,48 +98,60 @@ export default function CompareSlider() {
           onTouchEnd={() => setDragging(false)}
         />
 
-        {/* Slider divider line */}
+        {/* Slider divider */}
         <div
           className="absolute top-0 bottom-0 z-[1000] cursor-col-resize"
-          style={{ left: `${sliderPos}%`, transform: "translateX(-50%)", width: "40px" }}
+          style={{
+            left: `${sliderPos}%`,
+            transform: "translateX(-50%)",
+            width: "40px",
+          }}
           onMouseDown={() => setDragging(true)}
           onTouchStart={() => setDragging(true)}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowLeft") setSliderPos((p) => Math.max(2, p - 2));
+            if (e.key === "ArrowRight") setSliderPos((p) => Math.min(98, p + 2));
+          }}
+          role="slider"
+          aria-label="Compare slider"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.round(sliderPos)}
+          tabIndex={0}
         >
-          {/* Glowing line */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[2px] bg-accent-cyan shadow-[0_0_10px_rgba(0,212,255,0.5)]" />
-          {/* Drag handle */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-surface/90 border-2 border-accent-cyan flex items-center justify-center shadow-[0_0_20px_rgba(0,212,255,0.3)] backdrop-blur-sm">
-            <span className="text-accent-cyan text-xs font-mono">⟨ ⟩</span>
+          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-white/60" />
+          <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-8 h-8 border border-white/40 flex items-center justify-center bg-bg/90 cursor-ew-resize">
+            <span className="text-white/60 text-xs font-mono">&harr;</span>
           </div>
         </div>
 
-        {/* Labels */}
-        <div className="absolute top-3 left-3 z-[1000] glass-card px-3 py-1.5">
-          <span className="font-mono text-[9px] text-accent-amber tracking-wider">SENTINEL-2 · 2023</span>
+        {/* Source Labels */}
+        <div className="absolute top-3 left-3 z-[1000] bg-black/80 px-2.5 py-1.5">
+          <span className="font-mono text-[10px] sm:text-xs text-white/80 font-medium">
+            Sentinel-2 &middot; 2023
+          </span>
         </div>
-        <div className="absolute top-3 right-3 z-[1000] glass-card px-3 py-1.5">
-          <span className="font-mono text-[9px] text-accent-cyan tracking-wider">ESRI · LATEST</span>
+        <div className="absolute top-3 right-3 z-[1000] bg-black/80 px-2.5 py-1.5">
+          <span className="font-mono text-[10px] sm:text-xs text-white/80 font-medium">
+            ESRI &middot; Latest
+          </span>
         </div>
 
         {/* Bottom info strip */}
-        <div className="absolute bottom-0 left-0 right-0 z-[1000] bg-surface/80 backdrop-blur-md border-t border-border-custom px-4 py-2 flex justify-between items-center">
-          <span className="font-mono text-[9px] text-dim">
-            {selected.flag} {selected.name.replace("⚡ ", "")} · {selected.location}
+        <div className="absolute bottom-0 left-0 right-0 z-[1000] bg-bg/90 border-t border-white/10 px-3 py-1.5 flex justify-between items-center font-mono text-[10px] text-dim">
+          <span>
+            {selected.flag} {selected.name.replace("\u26a1 ", "")} &middot; {selected.location}
           </span>
-          <span className="font-mono text-[9px] text-accent-cyan">
-            LAT {selected.lat.toFixed(4)}° · LON {selected.lng.toFixed(4)}°
+          <span className="hidden sm:inline">
+            {selected.lat.toFixed(4)}&deg;N, {selected.lng.toFixed(4)}&deg;W
           </span>
         </div>
       </div>
 
-      {/* Warning */}
-      <div className="glass-card px-4 py-3 flex items-center gap-3">
-        <span className="text-accent-amber text-sm">⚠</span>
-        <span className="font-mono text-[9px] text-dim">
-          Imagery is NOT real-time. Sentinel-2: annual cloudless composite (2023). ESRI: updated every ~3-6 months.
-          For live data, a Copernicus account is required.
-        </span>
-      </div>
+      {/* Disclaimer */}
+      <p className="font-mono text-[9px] text-dim">
+        Imagery is not real-time. Sentinel-2: annual cloudless composite (2023). ESRI: updated ~3-6 months.
+      </p>
     </div>
   );
 }

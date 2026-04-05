@@ -3,7 +3,6 @@
 :root {
   --bg: #0c0d12;
   --surface: #13151d;
-  --surface2: #1a1d28;
   --border: #252a38;
   --text: #f0f2f8;
   --dim: #6b7280;
@@ -14,14 +13,11 @@
   --purple: #9b5de5;
   --cyan: #00d4ff;
   --pink: #ff006e;
-  --card-bg: rgba(255, 255, 255, 0.06);
-  --card-border: rgba(255, 255, 255, 0.1);
 }
 
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
-  --color-surface2: var(--surface2);
   --color-border-custom: var(--border);
   --color-text: var(--text);
   --color-dim: var(--dim);
@@ -32,8 +28,8 @@
   --color-accent-purple: var(--purple);
   --color-accent-cyan: var(--cyan);
   --color-accent-pink: var(--pink);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", monospace;
 }
 
 * {
@@ -51,150 +47,26 @@ body {
   overflow-x: hidden;
 }
 
-/* ── Grid Overlay (Stitch-inspired) ── */
-.grid-overlay::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(to right, rgba(0, 212, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
-  background-size: 80px 80px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* ── Radial Glow Center ── */
-.radial-glow {
-  background: radial-gradient(circle at 50% 40%, rgba(0, 212, 255, 0.06) 0%, transparent 70%);
-}
-
-/* ── Aurora Blur Orbs ── */
-.aurora-orb {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(150px);
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.35;
-}
-
-.aurora-1 {
-  width: 500px;
-  height: 500px;
-  background: linear-gradient(135deg, var(--red), var(--pink));
-  top: -10%;
-  right: -5%;
-  animation: float-1 20s ease-in-out infinite;
-}
-
-.aurora-2 {
-  width: 400px;
-  height: 400px;
-  background: linear-gradient(135deg, var(--blue), var(--cyan));
-  bottom: -10%;
-  left: -5%;
-  animation: float-2 25s ease-in-out infinite;
-}
-
-.aurora-3 {
-  width: 350px;
-  height: 350px;
-  background: linear-gradient(135deg, var(--purple), var(--blue));
-  top: 40%;
-  left: 30%;
-  animation: float-3 22s ease-in-out infinite;
-}
-
-@keyframes float-1 {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(-30px, 40px) scale(1.1);
-  }
-  66% {
-    transform: translate(20px, -30px) scale(0.95);
-  }
-}
-
-@keyframes float-2 {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(40px, -20px) scale(1.05);
-  }
-  66% {
-    transform: translate(-30px, 30px) scale(0.9);
-  }
-}
-
-@keyframes float-3 {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(-50px, 20px) scale(1.1);
-  }
-}
-
-/* ── Glassmorphism Card ── */
+/* ── Card ── */
 .glass-card {
   background: rgba(19, 21, 29, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  backdrop-filter: blur(20px);
-  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  transition: border-color 0.2s;
 }
 
 .glass-card:hover {
-  border-color: rgba(0, 212, 255, 0.2);
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.03);
-}
-
-/* ── Gradient Text ── */
-.gradient-text {
-  background: linear-gradient(135deg, var(--text) 0%, var(--dim) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-text-accent {
-  background: linear-gradient(135deg, var(--red) 0%, var(--pink) 50%, var(--amber) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 /* ── Progress Bar ── */
 .progress-track {
   height: 4px;
   background: var(--border);
-  border-radius: 2px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  border-radius: 2px;
-  transition: width 1.2s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-/* ── Scroll Reveal ── */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* ── Status Badge ── */
@@ -202,7 +74,6 @@ body {
   font-size: 0.6rem;
   font-weight: 600;
   padding: 0.15rem 0.55rem;
-  border-radius: 10px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -228,29 +99,6 @@ body {
   color: var(--red);
 }
 
-/* ── Pulse animation ── */
-@keyframes pulse-ring {
-  0% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  100% {
-    transform: scale(2.5);
-    opacity: 0;
-  }
-}
-
-/* ── Globe.gl override ── */
-.globe-wrapper {
-  contain: strict;
-  isolation: isolate;
-}
-
-.globe-wrapper canvas {
-  position: absolute !important;
-  max-height: 100% !important;
-}
-
 /* ── Leaflet overrides ── */
 .leaflet-container {
   background: #08090c !important;
@@ -268,7 +116,6 @@ body {
 }
 ::-webkit-scrollbar-thumb {
   background: var(--border);
-  border-radius: 2px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
