@@ -5,7 +5,7 @@ const FEEDS = [
   { source: "Teslarati", url: "https://www.teslarati.com/feed/" },
 ];
 
-const KEYWORDS = [
+const GLOBAL_KEYWORDS = [
   "factory", "gigafactory", "giga", "terafab", "fremont",
   "shanghai", "berlin", "nevada", "mexico", "buffalo",
   "construction", "expansion", "production",
@@ -33,8 +33,7 @@ function parseRSS(xml: string, source: string): NewsItem[] {
     const link = block.match(/<link>(.*?)<\/link>/)?.[1] ?? "";
     const pubDate = block.match(/<pubDate>(.*?)<\/pubDate>/)?.[1] ?? "";
 
-    const lower = title.toLowerCase();
-    if (title && link && KEYWORDS.some((k) => lower.includes(k))) {
+    if (title && link) {
       items.push({
         title,
         link,
@@ -42,13 +41,12 @@ function parseRSS(xml: string, source: string): NewsItem[] {
         source,
       });
     }
-    if (items.length >= 5) break;
   }
 
   return items;
 }
 
-async function fetchNews(): Promise<NewsItem[]> {
+async function fetchAllNews(): Promise<NewsItem[]> {
   try {
     const results = await Promise.allSettled(
       FEEDS.map(async (feed) => {
@@ -61,27 +59,22 @@ async function fetchNews(): Promise<NewsItem[]> {
 
     return results
       .filter((r): r is PromiseFulfilledResult<NewsItem[]> => r.status === "fulfilled")
-      .flatMap((r) => r.value)
-      .slice(0, 8);
+      .flatMap((r) => r.value);
   } catch {
     return [];
   }
 }
 
-export default async function NewsFeed() {
-  const items = await fetchNews();
+function filterNews(items: NewsItem[], keywords: string[], limit: number): NewsItem[] {
+  return items
+    .filter((item) => {
+      const lower = item.title.toLowerCase();
+      return keywords.some((k) => lower.includes(k));
+    })
+    .slice(0, limit);
+}
 
-  if (items.length === 0) {
-    return (
-      <p className="font-mono text-[9px] text-dim">
-        No factory news available. See{" "}
-        <a href="https://electrek.co/guides/tesla/" target="_blank" rel="noopener noreferrer" className="underline">Electrek</a>
-        {" "}or{" "}
-        <a href="https://www.teslarati.com" target="_blank" rel="noopener noreferrer" className="underline">Teslarati</a>.
-      </p>
-    );
-  }
-
+function NewsItems({ items }: { items: NewsItem[] }) {
   return (
     <div className="flex flex-col">
       {items.map((item, i) => (
@@ -99,4 +92,39 @@ export default async function NewsFeed() {
       ))}
     </div>
   );
+}
+
+// Home page: global factory news
+export default async function NewsFeed() {
+  const allItems = await fetchAllNews();
+  const items = filterNews(allItems, GLOBAL_KEYWORDS, 8);
+
+  if (items.length === 0) {
+    return (
+      <p className="font-mono text-[9px] text-dim">
+        No factory news available. See{" "}
+        <a href="https://electrek.co/guides/tesla/" target="_blank" rel="noopener noreferrer" className="underline">Electrek</a>
+        {" "}or{" "}
+        <a href="https://www.teslarati.com" target="_blank" rel="noopener noreferrer" className="underline">Teslarati</a>.
+      </p>
+    );
+  }
+
+  return <NewsItems items={items} />;
+}
+
+// Factory-specific news
+export async function FactoryNewsFeed({ keywords }: { keywords: string[] }) {
+  const allItems = await fetchAllNews();
+  const items = filterNews(allItems, keywords, 5);
+
+  if (items.length === 0) {
+    return (
+      <p className="font-mono text-[9px] text-dim">
+        No recent news for this factory.
+      </p>
+    );
+  }
+
+  return <NewsItems items={items} />;
 }
