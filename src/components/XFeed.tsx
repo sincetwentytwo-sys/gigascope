@@ -1,90 +1,43 @@
-import { searchTweets, type XTweet } from "@/lib/x-api";
-
 interface XFeedProps {
   query: string;
   factoryName: string;
 }
 
-function TweetCard({ tweet }: { tweet: XTweet }) {
-  return (
-    <a
-      href={tweet.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="block border border-white/8 p-4 hover:border-white/15 transition-colors"
-    >
-      {/* Author */}
-      <div className="flex items-center gap-2.5 mb-2">
-        {tweet.authorAvatar && (
-          <img
-            src={tweet.authorAvatar}
-            alt=""
-            className="w-8 h-8 rounded-full"
-          />
-        )}
-        <div className="flex-1 min-w-0">
-          <div className="text-sm font-bold truncate">{tweet.authorName}</div>
-          <div className="text-[10px] text-dim font-mono">@{tweet.authorHandle} &middot; {tweet.date}</div>
-        </div>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-dim shrink-0">
-          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-        </svg>
-      </div>
-
-      {/* Text */}
-      <p className="text-xs text-dim leading-relaxed mb-2">{tweet.text}</p>
-
-      {/* Images */}
-      {tweet.images.length > 0 && (
-        <div className={`grid gap-1 mb-2 ${tweet.images.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}>
-          {tweet.images.slice(0, 4).map((img, i) => (
-            <img
-              key={i}
-              src={img}
-              alt=""
-              className="w-full h-32 object-cover border border-white/5"
-            />
-          ))}
-        </div>
-      )}
-
-      {/* Metrics */}
-      <div className="flex gap-4 text-[10px] text-dim font-mono">
-        <span>{tweet.retweets.toLocaleString()} RT</span>
-        <span>{tweet.likes.toLocaleString()} likes</span>
-      </div>
-    </a>
-  );
-}
-
-export default async function XFeed({ query, factoryName }: XFeedProps) {
-  const tweets = await searchTweets(query, 5);
+export default function XFeed({ query, factoryName }: XFeedProps) {
   const searchUrl = `https://x.com/search?q=${encodeURIComponent(query)}&src=typed_query&f=live`;
+  const photosUrl = `https://x.com/search?q=${encodeURIComponent(query)}&src=typed_query&f=image`;
 
   return (
-    <div className="flex flex-col gap-3">
-      {tweets.length > 0 ? (
-        <div className="flex flex-col gap-2">
-          {tweets.map((tweet) => (
-            <TweetCard key={tweet.id} tweet={tweet} />
-          ))}
-        </div>
-      ) : (
-        <p className="text-xs text-dim font-mono py-2">
-          No recent posts found. Check X directly.
-        </p>
-      )}
-
+    <div className="flex flex-col gap-2">
       <a
         href={searchUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 text-xs font-mono text-dim hover:text-text transition-colors border border-white/8 px-3 py-2 w-fit"
+        className="flex items-center gap-3 border border-white/8 p-3 hover:border-white/20 transition-colors group"
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="shrink-0">
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
         </svg>
-        More {factoryName} posts on X &rarr;
+        <div className="flex-1">
+          <div className="text-sm font-bold group-hover:text-white transition-colors">{factoryName} — Latest</div>
+          <div className="text-[10px] text-dim">Live posts and updates</div>
+        </div>
+        <span className="text-dim group-hover:text-white">&rarr;</span>
+      </a>
+      <a
+        href={photosUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-3 border border-white/8 p-3 hover:border-white/20 transition-colors group"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
+        </svg>
+        <div className="flex-1">
+          <div className="text-sm font-bold group-hover:text-white transition-colors">{factoryName} — Photos</div>
+          <div className="text-[10px] text-dim">Construction photos from the community</div>
+        </div>
+        <span className="text-dim group-hover:text-white">&rarr;</span>
       </a>
     </div>
   );
