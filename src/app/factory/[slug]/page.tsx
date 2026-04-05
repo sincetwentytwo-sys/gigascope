@@ -1,4 +1,5 @@
 import { factories, getFactory, TIMELINE_YEARS } from "@/data/factories";
+import { FACTORY_X_POSTS } from "@/data/x-posts";
 import SatelliteMapWrapper from "@/components/SatelliteMapWrapper";
 import { getESRIImageryDate } from "@/lib/satellite-date";
 import { FactoryNewsFeed } from "@/components/NewsFeed";
@@ -68,6 +69,7 @@ export default async function FactoryPage({
   const imageryDate = await getESRIImageryDate(factory.lat, factory.lng);
   const newsKeywords = FACTORY_KEYWORDS[factory.slug] ?? [factory.name.toLowerCase()];
   const xQuery = X_QUERIES[factory.slug] ?? `Tesla ${factory.name}`;
+  const xPosts = FACTORY_X_POSTS[factory.slug] ?? [];
 
   const infoCards = [
     { label: "AREA", value: factory.area },
@@ -170,7 +172,7 @@ export default async function FactoryPage({
         </div>
         <div className="border border-white/5 p-4">
           <h3 className="font-bold text-sm uppercase mb-3">Community</h3>
-          <XFeed query={xQuery} factoryName={factory.name.replace("\u26a1 ", "")} />
+          <XFeed query={xQuery} factoryName={factory.name.replace("\u26a1 ", "")} posts={xPosts} />
         </div>
       </div>
 
