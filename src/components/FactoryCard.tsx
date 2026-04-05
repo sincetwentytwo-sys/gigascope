@@ -33,19 +33,14 @@ const STATUS_STYLES: Record<
 
 export default function FactoryCard({ factory }: { factory: Factory }) {
   const status = STATUS_STYLES[factory.status];
-  const segments = 6;
-  const filledSegments = Math.round((factory.progress / 100) * segments);
 
   return (
     <a
       href={`/factory/${factory.slug}`}
-      className="group relative block overflow-hidden border border-white/5 bg-[#0f1117]/60 backdrop-blur-md p-5 transition-all duration-500 hover:border-accent-cyan/30 hover:shadow-[0_0_15px_rgba(0,212,255,0.1)]"
+      className="group block border border-white/5 bg-surface/80 p-5 transition-colors hover:border-white/15"
     >
-      {/* Corner accent */}
-      <div className="absolute top-0 right-0 w-14 h-14 -mr-7 -mt-7 rotate-45 bg-accent-cyan/5 group-hover:bg-accent-cyan/10 transition-all" />
-
       {factory.featured && (
-        <span className="absolute top-3 right-3 text-[0.55rem] font-bold px-2 py-0.5 bg-accent-pink text-white tracking-wider animate-pulse z-10">
+        <span className="float-right text-[0.55rem] font-bold px-2 py-0.5 bg-accent-pink text-white tracking-wider">
           NEW
         </span>
       )}
@@ -55,7 +50,7 @@ export default function FactoryCard({ factory }: { factory: Factory }) {
         <div className="flex gap-3 items-center">
           <span className="text-xl">{factory.flag}</span>
           <div>
-            <h3 className="text-sm font-bold tracking-wide group-hover:text-white transition-colors">
+            <h3 className="text-sm font-bold tracking-wide">
               {factory.name}
             </h3>
             <p className="font-mono text-[10px] text-dim">{factory.location}</p>
@@ -70,7 +65,7 @@ export default function FactoryCard({ factory }: { factory: Factory }) {
         </div>
       </div>
 
-      {/* Segmented Progress Bar */}
+      {/* Continuous Progress Bar */}
       <div className="mb-4">
         <div className="flex justify-between items-end mb-1.5">
           <span className="font-mono text-[9px] text-dim tracking-widest uppercase">
@@ -83,41 +78,30 @@ export default function FactoryCard({ factory }: { factory: Factory }) {
             {factory.progress}%
           </span>
         </div>
-        <div className="flex gap-1 h-1.5 w-full">
-          {Array.from({ length: segments }).map((_, i) => (
-            <div
-              key={i}
-              className="h-full flex-grow transition-all"
-              style={{
-                background:
-                  i < filledSegments ? factory.color : `${factory.color}20`,
-                boxShadow:
-                  i < filledSegments
-                    ? `0 0 8px ${factory.color}66`
-                    : "none",
-              }}
-            />
-          ))}
+        <div className="progress-track">
+          <div
+            className="progress-fill"
+            style={{
+              width: `${factory.progress}%`,
+              background: factory.color,
+            }}
+          />
         </div>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-3 gap-3 pt-3 border-t border-white/5">
         <div>
-          <div className="font-mono text-[9px] text-dim/60 uppercase">Area</div>
-          <div className="font-mono text-xs text-white/90">{factory.area}</div>
+          <div className="font-mono text-[9px] text-dim uppercase">Area</div>
+          <div className="font-mono text-xs">{factory.area}</div>
         </div>
         <div>
-          <div className="font-mono text-[9px] text-dim/60 uppercase">Cap</div>
-          <div className="font-mono text-xs text-white/90">
-            {factory.capacity}
-          </div>
+          <div className="font-mono text-[9px] text-dim uppercase">Cap</div>
+          <div className="font-mono text-xs">{factory.capacity}</div>
         </div>
         <div>
-          <div className="font-mono text-[9px] text-dim/60 uppercase">
-            Products
-          </div>
-          <div className="font-mono text-xs text-white/90 truncate">
+          <div className="font-mono text-[9px] text-dim uppercase">Product</div>
+          <div className="font-mono text-xs truncate">
             {factory.products.split(",")[0].trim()}
           </div>
         </div>

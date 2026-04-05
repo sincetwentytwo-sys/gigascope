@@ -82,7 +82,6 @@ export default async function FactoryPage({
             style={{
               width: `${factory.progress}%`,
               background: factory.color,
-              boxShadow: `0 0 8px ${factory.color}`,
             }}
           />
         </div>
@@ -145,10 +144,7 @@ export default async function FactoryPage({
                   {m.done && (
                     <div
                       className="w-1.5 h-1.5"
-                      style={{
-                        background: factory.color,
-                        boxShadow: `0 0 8px ${factory.color}`,
-                      }}
+                      style={{ background: factory.color }}
                     />
                   )}
                 </div>
@@ -189,9 +185,6 @@ export default async function FactoryPage({
                   style={{
                     height: `${Math.max(4, val)}%`,
                     background: isLatest ? factory.color : `${factory.color}30`,
-                    boxShadow: isLatest
-                      ? `0 0 15px ${factory.color}80`
-                      : "none",
                   }}
                   title={`${TIMELINE_YEARS[i]}: ${val}%`}
                 />

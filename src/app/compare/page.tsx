@@ -10,13 +10,12 @@ export const metadata: Metadata = {
 export default function ComparePage() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="mb-6 border-l-2 border-accent-cyan/30 pl-4">
-        <h1 className="text-2xl sm:text-3xl font-black tracking-tight uppercase">
+      <div className="mb-6">
+        <h1 className="text-2xl sm:text-3xl font-black mb-1">
           Satellite Compare
         </h1>
-        <p className="font-mono text-[10px] text-dim tracking-wider mt-1">
-          Drag the slider to compare SENTINEL-2 vs ESRI imagery at each factory
-          site.
+        <p className="text-sm text-dim">
+          Drag the slider to compare Sentinel-2 vs ESRI imagery at each factory.
         </p>
       </div>
 
