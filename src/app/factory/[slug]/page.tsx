@@ -119,16 +119,16 @@ export default async function FactoryPage({ params }: { params: Promise<{ slug: 
       {/* Timeline */}
       <div className="bg-white border border-border-custom rounded-xl p-5 mt-8">
         <h3 className="font-bold mb-4">Progress by Year</h3>
-        <div className="flex items-end justify-between h-40 gap-3">
+        <div className="flex items-end gap-3" style={{ height: 160 }}>
           {factory.timeline.map((val, i) => {
             const isLatest = i === factory.timeline.length - 1;
             const maxVal = Math.max(...factory.timeline, 1);
-            const heightPct = val === 0 ? 2 : Math.max(8, (val / maxVal) * 100);
+            const heightPx = val === 0 ? 4 : Math.max(12, (val / maxVal) * 140);
             return (
-              <div key={TIMELINE_YEARS[i]} className="flex-1 flex flex-col items-center gap-1">
-                <div className="text-[10px] text-dim">{val}%</div>
-                <div className="w-full rounded-t" style={{ height: `${heightPct}%`, background: isLatest ? "#1d1d1f" : "#c7c7cc" }} title={`${TIMELINE_YEARS[i]}: ${val}%`} />
-                <span className={`text-xs ${isLatest ? "font-bold" : "text-dim"}`}>{String(TIMELINE_YEARS[i]).slice(-2)}</span>
+              <div key={TIMELINE_YEARS[i]} className="flex-1 flex flex-col items-center justify-end h-full">
+                <div className="text-[10px] text-dim mb-1">{val}%</div>
+                <div className="w-full rounded-t" style={{ height: heightPx, background: isLatest ? "#1d1d1f" : "#c7c7cc" }} />
+                <span className={`text-xs mt-1 ${isLatest ? "font-bold" : "text-dim"}`}>{String(TIMELINE_YEARS[i]).slice(-2)}</span>
               </div>
             );
           })}
