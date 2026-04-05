@@ -1,0 +1,42 @@
+name: Factory Data Update
+description: Submit updated data for a factory (progress, milestones, etc.)
+title: "[Data Update] "
+labels: ["data-update"]
+body:
+  - type: dropdown
+    id: factory
+    attributes:
+      label: Factory
+      options:
+        - Terafab
+        - Gigafactory Texas
+        - Gigafactory Nevada
+        - Gigafactory Shanghai
+        - Gigafactory Berlin
+        - Gigafactory Mexico
+        - Fremont Factory
+        - Gigafactory New York
+    validations:
+      required: true
+  - type: input
+    id: progress
+    attributes:
+      label: Updated Progress (%)
+      placeholder: "e.g. 80"
+  - type: textarea
+    id: milestone
+    attributes:
+      label: New Milestone
+      placeholder: "e.g. Phase 3 foundation complete (March 2026)"
+  - type: input
+    id: source
+    attributes:
+      label: Source URL
+      placeholder: "Link to news article, tweet, or official announcement"
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional Notes
+      placeholder: "Any other details"

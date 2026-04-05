@@ -4,13 +4,25 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "GIGASCOPE — Tesla Factory Construction Tracker",
   description:
-    "Track Tesla Terafab and Gigafactory construction progress worldwide with satellite imagery comparison and milestones.",
+    "Track Tesla Terafab and 8 Gigafactory construction sites worldwide. Satellite imagery comparison, milestones, real-time news, and community updates.",
+  keywords: ["Tesla", "Gigafactory", "Terafab", "factory tracker", "satellite imagery", "construction", "Giga Texas", "Giga Berlin", "Giga Shanghai"],
   icons: { icon: "/favicon.svg" },
   manifest: "/manifest.json",
+  metadataBase: new URL("https://gigascope-ten.vercel.app"),
   openGraph: {
-    title: "GIGASCOPE",
-    description: "Tesla factory construction tracker — satellite imagery, milestones",
+    title: "GIGASCOPE — Tesla Factory Construction Tracker",
+    description: "Track Tesla's 8 factory construction sites with satellite imagery, milestones, and real-time community updates.",
     type: "website",
+    siteName: "GIGASCOPE",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GIGASCOPE — Tesla Factory Tracker",
+    description: "Track Tesla's 8 factory sites with satellite imagery and real-time updates.",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -21,6 +33,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: "GIGASCOPE",
+              description: "Tesla factory construction tracker with satellite imagery, milestones, and community updates.",
+              url: "https://gigascope-ten.vercel.app",
+              applicationCategory: "ReferenceApplication",
+              operatingSystem: "All",
+              author: {
+                "@type": "Organization",
+                name: "GIGASCOPE",
+              },
+            }),
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-bg text-text">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-text focus:text-bg focus:px-4 focus:py-2 focus:text-sm focus:font-bold">
           Skip to content
