@@ -11,14 +11,14 @@ export function generateStaticParams() {
 }
 
 const FACTORY_KEYWORDS: Record<string, string[]> = {
-  terafab: ["terafab", "chip fab", "ai5 chip"],
-  "giga-texas": ["giga texas", "gigafactory texas", "austin factory", "cybertruck production", "cybercab"],
-  "giga-nevada": ["giga nevada", "gigafactory nevada", "sparks factory", "battery cell", "semi production"],
-  "giga-shanghai": ["giga shanghai", "gigafactory shanghai", "tesla china", "shanghai factory"],
-  "giga-berlin": ["giga berlin", "gigafactory berlin", "grünheide", "grunheide", "tesla germany"],
-  "giga-mexico": ["giga mexico", "gigafactory mexico", "nuevo leon", "tesla mexico"],
-  fremont: ["fremont factory", "fremont plant", "tesla fremont"],
-  "giga-buffalo": ["gigafactory new york", "buffalo factory", "solar roof production", "supercharger production"],
+  terafab: ["terafab", "chip fab", "ai5 chip", "tera fab"],
+  "giga-texas": ["giga texas", "gigafactory texas", "austin factory", "cybertruck", "cybercab", "giga austin"],
+  "giga-nevada": ["giga nevada", "gigafactory nevada", "sparks factory", "4680 cell", "semi production", "tesla semi"],
+  "giga-shanghai": ["giga shanghai", "gigafactory shanghai", "tesla china", "shanghai factory", "tesla megapack china"],
+  "giga-berlin": ["giga berlin", "gigafactory berlin", "grünheide", "grunheide", "tesla germany", "tesla europe"],
+  "giga-mexico": ["giga mexico", "gigafactory mexico", "nuevo leon", "tesla mexico", "tesla affordable"],
+  fremont: ["fremont", "model s production", "model x production", "model 3 production", "model y production", "tesla california"],
+  "giga-buffalo": ["gigafactory new york", "buffalo factory", "solar roof", "supercharger production", "megapack"],
 };
 
 const X_QUERIES: Record<string, string> = {
@@ -122,9 +122,11 @@ export default async function FactoryPage({ params }: { params: Promise<{ slug: 
         <div className="flex items-end justify-between h-32 gap-3">
           {factory.timeline.map((val, i) => {
             const isLatest = i === factory.timeline.length - 1;
+            const maxVal = Math.max(...factory.timeline, 1);
+            const heightPct = Math.max(4, (val / maxVal) * 100);
             return (
-              <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                <div className="w-full rounded-t" style={{ height: `${Math.max(4, val)}%`, background: isLatest ? "var(--text)" : "var(--border)" }} title={`${TIMELINE_YEARS[i]}: ${val}%`} />
+              <div key={TIMELINE_YEARS[i]} className="flex-1 flex flex-col items-center gap-1">
+                <div className="w-full rounded-t" style={{ height: `${heightPct}%`, background: isLatest ? "var(--text)" : "var(--border)" }} title={`${TIMELINE_YEARS[i]}: ${val}%`} />
                 <span className={`text-xs ${isLatest ? "font-bold" : "text-dim"}`}>{String(TIMELINE_YEARS[i]).slice(-2)}</span>
               </div>
             );
