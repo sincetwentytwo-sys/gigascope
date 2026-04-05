@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { factories } from "@/data/factories";
 
-// Simplified continent outlines (lat, lng pairs)
 const CONTINENTS: [number, number][][] = [
   // North America
   [[-10,80],[-20,70],[-30,60],[-45,55],[-50,60],[-60,65],[-55,72],[-70,75],[-80,70],[-65,60],[-80,50],[-90,48],[-100,50],[-105,40],[-120,35],[-125,40],[-125,50],[-140,60],[-165,62],[-168,55],[-155,20],[-115,30],[-105,25],[-100,28],[-95,18],[-90,15],[-85,10],[-80,8],[-75,10],[-60,10],[-60,15],[-65,18],[-70,20],[-65,45],[-55,47],[-45,50],[-10,80]].map(([lng,lat]) => [lat,lng] as [number,number]),
@@ -22,10 +21,11 @@ const CONTINENTS: [number, number][][] = [
 function project(lat: number, lng: number, cx: number, cy: number, r: number, rot: number) {
   const lonRad = ((lng + rot) * Math.PI) / 180;
   const latRad = (lat * Math.PI) / 180;
-  const x = cx + r * Math.cos(latRad) * Math.sin(lonRad);
-  const y = cy - r * Math.sin(latRad);
-  const z = Math.cos(latRad) * Math.cos(lonRad);
-  return { x, y, z };
+  return {
+    x: cx + r * Math.cos(latRad) * Math.sin(lonRad),
+    y: cy - r * Math.sin(latRad),
+    z: Math.cos(latRad) * Math.cos(lonRad),
+  };
 }
 
 export default function GlobeBackground() {
@@ -53,43 +53,27 @@ export default function GlobeBackground() {
       // Globe circle
       ctx.beginPath();
       ctx.arc(cx, cy, r, 0, Math.PI * 2);
-      ctx.strokeStyle = "rgba(0,0,0,0.1)";
+      ctx.strokeStyle = "rgba(0,0,0,0.08)";
       ctx.lineWidth = 0.8;
       ctx.stroke();
 
-      // Latitude lines
-      for (const lat of [-60, -30, 0, 30, 60]) {
-        const lr = r * Math.cos((lat * Math.PI) / 180);
-        const ly = cy - r * Math.sin((lat * Math.PI) / 180);
-        ctx.beginPath();
-        ctx.ellipse(cx, ly, lr, lr * 0.3, 0, 0, Math.PI * 2);
-        ctx.strokeStyle = "rgba(0,0,0,0.04)";
-        ctx.lineWidth = 0.4;
-        ctx.stroke();
-      }
-
-      // Continents
+      // Continent outlines only — draw line segments where both points visible
+      ctx.strokeStyle = "rgba(0,0,0,0.13)";
+      ctx.lineWidth = 0.8;
       for (const continent of CONTINENTS) {
         ctx.beginPath();
-        let started = false;
-        let allHidden = true;
-        for (const [lat, lng] of continent) {
+        let penDown = false;
+        for (let i = 0; i < continent.length; i++) {
+          const [lat, lng] = continent[i];
           const p = project(lat, lng, cx, cy, r, rotation.current);
-          if (p.z > -0.1) {
-            allHidden = false;
-            if (!started) { ctx.moveTo(p.x, p.y); started = true; }
+          if (p.z > 0) {
+            if (!penDown) { ctx.moveTo(p.x, p.y); penDown = true; }
             else ctx.lineTo(p.x, p.y);
           } else {
-            started = false;
+            penDown = false;
           }
         }
-        if (!allHidden) {
-          ctx.fillStyle = "rgba(0,0,0,0.07)";
-          ctx.fill();
-          ctx.strokeStyle = "rgba(0,0,0,0.12)";
-          ctx.lineWidth = 0.6;
-          ctx.stroke();
-        }
+        ctx.stroke();
       }
 
       // Factory dots
@@ -97,8 +81,8 @@ export default function GlobeBackground() {
         const p = project(f.lat, f.lng, cx, cy, r, rotation.current);
         if (p.z <= 0) continue;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(0,0,0,0.35)";
+        ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(0,0,0,0.3)";
         ctx.fill();
       }
 
@@ -111,10 +95,7 @@ export default function GlobeBackground() {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center pointer-events-none" style={{ zIndex: -1 }}>
-      <canvas
-        ref={canvasRef}
-        style={{ width: 700, height: 700, pointerEvents: "none" }}
-      />
+      <canvas ref={canvasRef} style={{ width: 700, height: 700, pointerEvents: "none" }} />
     </div>
   );
 }
