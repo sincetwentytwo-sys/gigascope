@@ -17,7 +17,7 @@ export default function GlobeBackground() {
 
   return (
     <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-      <div className="w-[600px] h-[600px] sm:w-[700px] sm:h-[700px] opacity-[0.06]">
+      <div className="w-[600px] h-[600px] sm:w-[700px] sm:h-[700px] opacity-[0.12]">
         <svg
           viewBox="0 0 500 500"
           className="w-full h-full animate-[spin_120s_linear_infinite]"
