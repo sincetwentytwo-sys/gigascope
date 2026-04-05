@@ -67,6 +67,14 @@ export default function GlobeBackground() {
 
       // Continent outlines
       for (const coast of CONTINENTS) {
+        // Only fill if most points are visible (avoids weird fill at edges)
+        let visibleCount = 0;
+        const totalPts = coast.length;
+        for (const [lat, lng] of coast) {
+          const p = project(lat, lng, cx, cy, r, rotation.current);
+          if (p.z > 0) visibleCount++;
+        }
+
         ctx.beginPath();
         let penDown = false;
         for (const [lat, lng] of coast) {
@@ -77,6 +85,12 @@ export default function GlobeBackground() {
           } else {
             penDown = false;
           }
+        }
+
+        if (visibleCount > totalPts * 0.7) {
+          ctx.closePath();
+          ctx.fillStyle = "rgba(0,0,0,0.04)";
+          ctx.fill();
         }
         ctx.strokeStyle = "rgba(0,0,0,0.08)";
         ctx.lineWidth = 0.8;
