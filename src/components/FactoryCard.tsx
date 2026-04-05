@@ -37,71 +37,43 @@ export default function FactoryCard({ factory }: { factory: Factory }) {
   return (
     <a
       href={`/factory/${factory.slug}`}
-      className="group block border border-white/5 bg-surface/80 p-5 transition-colors hover:border-white/15"
+      className="group block border border-white/8 bg-surface p-5 hover:border-white/20 transition-colors"
     >
-      {factory.featured && (
-        <span className="float-right text-[0.55rem] font-bold px-2 py-0.5 bg-accent-pink text-white tracking-wider">
-          NEW
-        </span>
-      )}
-
-      {/* Header: Flag + Name + Status */}
-      <div className="flex justify-between items-start mb-4">
-        <div className="flex gap-3 items-center">
-          <span className="text-xl">{factory.flag}</span>
-          <div>
-            <h3 className="text-sm font-bold tracking-wide">
-              {factory.name}
-            </h3>
-            <p className="font-mono text-[10px] text-dim">{factory.location}</p>
-          </div>
-        </div>
+      {/* Top row: status + progress number (biggest visual element) */}
+      <div className="flex justify-between items-start mb-3">
         <div className={`${status.bg} ${status.border} border px-2 py-0.5`}>
-          <span
-            className={`font-mono text-[9px] font-bold tracking-widest uppercase ${status.text}`}
-          >
+          <span className={`font-mono text-[9px] font-bold tracking-widest uppercase ${status.text}`}>
             {factory.status}
           </span>
         </div>
+        <span className="font-mono text-2xl font-black" style={{ color: factory.color }}>
+          {factory.progress}%
+        </span>
       </div>
 
-      {/* Continuous Progress Bar */}
-      <div className="mb-4">
-        <div className="flex justify-between items-end mb-1.5">
-          <span className="font-mono text-[9px] text-dim tracking-widest uppercase">
-            PROGRESS
-          </span>
-          <span
-            className="font-mono text-xs font-bold"
-            style={{ color: factory.color }}
-          >
-            {factory.progress}%
-          </span>
-        </div>
-        <div className="progress-track">
-          <div
-            className="progress-fill"
-            style={{
-              width: `${factory.progress}%`,
-              background: factory.color,
-            }}
-          />
+      {/* Progress bar — thicker so it's actually visible */}
+      <div className="h-1.5 bg-white/5 mb-4">
+        <div className="h-full" style={{ width: `${factory.progress}%`, background: factory.color }} />
+      </div>
+
+      {/* Name + location */}
+      <div className="flex gap-2.5 items-center mb-3">
+        <span className="text-lg">{factory.flag}</span>
+        <div>
+          <h3 className="text-sm font-bold">{factory.name}</h3>
+          <p className="font-mono text-[10px] text-dim">{factory.location}</p>
         </div>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-3 gap-3 pt-3 border-t border-white/5">
+      {/* Key stats */}
+      <div className="grid grid-cols-2 gap-2 pt-3 border-t border-white/5 font-mono text-[10px]">
         <div>
-          <div className="font-mono text-[9px] text-dim uppercase">Area</div>
-          <div className="font-mono text-xs">{factory.area}</div>
+          <span className="text-dim">Area </span>
+          <span>{factory.area}</span>
         </div>
         <div>
-          <div className="font-mono text-[9px] text-dim uppercase">Cap</div>
-          <div className="font-mono text-xs">{factory.capacity}</div>
-        </div>
-        <div>
-          <div className="font-mono text-[9px] text-dim uppercase">Updated</div>
-          <div className="font-mono text-xs">{factory.lastUpdated}</div>
+          <span className="text-dim">Cap </span>
+          <span>{factory.capacity}</span>
         </div>
       </div>
     </a>

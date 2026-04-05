@@ -25,7 +25,7 @@ export default function Home() {
         <section className="max-w-7xl mx-auto px-4 pb-6">
           <a
             href={`/factory/${featured.slug}`}
-            className="block border border-accent-pink/20 bg-accent-pink/[0.03] p-5 sm:p-6 group"
+            className="block border-2 border-accent-pink/40 bg-accent-pink/[0.04] p-5 sm:p-6 group hover:border-accent-pink/60 transition-colors"
           >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
