@@ -99,6 +99,15 @@ body {
   color: var(--red);
 }
 
+/* ── react-tweet dark theme ── */
+[data-theme="light"] .react-tweet-theme {
+  --tweet-bg-color: var(--surface) !important;
+  --tweet-border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  --tweet-font-color: var(--text) !important;
+  --tweet-font-color-secondary: var(--dim) !important;
+  --tweet-actions-icon-color: var(--dim) !important;
+}
+
 /* ── Leaflet overrides ── */
 .leaflet-container {
   background: #08090c !important;

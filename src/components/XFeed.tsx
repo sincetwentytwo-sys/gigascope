@@ -1,100 +1,16 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-
-declare global {
-  interface Window {
-    twttr?: {
-      widgets: {
-        createTweet: (
-          id: string,
-          el: HTMLElement,
-          options?: Record<string, string>
-        ) => Promise<HTMLElement>;
-      };
-    };
-  }
-}
-
-function getTweetId(url: string): string | null {
-  const match = url.match(/status\/(\d+)/);
-  return match ? match[1] : null;
-}
-
-function loadWidgetsJs(): Promise<void> {
-  return new Promise((resolve) => {
-    if (window.twttr) {
-      resolve();
-      return;
-    }
-    if (!document.getElementById("twitter-wjs")) {
-      const script = document.createElement("script");
-      script.id = "twitter-wjs";
-      script.src = "https://platform.twitter.com/widgets.js";
-      script.async = true;
-      script.onload = () => {
-        const check = setInterval(() => {
-          if (window.twttr) {
-            clearInterval(check);
-            resolve();
-          }
-        }, 100);
-      };
-      document.head.appendChild(script);
-    } else {
-      const check = setInterval(() => {
-        if (window.twttr) {
-          clearInterval(check);
-          resolve();
-        }
-      }, 100);
-    }
-  });
-}
-
-function TweetEmbed({ url }: { url: string }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [failed, setFailed] = useState(false);
-
-  useEffect(() => {
-    const id = getTweetId(url);
-    if (!id || !containerRef.current) return;
-
-    const el = containerRef.current;
-    el.innerHTML = "";
-
-    loadWidgetsJs().then(() => {
-      if (!window.twttr) return;
-      window.twttr.widgets
-        .createTweet(id, el, { theme: "dark", dnt: "true", width: "500" })
-        .then((result) => {
-          if (!result) setFailed(true);
-        })
-        .catch(() => setFailed(true));
-    });
-  }, [url]);
-
-  if (failed) {
-    return (
-      <a
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block border border-white/10 p-3 text-xs text-dim hover:text-text font-mono"
-      >
-        View post on X &rarr;
-      </a>
-    );
-  }
-
-  return <div ref={containerRef} className="min-h-[100px]" />;
-}
+import { Suspense } from "react";
+import { Tweet } from "react-tweet";
 
 export interface XPostData {
   url: string;
   author: string;
   summary: string;
   date: string;
+}
+
+function getTweetId(url: string): string | null {
+  const match = url.match(/status\/(\d+)/);
+  return match ? match[1] : null;
 }
 
 interface XFeedProps {
@@ -107,13 +23,26 @@ export default function XFeed({ query, factoryName, posts }: XFeedProps) {
   const searchUrl = `https://x.com/search?q=${encodeURIComponent(query)}&src=typed_query&f=live`;
 
   return (
-    <div className="flex flex-col gap-4">
-      {/* Embedded tweets */}
+    <div className="flex flex-col gap-3">
+      {/* Embedded tweets via react-tweet (server rendered, no widgets.js) */}
       {posts && posts.length > 0 && (
-        <div className="flex flex-col gap-2 max-h-[600px] overflow-y-auto">
-          {posts.map((post, i) => (
-            <TweetEmbed key={i} url={post.url} />
-          ))}
+        <div className="flex flex-col gap-3 max-h-[700px] overflow-y-auto [&_.react-tweet-theme]:!m-0 [&_.react-tweet-theme]:!max-w-full">
+          {posts.map((post, i) => {
+            const id = getTweetId(post.url);
+            if (!id) return null;
+            return (
+              <Suspense
+                key={i}
+                fallback={
+                  <div className="border border-white/10 p-3 text-xs text-dim font-mono animate-pulse">
+                    Loading tweet...
+                  </div>
+                }
+              >
+                <Tweet id={id} />
+              </Suspense>
+            );
+          })}
         </div>
       )}
 
