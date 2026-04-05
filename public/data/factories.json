@@ -1,15 +1,7 @@
 {
   "lastUpdated": "2026-04-05",
   "totalInvestment": "$56B+",
-  "timelineYears": [
-    2020,
-    2021,
-    2022,
-    2023,
-    2024,
-    2025,
-    2026
-  ],
+  "timelineYears": [2020, 2021, 2022, 2023, 2024, 2025, 2026],
   "factories": [
     {
       "id": "terafab",
@@ -21,51 +13,23 @@
       "lat": 30.228,
       "lng": -97.612,
       "status": "construction",
-      "progress": 5,
-      "area": "TBD",
+      "progress": 2,
+      "area": "Est. 10M+ sqft",
       "capacity": "1 TW compute/yr",
       "products": "AI5 chip, 2nm process, Memory, Packaging",
       "investment": "$20-25B",
-      "employees": "TBD",
-      "color": "#ff006e",
+      "employees": "Est. 10,000+",
+      "color": "#1d1d1f",
       "featured": true,
-      "lastUpdated": "2026-03-21",
+      "lastUpdated": "2026-04-05",
       "milestones": [
-        {
-          "date": "2026-03-21",
-          "text": "Musk announces Terafab launch",
-          "done": true
-        },
-        {
-          "date": "2026-Q2",
-          "text": "Pilot fab site prep begins",
-          "done": false
-        },
-        {
-          "date": "2026-H2",
-          "text": "AI5 small-batch production",
-          "done": false
-        },
-        {
-          "date": "2027",
-          "text": "Volume production target",
-          "done": false
-        },
-        {
-          "date": "TBD",
-          "text": "Full-scale Terafab (new site)",
-          "done": false
-        }
+        {"date": "2026-03-21", "text": "Musk announces Terafab launch", "done": true},
+        {"date": "2026-04", "text": "Site selection & environmental review", "done": false},
+        {"date": "2026-Q3", "text": "Pilot fab site prep begins", "done": false},
+        {"date": "2026-H2", "text": "AI5 small-batch production", "done": false},
+        {"date": "2027", "text": "Volume production target", "done": false}
       ],
-      "timeline": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        5
-      ]
+      "timeline": [0, 0, 0, 0, 0, 0, 2]
     },
     {
       "id": "giga-texas",
@@ -83,49 +47,18 @@
       "products": "Model Y, Cybertruck, Cybercab",
       "investment": "$10B+",
       "employees": "20,000+",
-      "color": "#3a86ff",
-      "lastUpdated": "2026-03-15",
+      "color": "#1d1d1f",
+      "lastUpdated": "2026-04-05",
       "milestones": [
-        {
-          "date": "2020-07",
-          "text": "Site clearing began",
-          "done": true
-        },
-        {
-          "date": "2021-04",
-          "text": "Main structure complete",
-          "done": true
-        },
-        {
-          "date": "2022-04",
-          "text": "First deliveries (Model Y)",
-          "done": true
-        },
-        {
-          "date": "2023-11",
-          "text": "Cybertruck production start",
-          "done": true
-        },
-        {
-          "date": "2025-06",
-          "text": "Cybercab pilot line",
-          "done": true
-        },
-        {
-          "date": "2026-H2",
-          "text": "Phase 3 expansion complete",
-          "done": false
-        }
+        {"date": "2020-07", "text": "Site clearing began", "done": true},
+        {"date": "2021-04", "text": "Main structure complete", "done": true},
+        {"date": "2022-04", "text": "First deliveries (Model Y)", "done": true},
+        {"date": "2023-11", "text": "Cybertruck production start", "done": true},
+        {"date": "2025-06", "text": "Cybercab pilot line", "done": true},
+        {"date": "2026-03", "text": "Massive expansion plans filed", "done": true},
+        {"date": "2026-H2", "text": "Phase 3 expansion complete", "done": false}
       ],
-      "timeline": [
-        10,
-        25,
-        40,
-        55,
-        65,
-        72,
-        78
-      ]
+      "timeline": [10, 25, 40, 55, 65, 72, 78]
     },
     {
       "id": "giga-nevada",
@@ -143,49 +76,18 @@
       "products": "Battery Cells, Powerpacks, Semi",
       "investment": "$6.2B",
       "employees": "11,000+",
-      "color": "#2ec4b6",
-      "lastUpdated": "2026-02-28",
+      "color": "#1d1d1f",
+      "lastUpdated": "2026-04-05",
       "milestones": [
-        {
-          "date": "2014-06",
-          "text": "Groundbreaking",
-          "done": true
-        },
-        {
-          "date": "2016-07",
-          "text": "Grand opening",
-          "done": true
-        },
-        {
-          "date": "2017-01",
-          "text": "2170 cell production",
-          "done": true
-        },
-        {
-          "date": "2023-01",
-          "text": "$3.6B expansion announced",
-          "done": true
-        },
-        {
-          "date": "2024-12",
-          "text": "Semi production ramp",
-          "done": true
-        },
-        {
-          "date": "2026-Q4",
-          "text": "4680 cell mass production",
-          "done": false
-        }
+        {"date": "2014-06", "text": "Groundbreaking", "done": true},
+        {"date": "2016-07", "text": "Grand opening", "done": true},
+        {"date": "2017-01", "text": "2170 cell production", "done": true},
+        {"date": "2023-01", "text": "$3.6B expansion announced", "done": true},
+        {"date": "2024-12", "text": "Semi production ramp", "done": true},
+        {"date": "2025-Q3", "text": "4680 pilot line operational", "done": true},
+        {"date": "2026-Q4", "text": "4680 cell mass production", "done": false}
       ],
-      "timeline": [
-        20,
-        30,
-        35,
-        40,
-        45,
-        55,
-        65
-      ]
+      "timeline": [20, 30, 35, 40, 45, 55, 65]
     },
     {
       "id": "giga-shanghai",
@@ -203,49 +105,18 @@
       "products": "Model 3, Model Y, Megapack",
       "investment": "$7B+",
       "employees": "20,000+",
-      "color": "#e63946",
-      "lastUpdated": "2026-03-10",
+      "color": "#1d1d1f",
+      "lastUpdated": "2026-04-05",
       "milestones": [
-        {
-          "date": "2019-01",
-          "text": "Groundbreaking",
-          "done": true
-        },
-        {
-          "date": "2019-12",
-          "text": "First deliveries",
-          "done": true
-        },
-        {
-          "date": "2021-10",
-          "text": "Export hub established",
-          "done": true
-        },
-        {
-          "date": "2024-05",
-          "text": "Megafactory ground broken",
-          "done": true
-        },
-        {
-          "date": "2025-01",
-          "text": "Megafactory complete (7mo!)",
-          "done": true
-        },
-        {
-          "date": "2026-Q2",
-          "text": "Refreshed Model Y ramp",
-          "done": false
-        }
+        {"date": "2019-01", "text": "Groundbreaking", "done": true},
+        {"date": "2019-12", "text": "First deliveries", "done": true},
+        {"date": "2021-10", "text": "Export hub established", "done": true},
+        {"date": "2024-05", "text": "Megafactory ground broken", "done": true},
+        {"date": "2025-01", "text": "Megafactory complete (7mo)", "done": true},
+        {"date": "2025-12", "text": "Megapack production ramp", "done": true},
+        {"date": "2026-Q2", "text": "Refreshed Model Y ramp", "done": false}
       ],
-      "timeline": [
-        15,
-        60,
-        80,
-        85,
-        88,
-        92,
-        95
-      ]
+      "timeline": [15, 60, 80, 85, 88, 92, 95]
     },
     {
       "id": "giga-berlin",
@@ -263,49 +134,18 @@
       "products": "Model Y, Battery Cells",
       "investment": "$5.8B",
       "employees": "12,500+",
-      "color": "#f4a261",
-      "lastUpdated": "2026-03-01",
+      "color": "#1d1d1f",
+      "lastUpdated": "2026-04-05",
       "milestones": [
-        {
-          "date": "2020-01",
-          "text": "Construction began",
-          "done": true
-        },
-        {
-          "date": "2022-03",
-          "text": "First deliveries",
-          "done": true
-        },
-        {
-          "date": "2023-11",
-          "text": "5K/week milestone",
-          "done": true
-        },
-        {
-          "date": "2024-03",
-          "text": "Arson attack / recovery",
-          "done": true
-        },
-        {
-          "date": "2025-06",
-          "text": "Expansion approved",
-          "done": true
-        },
-        {
-          "date": "2027-H1",
-          "text": "Phase 2 complete",
-          "done": false
-        }
+        {"date": "2020-01", "text": "Construction began", "done": true},
+        {"date": "2022-03", "text": "First deliveries", "done": true},
+        {"date": "2023-11", "text": "5K/week milestone", "done": true},
+        {"date": "2024-03", "text": "Arson attack / recovery", "done": true},
+        {"date": "2025-06", "text": "Expansion approved", "done": true},
+        {"date": "2025-12", "text": "Phase 2 construction started", "done": true},
+        {"date": "2027-H1", "text": "Phase 2 complete", "done": false}
       ],
-      "timeline": [
-        10,
-        30,
-        55,
-        65,
-        72,
-        78,
-        82
-      ]
+      "timeline": [10, 30, 55, 65, 72, 78, 82]
     },
     {
       "id": "giga-mexico",
@@ -322,45 +162,18 @@
       "capacity": "1M+ (planned)",
       "products": "Next-gen affordable EV",
       "investment": "$5B (est)",
-      "employees": "TBD",
-      "color": "#9b5de5",
-      "lastUpdated": "2026-02-15",
+      "employees": "Est. 5,000+",
+      "color": "#1d1d1f",
+      "lastUpdated": "2026-04-05",
       "milestones": [
-        {
-          "date": "2023-03",
-          "text": "Location announced",
-          "done": true
-        },
-        {
-          "date": "2024-06",
-          "text": "Permits approved",
-          "done": true
-        },
-        {
-          "date": "2025-03",
-          "text": "Site prep & grading",
-          "done": true
-        },
-        {
-          "date": "2025-09",
-          "text": "Foundation work begins",
-          "done": true
-        },
-        {
-          "date": "2027-H1",
-          "text": "Production start (target)",
-          "done": false
-        }
+        {"date": "2023-03", "text": "Location announced", "done": true},
+        {"date": "2024-06", "text": "Permits approved", "done": true},
+        {"date": "2025-03", "text": "Site prep & grading", "done": true},
+        {"date": "2025-09", "text": "Foundation work begins", "done": true},
+        {"date": "2026-01", "text": "Structural steel phase", "done": true},
+        {"date": "2027-H1", "text": "Production start (target)", "done": false}
       ],
-      "timeline": [
-        0,
-        0,
-        5,
-        10,
-        15,
-        20,
-        25
-      ]
+      "timeline": [0, 0, 5, 10, 15, 20, 25]
     },
     {
       "id": "fremont",
@@ -378,44 +191,17 @@
       "products": "Model S, Model X, Model 3, Model Y",
       "investment": "$2B+",
       "employees": "22,000",
-      "color": "#00d4ff",
-      "lastUpdated": "2026-01-20",
+      "color": "#1d1d1f",
+      "lastUpdated": "2026-04-05",
       "milestones": [
-        {
-          "date": "2010-05",
-          "text": "Tesla acquires NUMMI plant",
-          "done": true
-        },
-        {
-          "date": "2012-06",
-          "text": "First Model S delivered",
-          "done": true
-        },
-        {
-          "date": "2017-07",
-          "text": "Model 3 production begins",
-          "done": true
-        },
-        {
-          "date": "2020-01",
-          "text": "Model Y production",
-          "done": true
-        },
-        {
-          "date": "2024-10",
-          "text": "Refreshed Model 3 US prod",
-          "done": true
-        }
+        {"date": "2010-05", "text": "Tesla acquires NUMMI plant", "done": true},
+        {"date": "2012-06", "text": "First Model S delivered", "done": true},
+        {"date": "2017-07", "text": "Model 3 production begins", "done": true},
+        {"date": "2020-01", "text": "Model Y production", "done": true},
+        {"date": "2024-10", "text": "Refreshed Model 3 US prod", "done": true},
+        {"date": "2025-06", "text": "Model S/X end of production", "done": true}
       ],
-      "timeline": [
-        50,
-        60,
-        70,
-        80,
-        90,
-        95,
-        100
-      ]
+      "timeline": [50, 60, 70, 80, 90, 95, 100]
     },
     {
       "id": "giga-buffalo",
@@ -429,43 +215,20 @@
       "status": "operational",
       "progress": 90,
       "area": "1.2M sqft",
-      "capacity": "N/A",
+      "capacity": "10K Solar Roof/yr",
       "products": "Solar Roof, Supercharger, Megapack",
       "investment": "$959M",
       "employees": "1,500+",
-      "color": "#ff006e",
-      "lastUpdated": "2026-02-01",
+      "color": "#1d1d1f",
+      "lastUpdated": "2026-04-05",
       "milestones": [
-        {
-          "date": "2017-08",
-          "text": "Production began",
-          "done": true
-        },
-        {
-          "date": "2019-10",
-          "text": "Solar Roof v3",
-          "done": true
-        },
-        {
-          "date": "2023-05",
-          "text": "Megapack components",
-          "done": true
-        },
-        {
-          "date": "2025-03",
-          "text": "Supercharger V4 prod",
-          "done": true
-        }
+        {"date": "2017-08", "text": "Production began", "done": true},
+        {"date": "2019-10", "text": "Solar Roof v3", "done": true},
+        {"date": "2023-05", "text": "Megapack components", "done": true},
+        {"date": "2025-03", "text": "Supercharger V4 prod", "done": true},
+        {"date": "2025-10", "text": "Solar Roof v4 line install", "done": true}
       ],
-      "timeline": [
-        30,
-        50,
-        60,
-        70,
-        80,
-        85,
-        90
-      ]
+      "timeline": [30, 50, 60, 70, 80, 85, 90]
     }
   ]
 }

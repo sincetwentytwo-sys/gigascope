@@ -23,13 +23,13 @@ const FACTORY_KEYWORDS: Record<string, string[]> = {
 
 const X_QUERIES: Record<string, string> = {
   terafab: "Tesla Terafab OR \"chip fab\" OR AI5",
-  "giga-texas": "Giga Texas OR \"Gigafactory Texas\" OR Cybertruck factory",
-  "giga-nevada": "Giga Nevada OR \"Gigafactory Nevada\" OR Tesla Semi factory",
-  "giga-shanghai": "Giga Shanghai OR Tesla Shanghai factory",
-  "giga-berlin": "Giga Berlin OR Tesla Grünheide factory",
-  "giga-mexico": "Giga Mexico OR Tesla Monterrey factory",
-  fremont: "Tesla Fremont factory",
-  "giga-buffalo": "Tesla Buffalo factory OR Gigafactory New York",
+  "giga-texas": "Giga Texas OR \"Gigafactory Texas\" OR Cybertruck OR Cybercab",
+  "giga-nevada": "Giga Nevada OR \"Gigafactory Nevada\" OR \"Tesla Semi\" OR 4680",
+  "giga-shanghai": "Giga Shanghai OR Tesla Shanghai OR Megafactory",
+  "giga-berlin": "Giga Berlin OR Tesla Grünheide OR \"Tesla Germany\"",
+  "giga-mexico": "Giga Mexico OR \"Tesla Nuevo Leon\" OR \"Tesla Santa Catarina\"",
+  fremont: "Tesla Fremont factory OR \"Fremont production\"",
+  "giga-buffalo": "Tesla Buffalo OR \"Gigafactory New York\" OR \"Solar Roof production\"",
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
