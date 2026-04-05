@@ -123,10 +123,11 @@ export default async function FactoryPage({ params }: { params: Promise<{ slug: 
           {factory.timeline.map((val, i) => {
             const isLatest = i === factory.timeline.length - 1;
             const maxVal = Math.max(...factory.timeline, 1);
-            const heightPct = Math.max(4, (val / maxVal) * 100);
+            const heightPct = val === 0 ? 2 : Math.max(8, (val / maxVal) * 100);
             return (
               <div key={TIMELINE_YEARS[i]} className="flex-1 flex flex-col items-center gap-1">
-                <div className="w-full rounded-t" style={{ height: `${heightPct}%`, background: isLatest ? "var(--text)" : "var(--border)" }} title={`${TIMELINE_YEARS[i]}: ${val}%`} />
+                <div className="text-[10px] text-dim">{val}%</div>
+                <div className="w-full rounded-t" style={{ height: `${heightPct}%`, background: isLatest ? "var(--text)" : "#d1d1d6" }} title={`${TIMELINE_YEARS[i]}: ${val}%`} />
                 <span className={`text-xs ${isLatest ? "font-bold" : "text-dim"}`}>{String(TIMELINE_YEARS[i]).slice(-2)}</span>
               </div>
             );

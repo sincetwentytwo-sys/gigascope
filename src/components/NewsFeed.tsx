@@ -83,7 +83,7 @@ function NewsItems({ items }: { items: NewsItem[] }) {
           href={item.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-baseline gap-3 py-2 border-b border-white/5 last:border-0 hover:bg-white/[0.02] -mx-2 px-2"
+          className="flex items-baseline gap-3 py-2.5 border-b border-border-custom last:border-0 hover:bg-surface -mx-2 px-2 rounded"
         >
           <span className="font-mono text-[9px] text-dim shrink-0 w-14">{item.date}</span>
           <span className="text-xs text-dim hover:text-text transition-colors leading-snug flex-1">{item.title}</span>
@@ -113,15 +113,20 @@ export default async function NewsFeed() {
   return <NewsItems items={items} />;
 }
 
-// Factory-specific news
+// Factory-specific news (falls back to general Tesla news)
 export async function FactoryNewsFeed({ keywords }: { keywords: string[] }) {
   const allItems = await fetchAllNews();
-  const items = filterNews(allItems, keywords, 5);
+  let items = filterNews(allItems, keywords, 5);
+
+  if (items.length === 0) {
+    // Fallback: show general Tesla factory news
+    items = filterNews(allItems, GLOBAL_KEYWORDS, 5);
+  }
 
   if (items.length === 0) {
     return (
-      <p className="font-mono text-[9px] text-dim">
-        No recent news for this factory.
+      <p className="text-sm text-dim">
+        No recent news available.
       </p>
     );
   }
