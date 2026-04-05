@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "GIGASCOPE — Tesla Factory Construction Tracker",
   description:
     "Track Tesla Terafab and Gigafactory construction progress worldwide with satellite imagery comparison and milestones.",
+  icons: {
+    icon: "/favicon.svg",
+  },
   openGraph: {
     title: "GIGASCOPE",
     description:
