@@ -82,7 +82,7 @@ export default function OGImage() {
             color: "#6b7280",
           }}
         >
-          Satellite imagery + milestones — gigascope-ten.vercel.app
+          Satellite imagery + milestones — gigascope.xyz
         </div>
       </div>
     ),

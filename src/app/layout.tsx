@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   keywords: ["Tesla", "Gigafactory", "Terafab", "factory tracker", "satellite imagery", "construction", "Giga Texas", "Giga Berlin", "Giga Shanghai"],
   icons: { icon: "/favicon.svg" },
   manifest: "/manifest.json",
-  metadataBase: new URL("https://gigascope-ten.vercel.app"),
+  metadataBase: new URL("https://gigascope.xyz"),
   openGraph: {
     title: "GIGASCOPE — Tesla Factory Construction Tracker",
     description: "Track Tesla's 8 factory construction sites with satellite imagery, milestones, and real-time community updates.",
@@ -42,7 +42,7 @@ export default function RootLayout({
               "@type": "WebApplication",
               name: "GIGASCOPE",
               description: "Tesla factory construction tracker with satellite imagery, milestones, and community updates.",
-              url: "https://gigascope-ten.vercel.app",
+              url: "https://gigascope.xyz",
               applicationCategory: "ReferenceApplication",
               operatingSystem: "All",
               author: {
