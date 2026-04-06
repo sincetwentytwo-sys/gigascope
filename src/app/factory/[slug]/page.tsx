@@ -11,14 +11,14 @@ export function generateStaticParams() {
 }
 
 const FACTORY_KEYWORDS: Record<string, string[]> = {
-  terafab: ["terafab", "chip fab", "ai5 chip", "tera fab"],
-  "giga-texas": ["giga texas", "gigafactory texas", "austin factory", "cybertruck", "cybercab", "giga austin"],
-  "giga-nevada": ["giga nevada", "gigafactory nevada", "sparks factory", "4680 cell", "semi production", "tesla semi"],
-  "giga-shanghai": ["giga shanghai", "gigafactory shanghai", "tesla china", "shanghai factory", "tesla megapack china"],
-  "giga-berlin": ["giga berlin", "gigafactory berlin", "grünheide", "grunheide", "tesla germany", "tesla europe"],
-  "giga-mexico": ["giga mexico", "gigafactory mexico", "nuevo leon", "tesla mexico", "tesla affordable"],
-  fremont: ["fremont", "model s production", "model x production", "model 3 production", "model y production", "tesla california"],
-  "giga-buffalo": ["gigafactory new york", "buffalo factory", "solar roof", "supercharger production", "megapack"],
+  terafab: ["terafab", "chip fab", "ai5", "tera fab", "chip factory", "semiconductor", "2nm", "tsmc", "chip production"],
+  "giga-texas": ["giga texas", "gigafactory texas", "austin", "cybertruck", "cybercab", "texas factory", "travis county"],
+  "giga-nevada": ["giga nevada", "gigafactory nevada", "sparks", "4680", "semi production", "tesla semi", "battery cell", "nevada factory", "panasonic"],
+  "giga-shanghai": ["giga shanghai", "gigafactory shanghai", "tesla china", "shanghai", "megafactory", "byd", "china ev", "chinese market"],
+  "giga-berlin": ["giga berlin", "gigafactory berlin", "grünheide", "grunheide", "tesla germany", "tesla europe", "brandenburg", "german factory"],
+  "giga-mexico": ["giga mexico", "gigafactory mexico", "nuevo leon", "santa catarina", "tesla mexico", "affordable ev", "compact tesla", "mexico factory"],
+  fremont: ["fremont", "model s", "model x", "model 3", "model y", "tesla california", "nummi", "california factory", "bay area"],
+  "giga-buffalo": ["gigafactory new york", "buffalo", "solar roof", "supercharger", "megapack", "new york factory", "energy storage"],
 };
 
 const X_QUERIES: Record<string, string> = {

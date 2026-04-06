@@ -190,18 +190,13 @@ export default async function NewsFeed() {
 
 export async function FactoryNewsFeed({ keywords }: { keywords: string[] }) {
   const allItems = await fetchAllNews();
-  let items = allItems.filter((item) => {
+  const items = allItems.filter((item) => {
     const lower = item.title.toLowerCase();
     return keywords.some((k) => lower.includes(k));
   }).slice(0, 10);
 
-  // Fallback to latest general news
   if (items.length === 0) {
-    items = allItems.slice(0, 10);
-  }
-
-  if (items.length === 0) {
-    return <p className="text-sm text-dim">No recent news available.</p>;
+    return <p className="text-sm text-dim">No recent news for this factory.</p>;
   }
 
   return <NewsItems items={items} />;
