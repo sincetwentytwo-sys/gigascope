@@ -59,16 +59,26 @@ export default function CompareSlider() {
       const map = L.map(mapRef.current, {
         center: [selectedRef.current.lat, selectedRef.current.lng],
         zoom: 14,
-        maxZoom: 15,
+        maxZoom: 19,
         zoomControl: true,
         attributionControl: false,
       });
+
+      // ESRI (bottom layer — full zoom)
       L.tileLayer(ESRI_URL, { maxZoom: 19 }).addTo(map);
-      const left = L.tileLayer(SENTINEL_URL, { maxZoom: 15 }).addTo(map);
+
+      // Sentinel-2 (top layer — clipped, sepia tint for visual distinction)
+      const left = L.tileLayer(SENTINEL_URL, {
+        maxZoom: 15,
+        maxNativeZoom: 15,
+        className: "sentinel-layer",
+      }).addTo(map);
+
       setTimeout(() => {
         const c = left.getContainer();
         if (c) c.style.clipPath = "inset(0 50% 0 0)";
       }, 500);
+
       leafletMap.current = map;
       leftLayer.current = left;
     });
@@ -77,11 +87,15 @@ export default function CompareSlider() {
   const selectFactory = (f: Factory) => {
     selectedRef.current = f;
     setSelectedId(f.id);
-    if (leafletMap.current) leafletMap.current.flyTo([f.lat, f.lng], 15, { duration: 1 });
+    if (leafletMap.current) leafletMap.current.flyTo([f.lat, f.lng], 14, { duration: 1 });
   };
 
   return (
     <div className="flex flex-col gap-5">
+      <style>{`
+        .sentinel-layer { filter: sepia(0.3) saturate(0.8) brightness(0.95); }
+      `}</style>
+
       <div role="group" aria-label="Factory selector" className="flex gap-2 flex-wrap">
         {factories.map((f) => (
           <button
@@ -119,10 +133,10 @@ export default function CompareSlider() {
           </div>
         </div>
 
-        <div className="absolute top-3 left-3 z-[1000] bg-black/70 rounded-lg px-3 py-1.5">
+        <div className="absolute top-3 left-3 z-[1000] bg-amber-800/80 rounded-lg px-3 py-1.5">
           <span className="text-xs text-white font-medium">Sentinel-2 &middot; 2023</span>
         </div>
-        <div className="absolute top-3 right-3 z-[1000] bg-black/70 rounded-lg px-3 py-1.5">
+        <div className="absolute top-3 right-3 z-[1000] bg-blue-900/80 rounded-lg px-3 py-1.5">
           <span className="text-xs text-white font-medium">ESRI &middot; Latest</span>
         </div>
 
@@ -132,10 +146,9 @@ export default function CompareSlider() {
         </div>
       </div>
 
-      <div className="text-sm text-dim">
-        <p><strong>Left:</strong> Sentinel-2 — annual composite from 2023 (natural colors, slightly soft)</p>
-        <p><strong>Right:</strong> ESRI — latest high-res imagery (sharper, updated every ~3-6 months)</p>
-        <p className="mt-1 text-xs">Drag the slider to compare. Zoom in to see construction changes.</p>
+      <div className="text-sm text-dim space-y-1">
+        <p><span className="inline-block w-3 h-3 rounded bg-amber-800/60 align-middle mr-1"></span> <strong>Left (warm tone):</strong> Sentinel-2 — annual composite from 2023</p>
+        <p><span className="inline-block w-3 h-3 rounded bg-blue-900/60 align-middle mr-1"></span> <strong>Right (cool tone):</strong> ESRI — latest high-res (~3-6 months old)</p>
       </div>
     </div>
   );
