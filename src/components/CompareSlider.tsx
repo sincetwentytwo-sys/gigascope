@@ -58,7 +58,8 @@ export default function CompareSlider() {
       if (!mapRef.current) return;
       const map = L.map(mapRef.current, {
         center: [selectedRef.current.lat, selectedRef.current.lng],
-        zoom: 15,
+        zoom: 14,
+        maxZoom: 15,
         zoomControl: true,
         attributionControl: false,
       });
