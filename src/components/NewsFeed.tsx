@@ -49,10 +49,12 @@ function parseXML(xml: string, source: string): NewsItem[] {
     const pubDate = block.match(/<pubDate>(.*?)<\/pubDate>/)?.[1] ?? "";
 
     if (title && link) {
+      const ts = pubDate ? new Date(pubDate).getTime() : 0;
       items.push({
         title,
         link: link.trim(),
         date: pubDate ? new Date(pubDate).toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "",
+        timestamp: ts,
         source,
       });
     }
@@ -72,10 +74,12 @@ function parseXML(xml: string, source: string): NewsItem[] {
         ?? block.match(/<published>(.*?)<\/published>/)?.[1] ?? "";
 
       if (title && link) {
+        const ts = updated ? new Date(updated).getTime() : 0;
         items.push({
           title,
           link: link.trim(),
           date: updated ? new Date(updated).toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "",
+          timestamp: ts,
           source,
         });
       }
@@ -126,7 +130,7 @@ async function fetchAllNews(): Promise<NewsItem[]> {
   // Sort by date (newest first) and deduplicate by title similarity
   const seen = new Set<string>();
   return allItems
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .sort((a, b) => b.timestamp - a.timestamp)
     .filter((item) => {
       const key = item.title.toLowerCase().slice(0, 40);
       if (seen.has(key)) return false;
