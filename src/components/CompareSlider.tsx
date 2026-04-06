@@ -58,7 +58,7 @@ export default function CompareSlider() {
       if (!mapRef.current) return;
       const map = L.map(mapRef.current, {
         center: [selectedRef.current.lat, selectedRef.current.lng],
-        zoom: 16,
+        zoom: 15,
         zoomControl: true,
         attributionControl: false,
       });
@@ -76,7 +76,7 @@ export default function CompareSlider() {
   const selectFactory = (f: Factory) => {
     selectedRef.current = f;
     setSelectedId(f.id);
-    if (leafletMap.current) leafletMap.current.flyTo([f.lat, f.lng], 16, { duration: 1 });
+    if (leafletMap.current) leafletMap.current.flyTo([f.lat, f.lng], 15, { duration: 1 });
   };
 
   return (
