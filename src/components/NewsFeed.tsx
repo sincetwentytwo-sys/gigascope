@@ -3,11 +3,11 @@ import type { NewsItem } from "@/data/types";
 const FEEDS = [
   { source: "Electrek", url: "https://electrek.co/guides/tesla/feed/" },
   { source: "Teslarati", url: "https://www.teslarati.com/feed/" },
-  { source: "InsideEVs", url: "https://insideevs.com/tag/tesla/feed/" },
-  { source: "CleanTechnica", url: "https://cleantechnica.com/tag/tesla/feed/" },
-  { source: "TechCrunch", url: "https://techcrunch.com/tag/tesla/feed/" },
-  { source: "Reuters", url: "https://www.reutersagency.com/feed/?best-topics=tech&post_type=best" },
-  { source: "The Verge", url: "https://www.theverge.com/rss/tesla/index.xml" },
+  { source: "InsideEVs", url: "https://insideevs.com/feed/" },
+  { source: "CleanTechnica", url: "https://cleantechnica.com/feed/" },
+  { source: "TorqueNews", url: "https://www.torquenews.com/rss.xml" },
+  { source: "Not A Tesla App", url: "https://www.notateslaapp.com/feed/" },
+  { source: "CNBC", url: "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001147" },
 ];
 
 const GLOBAL_KEYWORDS = [
