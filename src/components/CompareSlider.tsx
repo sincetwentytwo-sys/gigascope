@@ -93,7 +93,7 @@ export default function CompareSlider() {
   return (
     <div className="flex flex-col gap-5">
       <style>{`
-        .sentinel-layer { filter: sepia(0.3) saturate(0.8) brightness(0.95); }
+        .sentinel-layer { filter: grayscale(1) brightness(0.9); }
       `}</style>
 
       <div role="group" aria-label="Factory selector" className="flex gap-2 flex-wrap">
