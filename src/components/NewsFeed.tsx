@@ -3,12 +3,20 @@ import type { NewsItem } from "@/data/types";
 const FEEDS = [
   { source: "Electrek", url: "https://electrek.co/guides/tesla/feed/" },
   { source: "Teslarati", url: "https://www.teslarati.com/feed/" },
+  { source: "InsideEVs", url: "https://insideevs.com/tag/tesla/feed/" },
+  { source: "CleanTechnica", url: "https://cleantechnica.com/tag/tesla/feed/" },
+  { source: "TechCrunch", url: "https://techcrunch.com/tag/tesla/feed/" },
+  { source: "Reuters", url: "https://www.reutersagency.com/feed/?best-topics=tech&post_type=best" },
+  { source: "The Verge", url: "https://www.theverge.com/rss/tesla/index.xml" },
 ];
 
 const GLOBAL_KEYWORDS = [
-  "factory", "gigafactory", "giga", "terafab", "fremont",
+  "tesla", "factory", "gigafactory", "giga", "terafab", "fremont",
   "shanghai", "berlin", "nevada", "mexico", "buffalo",
-  "construction", "expansion", "production",
+  "construction", "expansion", "production", "cybertruck", "cybercab",
+  "model y", "model 3", "semi", "megapack", "solar roof", "supercharger",
+  "4680", "battery", "fsd", "autopilot", "robotaxi", "optimus",
+  "earnings", "delivery", "elon musk",
 ];
 
 function decodeEntities(str: string): string {
@@ -97,7 +105,7 @@ function NewsItems({ items }: { items: NewsItem[] }) {
 // Home page: global factory news
 export default async function NewsFeed() {
   const allItems = await fetchAllNews();
-  const items = filterNews(allItems, GLOBAL_KEYWORDS, 8);
+  const items = filterNews(allItems, GLOBAL_KEYWORDS, 15);
 
   if (items.length === 0) {
     return (
