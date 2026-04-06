@@ -1,6 +1,7 @@
 import { factories, getTotalInvestment, DATA_LAST_UPDATED } from "@/data/factories";
 import FactoryCard from "@/components/FactoryCard";
 import NewsFeed from "@/components/NewsFeed";
+import StockTicker from "@/components/StockTicker";
 
 export const revalidate = 3600;
 
@@ -10,14 +11,15 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero — Tesla style, big and bold */}
+      {/* Hero */}
       <section className="text-center py-16 sm:py-24 px-6">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4">
           Tesla Factory Tracker
         </h1>
-        <p className="text-lg text-dim max-w-lg mx-auto">
+        <p className="text-lg text-dim max-w-lg mx-auto mb-4">
           {factories.length} factories &middot; {getTotalInvestment()} invested &middot; 4 countries
         </p>
+        <StockTicker />
       </section>
 
       {/* Terafab spotlight */}
@@ -67,7 +69,9 @@ export default function Home() {
             <FactoryCard key={f.id} factory={f} />
           ))}
         </div>
-        <p className="text-xs text-dim mt-4">Updated {DATA_LAST_UPDATED}</p>
+        <p className="text-xs text-dim mt-4">
+          Updated {DATA_LAST_UPDATED} &middot; Progress estimates based on satellite imagery, official announcements, and public filings.
+        </p>
       </section>
 
       {/* News */}
