@@ -135,6 +135,16 @@ async function fetchAllNews(): Promise<NewsItem[]> {
     });
 }
 
+const SOURCE_COLORS: Record<string, string> = {
+  "Electrek": "bg-green-100 text-green-700",
+  "Teslarati": "bg-blue-100 text-blue-700",
+  "Not A Tesla App": "bg-purple-100 text-purple-700",
+  "InsideEVs": "bg-orange-100 text-orange-700",
+  "CleanTechnica": "bg-emerald-100 text-emerald-700",
+  "TorqueNews": "bg-red-100 text-red-700",
+  "CNBC": "bg-sky-100 text-sky-700",
+};
+
 function NewsItems({ items }: { items: NewsItem[] }) {
   return (
     <div className="flex flex-col">
@@ -144,11 +154,13 @@ function NewsItems({ items }: { items: NewsItem[] }) {
           href={item.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-baseline gap-3 py-2.5 border-b border-border-custom last:border-0 hover:bg-surface -mx-2 px-2 rounded"
+          className="flex items-center gap-3 py-2.5 border-b border-border-custom last:border-0 hover:bg-surface -mx-2 px-2 rounded"
         >
-          <span className="font-mono text-[9px] text-dim shrink-0 w-14">{item.date}</span>
-          <span className="text-xs text-dim hover:text-text transition-colors leading-snug flex-1">{item.title}</span>
-          <span className="font-mono text-[8px] text-dim/40 shrink-0">{item.source}</span>
+          <span className="font-mono text-[10px] text-dim shrink-0 w-12">{item.date}</span>
+          <span className={`text-[9px] font-semibold px-1.5 py-0.5 rounded shrink-0 ${SOURCE_COLORS[item.source] ?? "bg-gray-100 text-gray-600"}`}>
+            {item.source}
+          </span>
+          <span className="text-sm text-dim hover:text-text transition-colors leading-snug flex-1">{item.title}</span>
         </a>
       ))}
     </div>
@@ -177,11 +189,11 @@ export async function FactoryNewsFeed({ keywords }: { keywords: string[] }) {
   let items = allItems.filter((item) => {
     const lower = item.title.toLowerCase();
     return keywords.some((k) => lower.includes(k));
-  }).slice(0, 5);
+  }).slice(0, 10);
 
   // Fallback to latest general news
   if (items.length === 0) {
-    items = allItems.slice(0, 5);
+    items = allItems.slice(0, 10);
   }
 
   if (items.length === 0) {
