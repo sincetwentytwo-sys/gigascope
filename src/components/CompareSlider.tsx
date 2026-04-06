@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import { factories } from "@/data/factories";
 import { tileSources } from "@/lib/tiles";
 import type { Factory } from "@/data/types";
@@ -10,68 +10,86 @@ const SENTINEL_URL = tileSources[2].url;
 
 export default function CompareSlider() {
   const mapRef = useRef<HTMLDivElement>(null);
-  const [selected, setSelected] = useState<Factory>(factories[0]);
-  const [sliderPos, setSliderPos] = useState(50);
-  const [dragging, setDragging] = useState(false);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
   const leafletMap = useRef<L.Map | null>(null);
   const leftLayer = useRef<L.TileLayer | null>(null);
-  const rightLayer = useRef<L.TileLayer | null>(null);
+  const selectedRef = useRef<Factory>(factories[0]);
+  const dragging = useRef(false);
+  const [selectedId, setSelectedId] = useState(factories[0].id);
 
-  useEffect(() => {
-    if (!mapRef.current || leafletMap.current) return;
-
-    import("leaflet").then((L) => {
-      if (!mapRef.current) return;
-
-      const map = L.map(mapRef.current, {
-        center: [selected.lat, selected.lng],
-        zoom: 14,
-        zoomControl: true,
-        attributionControl: false,
-      });
-
-      const right = L.tileLayer(ESRI_URL, { maxZoom: 19 }).addTo(map);
-      const left = L.tileLayer(SENTINEL_URL, { maxZoom: 15 }).addTo(map);
-
-      leafletMap.current = map;
-      leftLayer.current = left;
-      rightLayer.current = right;
-    });
+  const updateSlider = useCallback((clientX: number) => {
+    if (!mapRef.current || !sliderRef.current || !lineRef.current || !leftLayer.current) return;
+    const rect = mapRef.current.getBoundingClientRect();
+    const pct = Math.max(2, Math.min(98, ((clientX - rect.left) / rect.width) * 100));
+    sliderRef.current.style.left = `${pct}%`;
+    lineRef.current.style.left = `${pct}%`;
+    const container = leftLayer.current.getContainer();
+    if (container) container.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
   }, []);
 
   useEffect(() => {
-    if (leafletMap.current) {
-      leafletMap.current.flyTo([selected.lat, selected.lng], 14, { duration: 1 });
-    }
-  }, [selected]);
+    const onMove = (e: MouseEvent) => {
+      if (!dragging.current) return;
+      e.preventDefault();
+      updateSlider(e.clientX);
+    };
+    const onTouch = (e: TouchEvent) => {
+      if (!dragging.current) return;
+      updateSlider(e.touches[0].clientX);
+    };
+    const onUp = () => { dragging.current = false; };
+
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    window.addEventListener("touchmove", onTouch, { passive: true });
+    window.addEventListener("touchend", onUp);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+      window.removeEventListener("touchmove", onTouch);
+      window.removeEventListener("touchend", onUp);
+    };
+  }, [updateSlider]);
 
   useEffect(() => {
-    if (!leftLayer.current) return;
-    const container = leftLayer.current.getContainer();
-    if (container) {
-      container.style.clipPath = `inset(0 ${100 - sliderPos}% 0 0)`;
-    }
-  }, [sliderPos]);
+    if (!mapRef.current || leafletMap.current) return;
+    import("leaflet").then((L) => {
+      if (!mapRef.current) return;
+      const map = L.map(mapRef.current, {
+        center: [selectedRef.current.lat, selectedRef.current.lng],
+        zoom: 16,
+        zoomControl: true,
+        attributionControl: false,
+      });
+      L.tileLayer(ESRI_URL, { maxZoom: 19 }).addTo(map);
+      const left = L.tileLayer(SENTINEL_URL, { maxZoom: 15 }).addTo(map);
+      setTimeout(() => {
+        const c = left.getContainer();
+        if (c) c.style.clipPath = "inset(0 50% 0 0)";
+      }, 500);
+      leafletMap.current = map;
+      leftLayer.current = left;
+    });
+  }, []);
 
-  const handleMove = (clientX: number) => {
-    if (!mapRef.current) return;
-    const rect = mapRef.current.getBoundingClientRect();
-    const x = ((clientX - rect.left) / rect.width) * 100;
-    setSliderPos(Math.max(2, Math.min(98, x)));
+  const selectFactory = (f: Factory) => {
+    selectedRef.current = f;
+    setSelectedId(f.id);
+    if (leafletMap.current) leafletMap.current.flyTo([f.lat, f.lng], 16, { duration: 1 });
   };
 
   return (
     <div className="flex flex-col gap-5">
-      {/* Factory Selector */}
       <div role="group" aria-label="Factory selector" className="flex gap-2 flex-wrap">
         {factories.map((f) => (
           <button
             key={f.id}
-            onClick={() => setSelected(f)}
-            className={`px-3 py-1.5 text-xs font-mono transition-colors ${
-              selected.id === f.id
-                ? "bg-accent-cyan/15 text-accent-cyan border border-accent-cyan/30"
-                : "border border-white/8 text-dim hover:text-text hover:border-white/15"
+            onClick={() => selectFactory(f)}
+            className={`px-3 py-1.5 text-xs rounded-full transition-colors ${
+              selectedId === f.id
+                ? "bg-text text-bg"
+                : "border border-border-custom text-dim hover:text-text"
             }`}
           >
             {f.flag} {f.name}
@@ -79,80 +97,45 @@ export default function CompareSlider() {
         ))}
       </div>
 
-      {/* Compare Map */}
       <div
-        className="relative overflow-hidden border border-white/10"
-        style={{ height: "clamp(350px, calc(100vh - 280px), 700px)" }}
+        className="relative overflow-hidden rounded-xl border border-border-custom select-none"
+        style={{ height: "clamp(400px, calc(100vh - 250px), 700px)" }}
       >
-        <link
-          rel="stylesheet"
-          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+        <div ref={mapRef} className="w-full h-full" />
+
+        <div ref={lineRef} className="absolute top-0 bottom-0 z-[1000] w-0.5 bg-white pointer-events-none" style={{ left: "50%", boxShadow: "0 0 8px rgba(0,0,0,0.4)" }} />
 
         <div
-          ref={mapRef}
-          className="w-full h-full"
-          onMouseMove={(e) => dragging && handleMove(e.clientX)}
-          onMouseUp={() => setDragging(false)}
-          onMouseLeave={() => setDragging(false)}
-          onTouchMove={(e) => dragging && handleMove(e.touches[0].clientX)}
-          onTouchEnd={() => setDragging(false)}
-        />
-
-        {/* Slider divider */}
-        <div
-          className="absolute top-0 bottom-0 z-[1000] cursor-col-resize"
-          style={{
-            left: `${sliderPos}%`,
-            transform: "translateX(-50%)",
-            width: "40px",
-          }}
-          onMouseDown={() => setDragging(true)}
-          onTouchStart={() => setDragging(true)}
-          onKeyDown={(e) => {
-            if (e.key === "ArrowLeft") setSliderPos((p) => Math.max(2, p - 2));
-            if (e.key === "ArrowRight") setSliderPos((p) => Math.min(98, p + 2));
-          }}
-          role="slider"
-          aria-label="Compare slider"
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-valuenow={Math.round(sliderPos)}
-          tabIndex={0}
+          ref={sliderRef}
+          className="absolute top-0 bottom-0 z-[1001] cursor-col-resize"
+          style={{ left: "50%", transform: "translateX(-50%)", width: "44px" }}
+          onMouseDown={() => { dragging.current = true; }}
+          onTouchStart={() => { dragging.current = true; }}
         >
-          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-white/60" />
-          <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-8 h-8 border border-white/40 flex items-center justify-center bg-bg/90 cursor-ew-resize">
-            <span className="text-white/60 text-xs font-mono">&harr;</span>
+          <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-border-custom flex items-center justify-center shadow-lg">
+            <span className="text-dim text-sm">&harr;</span>
           </div>
         </div>
 
-        {/* Source Labels */}
-        <div className="absolute top-3 left-3 z-[1000] bg-black/80 px-2.5 py-1.5">
-          <span className="font-mono text-[10px] sm:text-xs text-white/80 font-medium">
-            Sentinel-2 &middot; 2023
-          </span>
+        <div className="absolute top-3 left-3 z-[1000] bg-black/70 rounded-lg px-3 py-1.5">
+          <span className="text-xs text-white font-medium">Sentinel-2 &middot; 2023</span>
         </div>
-        <div className="absolute top-3 right-3 z-[1000] bg-black/80 px-2.5 py-1.5">
-          <span className="font-mono text-[10px] sm:text-xs text-white/80 font-medium">
-            ESRI &middot; Latest
-          </span>
+        <div className="absolute top-3 right-3 z-[1000] bg-black/70 rounded-lg px-3 py-1.5">
+          <span className="text-xs text-white font-medium">ESRI &middot; Latest</span>
         </div>
 
-        {/* Bottom info strip */}
-        <div className="absolute bottom-0 left-0 right-0 z-[1000] bg-bg/90 border-t border-white/10 px-3 py-1.5 flex justify-between items-center font-mono text-[10px] text-dim">
-          <span>
-            {selected.flag} {selected.name} &middot; {selected.location}
-          </span>
-          <span className="hidden sm:inline">
-            {selected.lat.toFixed(4)}&deg;N, {selected.lng.toFixed(4)}&deg;W
-          </span>
+        <div className="absolute bottom-0 left-0 right-0 z-[1000] bg-white/90 border-t border-border-custom px-4 py-2 flex justify-between items-center text-xs text-dim">
+          <span>{selectedRef.current.flag} {selectedRef.current.name} &middot; {selectedRef.current.location}</span>
+          <span className="hidden sm:inline">{selectedRef.current.lat.toFixed(4)}°N, {selectedRef.current.lng.toFixed(4)}°W</span>
         </div>
       </div>
 
-      {/* Disclaimer */}
-      <p className="font-mono text-[9px] text-dim">
-        Imagery is not real-time. Sentinel-2: annual cloudless composite (2023). ESRI: updated ~3-6 months.
-      </p>
+      <div className="text-sm text-dim">
+        <p><strong>Left:</strong> Sentinel-2 — annual composite from 2023 (natural colors, slightly soft)</p>
+        <p><strong>Right:</strong> ESRI — latest high-res imagery (sharper, updated every ~3-6 months)</p>
+        <p className="mt-1 text-xs">Drag the slider to compare. Zoom in to see construction changes.</p>
+      </div>
     </div>
   );
 }
