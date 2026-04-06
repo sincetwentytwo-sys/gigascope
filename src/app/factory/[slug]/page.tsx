@@ -11,14 +11,14 @@ export function generateStaticParams() {
 }
 
 const FACTORY_KEYWORDS: Record<string, string[]> = {
-  terafab: ["terafab", "chip fab", "ai5", "tera fab", "chip factory", "semiconductor", "2nm", "tsmc", "chip production"],
-  "giga-texas": ["giga texas", "gigafactory texas", "austin", "cybertruck", "cybercab", "texas factory", "travis county"],
-  "giga-nevada": ["giga nevada", "gigafactory nevada", "sparks", "4680", "semi production", "tesla semi", "battery cell", "nevada factory", "panasonic"],
-  "giga-shanghai": ["giga shanghai", "gigafactory shanghai", "tesla china", "shanghai", "megafactory", "byd", "china ev", "chinese market"],
-  "giga-berlin": ["giga berlin", "gigafactory berlin", "grünheide", "grunheide", "tesla germany", "tesla europe", "brandenburg", "german factory"],
-  "giga-mexico": ["giga mexico", "gigafactory mexico", "nuevo leon", "santa catarina", "tesla mexico", "affordable ev", "compact tesla", "mexico factory"],
-  fremont: ["fremont", "model s", "model x", "model 3", "model y", "tesla california", "nummi", "california factory", "bay area"],
-  "giga-buffalo": ["gigafactory new york", "buffalo", "solar roof", "supercharger", "megapack", "new york factory", "energy storage"],
+  terafab: ["terafab", "chip fab", "ai5", "semiconductor", "2nm", "tsmc", "chip", "fab", "xai"],
+  "giga-texas": ["texas", "austin", "cybertruck", "cybercab", "giga texas", "travis"],
+  "giga-nevada": ["nevada", "sparks", "4680", "semi", "battery", "panasonic", "cell production"],
+  "giga-shanghai": ["shanghai", "china", "megafactory", "byd", "chinese"],
+  "giga-berlin": ["berlin", "germany", "grünheide", "grunheide", "europe", "brandenburg"],
+  "giga-mexico": ["mexico", "nuevo leon", "santa catarina", "affordable", "compact"],
+  fremont: ["fremont", "model s", "model x", "model 3", "model y", "california"],
+  "giga-buffalo": ["buffalo", "new york", "solar roof", "solar", "supercharger", "megapack", "energy"],
 };
 
 const X_QUERIES: Record<string, string> = {

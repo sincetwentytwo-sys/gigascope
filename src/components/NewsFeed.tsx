@@ -190,13 +190,21 @@ export default async function NewsFeed() {
 
 export async function FactoryNewsFeed({ keywords }: { keywords: string[] }) {
   const allItems = await fetchAllNews();
-  const items = allItems.filter((item) => {
+
+  // Factory-specific articles first
+  const specific = allItems.filter((item) => {
     const lower = item.title.toLowerCase();
     return keywords.some((k) => lower.includes(k));
-  }).slice(0, 10);
+  });
+
+  // Fill remaining slots with general Tesla news (excluding duplicates)
+  const specificIds = new Set(specific.map((item) => item.title));
+  const general = allItems.filter((item) => !specificIds.has(item.title));
+
+  const items = [...specific.slice(0, 10), ...general.slice(0, Math.max(0, 10 - specific.length))];
 
   if (items.length === 0) {
-    return <p className="text-sm text-dim">No recent news for this factory.</p>;
+    return <p className="text-sm text-dim">No recent news available.</p>;
   }
 
   return <NewsItems items={items} />;
