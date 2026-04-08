@@ -2,7 +2,7 @@ import { factories, getFactory, TIMELINE_YEARS } from "@/data/factories";
 import SatelliteMapWrapper from "@/components/SatelliteMapWrapper";
 import { getESRIImageryDate } from "@/lib/satellite-date";
 import { FactoryNewsFeed } from "@/components/NewsFeed";
-import XFeed from "@/components/XFeed";
+import CommunityFeed from "@/components/CommunityFeed";
 
 export const revalidate = 1800;
 
@@ -19,17 +19,6 @@ const FACTORY_KEYWORDS: Record<string, string[]> = {
   "giga-mexico": ["mexico", "nuevo leon", "santa catarina", "affordable", "compact"],
   fremont: ["fremont", "model s", "model x", "model 3", "model y", "california"],
   "giga-buffalo": ["buffalo", "new york", "solar roof", "solar", "supercharger", "megapack", "energy"],
-};
-
-const X_QUERIES: Record<string, string> = {
-  terafab: "Tesla Terafab OR \"chip fab\" OR AI5",
-  "giga-texas": "Giga Texas OR \"Gigafactory Texas\" OR Cybertruck OR Cybercab",
-  "giga-nevada": "Giga Nevada OR \"Gigafactory Nevada\" OR \"Tesla Semi\" OR 4680",
-  "giga-shanghai": "Giga Shanghai OR Tesla Shanghai OR Megafactory",
-  "giga-berlin": "Giga Berlin OR Tesla Grünheide OR \"Tesla Germany\"",
-  "giga-mexico": "Giga Mexico OR \"Tesla Nuevo Leon\" OR \"Tesla Santa Catarina\"",
-  fremont: "Tesla Fremont factory OR \"Fremont production\"",
-  "giga-buffalo": "Tesla Buffalo OR \"Gigafactory New York\" OR \"Solar Roof production\"",
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -51,7 +40,6 @@ export default async function FactoryPage({ params }: { params: Promise<{ slug: 
 
   const imageryDate = await getESRIImageryDate(factory.lat, factory.lng);
   const newsKeywords = FACTORY_KEYWORDS[factory.slug] ?? [factory.name.toLowerCase()];
-  const xQuery = X_QUERIES[factory.slug] ?? `Tesla ${factory.name}`;
 
   return (
     <div className="max-w-[1200px] mx-auto px-6 py-10">
@@ -143,7 +131,7 @@ export default async function FactoryPage({ params }: { params: Promise<{ slug: 
         </div>
         <div className="bg-surface rounded-xl p-5">
           <h3 className="font-bold mb-3">Community</h3>
-          <XFeed query={xQuery} factoryName={factory.name} />
+          <CommunityFeed keywords={newsKeywords} factoryName={factory.name} />
         </div>
       </div>
 
