@@ -2,7 +2,7 @@ import { factories, getTotalInvestment, DATA_LAST_UPDATED } from "@/data/factori
 import FactoryCard from "@/components/FactoryCard";
 import NewsFeed from "@/components/NewsFeed";
 
-export const revalidate = 3600;
+export const revalidate = 1800;
 
 export default function Home() {
   const featured = factories.find((f) => f.featured);

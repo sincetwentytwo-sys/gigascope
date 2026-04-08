@@ -1,76 +1,158 @@
 import type { NewsItem } from "@/data/types";
 
-const FEEDS = [
+// Tesla-dedicated sources (all articles are relevant, no keyword filter needed)
+const TESLA_FEEDS = [
   { source: "Electrek", url: "https://electrek.co/guides/tesla/feed/" },
   { source: "Teslarati", url: "https://www.teslarati.com/feed/" },
+  { source: "Not A Tesla App", url: "https://www.notateslaapp.com/feed/" },
 ];
 
-const KEYWORDS = [
-  "factory", "gigafactory", "giga", "terafab", "fremont",
-  "shanghai", "berlin", "nevada", "mexico", "buffalo",
-  "construction", "expansion", "production",
+// General sources (need keyword filter)
+const GENERAL_FEEDS = [
+  { source: "InsideEVs", url: "https://insideevs.com/feed/" },
+  { source: "CleanTechnica", url: "https://cleantechnica.com/feed/" },
+  { source: "TorqueNews", url: "https://www.torquenews.com/rss.xml" },
+  { source: "CNBC", url: "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001147" },
+  { source: "Reuters", url: "https://feeds.reuters.com/reuters/technologyNews" },
+  { source: "Reuters", url: "https://feeds.reuters.com/reuters/businessNews" },
 ];
 
-function parseRSS(xml: string, source: string): NewsItem[] {
+const TESLA_KEYWORDS = [
+  "tesla", "terafab", "gigafactory", "giga texas", "giga berlin",
+  "giga shanghai", "giga nevada", "giga mexico", "fremont",
+  "cybertruck", "cybercab", "model y", "model 3", "model s",
+  "semi", "megapack", "supercharger", "4680", "fsd", "autopilot",
+  "robotaxi", "optimus", "elon musk", "tsla", "spacex", "starship",
+];
+
+function decodeEntities(str: string): string {
+  return str
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)))
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'");
+}
+
+function parseXML(xml: string, source: string): NewsItem[] {
   const items: NewsItem[] = [];
-  const itemRegex = /<item>([\s\S]*?)<\/item>/g;
-  let match;
 
-  while ((match = itemRegex.exec(xml)) !== null) {
+  // Try RSS format (<item>)
+  const rssRegex = /<item>([\s\S]*?)<\/item>/g;
+  let match;
+  while ((match = rssRegex.exec(xml)) !== null) {
     const block = match[1];
-    const title = block.match(/<title><!\[CDATA\[(.*?)\]\]>|<title>(.*?)<\/title>/)?.[1] ?? block.match(/<title>(.*?)<\/title>/)?.[1] ?? "";
-    const link = block.match(/<link>(.*?)<\/link>/)?.[1] ?? "";
+    const rawTitle = block.match(/<title><!\[CDATA\[(.*?)\]\]>/)?.[1]
+      ?? block.match(/<title>(.*?)<\/title>/)?.[1] ?? "";
+    const title = decodeEntities(rawTitle.trim());
+    const link = block.match(/<link>(.*?)<\/link>/)?.[1]
+      ?? block.match(/<link[^>]*href="([^"]*)"/)?.[ 1] ?? "";
     const pubDate = block.match(/<pubDate>(.*?)<\/pubDate>/)?.[1] ?? "";
 
-    const lower = title.toLowerCase();
-    if (title && link && KEYWORDS.some((k) => lower.includes(k))) {
+    if (title && link) {
+      const ts = pubDate ? new Date(pubDate).getTime() : 0;
       items.push({
         title,
-        link,
+        link: link.trim(),
         date: pubDate ? new Date(pubDate).toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "",
+        timestamp: ts,
         source,
       });
     }
-    if (items.length >= 5) break;
+  }
+
+  // Try Atom format (<entry>) if no RSS items found
+  if (items.length === 0) {
+    const atomRegex = /<entry>([\s\S]*?)<\/entry>/g;
+    while ((match = atomRegex.exec(xml)) !== null) {
+      const block = match[1];
+      const rawTitle = block.match(/<title[^>]*>(.*?)<\/title>/)?.[1]
+        ?? block.match(/<title><!\[CDATA\[(.*?)\]\]>/)?.[1] ?? "";
+      const title = decodeEntities(rawTitle.trim());
+      const link = block.match(/<link[^>]*href="([^"]*)"[^>]*\/>/)?.[1]
+        ?? block.match(/<link[^>]*href="([^"]*)">/)?.[1] ?? "";
+      const updated = block.match(/<updated>(.*?)<\/updated>/)?.[1]
+        ?? block.match(/<published>(.*?)<\/published>/)?.[1] ?? "";
+
+      if (title && link) {
+        const ts = updated ? new Date(updated).getTime() : 0;
+        items.push({
+          title,
+          link: link.trim(),
+          date: updated ? new Date(updated).toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "",
+          timestamp: ts,
+          source,
+        });
+      }
+    }
   }
 
   return items;
 }
 
-async function fetchNews(): Promise<NewsItem[]> {
+async function fetchFeed(url: string, source: string): Promise<NewsItem[]> {
   try {
-    const results = await Promise.allSettled(
-      FEEDS.map(async (feed) => {
-        const res = await fetch(feed.url, { next: { revalidate: 3600 } });
-        if (!res.ok) return [];
-        const xml = await res.text();
-        return parseRSS(xml, feed.source);
-      })
-    );
-
-    return results
-      .filter((r): r is PromiseFulfilledResult<NewsItem[]> => r.status === "fulfilled")
-      .flatMap((r) => r.value)
-      .slice(0, 8);
-  } catch {
+    const res = await fetch(url, { next: { revalidate: 1800 } });
+    if (!res.ok) {
+      console.error(`RSS ${source}: HTTP ${res.status}`);
+      return [];
+    }
+    const xml = await res.text();
+    const items = parseXML(xml, source);
+    console.log(`RSS ${source}: ${items.length} articles`);
+    return items;
+  } catch (err) {
+    console.error(`RSS ${source}: fetch failed`, err);
     return [];
   }
 }
 
-export default async function NewsFeed() {
-  const items = await fetchNews();
+async function fetchAllNews(): Promise<NewsItem[]> {
+  const results = await Promise.allSettled([
+    // Tesla-dedicated feeds — no keyword filter needed
+    ...TESLA_FEEDS.map(async (feed) => {
+      const items = await fetchFeed(feed.url, feed.source);
+      return items.slice(0, 10);
+    }),
+    // General feeds — filter for Tesla keywords
+    ...GENERAL_FEEDS.map(async (feed) => {
+      const items = await fetchFeed(feed.url, feed.source);
+      return items.filter((item) => {
+        const lower = item.title.toLowerCase();
+        return TESLA_KEYWORDS.some((k) => lower.includes(k));
+      }).slice(0, 5);
+    }),
+  ]);
 
-  if (items.length === 0) {
-    return (
-      <p className="font-mono text-[9px] text-dim">
-        No factory news available. See{" "}
-        <a href="https://electrek.co/guides/tesla/" target="_blank" rel="noopener noreferrer" className="underline">Electrek</a>
-        {" "}or{" "}
-        <a href="https://www.teslarati.com" target="_blank" rel="noopener noreferrer" className="underline">Teslarati</a>.
-      </p>
-    );
-  }
+  const allItems = results
+    .filter((r): r is PromiseFulfilledResult<NewsItem[]> => r.status === "fulfilled")
+    .flatMap((r) => r.value);
 
+  // Sort by date (newest first) and deduplicate by title similarity
+  const seen = new Set<string>();
+  return allItems
+    .sort((a, b) => b.timestamp - a.timestamp)
+    .filter((item) => {
+      const key = item.title.toLowerCase().slice(0, 40);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
+const SOURCE_COLORS: Record<string, string> = {
+  "Electrek": "bg-green-100 text-green-700",
+  "Teslarati": "bg-blue-100 text-blue-700",
+  "Not A Tesla App": "bg-purple-100 text-purple-700",
+  "InsideEVs": "bg-orange-100 text-orange-700",
+  "CleanTechnica": "bg-emerald-100 text-emerald-700",
+  "TorqueNews": "bg-red-100 text-red-700",
+  "CNBC": "bg-sky-100 text-sky-700",
+  "Reuters": "bg-amber-100 text-amber-700",
+};
+
+function NewsItems({ items }: { items: NewsItem[] }) {
   return (
     <div className="flex flex-col">
       {items.map((item, i) => (
@@ -79,13 +161,54 @@ export default async function NewsFeed() {
           href={item.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-baseline gap-3 py-2 border-b border-white/5 last:border-0 hover:bg-white/[0.02] -mx-2 px-2"
+          className="flex items-center gap-3 py-2.5 border-b border-border-custom last:border-0 hover:bg-surface -mx-2 px-2 rounded"
         >
-          <span className="font-mono text-[9px] text-dim shrink-0 w-14">{item.date}</span>
-          <span className="text-xs text-dim hover:text-text transition-colors leading-snug flex-1">{item.title}</span>
-          <span className="font-mono text-[8px] text-dim/40 shrink-0">{item.source}</span>
+          <span className="font-mono text-[10px] text-dim shrink-0 w-12">{item.date}</span>
+          <span className={`text-[9px] font-semibold px-1.5 py-0.5 rounded shrink-0 ${SOURCE_COLORS[item.source] ?? "bg-gray-100 text-gray-600"}`}>
+            {item.source}
+          </span>
+          <span className="text-sm text-dim hover:text-text transition-colors leading-snug flex-1">{item.title}</span>
         </a>
       ))}
     </div>
   );
+}
+
+export default async function NewsFeed() {
+  const allItems = await fetchAllNews();
+
+  if (allItems.length === 0) {
+    return (
+      <p className="text-sm text-dim">
+        No news available. See{" "}
+        <a href="https://electrek.co/guides/tesla/" target="_blank" rel="noopener noreferrer" className="underline">Electrek</a>
+        {" "}or{" "}
+        <a href="https://www.teslarati.com" target="_blank" rel="noopener noreferrer" className="underline">Teslarati</a>.
+      </p>
+    );
+  }
+
+  return <NewsItems items={allItems.slice(0, 15)} />;
+}
+
+export async function FactoryNewsFeed({ keywords }: { keywords: string[] }) {
+  const allItems = await fetchAllNews();
+
+  // Factory-specific articles first
+  const specific = allItems.filter((item) => {
+    const lower = item.title.toLowerCase();
+    return keywords.some((k) => lower.includes(k));
+  });
+
+  // Fill remaining slots with general Tesla news (excluding duplicates)
+  const specificIds = new Set(specific.map((item) => item.title));
+  const general = allItems.filter((item) => !specificIds.has(item.title));
+
+  const items = [...specific.slice(0, 10), ...general.slice(0, Math.max(0, 10 - specific.length))];
+
+  if (items.length === 0) {
+    return <p className="text-sm text-dim">No recent news available.</p>;
+  }
+
+  return <NewsItems items={items} />;
 }
