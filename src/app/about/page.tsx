@@ -35,7 +35,7 @@ export default function AboutPage() {
             >
               <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: f.color }} />
               <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium">{f.flag} {f.name.replace("⚡ ", "")}</div>
+                <div className="text-sm font-medium">{f.flag} {f.name}</div>
                 <div className="text-[0.65rem] text-dim">{f.location}</div>
               </div>
               <span className="font-mono text-xs" style={{ color: f.color }}>{f.progress}%</span>

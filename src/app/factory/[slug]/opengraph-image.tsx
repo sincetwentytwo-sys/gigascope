@@ -1,14 +1,9 @@
 import { ImageResponse } from "next/og";
-import { getFactory, factories } from "@/data/factories";
+import { getFactory } from "@/data/factories";
 
-export const runtime = "edge";
 export const alt = "Factory — GIGASCOPE";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-
-export function generateStaticParams() {
-  return factories.map((f) => ({ slug: f.slug }));
-}
 
 export default async function OGImage({
   params,

@@ -51,18 +51,18 @@ export default function SatelliteMap({
       tile.on("tileerror", () => setTileError(true));
       tile.on("tileload", () => setTileError(false));
 
-      // Factory marker
+      // Factory marker — white pulsing dot
       const icon = L.divIcon({
         className: "",
         html: `
-          <div style="position:relative;width:24px;height:24px;">
-            <div style="position:absolute;inset:0;background:${factoryColor};border-radius:50%;opacity:0.2;animation:pulse-ring 2s infinite;"></div>
-            <div style="position:absolute;inset:6px;background:${factoryColor};border-radius:50%;opacity:0.5;"></div>
-            <div style="position:absolute;inset:9px;background:${factoryColor};border-radius:50%;"></div>
+          <div style="position:relative;width:28px;height:28px;">
+            <div style="position:absolute;inset:0;background:white;border-radius:50%;opacity:0.3;animation:pulse-ring 2s infinite;"></div>
+            <div style="position:absolute;inset:4px;background:white;border-radius:50%;opacity:0.6;box-shadow:0 0 8px rgba(255,255,255,0.8);"></div>
+            <div style="position:absolute;inset:9px;background:white;border-radius:50%;box-shadow:0 0 12px rgba(255,255,255,1);"></div>
           </div>
         `,
-        iconSize: [24, 24],
-        iconAnchor: [12, 12],
+        iconSize: [28, 28],
+        iconAnchor: [14, 14],
       });
 
       L.marker([lat, lng], { icon }).addTo(map);

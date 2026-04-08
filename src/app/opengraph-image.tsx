@@ -1,6 +1,4 @@
 import { ImageResponse } from "next/og";
-
-export const runtime = "edge";
 export const alt = "GIGASCOPE — Tesla Factory Construction Tracker";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -84,7 +82,7 @@ export default function OGImage() {
             color: "#6b7280",
           }}
         >
-          Satellite imagery + milestones — gigascope-ten.vercel.app
+          Satellite imagery + milestones — gigascope.xyz
         </div>
       </div>
     ),

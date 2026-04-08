@@ -31,6 +31,7 @@ export interface NewsItem {
   title: string;
   link: string;
   date: string;
+  timestamp: number;
   source: string;
 }
 

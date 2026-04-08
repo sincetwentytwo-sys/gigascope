@@ -22,14 +22,14 @@ const FACTORY_KEYWORDS: Record<string, string[]> = {
 };
 
 const X_QUERIES: Record<string, string> = {
-  terafab: "(Tesla Terafab OR \"chip fab\" OR AI5) OR (from:Tesla Terafab)",
-  "giga-texas": "(Giga Texas OR \"Gigafactory Texas\" OR Cybertruck OR Cybercab) OR (from:Tesla texas)",
-  "giga-nevada": "(Giga Nevada OR \"Gigafactory Nevada\" OR \"Tesla Semi\" OR 4680) OR (from:Tesla nevada)",
-  "giga-shanghai": "(Giga Shanghai OR Tesla Shanghai OR Megafactory) OR (from:Tesla shanghai)",
-  "giga-berlin": "(Giga Berlin OR Tesla Grünheide OR \"Tesla Germany\") OR (from:Tesla berlin)",
-  "giga-mexico": "(Giga Mexico OR \"Tesla Nuevo Leon\" OR \"Tesla Santa Catarina\") OR (from:Tesla mexico)",
-  fremont: "(Tesla Fremont factory OR \"Fremont production\") OR (from:Tesla fremont)",
-  "giga-buffalo": "(Tesla Buffalo OR \"Gigafactory New York\" OR \"Solar Roof production\") OR (from:Tesla buffalo)",
+  terafab: "Tesla Terafab OR \"chip fab\" OR AI5",
+  "giga-texas": "Giga Texas OR \"Gigafactory Texas\" OR Cybertruck OR Cybercab",
+  "giga-nevada": "Giga Nevada OR \"Gigafactory Nevada\" OR \"Tesla Semi\" OR 4680",
+  "giga-shanghai": "Giga Shanghai OR Tesla Shanghai OR Megafactory",
+  "giga-berlin": "Giga Berlin OR Tesla Grünheide OR \"Tesla Germany\"",
+  "giga-mexico": "Giga Mexico OR \"Tesla Nuevo Leon\" OR \"Tesla Santa Catarina\"",
+  fremont: "Tesla Fremont factory OR \"Fremont production\"",
+  "giga-buffalo": "Tesla Buffalo OR \"Gigafactory New York\" OR \"Solar Roof production\"",
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -150,7 +150,7 @@ export default async function FactoryPage({ params }: { params: Promise<{ slug: 
       {/* Links */}
       <div className="flex gap-4 mt-6 text-sm">
         <a href="/compare" className="text-accent-blue hover:underline">Compare imagery &rarr;</a>
-        <a href={`https://www.google.com/maps/@${factory.lat},${factory.lng},1000m/data=!3m1!1e3`} target="_blank" rel="noopener noreferrer" className="text-dim hover:text-text">Google Maps &nearr;</a>
+        <a href={`https://www.google.com/maps/@${factory.lat},${factory.lng},1000m/data=!3m1!1e3`} target="_blank" rel="noopener noreferrer" className="text-dim hover:text-text">Google Maps ↗</a>
       </div>
     </div>
   );
