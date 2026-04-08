@@ -17,7 +17,7 @@ function getAllMilestones() {
   return all.sort((a, b) => {
     const da = a.date.replace(/Q\d|H\d/g, "").trim();
     const db = b.date.replace(/Q\d|H\d/g, "").trim();
-    return da.localeCompare(db);
+    return db.localeCompare(da); // newest first
   });
 }
 
