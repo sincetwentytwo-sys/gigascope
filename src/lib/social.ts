@@ -1,38 +1,86 @@
-// Free social feeds: Reddit JSON API + HN Algolia API.
-// No tokens, no rate limits in practice. Cached for 30min via fetch revalidate.
+// Free social feeds: Reddit RSS + HN Algolia API.
+// Reddit JSON API is blocked from Vercel IPs, so we use the public RSS
+// feed instead. HN Algolia API has no rate limits.
 
 export interface SocialPost {
   id: string;
-  source: "reddit" | "hn" | "x";
-  sourceLabel: string; // r/teslamotors, HN, @elonmusk
+  source: "reddit" | "hn";
+  sourceLabel: string;
   author: string;
   title: string;
-  url: string;          // direct article/link
-  discussionUrl: string; // reddit/hn discussion thread
-  score: number;
+  url: string;           // article link
+  discussionUrl: string; // reddit/hn thread
+  score: number;         // 0 if unknown (RSS doesn't expose it)
   comments: number;
   timestamp: number;
-  thumbnail?: string;
 }
 
-interface RedditChild {
-  data: {
-    id: string;
-    title: string;
-    author: string;
-    url: string;
-    permalink: string;
-    score: number;
-    num_comments: number;
-    created_utc: number;
-    thumbnail?: string;
-    over_18?: boolean;
-    stickied?: boolean;
-  };
+function decodeEntities(str: string): string {
+  return str
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)))
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCharCode(parseInt(h, 16)))
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'");
 }
 
-interface RedditResponse {
-  data?: { children?: RedditChild[] };
+function stripCData(str: string): string {
+  return str.replace(/^<!\[CDATA\[|\]\]>$/g, "");
+}
+
+// Reddit via RSS (Atom format). JSON API gets blocked from cloud IPs.
+async function fetchSubredditRSS(sub: string): Promise<SocialPost[]> {
+  try {
+    const res = await fetch(
+      `https://www.reddit.com/r/${sub}/top/.rss?t=day&limit=10`,
+      {
+        headers: {
+          "User-Agent": "web:gigascope:v1.0 (https://gigascope-ten.vercel.app)",
+          Accept: "application/atom+xml,application/xml,text/xml",
+        },
+        next: { revalidate: 1800 },
+      }
+    );
+    if (!res.ok) {
+      console.error(`Reddit r/${sub} RSS: HTTP ${res.status}`);
+      return [];
+    }
+    const xml = await res.text();
+
+    const posts: SocialPost[] = [];
+    const entryRegex = /<entry>([\s\S]*?)<\/entry>/g;
+    let match;
+    while ((match = entryRegex.exec(xml)) !== null) {
+      const block = match[1];
+      const titleRaw = block.match(/<title[^>]*>([\s\S]*?)<\/title>/)?.[1] ?? "";
+      const title = decodeEntities(stripCData(titleRaw).trim());
+      const threadUrl = block.match(/<link[^>]*href="([^"]*)"/)?.[1] ?? "";
+      const id = block.match(/<id>([^<]+)<\/id>/)?.[1] ?? "";
+      const updated = block.match(/<updated>([^<]+)<\/updated>/)?.[1] ?? "";
+      const authorName = block.match(/<author>[\s\S]*?<name>\/u\/([^<]+)<\/name>/)?.[1] ?? "";
+
+      if (!title || !threadUrl) continue;
+
+      posts.push({
+        id: `reddit-${id}`,
+        source: "reddit",
+        sourceLabel: `r/${sub}`,
+        author: `u/${authorName}`,
+        title,
+        url: threadUrl,
+        discussionUrl: threadUrl,
+        score: 0, // RSS doesn't expose upvotes
+        comments: 0,
+        timestamp: updated ? new Date(updated).getTime() : 0,
+      });
+    }
+    return posts;
+  } catch (err) {
+    console.error(`Reddit r/${sub} RSS fetch failed:`, err);
+    return [];
+  }
 }
 
 interface HNHit {
@@ -49,63 +97,22 @@ interface HNResponse {
   hits?: HNHit[];
 }
 
-const REDDIT_HEADERS = {
-  "User-Agent": "gigascope-tracker/1.0 (+https://gigascope-ten.vercel.app)",
-};
-
-async function fetchSubreddit(sub: string, limit = 5): Promise<SocialPost[]> {
+// HN Algolia: use popularity sort, filter by points + recency.
+async function fetchHN(query: string, limit = 10): Promise<SocialPost[]> {
   try {
-    const res = await fetch(
-      `https://www.reddit.com/r/${sub}/top.json?t=day&limit=${limit}`,
-      {
-        headers: REDDIT_HEADERS,
-        next: { revalidate: 1800 },
-      }
-    );
-    if (!res.ok) {
-      console.error(`Reddit r/${sub}: HTTP ${res.status}`);
-      return [];
-    }
-    const json: RedditResponse = await res.json();
-    const children = json.data?.children ?? [];
-    return children
-      .filter((c) => !c.data.over_18 && !c.data.stickied)
-      .map((c) => {
-        const d = c.data;
-        const thumb = d.thumbnail && d.thumbnail.startsWith("http") ? d.thumbnail : undefined;
-        return {
-          id: `reddit-${d.id}`,
-          source: "reddit" as const,
-          sourceLabel: `r/${sub}`,
-          author: `u/${d.author}`,
-          title: d.title,
-          url: d.url,
-          discussionUrl: `https://www.reddit.com${d.permalink}`,
-          score: d.score,
-          comments: d.num_comments,
-          timestamp: d.created_utc * 1000,
-          thumbnail: thumb,
-        };
-      });
-  } catch (err) {
-    console.error(`Reddit r/${sub} fetch failed:`, err);
-    return [];
-  }
-}
-
-async function fetchHN(query: string, limit = 5): Promise<SocialPost[]> {
-  try {
+    const weekAgo = Math.floor(Date.now() / 1000) - 30 * 24 * 3600; // 30 days
     const params = new URLSearchParams({
       query,
       tags: "story",
       hitsPerPage: String(limit),
+      numericFilters: `points>20,created_at_i>${weekAgo}`,
     });
     const res = await fetch(
-      `https://hn.algolia.com/api/v1/search_by_date?${params}`,
+      `https://hn.algolia.com/api/v1/search?${params}`, // default sort = popularity
       { next: { revalidate: 1800 } }
     );
     if (!res.ok) {
-      console.error(`HN search "${query}": HTTP ${res.status}`);
+      console.error(`HN "${query}": HTTP ${res.status}`);
       return [];
     }
     const json: HNResponse = await res.json();
@@ -130,45 +137,44 @@ async function fetchHN(query: string, limit = 5): Promise<SocialPost[]> {
   }
 }
 
-// Fetch all community sources for a factory.
-// `keywords` are used to filter Reddit posts down to factory-relevant ones,
-// but if filtering yields too few, we fall back to general Tesla/SpaceX posts.
+// Fetch all community sources. `keywords` boost factory-relevant posts.
 export async function fetchCommunityPosts(keywords: string[] = []): Promise<SocialPost[]> {
   const results = await Promise.allSettled([
-    fetchSubreddit("teslamotors", 10),
-    fetchSubreddit("SpaceXLounge", 5),
-    fetchSubreddit("teslainvestorsclub", 5),
-    fetchHN("Tesla", 5),
-    fetchHN("SpaceX OR Starship", 5),
+    fetchSubredditRSS("teslamotors"),
+    fetchSubredditRSS("SpaceXLounge"),
+    fetchSubredditRSS("teslainvestorsclub"),
+    fetchHN("Tesla Gigafactory OR Cybertruck OR Cybercab OR \"Tesla Semi\" OR Optimus OR \"Full Self Driving\"", 8),
+    fetchHN("SpaceX Starship OR Starlink OR \"Falcon 9\"", 5),
   ]);
 
   const all = results
     .filter((r): r is PromiseFulfilledResult<SocialPost[]> => r.status === "fulfilled")
     .flatMap((r) => r.value);
 
-  // Dedupe by URL
+  // Dedupe by URL (and title as fallback)
   const seen = new Set<string>();
   const deduped = all.filter((p) => {
-    if (seen.has(p.url)) return false;
-    seen.add(p.url);
+    const key = p.url || p.title;
+    if (seen.has(key)) return false;
+    seen.add(key);
     return true;
   });
 
-  // If keywords provided, prefer factory-relevant posts at the top
+  // Filter to posts from last 14 days max (no more 48-week-old stragglers)
+  const cutoff = Date.now() - 14 * 24 * 3600 * 1000;
+  const recent = deduped.filter((p) => p.timestamp >= cutoff);
+
+  // If factory keywords provided, prioritize matches
   if (keywords.length > 0) {
     const matches = (p: SocialPost) => {
       const lower = p.title.toLowerCase();
       return keywords.some((k) => lower.includes(k.toLowerCase()));
     };
-    const relevant = deduped.filter(matches);
-    const general = deduped.filter((p) => !matches(p));
-    // Sort each group by timestamp desc
-    relevant.sort((a, b) => b.timestamp - a.timestamp);
-    general.sort((a, b) => b.timestamp - a.timestamp);
+    const relevant = recent.filter(matches).sort((a, b) => b.timestamp - a.timestamp);
+    const general = recent.filter((p) => !matches(p)).sort((a, b) => b.timestamp - a.timestamp);
     return [...relevant, ...general];
   }
 
-  // No keywords: just sort by timestamp desc
-  deduped.sort((a, b) => b.timestamp - a.timestamp);
-  return deduped;
+  recent.sort((a, b) => b.timestamp - a.timestamp);
+  return recent;
 }
