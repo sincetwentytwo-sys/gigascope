@@ -45,13 +45,30 @@ function TweetCard({ tweet }: { tweet: XTweet }) {
 }
 
 export default async function XFeed({ query, factoryName }: XFeedProps) {
-  const tweets = await searchTweets(query, 5);
+  // Two parallel searches: keyword query + Tesla official accounts.
+  // Official posts are merged in so we never miss them.
+  const [keywordTweets, officialTweets] = await Promise.all([
+    searchTweets(query, 5),
+    searchTweets("from:Tesla OR from:elonmusk OR from:SpaceX OR from:cybertruck", 5),
+  ]);
+
+  const seen = new Set<string>();
+  const merged = [...officialTweets, ...keywordTweets].filter((t) => {
+    if (seen.has(t.id)) return false;
+    seen.add(t.id);
+    return true;
+  });
+
+  // Newest first (Twitter snowflake ids: larger = newer)
+  merged.sort((a, b) => (BigInt(b.id) > BigInt(a.id) ? 1 : -1));
+
+  const items = merged.slice(0, 6);
   const searchUrl = `https://x.com/search?q=${encodeURIComponent(query)}&src=typed_query&f=live`;
 
   return (
     <div className="flex flex-col gap-2">
-      {tweets.length > 0 ? (
-        tweets.map((tweet) => <TweetCard key={tweet.id} tweet={tweet} />)
+      {items.length > 0 ? (
+        items.map((tweet) => <TweetCard key={tweet.id} tweet={tweet} />)
       ) : (
         <p className="text-sm text-dim py-2">No recent posts found.</p>
       )}

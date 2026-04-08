@@ -3,7 +3,7 @@ import FactoryCard from "@/components/FactoryCard";
 import NewsFeed from "@/components/NewsFeed";
 import StockTicker from "@/components/StockTicker";
 
-export const revalidate = 3600;
+export const revalidate = 1800;
 
 export default function Home() {
   const featured = factories.find((f) => f.featured);

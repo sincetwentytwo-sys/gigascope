@@ -4,7 +4,7 @@ import { getESRIImageryDate } from "@/lib/satellite-date";
 import { FactoryNewsFeed } from "@/components/NewsFeed";
 import XFeed from "@/components/XFeed";
 
-export const revalidate = 3600;
+export const revalidate = 1800;
 
 export function generateStaticParams() {
   return factories.map((f) => ({ slug: f.slug }));
@@ -150,7 +150,7 @@ export default async function FactoryPage({ params }: { params: Promise<{ slug: 
       {/* Links */}
       <div className="flex gap-4 mt-6 text-sm">
         <a href="/compare" className="text-accent-blue hover:underline">Compare imagery &rarr;</a>
-        <a href={`https://www.google.com/maps/@${factory.lat},${factory.lng},1000m/data=!3m1!1e3`} target="_blank" rel="noopener noreferrer" className="text-dim hover:text-text">Google Maps &nearr;</a>
+        <a href={`https://www.google.com/maps/@${factory.lat},${factory.lng},1000m/data=!3m1!1e3`} target="_blank" rel="noopener noreferrer" className="text-dim hover:text-text">Google Maps ↗</a>
       </div>
     </div>
   );

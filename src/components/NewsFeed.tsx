@@ -15,12 +15,22 @@ const GENERAL_FEEDS = [
   { source: "CNBC", url: "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001147" },
 ];
 
+// Google News RSS — pre-filtered queries (no extra keyword filtering needed)
+// Captures Reuters + breaking news that other feeds miss
+const GOOGLE_NEWS_FEEDS = [
+  { source: "Reuters", url: "https://news.google.com/rss/search?q=(Tesla+OR+SpaceX+OR+%22Elon+Musk%22)+site:reuters.com&hl=en-US&gl=US&ceid=US:en" },
+  { source: "Bloomberg", url: "https://news.google.com/rss/search?q=(Tesla+OR+SpaceX+OR+%22Elon+Musk%22)+site:bloomberg.com&hl=en-US&gl=US&ceid=US:en" },
+  { source: "WSJ", url: "https://news.google.com/rss/search?q=(Tesla+OR+SpaceX+OR+%22Elon+Musk%22)+site:wsj.com&hl=en-US&gl=US&ceid=US:en" },
+  { source: "FT", url: "https://news.google.com/rss/search?q=(Tesla+OR+SpaceX+OR+%22Elon+Musk%22)+site:ft.com&hl=en-US&gl=US&ceid=US:en" },
+  { source: "Google News", url: "https://news.google.com/rss/search?q=Tesla+when:1d&hl=en-US&gl=US&ceid=US:en" },
+];
+
 const TESLA_KEYWORDS = [
   "tesla", "terafab", "gigafactory", "giga texas", "giga berlin",
   "giga shanghai", "giga nevada", "giga mexico", "fremont",
   "cybertruck", "cybercab", "model y", "model 3", "model s",
   "semi", "megapack", "supercharger", "4680", "fsd", "autopilot",
-  "robotaxi", "optimus", "elon musk", "tsla",
+  "robotaxi", "optimus", "elon musk", "tsla", "spacex", "starship", "starlink",
 ];
 
 function decodeEntities(str: string): string {
@@ -91,7 +101,7 @@ function parseXML(xml: string, source: string): NewsItem[] {
 
 async function fetchFeed(url: string, source: string): Promise<NewsItem[]> {
   try {
-    const res = await fetch(url, { next: { revalidate: 3600 } });
+    const res = await fetch(url, { next: { revalidate: 1800 } });
     if (!res.ok) {
       console.error(`RSS ${source}: HTTP ${res.status}`);
       return [];
@@ -121,6 +131,11 @@ async function fetchAllNews(): Promise<NewsItem[]> {
         return TESLA_KEYWORDS.some((k) => lower.includes(k));
       }).slice(0, 5);
     }),
+    // Google News feeds — pre-filtered by query, no extra filtering needed
+    ...GOOGLE_NEWS_FEEDS.map(async (feed) => {
+      const items = await fetchFeed(feed.url, feed.source);
+      return items.slice(0, 5);
+    }),
   ]);
 
   const allItems = results
@@ -147,6 +162,11 @@ const SOURCE_COLORS: Record<string, string> = {
   "CleanTechnica": "bg-emerald-100 text-emerald-700",
   "TorqueNews": "bg-red-100 text-red-700",
   "CNBC": "bg-sky-100 text-sky-700",
+  "Reuters": "bg-amber-100 text-amber-700",
+  "Bloomberg": "bg-yellow-100 text-yellow-700",
+  "WSJ": "bg-stone-100 text-stone-700",
+  "FT": "bg-pink-100 text-pink-700",
+  "Google News": "bg-indigo-100 text-indigo-700",
 };
 
 function NewsItems({ items }: { items: NewsItem[] }) {
