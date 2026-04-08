@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import GlobeBackground from "@/components/GlobeBackground";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "GIGASCOPE — Tesla Factory Construction Tracker",
@@ -100,6 +101,7 @@ export default function RootLayout({
         <footer className="py-8 px-6 pb-20 sm:pb-8 text-center text-xs text-dim">
           GIGASCOPE — Community project. Not affiliated with Tesla, Inc.
         </footer>
+        <Analytics />
       </body>
     </html>
   );
