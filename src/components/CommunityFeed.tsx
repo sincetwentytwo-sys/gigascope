@@ -6,9 +6,8 @@ interface CommunityFeedProps {
 }
 
 const SOURCE_BADGE: Record<SocialPost["source"], string> = {
-  reddit: "bg-orange-100 text-orange-700",
-  hn: "bg-orange-200 text-orange-800",
-  x: "bg-gray-900 text-white",
+  reddit: "bg-red-100 text-red-700",
+  hn: "bg-orange-100 text-orange-700",
 };
 
 const OFFICIAL_ACCOUNTS = [
@@ -53,10 +52,12 @@ function PostCard({ post }: { post: SocialPost }) {
         <span className="text-xs text-dim">{timeAgo(post.timestamp)}</span>
       </div>
       <p className="text-sm font-medium leading-snug mb-2">{post.title}</p>
-      <div className="flex gap-3 text-xs text-dim">
-        <span title="upvotes / points">▲ {formatScore(post.score)}</span>
-        <span title="comments">💬 {formatScore(post.comments)}</span>
-      </div>
+      {(post.score > 0 || post.comments > 0) && (
+        <div className="flex gap-3 text-xs text-dim">
+          {post.score > 0 && <span title="points">▲ {formatScore(post.score)}</span>}
+          {post.comments > 0 && <span title="comments">💬 {formatScore(post.comments)}</span>}
+        </div>
+      )}
     </a>
   );
 }
