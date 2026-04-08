@@ -55,8 +55,14 @@ export async function searchTweets(query: string, maxResults = 5): Promise<XTwee
   }
 
   try {
+    // Only add lang:en for keyword queries — from: queries already constrain the source
+    // and would lose image/video posts that have no detected language
+    const finalQuery = query.includes("from:")
+      ? `${query} -is:retweet`
+      : `${query} -is:retweet lang:en`;
+
     const params = new URLSearchParams({
-      query: `${query} -is:retweet lang:en`,
+      query: finalQuery,
       max_results: String(Math.max(10, Math.min(maxResults, 100))),
       "tweet.fields": "created_at,public_metrics,attachments,author_id",
       expansions: "author_id,attachments.media_keys",
@@ -74,7 +80,7 @@ export async function searchTweets(query: string, maxResults = 5): Promise<XTwee
 
     if (!res.ok) {
       const errorText = await res.text();
-      console.error(`X API error ${res.status}: ${errorText}`);
+      console.error(`X API error ${res.status} for query "${finalQuery}": ${errorText}`);
       return [];
     }
 
