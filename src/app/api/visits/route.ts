@@ -38,29 +38,22 @@ export async function GET(req: Request) {
   const day = todayKey();
 
   const uniqKey = `visits:${day}:uniques`;
-  const viewsKey = `visits:${day}:views`;
-  const totalKey = `visits:total`;
+  const totalKey = `visits:total:hll`; // HyperLogLog — approximate unique all-time
 
   try {
-    // Pipeline: register visitor, increment views, read counts
     const pipeline = redis.pipeline();
     pipeline.sadd(uniqKey, id);
-    pipeline.expire(uniqKey, 60 * 60 * 48); // keep 48h then auto-clean
-    pipeline.incr(viewsKey);
-    pipeline.expire(viewsKey, 60 * 60 * 48);
-    pipeline.incr(totalKey);
+    pipeline.expire(uniqKey, 60 * 60 * 48);
+    pipeline.pfadd(totalKey, id);  // HyperLogLog: only counts unique IDs
     pipeline.scard(uniqKey);
-    pipeline.get(viewsKey);
-    pipeline.get(totalKey);
+    pipeline.pfcount(totalKey);
 
     const results = (await pipeline.exec()) as unknown[];
-    const todayUnique = Number(results[5] ?? 0);
-    const todayViews = Number(results[6] ?? 0);
-    const total = Number(results[7] ?? 0);
+    const todayUnique = Number(results[3] ?? 0);
+    const total = Number(results[4] ?? 0);
 
     return NextResponse.json({
       today: todayUnique,
-      todayViews,
       total,
       enabled: true,
     });
