@@ -18,83 +18,111 @@ export default async function OGImage({
       (
         <div
           style={{
-            background: "#0c0d12",
+            background: "#ffffff",
             width: "100%",
             height: "100%",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            color: "#6b7280",
+            color: "#86868b",
             fontSize: 32,
           }}
         >
-          Factory not found
+          Factory not found — GIGASCOPE
         </div>
       ),
       { ...size }
     );
   }
 
+  const infoCards = [
+    { label: "Area", value: factory.area },
+    { label: "Capacity", value: factory.capacity },
+    { label: "Investment", value: factory.investment },
+    { label: "Employees", value: factory.employees },
+  ];
+
+  const completedMs = factory.milestones.filter((m) => m.done).length;
+  const totalMs = factory.milestones.length;
+
   return new ImageResponse(
     (
       <div
         style={{
-          background: "#0c0d12",
+          background: "#ffffff",
           width: "100%",
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          padding: 80,
+          padding: "48px 64px",
           fontFamily: "system-ui, sans-serif",
         }}
       >
-        <div style={{ fontSize: 14, color: "#6b7280", letterSpacing: "0.15em", textTransform: "uppercase" }}>
-          GIGASCOPE
-        </div>
-        <div style={{ fontSize: 64, fontWeight: 900, color: "#f0f2f8", marginTop: 12 }}>
-          {factory.flag} {factory.name}
-        </div>
-        <div style={{ fontSize: 22, color: "#6b7280", marginTop: 8 }}>
-          {factory.aka} — {factory.location}
+        {/* Top bar */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ fontSize: 14, color: "#86868b", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+            GIGASCOPE
+          </div>
+          <div style={{
+            fontSize: 12,
+            color: "#86868b",
+            padding: "4px 12px",
+            border: "1px solid #e5e5e7",
+            borderRadius: 20,
+          }}>
+            {factory.status}
+          </div>
         </div>
 
-        <div style={{ display: "flex", gap: 48, marginTop: 40 }}>
+        {/* Factory name + progress */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginTop: 32 }}>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ fontSize: 48, fontWeight: 900, color: factory.color }}>
-              {factory.progress}%
+            <div style={{ fontSize: 56, fontWeight: 900, color: "#1d1d1f", letterSpacing: "-0.02em" }}>
+              {factory.flag} {factory.name}
             </div>
-            <div style={{ fontSize: 12, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.15em" }}>
-              Progress
+            <div style={{ fontSize: 20, color: "#86868b", marginTop: 4 }}>
+              {factory.aka} — {factory.location}
             </div>
           </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ fontSize: 48, fontWeight: 900, color: "#f0f2f8" }}>
-              {factory.investment}
-            </div>
-            <div style={{ fontSize: 12, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.15em" }}>
-              Investment
-            </div>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ fontSize: 48, fontWeight: 900, color: "#f0f2f8" }}>
-              {factory.capacity}
-            </div>
-            <div style={{ fontSize: 12, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.15em" }}>
-              Capacity
-            </div>
+          <div style={{ fontSize: 72, fontWeight: 900, color: "#1d1d1f" }}>
+            {factory.progress}%
           </div>
         </div>
 
         {/* Progress bar */}
-        <div style={{ marginTop: 40, width: "100%", height: 8, background: "#252a38", display: "flex" }}>
-          <div
-            style={{
-              width: `${factory.progress}%`,
-              height: "100%",
-              background: factory.color,
-            }}
-          />
+        <div style={{ width: "100%", height: 12, background: "#f5f5f7", borderRadius: 6, marginTop: 24, display: "flex", overflow: "hidden" }}>
+          <div style={{ width: `${factory.progress}%`, height: "100%", background: "#1d1d1f", borderRadius: 6 }} />
+        </div>
+
+        {/* Info cards */}
+        <div style={{ display: "flex", gap: 24, marginTop: 40 }}>
+          {infoCards.map((c) => (
+            <div key={c.label} style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              background: "#f5f5f7",
+              borderRadius: 12,
+              padding: "16px 20px",
+            }}>
+              <div style={{ fontSize: 11, color: "#86868b", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                {c.label}
+              </div>
+              <div style={{ fontSize: 22, fontWeight: 700, color: "#1d1d1f", marginTop: 4 }}>
+                {c.value}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "auto", paddingTop: 24 }}>
+          <div style={{ fontSize: 14, color: "#86868b" }}>
+            {factory.products}
+          </div>
+          <div style={{ fontSize: 14, color: "#86868b" }}>
+            {completedMs}/{totalMs} milestones — gigascope.xyz
+          </div>
         </div>
       </div>
     ),
