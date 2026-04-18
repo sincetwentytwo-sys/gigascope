@@ -1,0 +1,63 @@
+name: Data Freshness Check
+
+# Runs weekly to check if factory data is getting stale. Opens an issue
+# if lastUpdated is more than 30 days old, so updates never slip.
+on:
+  schedule:
+    - cron: "0 9 * * 1" # Mondays 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run freshness script
+        id: check
+        run: node scripts/check-data-freshness.mjs
+        env:
+          STALE_DAYS: "30"
+
+      - name: Open stale-data issue
+        if: steps.check.outputs.stale == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const ageDays = '${{ steps.check.outputs.age_days }}';
+            const lastUpdated = '${{ steps.check.outputs.last_updated }}';
+            const title = `Factory data is ${ageDays} days old — update needed`;
+
+            // Don't spam: only open if no similar issue is already open
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'data-stale',
+            });
+            if (existing.data.length > 0) {
+              core.info('A data-stale issue is already open; skipping.');
+              return;
+            }
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              labels: ['data-stale'],
+              body: [
+                `Factory data in \`public/data/factories.json\` has not been updated since **${lastUpdated}** (${ageDays} days ago).`,
+                '',
+                'Things to check for each factory:',
+                '- `progress` percentage (based on latest satellite imagery or news)',
+                '- `milestones` array (add newly-completed ones, mark upcoming as `done: false`)',
+                '- `lastUpdated` date',
+                '- `timeline` yearly progress array',
+                '',
+                'When finished, update the top-level `lastUpdated` field. The daily rebuild workflow will pick up the changes and redeploy.',
+              ].join('\n'),
+            });

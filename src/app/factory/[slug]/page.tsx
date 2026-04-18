@@ -3,6 +3,9 @@ import SatelliteMapWrapper from "@/components/SatelliteMapWrapper";
 import { getESRIImageryDate } from "@/lib/satellite-date";
 import { FactoryNewsFeed } from "@/components/NewsFeed";
 import CommunityFeed from "@/components/CommunityFeed";
+import ShareButtons from "@/components/ShareButtons";
+
+const SITE_URL = "https://gigascope.xyz";
 
 export const revalidate = 1800;
 
@@ -24,9 +27,17 @@ const FACTORY_KEYWORDS: Record<string, string[]> = {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const f = getFactory(slug);
+  const url = `${SITE_URL}/factory/${slug}`;
   return {
     title: f ? `${f.name} — GIGASCOPE` : "Factory — GIGASCOPE",
     description: f ? `${f.name} construction progress: ${f.progress}% — ${f.products}` : "Tesla factory construction tracker",
+    alternates: { canonical: url },
+    openGraph: {
+      title: f ? `${f.name} — ${f.progress}% complete` : "Factory — GIGASCOPE",
+      description: f ? `${f.location} · ${f.products} · ${f.investment}` : undefined,
+      url,
+      type: "website",
+    },
   };
 }
 
@@ -40,9 +51,37 @@ export default async function FactoryPage({ params }: { params: Promise<{ slug: 
 
   const imageryDate = await getESRIImageryDate(factory.lat, factory.lng);
   const newsKeywords = FACTORY_KEYWORDS[factory.slug] ?? [factory.name.toLowerCase()];
+  const pageUrl = `${SITE_URL}/factory/${factory.slug}`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Place",
+    name: `Tesla ${factory.name}`,
+    alternateName: factory.aka,
+    description: `${factory.name} construction progress: ${factory.progress}% — ${factory.products}`,
+    url: pageUrl,
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: factory.lat,
+      longitude: factory.lng,
+    },
+    address: { "@type": "PostalAddress", addressLocality: factory.location },
+    additionalProperty: [
+      { "@type": "PropertyValue", name: "Construction progress", value: `${factory.progress}%` },
+      { "@type": "PropertyValue", name: "Status", value: factory.status },
+      { "@type": "PropertyValue", name: "Products", value: factory.products },
+      { "@type": "PropertyValue", name: "Investment", value: factory.investment },
+      { "@type": "PropertyValue", name: "Capacity", value: factory.capacity },
+      { "@type": "PropertyValue", name: "Area", value: factory.area },
+    ],
+  };
 
   return (
     <div className="max-w-[1200px] mx-auto px-6 py-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Header */}
       <a href="/" className="text-dim text-sm hover:text-text transition-colors">&larr; All Factories</a>
 
@@ -133,6 +172,11 @@ export default async function FactoryPage({ params }: { params: Promise<{ slug: 
           <h3 className="font-bold mb-3">Community</h3>
           <CommunityFeed keywords={newsKeywords} factoryName={factory.name} />
         </div>
+      </div>
+
+      {/* Share */}
+      <div className="mt-8">
+        <ShareButtons url={pageUrl} title={`${factory.name} — ${factory.progress}% complete`} />
       </div>
 
       {/* Links */}
