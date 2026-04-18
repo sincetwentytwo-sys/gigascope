@@ -1,6 +1,7 @@
 import { factories, getTotalInvestment, DATA_LAST_UPDATED } from "@/data/factories";
 import FactoryCard from "@/components/FactoryCard";
 import NewsFeed from "@/components/NewsFeed";
+import CommunityFeed from "@/components/CommunityFeed";
 import StockTicker from "@/components/StockTicker";
 
 export const revalidate = 1800;
@@ -74,11 +75,17 @@ export default function Home() {
         </p>
       </section>
 
-      {/* News */}
+      {/* News + Community */}
       <section className="border-t border-border-custom">
-        <div className="max-w-[1200px] mx-auto px-6 py-12">
-          <h2 className="text-2xl font-bold mb-6">Latest News</h2>
-          <NewsFeed />
+        <div className="max-w-[1200px] mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div>
+            <h2 className="text-2xl font-bold mb-6">Latest News</h2>
+            <NewsFeed />
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold mb-6">Community</h2>
+            <CommunityFeed factoryName="Tesla" />
+          </div>
         </div>
       </section>
     </>

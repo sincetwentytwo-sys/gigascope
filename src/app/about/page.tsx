@@ -11,15 +11,11 @@ export default function AboutPage() {
     <div className="max-w-4xl mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-12">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-2 h-2 bg-accent-cyan rounded-full" />
-          <span className="font-mono text-[9px] tracking-[0.2em] text-dim uppercase">MISSION BRIEFING</span>
-        </div>
         <h1 className="text-3xl sm:text-4xl font-black mb-4">About GIGASCOPE</h1>
         <p className="text-dim text-base leading-relaxed max-w-2xl">
           GIGASCOPE is a community-built dashboard that tracks Tesla factory construction
-          progress worldwide using satellite imagery comparison, milestone tracking, and
-          3D globe visualization.
+          progress worldwide. Satellite imagery comparison, milestone tracking, news, and
+          community discussions in one place.
         </p>
       </div>
 
@@ -50,9 +46,13 @@ export default function AboutPage() {
         <div className="flex flex-col gap-4">
           {[
             { name: "ESRI World Imagery", desc: "High-resolution satellite basemap, updated every 3-6 months", color: "var(--cyan)" },
-            { name: "Sentinel-2 by EOX", desc: "Annual cloudless composite mosaic from Copernicus Sentinel-2 satellites", color: "var(--amber)" },
-            { name: "CartoDB Dark", desc: "Dark basemap tiles for globe and map backgrounds", color: "var(--dim)" },
-            { name: "Google Stitch SDK", desc: "AI-generated UI designs for the dashboard interface", color: "var(--pink)" },
+            { name: "Sentinel-2 (EOX)", desc: "Annual cloudless composite from Copernicus Sentinel-2", color: "var(--amber)" },
+            { name: "Electrek, Teslarati, Not A Tesla App", desc: "Tesla-dedicated news via RSS", color: "var(--text)" },
+            { name: "Reuters, Bloomberg, WSJ, FT (via Google News)", desc: "Breaking business coverage filtered by Tesla/SpaceX keywords", color: "var(--dim)" },
+            { name: "Reddit r/teslamotors, r/SpaceXLounge, r/teslainvestorsclub", desc: "Community discussions via public RSS", color: "var(--pink)" },
+            { name: "Hacker News (Algolia API)", desc: "Tech discussions filtered by points and recency", color: "var(--amber)" },
+            { name: "Yahoo Finance", desc: "TSLA live price ticker", color: "var(--cyan)" },
+            { name: "Milestones & specs", desc: "Compiled manually from public filings, press releases, and satellite observations", color: "var(--text)" },
           ].map((s) => (
             <div key={s.name} className="flex items-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ background: s.color }} />
@@ -81,14 +81,25 @@ export default function AboutPage() {
         <h2 className="text-lg font-bold mb-4">Built With</h2>
         <div className="flex flex-wrap gap-2">
           {[
-            "Next.js 16", "TypeScript", "Tailwind CSS", "Leaflet",
-            "Vercel", "ESRI", "Sentinel-2",
+            "Next.js 16", "React 19", "TypeScript", "Tailwind CSS 4",
+            "Leaflet", "Vercel", "Upstash Redis", "ESRI", "Sentinel-2",
           ].map((t) => (
             <span key={t} className="px-3 py-1.5 rounded-full text-xs font-mono glass-card">
               {t}
             </span>
           ))}
         </div>
+        <p className="text-xs text-dim mt-4">
+          Source code:{" "}
+          <a
+            href="https://github.com/sincetwentytwo-sys/gigascope"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-text"
+          >
+            github.com/sincetwentytwo-sys/gigascope
+          </a>
+        </p>
       </div>
 
       {/* Disclaimer */}

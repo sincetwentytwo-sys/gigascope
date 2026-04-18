@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import GlobeBackground from "@/components/GlobeBackground";
 import VisitCounter from "@/components/VisitCounter";
+import SupportLinks from "@/components/SupportLinks";
 
 export const metadata: Metadata = {
   title: "GIGASCOPE — Tesla Factory Construction Tracker",
@@ -98,8 +99,9 @@ export default function RootLayout({
 
         <main id="main-content" className="flex-1">{children}</main>
 
-        <footer className="py-8 px-6 pb-20 sm:pb-8 text-center text-xs text-dim flex flex-col gap-2 items-center">
+        <footer className="py-8 px-6 pb-20 sm:pb-8 text-center text-xs text-dim flex flex-col gap-3 items-center">
           <div>GIGASCOPE — Community project. Not affiliated with Tesla, Inc.</div>
+          <SupportLinks />
           <VisitCounter />
         </footer>
       </body>
