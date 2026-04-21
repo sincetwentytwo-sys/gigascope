@@ -78,14 +78,14 @@ export default async function OGImage({
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginTop: 32 }}>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ fontSize: 56, fontWeight: 900, color: "#1d1d1f", letterSpacing: "-0.02em" }}>
-              {factory.flag} {factory.name}
+              {`${factory.flag} ${factory.name}`}
             </div>
             <div style={{ fontSize: 20, color: "#86868b", marginTop: 4 }}>
-              {factory.aka} — {factory.location}
+              {`${factory.aka} — ${factory.location}`}
             </div>
           </div>
           <div style={{ fontSize: 72, fontWeight: 900, color: "#1d1d1f" }}>
-            {factory.progress}%
+            {`${factory.progress}%`}
           </div>
         </div>
 
@@ -121,7 +121,7 @@ export default async function OGImage({
             {factory.products}
           </div>
           <div style={{ fontSize: 14, color: "#86868b" }}>
-            {completedMs}/{totalMs} milestones — gigascope.xyz
+            {`${completedMs}/${totalMs} milestones — gigascope.xyz`}
           </div>
         </div>
       </div>
