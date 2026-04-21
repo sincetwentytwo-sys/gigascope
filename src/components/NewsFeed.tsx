@@ -221,7 +221,8 @@ export async function FactoryNewsFeed({ keywords }: { keywords: string[] }) {
   const specificIds = new Set(specific.map((item) => item.title));
   const general = allItems.filter((item) => !specificIds.has(item.title));
 
-  const items = [...specific.slice(0, 10), ...general.slice(0, Math.max(0, 10 - specific.length))];
+  const items = [...specific.slice(0, 10), ...general.slice(0, Math.max(0, 10 - specific.length))]
+    .sort((a, b) => b.timestamp - a.timestamp);
 
   if (items.length === 0) {
     return <p className="text-sm text-dim">No recent news available.</p>;
