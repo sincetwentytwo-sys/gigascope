@@ -61,7 +61,7 @@ export default function OGImage() {
                 <div style={{ width: `${f.progress}%`, height: "100%", background: "#1d1d1f", borderRadius: 4 }} />
               </div>
               <div style={{ width: 56, textAlign: "right", fontSize: 16, fontWeight: 700, color: "#1d1d1f" }}>
-                {f.progress}%
+                {`${f.progress}%`}
               </div>
               <div style={{ width: 100, fontSize: 11, color: "#86868b", textAlign: "right" }}>
                 {f.status}
