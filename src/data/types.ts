@@ -1,3 +1,5 @@
+export type Company = "tesla" | "spacex" | "xai" | "neuralink" | "boring" | "joint";
+
 export interface Milestone {
   date: string;
   text: string;
@@ -13,6 +15,7 @@ export interface Factory {
   location: string;
   lat: number;
   lng: number;
+  company: Company;
   status: "operational" | "expanding" | "construction" | "planned" | "paused";
   progress: number;
   area: string;
@@ -22,9 +25,18 @@ export interface Factory {
   employees: string;
   color: string;
   featured?: boolean;
-  lastUpdated: string; // ISO date string (YYYY-MM-DD)
+  extras?: Record<string, string>;
+  lastUpdated: string;
   milestones: Milestone[];
-  timeline: number[]; // progress % per year [2020..2026]
+  timeline: number[];
+}
+
+export interface CompanyMeta {
+  id: Company;
+  name: string;
+  color: string;
+  icon: string;
+  description: string;
 }
 
 export interface NewsItem {
