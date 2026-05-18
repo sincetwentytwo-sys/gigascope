@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const factoryPages: MetadataRoute.Sitemap = factories.map((f) => ({
-    url: `${BASE_URL}/factory/${f.slug}`,
+    url: `${BASE_URL}/site/${f.slug}`,
     lastModified: f.lastUpdated ? new Date(f.lastUpdated) : lastMod,
     changeFrequency: "weekly",
     priority: f.featured ? 0.95 : 0.85,

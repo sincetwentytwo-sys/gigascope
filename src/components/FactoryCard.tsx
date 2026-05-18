@@ -3,7 +3,7 @@ import type { Factory } from "@/data/types";
 export default function FactoryCard({ factory }: { factory: Factory }) {
   return (
     <a
-      href={`/factory/${factory.slug}`}
+      href={`/site/${factory.slug}`}
       className="group block bg-surface rounded-xl p-5 hover:shadow-lg transition-shadow"
     >
       <div className="flex justify-between items-start mb-3">

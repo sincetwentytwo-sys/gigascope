@@ -26,7 +26,7 @@ export default function AboutPage() {
           {factories.map((f) => (
             <a
               key={f.id}
-              href={`/factory/${f.slug}`}
+              href={`/site/${f.slug}`}
               className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors"
             >
               <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: f.color }} />

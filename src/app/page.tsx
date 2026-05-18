@@ -26,7 +26,7 @@ export default function Home() {
       {/* Terafab spotlight */}
       {featured && (
         <section className="max-w-[1200px] mx-auto px-6 pb-12">
-          <a href={`/factory/${featured.slug}`} className="block bg-text text-bg rounded-2xl p-8 sm:p-10 group hover:opacity-95 transition-opacity">
+          <a href={`/site/${featured.slug}`} className="block bg-text text-bg rounded-2xl p-8 sm:p-10 group hover:opacity-95 transition-opacity">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
               <div>
                 <span className="text-[11px] font-semibold px-3 py-1 rounded-full bg-white/20 text-white">NEW</span>
