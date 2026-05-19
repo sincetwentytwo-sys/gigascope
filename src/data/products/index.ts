@@ -69,8 +69,10 @@ export type ProductSpec = {
 import { raptor } from "./raptor";
 import { falcon9 } from "./falcon9";
 import { starship } from "./starship";
+import { tesla4680 } from "./4680";
+import { neuralinkN1 } from "./neuralink-n1";
 
-export const KNOWN_PRODUCTS: ProductSpec[] = [raptor, falcon9, starship];
+export const KNOWN_PRODUCTS: ProductSpec[] = [raptor, falcon9, starship, tesla4680, neuralinkN1];
 
 export function getProduct(slug: string): ProductSpec | undefined {
   return KNOWN_PRODUCTS.find((p) => p.slug === slug);
