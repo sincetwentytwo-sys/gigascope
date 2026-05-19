@@ -1,6 +1,6 @@
 "use client";
 
-import { Canvas, ThreeEvent } from "@react-three/fiber";
+import { Canvas, ThreeEvent, useThree } from "@react-three/fiber";
 import { OrbitControls, Stars, Environment, ContactShadows } from "@react-three/drei";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type {
@@ -8,7 +8,16 @@ import type {
   PartSpec,
   ProductSpec,
 } from "@/data/products";
-import type * as THREE from "three";
+
+function CameraSetup({ position, target }: { position: [number, number, number]; target: [number, number, number] }) {
+  const { camera } = useThree();
+  useEffect(() => {
+    camera.position.set(position[0], position[1], position[2]);
+    camera.lookAt(target[0], target[1], target[2]);
+    camera.updateProjectionMatrix();
+  }, [camera, position[0], position[1], position[2], target[0], target[1], target[2]]);
+  return null;
+}
 
 type GeometryProps = { kind: GeometryKind; args: Array<number | boolean> };
 
@@ -193,6 +202,11 @@ function Scene({
         position={[0, -2.39, 0]}
       />
 
+      <CameraSetup
+        position={product.cameraPosition}
+        target={target as [number, number, number]}
+      />
+
       <group onPointerMissed={() => setSelectedId(null)}>
         {product.parts.map((part) => (
           <Part
@@ -214,6 +228,7 @@ function Scene({
         maxDistance={product.cameraMaxDistance ?? 18}
         enableDamping
         dampingFactor={0.08}
+        makeDefault
       />
     </>
   );
