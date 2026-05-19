@@ -3,8 +3,17 @@
 
 const SITE_URL = "https://gigascope-ten.vercel.app";
 
-function siteUrl(slug) {
-  return `${SITE_URL}/site/${slug}`;
+function withUtm(url, campaign) {
+  const sep = url.includes("?") ? "&" : "?";
+  return `${url}${sep}utm_source=x&utm_medium=social&utm_campaign=${campaign}`;
+}
+
+function siteUrl(slug, campaign) {
+  return withUtm(`${SITE_URL}/site/${slug}`, campaign);
+}
+
+function homeUrl(campaign) {
+  return withUtm(SITE_URL, campaign);
 }
 
 function ogUrl(slug) {
@@ -15,7 +24,7 @@ export const templates = {
   milestoneHit({ site, milestoneText }) {
     return {
       text: `${site.flag} ${site.name} just hit a milestone:\n\n"${milestoneText}"\n\nCurrent progress: ${site.progress}%`,
-      url: siteUrl(site.slug),
+      url: siteUrl(site.slug, "milestone"),
       image: ogUrl(site.slug),
       tag: "milestone",
     };
@@ -25,7 +34,7 @@ export const templates = {
     const delta = newProgress - oldProgress;
     return {
       text: `${site.flag} ${site.name}: ${oldProgress}% → ${newProgress}% (+${delta}%)\n\n${site.aka}`,
-      url: siteUrl(site.slug),
+      url: siteUrl(site.slug, "progress"),
       image: ogUrl(site.slug),
       tag: "progress",
     };
@@ -34,7 +43,7 @@ export const templates = {
   launchImminent({ launchName, hoursAway, launchPad }) {
     return {
       text: `🚀 T-${hoursAway}h: ${launchName}\n\nPad: ${launchPad}\n\nTrack the site:`,
-      url: SITE_URL,
+      url: homeUrl("launch-t24"),
       tag: "launch-imminent",
     };
   },
@@ -42,7 +51,7 @@ export const templates = {
   launchT1h({ launchName, launchPad }) {
     return {
       text: `🔴 LIVE in ~1 hour\n\n${launchName} — ${launchPad}\n\nWatch your spot on the empire map:`,
-      url: SITE_URL,
+      url: homeUrl("launch-t1"),
       tag: "launch-t1h",
     };
   },
@@ -50,7 +59,7 @@ export const templates = {
   launchSuccess({ launchName, launchDate, launchPad }) {
     return {
       text: `✅ ${launchName} — launched ${launchDate} from ${launchPad}.\n\nSpaceX tally just ticked up. Live count:`,
-      url: SITE_URL,
+      url: homeUrl("launch-success"),
       tag: "launch-success",
     };
   },
@@ -58,7 +67,7 @@ export const templates = {
   spacexStats({ totalLaunches, launchesThisYear, starlinkCount, year }) {
     return {
       text: `SpaceX by the numbers (live):\n\n🚀 ${totalLaunches} total launches\n📅 ${launchesThisYear} in ${year}\n🛰️ ${starlinkCount.toLocaleString()} Starlinks in orbit\n\nTrack every pad:`,
-      url: SITE_URL,
+      url: homeUrl("stats-spacex"),
       tag: "stats-spacex",
     };
   },
@@ -77,7 +86,7 @@ export const templates = {
     lines.push("Full breakdown:");
     return {
       text: lines.join("\n"),
-      url: `${SITE_URL}/timeline`,
+      url: withUtm(`${SITE_URL}/timeline`, "weekly-summary"),
       tag: "weekly-summary",
     };
   },
@@ -85,7 +94,7 @@ export const templates = {
   featuredSite({ site }) {
     return {
       text: `Spotlight: ${site.flag} ${site.name}\n\n${site.aka}\n\n📍 ${site.location}\n🏗️ ${site.progress}% — ${site.status}\n💰 ${site.investment}`,
-      url: siteUrl(site.slug),
+      url: siteUrl(site.slug, "featured"),
       image: ogUrl(site.slug),
       tag: "featured",
     };
@@ -94,7 +103,7 @@ export const templates = {
   satelliteCompare({ site }) {
     return {
       text: `Then vs now: ${site.flag} ${site.name}\n\nDrag the slider — 2023 (Sentinel-2) vs latest (ESRI):`,
-      url: `${SITE_URL}/compare`,
+      url: withUtm(`${SITE_URL}/compare`, "compare"),
       tag: "compare",
     };
   },
@@ -102,7 +111,7 @@ export const templates = {
   empireSnapshot({ totalSites, totalInvestment, companies }) {
     return {
       text: `🌍 Musk Empire — live snapshot\n\n📍 ${totalSites} sites tracked\n💰 ${totalInvestment} invested\n🏢 ${companies.length} companies: ${companies.join(", ")}\n\nExplore:`,
-      url: SITE_URL,
+      url: homeUrl("snapshot"),
       tag: "snapshot",
     };
   },
