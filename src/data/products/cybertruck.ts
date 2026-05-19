@@ -9,9 +9,9 @@ export const cybertruck: ProductSpec = {
   category: "vehicle",
   description:
     "5.68m pickup with a 30X cold-rolled stainless-steel exoskeleton in place of a conventional unibody. Tri-motor AWD (Cyberbeast) makes ~845 hp combined, 0-60 in 2.6s. First production vehicle with 48V low-voltage architecture, steer-by-wire, and rear-axle steering. Built exclusively at Giga Texas.",
-  cameraPosition: [7, 5, 9],
+  cameraPosition: [7, 6, 10],
   cameraTarget: [0, 1.0, 0],
-  cameraMinDistance: 5,
+  cameraMinDistance: 6,
   cameraMaxDistance: 30,
   background: "#0a0c10",
   parts: [

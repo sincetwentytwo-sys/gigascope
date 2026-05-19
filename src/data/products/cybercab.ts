@@ -9,8 +9,8 @@ export const cybercab: ProductSpec = {
   category: "vehicle",
   description:
     "~3.9m, two-seat purpose-built autonomous robotaxi. No steering wheel, no pedals, no charge port — the cabin is pure occupant space and charging happens inductively from a floor pad. Built on a simplified unboxed-process chassis at Giga Texas with a single rear drive unit and the next-gen FSD compute stack. Mission: $0.30/mile fleet economics by deleting everything a human driver needs.",
-  cameraPosition: [5, 3, 6],
-  cameraTarget: [0, 0.6, 0],
+  cameraPosition: [5, 4, 7],
+  cameraTarget: [0, 0.7, 0],
   cameraMinDistance: 4,
   cameraMaxDistance: 20,
   background: "#15171c",

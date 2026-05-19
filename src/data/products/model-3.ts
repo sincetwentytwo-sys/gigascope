@@ -9,9 +9,9 @@ export const model3: ProductSpec = {
   category: "vehicle",
   description:
     "Mid-size electric sedan, 4.69m long. Highland refresh swapped stalks for steering-wheel scroll buttons, added acoustic glass, and revised the rear lights. AWD Long Range uses a front induction motor + rear PMSM, ~346 hp combined, 0-60 in 4.2s. Built at Fremont and Giga Shanghai (export hub); Highland body-in-white uses ~80 fewer parts than the pre-refresh shell.",
-  cameraPosition: [6, 4, 7],
-  cameraTarget: [0, 0.5, 0],
-  cameraMinDistance: 4,
+  cameraPosition: [6, 5, 8],
+  cameraTarget: [0, 0.7, 0],
+  cameraMinDistance: 5,
   cameraMaxDistance: 25,
   background: "#0b0d12",
   parts: [
