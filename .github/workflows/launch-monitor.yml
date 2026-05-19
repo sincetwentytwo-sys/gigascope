@@ -1,8 +1,9 @@
 name: SpaceX launch monitor
 
 # Runs hourly. Detects upcoming SpaceX launches via Launch Library 2 and
-# generates time-sensitive tweet drafts (T-24h, T-1h, post-launch).
-# Skips already-announced launches via marketing/launches-state.json.
+# generates time-sensitive tweet drafts (T-24h, T-1h, post-launch). All
+# launch alerts auto-post immediately (no rate limit) since they are time
+# sensitive. Skips already-announced launches via state file.
 on:
   schedule:
     - cron: "0 * * * *"
@@ -26,6 +27,19 @@ jobs:
         id: mon
         run: node scripts/marketing/launch-monitor.mjs
 
+      - name: Post launch alerts to X
+        id: post
+        if: steps.mon.outputs.tweet_count != '0'
+        env:
+          X_CONSUMER_KEY: ${{ secrets.X_CONSUMER_KEY }}
+          X_CONSUMER_SECRET: ${{ secrets.X_CONSUMER_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+          X_AUTOPOST: ${{ secrets.X_AUTOPOST }}
+          POST_LIMIT: "5"
+          DRAFT_FILE: ${{ steps.mon.outputs.draft_path }}
+        run: node scripts/marketing/post-to-x.mjs
+
       - name: Commit drafts and state
         if: steps.mon.outputs.tweet_count != '0'
         run: |
@@ -47,13 +61,15 @@ jobs:
             const fs = require('fs');
             const path = '${{ steps.mon.outputs.draft_path }}';
             const summary = '${{ steps.mon.outputs.summary }}';
-            let body = `🚀 Launch alert. ${summary}\n\n---\n\n`;
+            const postSummary = '${{ steps.post.outputs.summary || "skipped" }}';
+            const postedCount = '${{ steps.post.outputs.posted_count || "0" }}';
+            let body = `🚀 Launch alert.\n\n**Detected:** ${summary}\n**Auto-posted to X:** ${postSummary} (${postedCount})\n\n---\n\n`;
             try {
               body += fs.readFileSync(path, 'utf8');
             } catch (e) {
               body += `_(could not read ${path}: ${e.message})_`;
             }
-            body += `\n\n---\nTime-sensitive: post to X soon.`;
+            body += `\n\n---\nTime-sensitive: any tweets not auto-posted should be posted to X soon.`;
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
