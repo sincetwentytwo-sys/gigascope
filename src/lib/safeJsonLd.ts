@@ -4,6 +4,6 @@
 export function safeJsonLd(value: unknown): string {
   return JSON.stringify(value)
     .replace(/</g, "\\u003c")
-    .replace(/ /g, "\\u2028")
-    .replace(/ /g, "\\u2029");
+    .replace(new RegExp(" ", "g"), "\\u2028")
+    .replace(new RegExp(" ", "g"), "\\u2029");
 }
