@@ -71,6 +71,7 @@ export default function RootLayout({
             <div className="hidden sm:flex items-center gap-8 text-[13px] text-dim">
               <a href="/compare" className="hover:text-text transition-colors">Compare</a>
               <a href="/timeline" className="hover:text-text transition-colors">Timeline</a>
+              <a href="/products" className="hover:text-text transition-colors">Products</a>
               <a href="/about" className="hover:text-text transition-colors">About</a>
               <a href="https://github.com/sincetwentytwo-sys/gigascope" target="_blank" rel="noopener noreferrer" className="hover:text-text transition-colors">GitHub</a>
             </div>

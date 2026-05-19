@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { factories, getFactory, TIMELINE_YEARS } from "@/data/factories";
 import { getCompanyMeta } from "@/data/companies";
 import SatelliteMapWrapper from "@/components/SatelliteMapWrapper";
+import { listProducts } from "@/data/products";
 import { getESRIImageryDate } from "@/lib/satellite-date";
 import { FactoryNewsFeed } from "@/components/NewsFeed";
 import CommunityFeed from "@/components/CommunityFeed";
@@ -263,6 +264,29 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                   <p className="mt-1 font-mono text-[9px] text-[#8292aa]">
                     Latest: {tl.latest} · Source: Sentinel-2 L2A (Copernicus)
                   </p>
+                </div>
+              );
+            })()}
+
+            {(() => {
+              const related = listProducts().filter((p) =>
+                (p.relatedSites ?? []).includes(factory.slug),
+              );
+              if (related.length === 0) return null;
+              return (
+                <div className="mt-4 flex flex-wrap items-center gap-2">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-[#8292aa]">
+                    Related products
+                  </span>
+                  {related.map((p) => (
+                    <a
+                      key={p.slug}
+                      href={`/products/${p.slug}`}
+                      className="font-mono text-[10px] uppercase tracking-widest px-2 py-1 border border-[#343538] hover:border-white text-[#d6dde8] hover:text-white transition-colors"
+                    >
+                      {p.name} 3D &rarr;
+                    </a>
+                  ))}
                 </div>
               );
             })()}
