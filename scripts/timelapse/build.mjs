@@ -78,11 +78,11 @@ function buildVideo(framesDir, outFile) {
     { stdio: ["ignore", "ignore", "pipe"] }
   );
 
-  const latest = files[files.length - 1];
+  const latest = files[files.length - 1].replace(/\.png$/, "");
   return { ok: true, frames: files.length, latest };
 }
 
-function main() {
+async function main() {
   const data = JSON.parse(readFileSync(factoriesPath, "utf8"));
   const sites = onlySlug ? data.factories.filter((f) => f.slug === onlySlug) : data.factories;
 

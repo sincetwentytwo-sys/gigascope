@@ -1,1 +1,82 @@
-{}
+{
+  "terafab": {
+    "frames": 4,
+    "latest": "2026-05-15",
+    "builtAt": "2026-05-19T11:36:29.764Z"
+  },
+  "giga-texas": {
+    "frames": 4,
+    "latest": "2026-05-15",
+    "builtAt": "2026-05-19T11:36:32.584Z"
+  },
+  "giga-nevada": {
+    "frames": 4,
+    "latest": "2026-05-15",
+    "builtAt": "2026-05-19T11:36:35.002Z"
+  },
+  "giga-shanghai": {
+    "frames": 4,
+    "latest": "2026-05-15",
+    "builtAt": "2026-05-19T11:36:37.830Z"
+  },
+  "giga-berlin": {
+    "frames": 4,
+    "latest": "2026-05-15",
+    "builtAt": "2026-05-19T11:36:40.518Z"
+  },
+  "giga-mexico": {
+    "frames": 4,
+    "latest": "2026-05-15",
+    "builtAt": "2026-05-19T11:36:42.816Z"
+  },
+  "fremont": {
+    "frames": 4,
+    "latest": "2026-05-15",
+    "builtAt": "2026-05-19T11:36:44.843Z"
+  },
+  "giga-buffalo": {
+    "frames": 4,
+    "latest": "2026-05-15",
+    "builtAt": "2026-05-19T11:36:47.612Z"
+  },
+  "starbase": {
+    "frames": 4,
+    "latest": "2026-05-15",
+    "builtAt": "2026-05-19T11:36:49.859Z"
+  },
+  "spacex-hawthorne": {
+    "frames": 4,
+    "latest": "2026-05-15",
+    "builtAt": "2026-05-19T11:36:51.811Z"
+  },
+  "cape-canaveral": {
+    "frames": 4,
+    "latest": "2026-05-15",
+    "builtAt": "2026-05-19T11:36:53.683Z"
+  },
+  "vandenberg": {
+    "frames": 4,
+    "latest": "2026-05-15",
+    "builtAt": "2026-05-19T11:36:56.754Z"
+  },
+  "colossus": {
+    "frames": 4,
+    "latest": "2026-05-15",
+    "builtAt": "2026-05-19T11:36:59.539Z"
+  },
+  "neuralink-fremont": {
+    "frames": 4,
+    "latest": "2026-05-15",
+    "builtAt": "2026-05-19T11:37:02.443Z"
+  },
+  "neuralink-austin": {
+    "frames": 4,
+    "latest": "2026-05-15",
+    "builtAt": "2026-05-19T11:37:04.447Z"
+  },
+  "vegas-loop": {
+    "frames": 4,
+    "latest": "2026-05-15",
+    "builtAt": "2026-05-19T11:37:06.830Z"
+  }
+}

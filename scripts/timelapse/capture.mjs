@@ -151,9 +151,10 @@ async function main() {
   for (const site of sites) {
     const tag = `timelapse-frames-${site.slug}`;
     const assetName = `${frameDate}.png`;
-    const localPath = join(outDir, `${site.slug}-${frameDate}.png`);
+    const localPath = join(outDir, site.slug, `${frameDate}.png`);
     try {
       const buf = await captureSite(token, site);
+      mkdirSync(dirname(localPath), { recursive: true });
       writeFileSync(localPath, buf);
       const kb = (buf.length / 1024).toFixed(0);
       if (dryRun) {
