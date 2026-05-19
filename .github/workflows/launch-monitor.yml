@@ -61,8 +61,8 @@ jobs:
             const fs = require('fs');
             const path = '${{ steps.mon.outputs.draft_path }}';
             const summary = '${{ steps.mon.outputs.summary }}';
-            const postSummary = '${{ steps.post.outputs.summary || "skipped" }}';
-            const postedCount = '${{ steps.post.outputs.posted_count || "0" }}';
+            const postSummary = '${{ steps.post.outputs.summary || 'skipped' }}';
+            const postedCount = '${{ steps.post.outputs.posted_count || '0' }}';
             let body = `🚀 Launch alert.\n\n**Detected:** ${summary}\n**Auto-posted to X:** ${postSummary} (${postedCount})\n\n---\n\n`;
             try {
               body += fs.readFileSync(path, 'utf8');
