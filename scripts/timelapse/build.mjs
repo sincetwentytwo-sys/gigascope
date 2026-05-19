@@ -62,6 +62,25 @@ if (fontSrc) {
   copyFileSync(fontSrc, fontLocal);
 }
 
+function frameBrightness(srcPath) {
+  try {
+    const out = execFileSync(
+      "ffmpeg",
+      ["-hide_banner", "-i", srcPath, "-vf", "signalstats,metadata=print:file=-", "-f", "null", "-"],
+      { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }
+    );
+    const m = out.match(/lavfi\.signalstats\.YAVG=([\d.]+)/);
+    if (m) return Number(m[1]);
+    return 255;
+  } catch (e) {
+    const stderr = e.stderr?.toString?.() ?? "";
+    const m = stderr.match(/lavfi\.signalstats\.YAVG=([\d.]+)/);
+    return m ? Number(m[1]) : 255;
+  }
+}
+
+const MIN_BRIGHTNESS = 40;
+
 function burnDate(srcPath, dstPath, label) {
   const fontArg = fontLocal ? relative(process.cwd(), fontLocal).replace(/\\/g, "/") : null;
   const drawtext = fontArg
@@ -79,12 +98,23 @@ function buildVideo(framesDir, outFile) {
     .sort();
   if (files.length < 2) return { ok: false, frames: files.length, reason: "need at least 2 frames" };
 
+  let dropped = 0;
   for (const f of files) {
     const date = f.replace(/\.png$/, "");
+    const src = join(framesDir, f);
+    const y = frameBrightness(src);
+    if (y < MIN_BRIGHTNESS) {
+      console.log(`    drop ${date} (YAVG=${y.toFixed(1)})`);
+      dropped++;
+      continue;
+    }
     const burned = join(framesDir, `_burned_${f.replace(/\.png$/, ".jpg")}`);
-    burnDate(join(framesDir, f), burned, date);
+    burnDate(src, burned, date);
   }
   const burnedFiles = readdirSync(framesDir).filter((f) => f.startsWith("_burned_")).sort();
+  if (burnedFiles.length < 2) {
+    return { ok: false, frames: files.length, reason: `only ${burnedFiles.length} bright frames after drop` };
+  }
 
   const listFile = join(framesDir, "_concat.txt");
   const lines = burnedFiles.map((f) => `file '${join(framesDir, f).replace(/\\/g, "/")}'\nduration ${1 / fps}`);
@@ -108,8 +138,9 @@ function buildVideo(framesDir, outFile) {
     { stdio: ["ignore", "ignore", "pipe"] }
   );
 
-  const latest = files[files.length - 1].replace(/\.png$/, "");
-  return { ok: true, frames: files.length, latest };
+  const lastBurned = burnedFiles[burnedFiles.length - 1];
+  const latest = lastBurned.replace(/^_burned_/, "").replace(/\.(png|jpg)$/, "");
+  return { ok: true, frames: burnedFiles.length, dropped, latest };
 }
 
 async function main() {
