@@ -105,6 +105,11 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
   const latStr = `${Math.abs(lat).toFixed(4)}° ${lat >= 0 ? "N" : "S"}`;
   const lngStr = `${Math.abs(lng).toFixed(4)}° ${lng >= 0 ? "E" : "W"}`;
   const doneCount = factory.milestones.filter((m) => m.done).length;
+  const sortedMilestones = [...factory.milestones].sort((a, b) => {
+    const da = a.date.replace(/Q\d|H\d/g, "").trim();
+    const db = b.date.replace(/Q\d|H\d/g, "").trim();
+    return db.localeCompare(da);
+  });
 
   return (
     <div className="bg-[#121316] text-[#e3e2e6] min-h-screen">
@@ -255,7 +260,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                 </span>
               </div>
               <div className="relative space-y-6 before:content-[''] before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-[1px] before:bg-[#5d3f44]">
-                {factory.milestones.map((m, i) => (
+                {sortedMilestones.map((m, i) => (
                   <div key={i} className={`relative pl-7 ${!m.done ? "opacity-50" : ""}`}>
                     <div
                       className="absolute left-0 top-1 w-4 h-4 bg-[#121316] border flex items-center justify-center"
