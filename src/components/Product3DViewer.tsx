@@ -256,7 +256,7 @@ export default function Product3DViewer({ product }: { product: ProductSpec }) {
           far: Math.max(500, (product.cameraMaxDistance ?? 18) * 4),
         }}
         dpr={[1, 2]}
-        gl={{ antialias: true, powerPreference: "high-performance" }}
+        gl={{ antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: true }}
       >
         <Scene
           product={product}
