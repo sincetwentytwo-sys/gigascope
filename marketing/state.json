@@ -1,0 +1,603 @@
+{
+  "factories": [
+    {
+      "id": "terafab",
+      "progress": 2,
+      "milestones": [
+        {
+          "date": "2026-03-21",
+          "text": "Musk announces Terafab launch",
+          "done": true
+        },
+        {
+          "date": "2026-04",
+          "text": "Site selection & environmental review",
+          "done": false
+        },
+        {
+          "date": "2026-Q3",
+          "text": "Pilot fab site prep begins",
+          "done": false
+        },
+        {
+          "date": "2026-H2",
+          "text": "AI5 small-batch production",
+          "done": false
+        },
+        {
+          "date": "2027",
+          "text": "Volume production target",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "giga-texas",
+      "progress": 78,
+      "milestones": [
+        {
+          "date": "2020-07",
+          "text": "Site clearing began",
+          "done": true
+        },
+        {
+          "date": "2021-04",
+          "text": "Main structure complete",
+          "done": true
+        },
+        {
+          "date": "2022-04",
+          "text": "First deliveries (Model Y)",
+          "done": true
+        },
+        {
+          "date": "2023-11",
+          "text": "Cybertruck production start",
+          "done": true
+        },
+        {
+          "date": "2025-06",
+          "text": "Cybercab pilot line",
+          "done": true
+        },
+        {
+          "date": "2026-03",
+          "text": "Massive expansion plans filed",
+          "done": true
+        },
+        {
+          "date": "2026-H2",
+          "text": "Phase 3 expansion complete",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "giga-nevada",
+      "progress": 65,
+      "milestones": [
+        {
+          "date": "2014-06",
+          "text": "Groundbreaking",
+          "done": true
+        },
+        {
+          "date": "2016-07",
+          "text": "Grand opening",
+          "done": true
+        },
+        {
+          "date": "2017-01",
+          "text": "2170 cell production",
+          "done": true
+        },
+        {
+          "date": "2023-01",
+          "text": "$3.6B expansion announced",
+          "done": true
+        },
+        {
+          "date": "2024-12",
+          "text": "Semi production ramp",
+          "done": true
+        },
+        {
+          "date": "2025-Q3",
+          "text": "4680 pilot line operational",
+          "done": true
+        },
+        {
+          "date": "2026-Q4",
+          "text": "4680 cell mass production",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "giga-shanghai",
+      "progress": 95,
+      "milestones": [
+        {
+          "date": "2019-01",
+          "text": "Groundbreaking",
+          "done": true
+        },
+        {
+          "date": "2019-12",
+          "text": "First deliveries",
+          "done": true
+        },
+        {
+          "date": "2021-10",
+          "text": "Export hub established",
+          "done": true
+        },
+        {
+          "date": "2024-05",
+          "text": "Megafactory ground broken",
+          "done": true
+        },
+        {
+          "date": "2025-01",
+          "text": "Megafactory complete (7mo)",
+          "done": true
+        },
+        {
+          "date": "2025-12",
+          "text": "Megapack production ramp",
+          "done": true
+        },
+        {
+          "date": "2026-Q2",
+          "text": "Refreshed Model Y ramp",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "giga-berlin",
+      "progress": 82,
+      "milestones": [
+        {
+          "date": "2020-01",
+          "text": "Construction began",
+          "done": true
+        },
+        {
+          "date": "2022-03",
+          "text": "First deliveries",
+          "done": true
+        },
+        {
+          "date": "2023-11",
+          "text": "5K/week milestone",
+          "done": true
+        },
+        {
+          "date": "2024-03",
+          "text": "Arson attack / recovery",
+          "done": true
+        },
+        {
+          "date": "2025-06",
+          "text": "Expansion approved",
+          "done": true
+        },
+        {
+          "date": "2025-12",
+          "text": "Phase 2 construction started",
+          "done": true
+        },
+        {
+          "date": "2027-H1",
+          "text": "Phase 2 complete",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "giga-mexico",
+      "progress": 25,
+      "milestones": [
+        {
+          "date": "2023-03",
+          "text": "Location announced",
+          "done": true
+        },
+        {
+          "date": "2024-06",
+          "text": "Permits approved",
+          "done": true
+        },
+        {
+          "date": "2025-03",
+          "text": "Site prep & grading",
+          "done": true
+        },
+        {
+          "date": "2025-09",
+          "text": "Foundation work begins",
+          "done": true
+        },
+        {
+          "date": "2026-01",
+          "text": "Structural steel phase",
+          "done": true
+        },
+        {
+          "date": "2027-H1",
+          "text": "Production start (target)",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "fremont",
+      "progress": 100,
+      "milestones": [
+        {
+          "date": "2010-05",
+          "text": "Tesla acquires NUMMI plant",
+          "done": true
+        },
+        {
+          "date": "2012-06",
+          "text": "First Model S delivered",
+          "done": true
+        },
+        {
+          "date": "2017-07",
+          "text": "Model 3 production begins",
+          "done": true
+        },
+        {
+          "date": "2020-01",
+          "text": "Model Y production",
+          "done": true
+        },
+        {
+          "date": "2024-10",
+          "text": "Refreshed Model 3 US prod",
+          "done": true
+        },
+        {
+          "date": "2025-06",
+          "text": "Model S/X end of production",
+          "done": true
+        }
+      ]
+    },
+    {
+      "id": "giga-buffalo",
+      "progress": 90,
+      "milestones": [
+        {
+          "date": "2017-08",
+          "text": "Production began",
+          "done": true
+        },
+        {
+          "date": "2019-10",
+          "text": "Solar Roof v3",
+          "done": true
+        },
+        {
+          "date": "2023-05",
+          "text": "Megapack components",
+          "done": true
+        },
+        {
+          "date": "2025-03",
+          "text": "Supercharger V4 prod",
+          "done": true
+        },
+        {
+          "date": "2025-10",
+          "text": "Solar Roof v4 line install",
+          "done": true
+        }
+      ]
+    },
+    {
+      "id": "starbase",
+      "progress": 70,
+      "milestones": [
+        {
+          "date": "2019-08",
+          "text": "Starhopper 150m hop",
+          "done": true
+        },
+        {
+          "date": "2021-05",
+          "text": "SN15 successful landing",
+          "done": true
+        },
+        {
+          "date": "2023-04",
+          "text": "First orbital attempt (IFT-1)",
+          "done": true
+        },
+        {
+          "date": "2024-10",
+          "text": "Mechazilla booster catch (IFT-5)",
+          "done": true
+        },
+        {
+          "date": "2025-06",
+          "text": "Starship reuse demonstrated",
+          "done": true
+        },
+        {
+          "date": "2026-01",
+          "text": "Rapid cadence launches begin",
+          "done": true
+        },
+        {
+          "date": "2026-H2",
+          "text": "Starship Block 2 flights",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "spacex-hawthorne",
+      "progress": 95,
+      "milestones": [
+        {
+          "date": "2002-05",
+          "text": "SpaceX founded",
+          "done": true
+        },
+        {
+          "date": "2008-09",
+          "text": "Falcon 1 reaches orbit",
+          "done": true
+        },
+        {
+          "date": "2015-12",
+          "text": "First orbital booster landing",
+          "done": true
+        },
+        {
+          "date": "2020-05",
+          "text": "First crewed Dragon flight",
+          "done": true
+        },
+        {
+          "date": "2024-01",
+          "text": "300th Falcon 9 flight",
+          "done": true
+        },
+        {
+          "date": "2025-12",
+          "text": "Falcon 9 fleet: 20+ boosters",
+          "done": true
+        }
+      ]
+    },
+    {
+      "id": "cape-canaveral",
+      "progress": 90,
+      "milestones": [
+        {
+          "date": "2010-06",
+          "text": "Falcon 9 first flight from SLC-40",
+          "done": true
+        },
+        {
+          "date": "2014-04",
+          "text": "LC-39A lease signed (NASA)",
+          "done": true
+        },
+        {
+          "date": "2017-02",
+          "text": "LC-39A operational",
+          "done": true
+        },
+        {
+          "date": "2023-12",
+          "text": "98 launches in one year",
+          "done": true
+        },
+        {
+          "date": "2025-06",
+          "text": "Pad turnaround under 48hrs",
+          "done": true
+        },
+        {
+          "date": "2026-05-15",
+          "text": "Launch: Dragon CRS-2 SpX-34",
+          "done": true
+        },
+        {
+          "date": "2026-Q2",
+          "text": "Starship launch tower at 39A",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "vandenberg",
+      "progress": 85,
+      "milestones": [
+        {
+          "date": "2013-09",
+          "text": "First Falcon 9 from Vandenberg",
+          "done": true
+        },
+        {
+          "date": "2018-10",
+          "text": "First booster landing at SLC-4",
+          "done": true
+        },
+        {
+          "date": "2023-12",
+          "text": "30+ polar launches in year",
+          "done": true
+        },
+        {
+          "date": "2025-04",
+          "text": "Rapid reuse: same pad, 5 days",
+          "done": true
+        },
+        {
+          "date": "2026-05-12",
+          "text": "Launch: NROL-172",
+          "done": true
+        },
+        {
+          "date": "2026-Q3",
+          "text": "SLC-6 Starship pad construction",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "colossus",
+      "progress": 60,
+      "milestones": [
+        {
+          "date": "2024-06",
+          "text": "Memphis site announced",
+          "done": true
+        },
+        {
+          "date": "2024-09",
+          "text": "Phase 1: 100K H100s online (122 days build)",
+          "done": true
+        },
+        {
+          "date": "2025-02",
+          "text": "Grok-3 trained on Colossus",
+          "done": true
+        },
+        {
+          "date": "2025-08",
+          "text": "Phase 2: 200K GPUs operational",
+          "done": true
+        },
+        {
+          "date": "2026-03",
+          "text": "Grok-4 training begins",
+          "done": true
+        },
+        {
+          "date": "2026-Q4",
+          "text": "Phase 3: 1M GPU target",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "neuralink-fremont",
+      "progress": 80,
+      "milestones": [
+        {
+          "date": "2017-03",
+          "text": "Neuralink founded",
+          "done": true
+        },
+        {
+          "date": "2020-08",
+          "text": "Live pig demo (Gertrude)",
+          "done": true
+        },
+        {
+          "date": "2023-05",
+          "text": "FDA human trial approval",
+          "done": true
+        },
+        {
+          "date": "2024-01",
+          "text": "First human implant (Noland Arbaugh)",
+          "done": true
+        },
+        {
+          "date": "2025-03",
+          "text": "Third patient implanted",
+          "done": true
+        },
+        {
+          "date": "2026-H1",
+          "text": "10-patient expanded trial",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "neuralink-austin",
+      "progress": 30,
+      "milestones": [
+        {
+          "date": "2025-01",
+          "text": "Austin facility announced",
+          "done": true
+        },
+        {
+          "date": "2025-06",
+          "text": "Buildout begins",
+          "done": true
+        },
+        {
+          "date": "2026-01",
+          "text": "Cleanroom installation",
+          "done": true
+        },
+        {
+          "date": "2026-Q3",
+          "text": "Pilot production line",
+          "done": false
+        },
+        {
+          "date": "2027",
+          "text": "Full-scale manufacturing",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "vegas-loop",
+      "progress": 35,
+      "milestones": [
+        {
+          "date": "2021-06",
+          "text": "LVCC Loop opens (1.7mi)",
+          "done": true
+        },
+        {
+          "date": "2023-06",
+          "text": "Resorts World station opens",
+          "done": true
+        },
+        {
+          "date": "2024-11",
+          "text": "City-wide expansion approved (68mi)",
+          "done": true
+        },
+        {
+          "date": "2025-09",
+          "text": "Strip tunnel boring begins",
+          "done": true
+        },
+        {
+          "date": "2026-Q2",
+          "text": "Strip segment Phase 1 open",
+          "done": false
+        },
+        {
+          "date": "2028",
+          "text": "Full 68-mile network target",
+          "done": false
+        }
+      ]
+    }
+  ],
+  "lastRun": "2026-05-19",
+  "spacex": {
+    "latestLaunch": "Falcon 9 Block 5 | Dragon CRS-2 SpX-34",
+    "latestLaunchDate": "2026-05-15T22:05:41Z",
+    "totalLaunches": 661,
+    "launchesThisYear": 57,
+    "starlinkCount": 10363
+  }
+}
