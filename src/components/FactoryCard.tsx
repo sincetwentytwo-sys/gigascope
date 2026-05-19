@@ -11,7 +11,7 @@ export default function FactoryCard({ factory }: { factory: Factory }) {
   return (
     <a
       href={`/site/${factory.slug}`}
-      className="group relative flex flex-col gap-5 overflow-hidden border p-5 transition-all duration-500 hover:shadow-[0_0_15px_rgba(109,221,255,0.15)]"
+      className="group relative flex flex-col gap-4 sm:gap-5 overflow-hidden border p-4 sm:p-5 transition-all duration-500 hover:shadow-[0_0_15px_rgba(109,221,255,0.15)]"
       style={{
         background: "rgba(15, 17, 23, 0.92)",
         borderColor: `${accent}33`,
@@ -23,8 +23,8 @@ export default function FactoryCard({ factory }: { factory: Factory }) {
         style={{ background: `${accent}14` }}
       />
 
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex items-center gap-3">
+      <div className="flex items-start justify-between gap-2 sm:gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <div
             className="flex h-6 w-10 items-center justify-center overflow-hidden border text-base"
             style={{
@@ -34,17 +34,17 @@ export default function FactoryCard({ factory }: { factory: Factory }) {
           >
             <span className="opacity-80">{factory.flag}</span>
           </div>
-          <div>
-            <h3 className="font-bold tracking-wider text-[15px] text-[#e5e4ed] uppercase">
+          <div className="min-w-0">
+            <h3 className="font-bold tracking-wider text-sm sm:text-[15px] text-[#e5e4ed] uppercase truncate">
               {factory.name}
             </h3>
-            <p className="font-mono text-[10px] uppercase text-[#aaaab3]">
+            <p className="font-mono text-[10px] uppercase text-[#aaaab3] truncate">
               {factory.location}
             </p>
           </div>
         </div>
         <div
-          className={`border px-2.5 py-1 ${isAlert ? "animate-pulse" : ""}`}
+          className={`border px-2 py-1 flex-shrink-0 ${isAlert ? "animate-pulse" : ""}`}
           style={{
             background: `${accent}1a`,
             borderColor: `${accent}4d`,
@@ -87,21 +87,21 @@ export default function FactoryCard({ factory }: { factory: Factory }) {
       </div>
 
       <div
-        className="grid grid-cols-3 gap-4 border-t pt-4"
+        className="grid grid-cols-3 gap-2 sm:gap-4 border-t pt-3 sm:pt-4"
         style={{ borderColor: "rgba(255,255,255,0.06)" }}
       >
-        <div>
+        <div className="min-w-0">
           <div className="font-mono text-[9px] uppercase text-[#64748b]">Area</div>
-          <div className="font-mono text-sm text-[#e5e4ed] truncate">{factory.area}</div>
+          <div className="font-mono text-xs sm:text-sm text-[#e5e4ed] truncate">{factory.area}</div>
         </div>
-        <div>
+        <div className="min-w-0">
           <div className="font-mono text-[9px] uppercase text-[#64748b]">Capacity</div>
-          <div className="font-mono text-sm text-[#e5e4ed] truncate">{factory.capacity}</div>
+          <div className="font-mono text-xs sm:text-sm text-[#e5e4ed] truncate">{factory.capacity}</div>
         </div>
-        <div>
+        <div className="min-w-0">
           <div className="font-mono text-[9px] uppercase text-[#64748b]">Invest</div>
           <div
-            className="font-mono text-sm truncate"
+            className="font-mono text-xs sm:text-sm truncate"
             style={{ color: isAlert ? accent : "#e5e4ed" }}
           >
             {factory.investment}

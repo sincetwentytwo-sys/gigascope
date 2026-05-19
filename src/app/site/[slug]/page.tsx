@@ -115,7 +115,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
 
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Top strip: breadcrumb + ID + progress */}
-        <div className="flex flex-wrap items-center gap-4 mb-6">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-6">
           <a href="/" className="text-[#8292aa] text-sm hover:text-white transition-colors">&larr; All Sites</a>
           <div
             className="flex items-center gap-3 border-l-2 pl-3 py-1"
@@ -128,7 +128,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
               / {factory.slug.toUpperCase()}
             </span>
           </div>
-          <div className="flex-1 min-w-[200px] max-w-md">
+          <div className="flex-1 min-w-full sm:min-w-[200px] max-w-md">
             <div className="flex justify-between mb-1">
               <span className="font-mono text-[10px] text-[#8292aa] uppercase">ID: {factory.id}</span>
               <span className="font-mono text-[10px]" style={{ color: accent }}>
@@ -149,7 +149,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
 
         {/* Title block */}
         <div className="mb-6 border-l-2 pl-4" style={{ borderColor: accent }}>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+          <h1 className="text-2xl sm:text-4xl font-bold tracking-tight break-words">
             {factory.flag} {factory.name}
           </h1>
           <p className="text-[#8292aa] mt-1 text-sm">
@@ -163,19 +163,19 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
         </div>
 
         {/* Stat cards */}
-        <div className={`grid gap-4 mb-8 ${extraEntries.length > 0 ? "grid-cols-2 lg:grid-cols-4" : "grid-cols-2 sm:grid-cols-4"}`}>
+        <div className={`grid gap-3 sm:gap-4 mb-8 ${extraEntries.length > 0 ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"}`}>
           {statCards.map((c) => (
             <div
               key={c.label}
-              className="bg-[#1f1f23]/60 backdrop-blur-md border-l-2 p-4 hover:bg-[#1f1f23] transition-all"
+              className="bg-[#1f1f23]/60 backdrop-blur-md border-l-2 p-3 sm:p-4 hover:bg-[#1f1f23] transition-all"
               style={{ borderColor: c.color }}
             >
               <span className="font-mono text-[10px] uppercase tracking-widest flex items-center gap-2" style={{ color: c.color }}>
                 <span className="w-1 h-1" style={{ background: c.color }} />
                 {c.label}
               </span>
-              <div className="mt-4">
-                <span className="font-mono text-2xl font-bold text-white">{c.value}</span>
+              <div className="mt-3 sm:mt-4">
+                <span className="font-mono text-xl sm:text-2xl font-bold text-white break-words">{c.value}</span>
               </div>
             </div>
           ))}
@@ -245,7 +245,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
           {/* Right 1/3 */}
           <div className="flex flex-col gap-6">
             {/* Milestones */}
-            <div className="bg-[#1f1f23]/60 backdrop-blur-md p-5 border border-[#343538]">
+            <div className="bg-[#1f1f23]/60 backdrop-blur-md p-4 sm:p-5 border border-[#343538]">
               <div className="flex items-center justify-between mb-5">
                 <h3 className="font-bold text-sm tracking-widest uppercase" style={{ color: accent }}>
                   Milestones
@@ -286,7 +286,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
             </div>
 
             {/* Progress chart */}
-            <div className="bg-[#1f1f23]/60 backdrop-blur-md p-5 border border-[#343538]">
+            <div className="bg-[#1f1f23]/60 backdrop-blur-md p-4 sm:p-5 border border-[#343538]">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-bold text-sm tracking-widest text-[#00f4fe] uppercase">
                   Progress by Year
@@ -327,13 +327,13 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
 
         {/* News + Community */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <div className="bg-[#1f1f23]/60 backdrop-blur-md border border-[#343538] p-5">
+          <div className="bg-[#1f1f23]/60 backdrop-blur-md border border-[#343538] p-4 sm:p-5">
             <h3 className="font-bold text-sm tracking-widest uppercase mb-4" style={{ color: accent }}>
               Latest News
             </h3>
             <FactoryNewsFeed keywords={newsKeywords} />
           </div>
-          <div className="bg-[#1f1f23]/60 backdrop-blur-md border border-[#343538] p-5">
+          <div className="bg-[#1f1f23]/60 backdrop-blur-md border border-[#343538] p-4 sm:p-5">
             <h3 className="font-bold text-sm tracking-widest text-[#00f4fe] uppercase mb-4">
               Community
             </h3>
@@ -342,7 +342,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
         </div>
 
         {/* Share + Links */}
-        <div className="bg-[#1f1f23]/60 backdrop-blur-md border border-[#343538] p-5 mb-8">
+        <div className="bg-[#1f1f23]/60 backdrop-blur-md border border-[#343538] p-4 sm:p-5 mb-8">
           <ShareButtons url={pageUrl} title={`${factory.name} — ${factory.progress}% complete`} />
         </div>
 

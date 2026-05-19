@@ -128,7 +128,7 @@ export default function CompareSlider() {
   return (
     <div className="flex flex-col gap-5 font-['Space_Grotesk']">
       {/* Factory selector grouped by company */}
-      <div className="border border-[#00d4ff]/20 bg-[#0c0e10] p-4 relative">
+      <div className="border border-[#00d4ff]/20 bg-[#0c0e10] p-3 sm:p-4 relative">
         <span className="absolute -top-2 left-3 px-2 bg-[#121416] text-[10px] font-mono uppercase tracking-[0.2em] text-[#00d4ff]/70">
           Target Selector
         </span>
@@ -138,21 +138,21 @@ export default function CompareSlider() {
             if (sites.length === 0) return null;
             const meta = getCompanyMeta(companyId);
             return (
-              <div key={companyId} className="flex items-start gap-3 flex-wrap">
+              <div key={companyId} className="flex items-start gap-2 sm:gap-3 flex-wrap">
                 <span
                   className="text-[9px] font-mono font-bold uppercase tracking-[0.15em] px-2 py-1 border"
                   style={{ borderColor: meta.color, color: meta.color }}
                 >
                   {meta.icon} {meta.name}
                 </span>
-                <div role="group" aria-label={`${meta.name} sites`} className="flex gap-2 flex-wrap">
+                <div role="group" aria-label={`${meta.name} sites`} className="flex gap-1.5 sm:gap-2 flex-wrap">
                   {sites.map((f) => {
                     const active = selectedId === f.id;
                     return (
                       <button
                         key={f.id}
                         onClick={() => selectFactory(f)}
-                        className={`px-3 py-1.5 text-[11px] font-mono uppercase tracking-wider border transition-all duration-150 ${
+                        className={`px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-[11px] font-mono uppercase tracking-wider border transition-all duration-150 ${
                           active
                             ? "bg-[#00d4ff] text-[#003642] border-[#00d4ff] shadow-[0_0_10px_rgba(0,212,255,0.5)]"
                             : "bg-transparent text-[#00d4ff]/60 border-[#00d4ff]/30 hover:bg-[#00d4ff]/10 hover:text-[#00d4ff]"
@@ -206,7 +206,7 @@ export default function CompareSlider() {
         <div
           ref={sliderRef}
           className="absolute top-0 bottom-0 z-[1001] cursor-ew-resize"
-          style={{ left: "50%", transform: "translateX(-50%)", width: "44px" }}
+          style={{ left: "50%", transform: "translateX(-50%)", width: "56px" }}
           onMouseDown={() => { dragging.current = true; }}
           onTouchStart={() => { dragging.current = true; }}
         >
@@ -219,41 +219,41 @@ export default function CompareSlider() {
         </div>
 
         {/* Left label */}
-        <div className="absolute top-4 left-4 z-[1000]">
-          <div className="bg-black/70 border-l-2 border-[#00d4ff] px-3 py-2 backdrop-blur-md">
-            <h3 className="font-mono text-[11px] text-[#00d4ff] font-bold uppercase tracking-wider">SENTINEL-2 — 2023 COMPOSITE</h3>
-            <p className="font-mono text-[9px] text-white/40 mt-0.5 uppercase tracking-tighter">SOURCE: ESA / COPERNICUS HUB</p>
+        <div className="absolute top-2 left-2 sm:top-4 sm:left-4 z-[1000]">
+          <div className="bg-black/70 border-l-2 border-[#00d4ff] px-2 py-1 sm:px-3 sm:py-2 backdrop-blur-md">
+            <h3 className="font-mono text-[9px] sm:text-[11px] text-[#00d4ff] font-bold uppercase tracking-wider"><span className="sm:hidden">SENTINEL-2</span><span className="hidden sm:inline">SENTINEL-2 — 2023 COMPOSITE</span></h3>
+            <p className="hidden sm:block font-mono text-[9px] text-white/40 mt-0.5 uppercase tracking-tighter">SOURCE: ESA / COPERNICUS HUB</p>
           </div>
         </div>
 
         {/* Right label */}
-        <div className="absolute top-4 right-4 z-[1000] text-right">
-          <div className="bg-black/70 border-r-2 border-[#00d4ff] px-3 py-2 backdrop-blur-md">
-            <h3 className="font-mono text-[11px] text-[#00d4ff] font-bold uppercase tracking-wider">ESRI — LATEST (~3-6 MO)</h3>
-            <p className="font-mono text-[9px] text-white/40 mt-0.5 uppercase tracking-tighter">REF: WORLD IMAGERY SERVICE</p>
+        <div className="absolute top-2 right-2 sm:top-4 sm:right-4 z-[1000] text-right">
+          <div className="bg-black/70 border-r-2 border-[#00d4ff] px-2 py-1 sm:px-3 sm:py-2 backdrop-blur-md">
+            <h3 className="font-mono text-[9px] sm:text-[11px] text-[#00d4ff] font-bold uppercase tracking-wider"><span className="sm:hidden">ESRI</span><span className="hidden sm:inline">ESRI — LATEST (~3-6 MO)</span></h3>
+            <p className="hidden sm:block font-mono text-[9px] text-white/40 mt-0.5 uppercase tracking-tighter">REF: WORLD IMAGERY SERVICE</p>
           </div>
         </div>
 
         {/* HUD action buttons */}
-        <div className="absolute bottom-16 right-4 z-[1002] flex flex-col gap-2">
+        <div className="absolute bottom-20 right-2 sm:bottom-16 sm:right-4 z-[1002] flex flex-col gap-2">
           <button
             onClick={() => zoom(1)}
             aria-label="Zoom in"
-            className="w-9 h-9 bg-[#121416]/80 border border-[#00d4ff]/40 text-[#00d4ff] hover:bg-[#00d4ff]/20 flex items-center justify-center backdrop-blur-md transition-colors"
+            className="w-11 h-11 sm:w-9 sm:h-9 bg-[#121416]/80 border border-[#00d4ff]/40 text-[#00d4ff] hover:bg-[#00d4ff]/20 flex items-center justify-center backdrop-blur-md transition-colors"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </button>
           <button
             onClick={() => zoom(-1)}
             aria-label="Zoom out"
-            className="w-9 h-9 bg-[#121416]/80 border border-[#00d4ff]/40 text-[#00d4ff] hover:bg-[#00d4ff]/20 flex items-center justify-center backdrop-blur-md transition-colors"
+            className="w-11 h-11 sm:w-9 sm:h-9 bg-[#121416]/80 border border-[#00d4ff]/40 text-[#00d4ff] hover:bg-[#00d4ff]/20 flex items-center justify-center backdrop-blur-md transition-colors"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </button>
           <button
             onClick={recenter}
             aria-label="Recenter"
-            className="w-9 h-9 bg-[#121416]/80 border border-[#00d4ff]/40 text-[#00d4ff] hover:bg-[#00d4ff]/20 flex items-center justify-center backdrop-blur-md transition-colors"
+            className="w-11 h-11 sm:w-9 sm:h-9 bg-[#121416]/80 border border-[#00d4ff]/40 text-[#00d4ff] hover:bg-[#00d4ff]/20 flex items-center justify-center backdrop-blur-md transition-colors"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
           </button>
@@ -275,12 +275,12 @@ export default function CompareSlider() {
         </div>
 
         {/* Bottom info strip */}
-        <div className="absolute bottom-0 left-0 right-0 z-[1000] bg-[#121416]/90 border-t border-[#00d4ff]/30 backdrop-blur-md px-4 py-2 flex justify-between items-center font-mono text-[10px] text-[#00d4ff] uppercase tracking-wider">
-          <div className="flex items-center gap-4">
-            <span className="text-[#00d4ff] font-bold">{selected.flag} {selected.name}</span>
+        <div className="absolute bottom-0 left-0 right-0 z-[1000] bg-[#121416]/90 border-t border-[#00d4ff]/30 backdrop-blur-md px-2 py-2 sm:px-4 flex justify-between items-center gap-2 font-mono text-[9px] sm:text-[10px] text-[#00d4ff] uppercase tracking-wider">
+          <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+            <span className="text-[#00d4ff] font-bold truncate">{selected.flag} {selected.name}</span>
             <span className="hidden sm:inline text-[#00d4ff]/50">{selected.location}</span>
           </div>
-          <div className="flex items-center gap-4 text-[#00d4ff]/70">
+          <div className="flex items-center gap-2 sm:gap-4 text-[#00d4ff]/70 flex-shrink-0">
             <span className="hidden md:inline">LAT: <span className="text-[#00d4ff] font-bold">{latLabel}</span></span>
             <span className="hidden md:inline">LON: <span className="text-[#00d4ff] font-bold">{lngLabel}</span></span>
             <span>STATUS: <span className="text-[#00d4ff] font-bold">{selected.status.toUpperCase()}</span></span>
