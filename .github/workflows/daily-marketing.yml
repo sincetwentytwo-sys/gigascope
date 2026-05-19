@@ -27,6 +27,10 @@ jobs:
         id: gen
         run: node scripts/marketing/generate.mjs
 
+      - name: Random delay (0-45min) to avoid bot-like exact-hour posting
+        if: github.event_name == 'schedule' && steps.gen.outputs.tweet_count != '0'
+        run: sleep $((RANDOM % 2700))
+
       - name: Post to X (auto)
         id: post
         if: steps.gen.outputs.tweet_count != '0'
