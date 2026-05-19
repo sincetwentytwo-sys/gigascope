@@ -1,3 +1,5 @@
+import { readFileSync, existsSync } from "node:fs";
+import { resolve } from "node:path";
 import { factories, getFactory, TIMELINE_YEARS } from "@/data/factories";
 import { getCompanyMeta } from "@/data/companies";
 import SatelliteMapWrapper from "@/components/SatelliteMapWrapper";
@@ -5,6 +7,11 @@ import { getESRIImageryDate } from "@/lib/satellite-date";
 import { FactoryNewsFeed } from "@/components/NewsFeed";
 import CommunityFeed from "@/components/CommunityFeed";
 import ShareButtons from "@/components/ShareButtons";
+
+const timelapseIndexPath = resolve(process.cwd(), "public", "timelapses", "index.json");
+const TIMELAPSE_INDEX: Record<string, { frames: number; latest: string; builtAt: string }> = existsSync(timelapseIndexPath)
+  ? JSON.parse(readFileSync(timelapseIndexPath, "utf8"))
+  : {};
 
 const SITE_URL = "https://gigascope.xyz";
 
@@ -227,6 +234,34 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                 factoryColor={accent}
               />
             </div>
+
+            {TIMELAPSE_INDEX[factory.slug] && (
+              <div className="mt-4">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="font-bold text-sm tracking-widest uppercase" style={{ color: accent }}>
+                    Satellite Timelapse
+                  </h3>
+                  <span className="font-mono text-[10px] text-[#8292aa]">
+                    {TIMELAPSE_INDEX[factory.slug].frames} frames · weekly Sentinel-2
+                  </span>
+                </div>
+                <div className="aspect-square sm:aspect-video w-full bg-[#1f1f23] relative overflow-hidden border border-[#343538]">
+                  <video
+                    src={`/timelapses/${factory.slug}.mp4`}
+                    poster={`/timelapses/${factory.slug}.jpg`}
+                    controls
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <p className="mt-1 font-mono text-[9px] text-[#8292aa]">
+                  Latest: {TIMELAPSE_INDEX[factory.slug].latest} · Source: Sentinel-2 L2A (Copernicus)
+                </p>
+              </div>
+            )}
 
             {/* Stat strip below map */}
             <div className="mt-4 grid grid-cols-3 gap-3">
