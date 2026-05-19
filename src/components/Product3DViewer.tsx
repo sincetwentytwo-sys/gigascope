@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, ThreeEvent } from "@react-three/fiber";
-import { OrbitControls, Stars } from "@react-three/drei";
+import { OrbitControls, Stars, Environment, ContactShadows } from "@react-three/drei";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type {
   GeometryKind,
@@ -152,30 +152,46 @@ function Scene({
   const target = product.cameraTarget ?? [0, 0, 0];
   return (
     <>
-      <color attach="background" args={[product.background ?? "#0a0a0c"]} />
-      <ambientLight intensity={0.35} />
+      <color attach="background" args={[product.background ?? "#1a1d24"]} />
+      <fog attach="fog" args={["#1a1d24", 20, 60]} />
+
+      <Environment preset="studio" />
+      <hemisphereLight args={["#b7c8e1", "#1a1d24", 0.6]} />
+      <ambientLight intensity={0.55} />
       <directionalLight
         position={[8, 12, 6]}
-        intensity={1.1}
+        intensity={1.8}
         color="#ffffff"
+        castShadow
       />
-      <pointLight position={[-6, 4, -4]} intensity={0.6} color="#5a8cff" />
-      <pointLight position={[4, -2, 4]} intensity={0.4} color="#ff7a40" />
+      <directionalLight
+        position={[-6, 4, -4]}
+        intensity={0.8}
+        color="#7aa6ff"
+      />
+      <pointLight position={[4, -2, 4]} intensity={0.6} color="#ffb073" />
+      <pointLight position={[0, 8, 0]} intensity={0.5} color="#ffffff" />
 
       <Stars
         radius={60}
         depth={40}
-        count={2000}
+        count={1200}
         factor={3}
         saturation={0}
         fade
         speed={0.4}
       />
 
-      {/* Subtle grid plane below the model */}
-      <gridHelper
-        args={[24, 24, "#1f2937", "#101218"]}
+      <ContactShadows
         position={[0, -2.4, 0]}
+        opacity={0.45}
+        scale={20}
+        blur={2.5}
+        far={6}
+      />
+      <gridHelper
+        args={[24, 24, "#5a6e8f", "#2a3340"]}
+        position={[0, -2.39, 0]}
       />
 
       <group onPointerMissed={() => setSelectedId(null)}>
