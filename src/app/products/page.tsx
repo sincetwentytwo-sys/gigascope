@@ -1,6 +1,14 @@
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { listProducts, type ProductCategory } from "@/data/products";
+
+const PRODUCT_THUMBS = new Set(
+  listProducts()
+    .filter((p) => existsSync(resolve(process.cwd(), "public", "products", `${p.slug}.jpg`)))
+    .map((p) => p.slug),
+);
 
 export const metadata: Metadata = {
   title: "Interactive Product Breakdowns — GIGASCOPE",
@@ -78,12 +86,20 @@ export default function ProductsHubPage() {
                   className="aspect-[4/3] w-full relative overflow-hidden"
                   style={{ background: gradient }}
                 >
-                  <div
-                    className="absolute inset-0 opacity-30 group-hover:opacity-60 transition-opacity"
-                    style={{
-                      background: `radial-gradient(circle at 50% 60%, ${color}40 0%, transparent 60%)`,
-                    }}
-                  />
+                  {PRODUCT_THUMBS.has(p.slug) ? (
+                    <img
+                      src={`/products/${p.slug}.jpg`}
+                      alt={p.name}
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                  ) : (
+                    <div
+                      className="absolute inset-0 opacity-30 group-hover:opacity-60 transition-opacity"
+                      style={{
+                        background: `radial-gradient(circle at 50% 60%, ${color}40 0%, transparent 60%)`,
+                      }}
+                    />
+                  )}
                   <div className="absolute top-3 left-3">
                     <span
                       className="font-mono text-[9px] uppercase tracking-widest px-2 py-1 border"
