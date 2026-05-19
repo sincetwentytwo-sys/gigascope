@@ -20,10 +20,23 @@ function ogUrl(slug) {
   return `${SITE_URL}/site/${slug}/opengraph-image`;
 }
 
+const COMPANY_TAGS = {
+  tesla: "#Tesla #Gigafactory",
+  spacex: "#SpaceX",
+  xai: "#xAI",
+  neuralink: "#Neuralink",
+  boring: "#BoringCompany",
+  joint: "#Tesla #SpaceX",
+};
+
+function tagsFor(company) {
+  return COMPANY_TAGS[company] ?? "#MuskEmpire";
+}
+
 export const templates = {
   milestoneHit({ site, milestoneText }) {
     return {
-      text: `${site.flag} ${site.name} just hit a milestone:\n\n"${milestoneText}"\n\nCurrent progress: ${site.progress}%`,
+      text: `${site.flag} ${site.name} just hit a milestone:\n\n"${milestoneText}"\n\nCurrent progress: ${site.progress}%\n\n${tagsFor(site.company)}`,
       url: siteUrl(site.slug, "milestone"),
       image: ogUrl(site.slug),
       tag: "milestone",
@@ -33,7 +46,7 @@ export const templates = {
   progressJump({ site, oldProgress, newProgress }) {
     const delta = newProgress - oldProgress;
     return {
-      text: `${site.flag} ${site.name}: ${oldProgress}% → ${newProgress}% (+${delta}%)\n\n${site.aka}`,
+      text: `${site.flag} ${site.name}: ${oldProgress}% → ${newProgress}% (+${delta}%)\n\n${site.aka}\n\n${tagsFor(site.company)}`,
       url: siteUrl(site.slug, "progress"),
       image: ogUrl(site.slug),
       tag: "progress",
@@ -42,7 +55,7 @@ export const templates = {
 
   launchImminent({ launchName, hoursAway, launchPad }) {
     return {
-      text: `🚀 T-${hoursAway}h: ${launchName}\n\nPad: ${launchPad}\n\nTrack the site:`,
+      text: `🚀 T-${hoursAway}h: ${launchName}\n\nPad: ${launchPad}\n\n@SpaceX — track the site:`,
       url: homeUrl("launch-t24"),
       tag: "launch-imminent",
     };
@@ -50,7 +63,7 @@ export const templates = {
 
   launchT1h({ launchName, launchPad }) {
     return {
-      text: `🔴 LIVE in ~1 hour\n\n${launchName} — ${launchPad}\n\nWatch your spot on the empire map:`,
+      text: `🔴 LIVE in ~1 hour\n\n${launchName} — ${launchPad}\n\n@SpaceX — watch your spot on the empire map:`,
       url: homeUrl("launch-t1"),
       tag: "launch-t1h",
     };
@@ -58,7 +71,7 @@ export const templates = {
 
   launchSuccess({ launchName, launchDate, launchPad }) {
     return {
-      text: `✅ ${launchName} — launched ${launchDate} from ${launchPad}.\n\nSpaceX tally just ticked up. Live count:`,
+      text: `✅ ${launchName} — launched ${launchDate} from ${launchPad}.\n\n@SpaceX tally just ticked up. Live count:`,
       url: homeUrl("launch-success"),
       tag: "launch-success",
     };
@@ -66,7 +79,7 @@ export const templates = {
 
   spacexStats({ totalLaunches, launchesThisYear, starlinkCount, year }) {
     return {
-      text: `SpaceX by the numbers (live):\n\n🚀 ${totalLaunches} total launches\n📅 ${launchesThisYear} in ${year}\n🛰️ ${starlinkCount.toLocaleString()} Starlinks in orbit\n\nTrack every pad:`,
+      text: `@SpaceX by the numbers (live):\n\n🚀 ${totalLaunches} total launches\n📅 ${launchesThisYear} in ${year}\n🛰️ ${starlinkCount.toLocaleString()} Starlinks in orbit\n\nTrack every pad:`,
       url: homeUrl("stats-spacex"),
       tag: "stats-spacex",
     };
@@ -93,7 +106,7 @@ export const templates = {
 
   featuredSite({ site }) {
     return {
-      text: `Spotlight: ${site.flag} ${site.name}\n\n${site.aka}\n\n📍 ${site.location}\n🏗️ ${site.progress}% — ${site.status}\n💰 ${site.investment}`,
+      text: `Spotlight: ${site.flag} ${site.name}\n\n${site.aka}\n\n📍 ${site.location}\n🏗️ ${site.progress}% — ${site.status}\n💰 ${site.investment}\n\n${tagsFor(site.company)}`,
       url: siteUrl(site.slug, "featured"),
       image: ogUrl(site.slug),
       tag: "featured",
@@ -102,7 +115,7 @@ export const templates = {
 
   satelliteCompare({ site }) {
     return {
-      text: `Then vs now: ${site.flag} ${site.name}\n\nDrag the slider — 2023 (Sentinel-2) vs latest (ESRI):`,
+      text: `Then vs now: ${site.flag} ${site.name}\n\nDrag the slider — 2023 (Sentinel-2) vs latest (ESRI):\n\n${tagsFor(site.company)}`,
       url: withUtm(`${SITE_URL}/compare`, "compare"),
       tag: "compare",
     };
@@ -110,7 +123,7 @@ export const templates = {
 
   empireSnapshot({ totalSites, totalInvestment, companies }) {
     return {
-      text: `🌍 Musk Empire — live snapshot\n\n📍 ${totalSites} sites tracked\n💰 ${totalInvestment} invested\n🏢 ${companies.length} companies: ${companies.join(", ")}\n\nExplore:`,
+      text: `🌍 Musk Empire — live snapshot\n\n📍 ${totalSites} sites tracked\n💰 ${totalInvestment} invested\n🏢 ${companies.length} companies: ${companies.join(", ")}\n\n#MuskEmpire`,
       url: homeUrl("snapshot"),
       tag: "snapshot",
     };

@@ -34,11 +34,11 @@ function isoToWeekday(iso) {
   return new Date(iso).getUTCDay(); // 0 Sun .. 6 Sat
 }
 
-async function safeFetch(url, opts = {}) {
+async function safeFetchJson(url, opts = {}) {
   try {
     const res = await fetch(url, { ...opts, signal: AbortSignal.timeout(8000) });
     if (!res.ok) return null;
-    return res;
+    return await res.json();
   } catch {
     return null;
   }
@@ -49,17 +49,12 @@ async function fetchSpaceXStats() {
   const LSP = 121;
   const year = new Date().getFullYear();
 
-  const [latestRes, totalRes, yearRes, starlinkRes] = await Promise.all([
-    safeFetch(`${LL}/?lsp__id=${LSP}&status=3&ordering=-net&limit=1&mode=list`),
-    safeFetch(`${LL}/?lsp__id=${LSP}&status=3&limit=1&mode=list`),
-    safeFetch(`${LL}/?lsp__id=${LSP}&status=3&net__gte=${year}-01-01T00:00:00Z&net__lte=${year}-12-31T23:59:59Z&limit=1&mode=list`),
-    safeFetch("https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=json"),
+  const [latest, total, thisYear, starlink] = await Promise.all([
+    safeFetchJson(`${LL}/?lsp__id=${LSP}&status=3&ordering=-net&limit=1&mode=list`),
+    safeFetchJson(`${LL}/?lsp__id=${LSP}&status=3&limit=1&mode=list`),
+    safeFetchJson(`${LL}/?lsp__id=${LSP}&status=3&net__gte=${year}-01-01T00:00:00Z&net__lte=${year}-12-31T23:59:59Z&limit=1&mode=list`),
+    safeFetchJson("https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=json"),
   ]);
-
-  const latest = latestRes ? await latestRes.json() : null;
-  const total = totalRes ? await totalRes.json() : null;
-  const thisYear = yearRes ? await yearRes.json() : null;
-  const starlink = starlinkRes ? await starlinkRes.json() : null;
 
   return {
     latestLaunch: latest?.results?.[0]?.name ?? null,
