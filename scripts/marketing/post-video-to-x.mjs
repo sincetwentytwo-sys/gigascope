@@ -193,11 +193,13 @@ function isoWeekNumber(d) {
 }
 
 function pickSite(factories, index) {
-  const available = factories.filter((f) => index[f.slug] && index[f.slug].frames >= 2);
-  if (available.length === 0) return null;
+  const available = factories.filter(
+    (f) => index[f.slug] && index[f.slug].frames >= 2 && f.progress >= 40 && f.progress < 100
+  );
   if (forceSlug) {
-    return available.find((f) => f.slug === forceSlug) ?? null;
+    return factories.find((f) => f.slug === forceSlug) ?? null;
   }
+  if (available.length === 0) return null;
   const week = isoWeekNumber(new Date());
   return available[week % available.length];
 }

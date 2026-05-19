@@ -32,7 +32,7 @@ function evaluatePixel(s) {
   return [2.5 * s.B04, 2.5 * s.B03, 2.5 * s.B02];
 }`;
 
-const HALF_KM = 2.0;
+const DEFAULT_HALF_KM = 2.0;
 const IMG_SIZE = 1024;
 const CLOUD_MAX = 30;
 const WINDOW_DAYS = 30;
@@ -66,7 +66,8 @@ async function fetchToken() {
 }
 
 async function captureSite(token, site) {
-  const bbox = bboxAround(site.lat, site.lng, HALF_KM);
+  const halfKm = site.halfKm ?? DEFAULT_HALF_KM;
+  const bbox = bboxAround(site.lat, site.lng, halfKm);
   const toDate = new Date(frameDate + "T23:59:59Z");
   const fromDate = new Date(toDate);
   fromDate.setUTCDate(fromDate.getUTCDate() - WINDOW_DAYS);

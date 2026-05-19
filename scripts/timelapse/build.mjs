@@ -12,6 +12,7 @@
 //
 // Requires `gh` CLI and `ffmpeg` on PATH (both preinstalled on ubuntu-latest).
 import { readFileSync, mkdirSync, existsSync, readdirSync, rmSync, statSync, writeFileSync, copyFileSync } from "node:fs";
+import { relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve, join } from "node:path";
 import { execFileSync } from "node:child_process";
@@ -50,15 +51,44 @@ function downloadAssets(tag, dir) {
   gh(["release", "download", tag, "--repo", repo, "--dir", dir, "--pattern", "*.png"]);
 }
 
+const FONT_CANDIDATES = [
+  "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+  "C:/Windows/Fonts/arialbd.ttf",
+  "/System/Library/Fonts/Helvetica.ttc",
+];
+const fontSrc = FONT_CANDIDATES.find((p) => existsSync(p));
+const fontLocal = fontSrc ? join(tmpRoot, "font.ttf") : null;
+if (fontSrc) {
+  copyFileSync(fontSrc, fontLocal);
+}
+
+function burnDate(srcPath, dstPath, label) {
+  const fontArg = fontLocal ? relative(process.cwd(), fontLocal).replace(/\\/g, "/") : null;
+  const drawtext = fontArg
+    ? `drawtext=fontfile=${fontArg}:text=${label}:fontsize=44:fontcolor=white:borderw=3:bordercolor=black@0.7:x=20:y=h-th-20`
+    : null;
+  const vf = drawtext ? `scale=720:720,${drawtext}` : "scale=720:720";
+  execFileSync("ffmpeg", ["-y", "-i", srcPath, "-vf", vf, "-q:v", "3", dstPath], {
+    stdio: ["ignore", "ignore", "pipe"],
+  });
+}
+
 function buildVideo(framesDir, outFile) {
   const files = readdirSync(framesDir)
-    .filter((f) => f.endsWith(".png"))
+    .filter((f) => f.endsWith(".png") && !f.startsWith("_burned_"))
     .sort();
   if (files.length < 2) return { ok: false, frames: files.length, reason: "need at least 2 frames" };
 
+  for (const f of files) {
+    const date = f.replace(/\.png$/, "");
+    const burned = join(framesDir, `_burned_${f.replace(/\.png$/, ".jpg")}`);
+    burnDate(join(framesDir, f), burned, date);
+  }
+  const burnedFiles = readdirSync(framesDir).filter((f) => f.startsWith("_burned_")).sort();
+
   const listFile = join(framesDir, "_concat.txt");
-  const lines = files.map((f) => `file '${join(framesDir, f).replace(/\\/g, "/")}'\nduration ${1 / fps}`);
-  lines.push(`file '${join(framesDir, files[files.length - 1]).replace(/\\/g, "/")}'`);
+  const lines = burnedFiles.map((f) => `file '${join(framesDir, f).replace(/\\/g, "/")}'\nduration ${1 / fps}`);
+  lines.push(`file '${join(framesDir, burnedFiles[burnedFiles.length - 1]).replace(/\\/g, "/")}'`);
   writeFileSync(listFile, lines.join("\n"));
 
   execFileSync(
@@ -68,7 +98,7 @@ function buildVideo(framesDir, outFile) {
       "-f", "concat",
       "-safe", "0",
       "-i", listFile,
-      "-vf", "scale=720:720,format=yuv420p",
+      "-vf", "format=yuv420p",
       "-c:v", "libx264",
       "-preset", "medium",
       "-crf", "23",

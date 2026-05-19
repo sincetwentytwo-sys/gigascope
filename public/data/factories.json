@@ -71,7 +71,8 @@
         0,
         0,
         2
-      ]
+      ],
+      "halfKm": 3
     },
     {
       "id": "giga-texas",
@@ -141,7 +142,8 @@
       "sources": {
         "wikipediaRevision": "2026-05-15",
         "wikipediaTitle": "Gigafactory_Texas"
-      }
+      },
+      "halfKm": 2.5
     },
     {
       "id": "giga-nevada",
@@ -416,7 +418,8 @@
       "sources": {
         "wikipediaRevision": "2026-05-16",
         "wikipediaTitle": "Gigafactory_Mexico"
-      }
+      },
+      "halfKm": 3
     },
     {
       "id": "fremont",
@@ -615,7 +618,8 @@
       "sources": {
         "wikipediaRevision": "2026-05-13",
         "wikipediaTitle": "SpaceX_Starbase"
-      }
+      },
+      "halfKm": 3
     },
     {
       "id": "spacex-hawthorne",
@@ -680,7 +684,8 @@
       "sources": {
         "wikipediaRevision": "2026-05-16",
         "wikipediaTitle": "SpaceX_headquarters"
-      }
+      },
+      "halfKm": 0.5
     },
     {
       "id": "cape-canaveral",
@@ -750,7 +755,8 @@
       "sources": {
         "wikipediaRevision": "2026-05-09",
         "wikipediaTitle": "Space_Launch_Complex_40"
-      }
+      },
+      "halfKm": 4
     },
     {
       "id": "vandenberg",
@@ -815,7 +821,8 @@
       "sources": {
         "wikipediaRevision": "2026-05-19",
         "wikipediaTitle": "Vandenberg_Space_Launch_Complex_4"
-      }
+      },
+      "halfKm": 3
     },
     {
       "id": "colossus",
@@ -954,7 +961,8 @@
       "sources": {
         "wikipediaRevision": "2026-05-18",
         "wikipediaTitle": "Neuralink"
-      }
+      },
+      "halfKm": 0.5
     },
     {
       "id": "neuralink-austin",
@@ -1010,7 +1018,8 @@
         0,
         15,
         30
-      ]
+      ],
+      "halfKm": 0.5
     },
     {
       "id": "vegas-loop",
@@ -1079,7 +1088,8 @@
       "sources": {
         "wikipediaRevision": "2026-05-07",
         "wikipediaTitle": "Vegas_Loop"
-      }
+      },
+      "halfKm": 1
     }
   ]
 }
