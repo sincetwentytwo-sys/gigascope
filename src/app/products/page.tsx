@@ -28,6 +28,9 @@ const CATEGORY_COLORS: Record<ProductCategory, string> = {
   chip: "#c97aff",
   vehicle: "#ffd166",
   spacecraft: "#7adfff",
+  robot: "#ff7adf",
+  energy: "#7adf9e",
+  charging: "#ffae40",
 };
 
 const CATEGORY_GRADIENTS: Record<ProductCategory, string> = {
@@ -42,6 +45,12 @@ const CATEGORY_GRADIENTS: Record<ProductCategory, string> = {
     "linear-gradient(135deg, #2a200d 0%, #0a0a0c 50%, #3a2a0d 100%)",
   spacecraft:
     "linear-gradient(135deg, #0d1f2a 0%, #0a0a0c 50%, #0d2a3a 100%)",
+  robot:
+    "linear-gradient(135deg, #2a0d22 0%, #0a0a0c 50%, #3a0d33 100%)",
+  energy:
+    "linear-gradient(135deg, #0d2a20 0%, #0a0a0c 50%, #1a3a2d 100%)",
+  charging:
+    "linear-gradient(135deg, #2a1a0d 0%, #0a0a0c 50%, #3a2a13 100%)",
 };
 
 export default function ProductsHubPage() {

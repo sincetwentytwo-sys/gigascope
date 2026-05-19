@@ -51,7 +51,10 @@ export type ProductCategory =
   | "battery"
   | "chip"
   | "vehicle"
-  | "spacecraft";
+  | "spacecraft"
+  | "robot"
+  | "energy"
+  | "charging";
 
 export type ProductSpec = {
   slug: string;
