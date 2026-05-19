@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "update:factories": "node scripts/data/update-factories.mjs"
   },
   "dependencies": {
     "@types/leaflet": "^1.9.21",

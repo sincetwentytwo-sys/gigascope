@@ -1,7 +1,16 @@
 {
-  "lastUpdated": "2026-05-18",
+  "lastUpdated": "2026-05-19",
+  "lastChecked": "2026-05-19",
   "totalInvestment": "$80B+",
-  "timelineYears": [2020, 2021, 2022, 2023, 2024, 2025, 2026],
+  "timelineYears": [
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025,
+    2026
+  ],
   "factories": [
     {
       "id": "terafab",
@@ -28,13 +37,41 @@
       },
       "lastUpdated": "2026-05-18",
       "milestones": [
-        {"date": "2026-03-21", "text": "Musk announces Terafab launch", "done": true},
-        {"date": "2026-04", "text": "Site selection & environmental review", "done": false},
-        {"date": "2026-Q3", "text": "Pilot fab site prep begins", "done": false},
-        {"date": "2026-H2", "text": "AI5 small-batch production", "done": false},
-        {"date": "2027", "text": "Volume production target", "done": false}
+        {
+          "date": "2026-03-21",
+          "text": "Musk announces Terafab launch",
+          "done": true
+        },
+        {
+          "date": "2026-04",
+          "text": "Site selection & environmental review",
+          "done": false
+        },
+        {
+          "date": "2026-Q3",
+          "text": "Pilot fab site prep begins",
+          "done": false
+        },
+        {
+          "date": "2026-H2",
+          "text": "AI5 small-batch production",
+          "done": false
+        },
+        {
+          "date": "2027",
+          "text": "Volume production target",
+          "done": false
+        }
       ],
-      "timeline": [0, 0, 0, 0, 0, 0, 2]
+      "timeline": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ]
     },
     {
       "id": "giga-texas",
@@ -54,17 +91,57 @@
       "investment": "$10B+",
       "employees": "20,000+",
       "color": "#e31937",
-      "lastUpdated": "2026-05-18",
+      "lastUpdated": "2026-05-19",
       "milestones": [
-        {"date": "2020-07", "text": "Site clearing began", "done": true},
-        {"date": "2021-04", "text": "Main structure complete", "done": true},
-        {"date": "2022-04", "text": "First deliveries (Model Y)", "done": true},
-        {"date": "2023-11", "text": "Cybertruck production start", "done": true},
-        {"date": "2025-06", "text": "Cybercab pilot line", "done": true},
-        {"date": "2026-03", "text": "Massive expansion plans filed", "done": true},
-        {"date": "2026-H2", "text": "Phase 3 expansion complete", "done": false}
+        {
+          "date": "2020-07",
+          "text": "Site clearing began",
+          "done": true
+        },
+        {
+          "date": "2021-04",
+          "text": "Main structure complete",
+          "done": true
+        },
+        {
+          "date": "2022-04",
+          "text": "First deliveries (Model Y)",
+          "done": true
+        },
+        {
+          "date": "2023-11",
+          "text": "Cybertruck production start",
+          "done": true
+        },
+        {
+          "date": "2025-06",
+          "text": "Cybercab pilot line",
+          "done": true
+        },
+        {
+          "date": "2026-03",
+          "text": "Massive expansion plans filed",
+          "done": true
+        },
+        {
+          "date": "2026-H2",
+          "text": "Phase 3 expansion complete",
+          "done": false
+        }
       ],
-      "timeline": [10, 25, 40, 55, 65, 72, 78]
+      "timeline": [
+        10,
+        25,
+        40,
+        55,
+        65,
+        72,
+        78
+      ],
+      "sources": {
+        "wikipediaRevision": "2026-05-15",
+        "wikipediaTitle": "Gigafactory_Texas"
+      }
     },
     {
       "id": "giga-nevada",
@@ -84,17 +161,57 @@
       "investment": "$6.2B",
       "employees": "11,000+",
       "color": "#e31937",
-      "lastUpdated": "2026-05-18",
+      "lastUpdated": "2026-05-19",
       "milestones": [
-        {"date": "2014-06", "text": "Groundbreaking", "done": true},
-        {"date": "2016-07", "text": "Grand opening", "done": true},
-        {"date": "2017-01", "text": "2170 cell production", "done": true},
-        {"date": "2023-01", "text": "$3.6B expansion announced", "done": true},
-        {"date": "2024-12", "text": "Semi production ramp", "done": true},
-        {"date": "2025-Q3", "text": "4680 pilot line operational", "done": true},
-        {"date": "2026-Q4", "text": "4680 cell mass production", "done": false}
+        {
+          "date": "2014-06",
+          "text": "Groundbreaking",
+          "done": true
+        },
+        {
+          "date": "2016-07",
+          "text": "Grand opening",
+          "done": true
+        },
+        {
+          "date": "2017-01",
+          "text": "2170 cell production",
+          "done": true
+        },
+        {
+          "date": "2023-01",
+          "text": "$3.6B expansion announced",
+          "done": true
+        },
+        {
+          "date": "2024-12",
+          "text": "Semi production ramp",
+          "done": true
+        },
+        {
+          "date": "2025-Q3",
+          "text": "4680 pilot line operational",
+          "done": true
+        },
+        {
+          "date": "2026-Q4",
+          "text": "4680 cell mass production",
+          "done": false
+        }
       ],
-      "timeline": [20, 30, 35, 40, 45, 55, 65]
+      "timeline": [
+        20,
+        30,
+        35,
+        40,
+        45,
+        55,
+        65
+      ],
+      "sources": {
+        "wikipediaRevision": "2026-05-16",
+        "wikipediaTitle": "Gigafactory_Nevada"
+      }
     },
     {
       "id": "giga-shanghai",
@@ -114,17 +231,57 @@
       "investment": "$7B+",
       "employees": "20,000+",
       "color": "#e31937",
-      "lastUpdated": "2026-05-18",
+      "lastUpdated": "2026-05-19",
       "milestones": [
-        {"date": "2019-01", "text": "Groundbreaking", "done": true},
-        {"date": "2019-12", "text": "First deliveries", "done": true},
-        {"date": "2021-10", "text": "Export hub established", "done": true},
-        {"date": "2024-05", "text": "Megafactory ground broken", "done": true},
-        {"date": "2025-01", "text": "Megafactory complete (7mo)", "done": true},
-        {"date": "2025-12", "text": "Megapack production ramp", "done": true},
-        {"date": "2026-Q2", "text": "Refreshed Model Y ramp", "done": false}
+        {
+          "date": "2019-01",
+          "text": "Groundbreaking",
+          "done": true
+        },
+        {
+          "date": "2019-12",
+          "text": "First deliveries",
+          "done": true
+        },
+        {
+          "date": "2021-10",
+          "text": "Export hub established",
+          "done": true
+        },
+        {
+          "date": "2024-05",
+          "text": "Megafactory ground broken",
+          "done": true
+        },
+        {
+          "date": "2025-01",
+          "text": "Megafactory complete (7mo)",
+          "done": true
+        },
+        {
+          "date": "2025-12",
+          "text": "Megapack production ramp",
+          "done": true
+        },
+        {
+          "date": "2026-Q2",
+          "text": "Refreshed Model Y ramp",
+          "done": false
+        }
       ],
-      "timeline": [15, 60, 80, 85, 88, 92, 95]
+      "timeline": [
+        15,
+        60,
+        80,
+        85,
+        88,
+        92,
+        95
+      ],
+      "sources": {
+        "wikipediaRevision": "2026-03-22",
+        "wikipediaTitle": "Gigafactory_Shanghai"
+      }
     },
     {
       "id": "giga-berlin",
@@ -144,17 +301,57 @@
       "investment": "$5.8B",
       "employees": "12,500+",
       "color": "#e31937",
-      "lastUpdated": "2026-05-18",
+      "lastUpdated": "2026-05-19",
       "milestones": [
-        {"date": "2020-01", "text": "Construction began", "done": true},
-        {"date": "2022-03", "text": "First deliveries", "done": true},
-        {"date": "2023-11", "text": "5K/week milestone", "done": true},
-        {"date": "2024-03", "text": "Arson attack / recovery", "done": true},
-        {"date": "2025-06", "text": "Expansion approved", "done": true},
-        {"date": "2025-12", "text": "Phase 2 construction started", "done": true},
-        {"date": "2027-H1", "text": "Phase 2 complete", "done": false}
+        {
+          "date": "2020-01",
+          "text": "Construction began",
+          "done": true
+        },
+        {
+          "date": "2022-03",
+          "text": "First deliveries",
+          "done": true
+        },
+        {
+          "date": "2023-11",
+          "text": "5K/week milestone",
+          "done": true
+        },
+        {
+          "date": "2024-03",
+          "text": "Arson attack / recovery",
+          "done": true
+        },
+        {
+          "date": "2025-06",
+          "text": "Expansion approved",
+          "done": true
+        },
+        {
+          "date": "2025-12",
+          "text": "Phase 2 construction started",
+          "done": true
+        },
+        {
+          "date": "2027-H1",
+          "text": "Phase 2 complete",
+          "done": false
+        }
       ],
-      "timeline": [10, 30, 55, 65, 72, 78, 82]
+      "timeline": [
+        10,
+        30,
+        55,
+        65,
+        72,
+        78,
+        82
+      ],
+      "sources": {
+        "wikipediaRevision": "2026-01-04",
+        "wikipediaTitle": "Gigafactory_Berlin-Brandenburg"
+      }
     },
     {
       "id": "giga-mexico",
@@ -174,16 +371,52 @@
       "investment": "$5B (est)",
       "employees": "Est. 5,000+",
       "color": "#e31937",
-      "lastUpdated": "2026-05-18",
+      "lastUpdated": "2026-05-19",
       "milestones": [
-        {"date": "2023-03", "text": "Location announced", "done": true},
-        {"date": "2024-06", "text": "Permits approved", "done": true},
-        {"date": "2025-03", "text": "Site prep & grading", "done": true},
-        {"date": "2025-09", "text": "Foundation work begins", "done": true},
-        {"date": "2026-01", "text": "Structural steel phase", "done": true},
-        {"date": "2027-H1", "text": "Production start (target)", "done": false}
+        {
+          "date": "2023-03",
+          "text": "Location announced",
+          "done": true
+        },
+        {
+          "date": "2024-06",
+          "text": "Permits approved",
+          "done": true
+        },
+        {
+          "date": "2025-03",
+          "text": "Site prep & grading",
+          "done": true
+        },
+        {
+          "date": "2025-09",
+          "text": "Foundation work begins",
+          "done": true
+        },
+        {
+          "date": "2026-01",
+          "text": "Structural steel phase",
+          "done": true
+        },
+        {
+          "date": "2027-H1",
+          "text": "Production start (target)",
+          "done": false
+        }
       ],
-      "timeline": [0, 0, 5, 10, 15, 20, 25]
+      "timeline": [
+        0,
+        0,
+        5,
+        10,
+        15,
+        20,
+        25
+      ],
+      "sources": {
+        "wikipediaRevision": "2026-05-16",
+        "wikipediaTitle": "Gigafactory_Mexico"
+      }
     },
     {
       "id": "fremont",
@@ -203,16 +436,52 @@
       "investment": "$2B+",
       "employees": "22,000",
       "color": "#e31937",
-      "lastUpdated": "2026-05-18",
+      "lastUpdated": "2026-05-19",
       "milestones": [
-        {"date": "2010-05", "text": "Tesla acquires NUMMI plant", "done": true},
-        {"date": "2012-06", "text": "First Model S delivered", "done": true},
-        {"date": "2017-07", "text": "Model 3 production begins", "done": true},
-        {"date": "2020-01", "text": "Model Y production", "done": true},
-        {"date": "2024-10", "text": "Refreshed Model 3 US prod", "done": true},
-        {"date": "2025-06", "text": "Model S/X end of production", "done": true}
+        {
+          "date": "2010-05",
+          "text": "Tesla acquires NUMMI plant",
+          "done": true
+        },
+        {
+          "date": "2012-06",
+          "text": "First Model S delivered",
+          "done": true
+        },
+        {
+          "date": "2017-07",
+          "text": "Model 3 production begins",
+          "done": true
+        },
+        {
+          "date": "2020-01",
+          "text": "Model Y production",
+          "done": true
+        },
+        {
+          "date": "2024-10",
+          "text": "Refreshed Model 3 US prod",
+          "done": true
+        },
+        {
+          "date": "2025-06",
+          "text": "Model S/X end of production",
+          "done": true
+        }
       ],
-      "timeline": [50, 60, 70, 80, 90, 95, 100]
+      "timeline": [
+        50,
+        60,
+        70,
+        80,
+        90,
+        95,
+        100
+      ],
+      "sources": {
+        "wikipediaRevision": "2026-05-15",
+        "wikipediaTitle": "Tesla_Fremont_Factory"
+      }
     },
     {
       "id": "giga-buffalo",
@@ -232,15 +501,47 @@
       "investment": "$959M",
       "employees": "1,500+",
       "color": "#e31937",
-      "lastUpdated": "2026-05-18",
+      "lastUpdated": "2026-05-19",
       "milestones": [
-        {"date": "2017-08", "text": "Production began", "done": true},
-        {"date": "2019-10", "text": "Solar Roof v3", "done": true},
-        {"date": "2023-05", "text": "Megapack components", "done": true},
-        {"date": "2025-03", "text": "Supercharger V4 prod", "done": true},
-        {"date": "2025-10", "text": "Solar Roof v4 line install", "done": true}
+        {
+          "date": "2017-08",
+          "text": "Production began",
+          "done": true
+        },
+        {
+          "date": "2019-10",
+          "text": "Solar Roof v3",
+          "done": true
+        },
+        {
+          "date": "2023-05",
+          "text": "Megapack components",
+          "done": true
+        },
+        {
+          "date": "2025-03",
+          "text": "Supercharger V4 prod",
+          "done": true
+        },
+        {
+          "date": "2025-10",
+          "text": "Solar Roof v4 line install",
+          "done": true
+        }
       ],
-      "timeline": [30, 50, 60, 70, 80, 85, 90]
+      "timeline": [
+        30,
+        50,
+        60,
+        70,
+        80,
+        85,
+        90
+      ],
+      "sources": {
+        "wikipediaRevision": "2026-05-16",
+        "wikipediaTitle": "Gigafactory_New_York"
+      }
     },
     {
       "id": "starbase",
@@ -264,17 +565,57 @@
         "Launch Pad": "OLM (Orbital Launch Mount)",
         "Tower": "Mechazilla catch tower"
       },
-      "lastUpdated": "2026-05-18",
+      "lastUpdated": "2026-05-19",
       "milestones": [
-        {"date": "2019-08", "text": "Starhopper 150m hop", "done": true},
-        {"date": "2021-05", "text": "SN15 successful landing", "done": true},
-        {"date": "2023-04", "text": "First orbital attempt (IFT-1)", "done": true},
-        {"date": "2024-10", "text": "Mechazilla booster catch (IFT-5)", "done": true},
-        {"date": "2025-06", "text": "Starship reuse demonstrated", "done": true},
-        {"date": "2026-01", "text": "Rapid cadence launches begin", "done": true},
-        {"date": "2026-H2", "text": "Starship Block 2 flights", "done": false}
+        {
+          "date": "2019-08",
+          "text": "Starhopper 150m hop",
+          "done": true
+        },
+        {
+          "date": "2021-05",
+          "text": "SN15 successful landing",
+          "done": true
+        },
+        {
+          "date": "2023-04",
+          "text": "First orbital attempt (IFT-1)",
+          "done": true
+        },
+        {
+          "date": "2024-10",
+          "text": "Mechazilla booster catch (IFT-5)",
+          "done": true
+        },
+        {
+          "date": "2025-06",
+          "text": "Starship reuse demonstrated",
+          "done": true
+        },
+        {
+          "date": "2026-01",
+          "text": "Rapid cadence launches begin",
+          "done": true
+        },
+        {
+          "date": "2026-H2",
+          "text": "Starship Block 2 flights",
+          "done": false
+        }
       ],
-      "timeline": [5, 10, 20, 30, 45, 60, 70]
+      "timeline": [
+        5,
+        10,
+        20,
+        30,
+        45,
+        60,
+        70
+      ],
+      "sources": {
+        "wikipediaRevision": "2026-05-13",
+        "wikipediaTitle": "SpaceX_Starbase"
+      }
     },
     {
       "id": "spacex-hawthorne",
@@ -284,7 +625,7 @@
       "flag": "🇺🇸",
       "location": "Hawthorne, California",
       "lat": 33.9207,
-      "lng": -118.3280,
+      "lng": -118.328,
       "company": "spacex",
       "status": "operational",
       "progress": 95,
@@ -294,16 +635,52 @@
       "investment": "$1B+",
       "employees": "6,000+",
       "color": "#005288",
-      "lastUpdated": "2026-05-18",
+      "lastUpdated": "2026-05-19",
       "milestones": [
-        {"date": "2002-05", "text": "SpaceX founded", "done": true},
-        {"date": "2008-09", "text": "Falcon 1 reaches orbit", "done": true},
-        {"date": "2015-12", "text": "First orbital booster landing", "done": true},
-        {"date": "2020-05", "text": "First crewed Dragon flight", "done": true},
-        {"date": "2024-01", "text": "300th Falcon 9 flight", "done": true},
-        {"date": "2025-12", "text": "Falcon 9 fleet: 20+ boosters", "done": true}
+        {
+          "date": "2002-05",
+          "text": "SpaceX founded",
+          "done": true
+        },
+        {
+          "date": "2008-09",
+          "text": "Falcon 1 reaches orbit",
+          "done": true
+        },
+        {
+          "date": "2015-12",
+          "text": "First orbital booster landing",
+          "done": true
+        },
+        {
+          "date": "2020-05",
+          "text": "First crewed Dragon flight",
+          "done": true
+        },
+        {
+          "date": "2024-01",
+          "text": "300th Falcon 9 flight",
+          "done": true
+        },
+        {
+          "date": "2025-12",
+          "text": "Falcon 9 fleet: 20+ boosters",
+          "done": true
+        }
       ],
-      "timeline": [70, 75, 80, 85, 88, 92, 95]
+      "timeline": [
+        70,
+        75,
+        80,
+        85,
+        88,
+        92,
+        95
+      ],
+      "sources": {
+        "wikipediaRevision": "2026-05-16",
+        "wikipediaTitle": "SpaceX_headquarters"
+      }
     },
     {
       "id": "cape-canaveral",
@@ -312,7 +689,7 @@
       "aka": "SLC-40 / LC-39A",
       "flag": "🇺🇸",
       "location": "Cape Canaveral, Florida",
-      "lat": 28.5620,
+      "lat": 28.562,
       "lng": -80.5772,
       "company": "spacex",
       "status": "operational",
@@ -323,16 +700,57 @@
       "investment": "$500M+",
       "employees": "2,500+",
       "color": "#005288",
-      "lastUpdated": "2026-05-18",
+      "lastUpdated": "2026-05-19",
       "milestones": [
-        {"date": "2010-06", "text": "Falcon 9 first flight from SLC-40", "done": true},
-        {"date": "2014-04", "text": "LC-39A lease signed (NASA)", "done": true},
-        {"date": "2017-02", "text": "LC-39A operational", "done": true},
-        {"date": "2023-12", "text": "98 launches in one year", "done": true},
-        {"date": "2025-06", "text": "Pad turnaround under 48hrs", "done": true},
-        {"date": "2026-Q2", "text": "Starship launch tower at 39A", "done": false}
+        {
+          "date": "2010-06",
+          "text": "Falcon 9 first flight from SLC-40",
+          "done": true
+        },
+        {
+          "date": "2014-04",
+          "text": "LC-39A lease signed (NASA)",
+          "done": true
+        },
+        {
+          "date": "2017-02",
+          "text": "LC-39A operational",
+          "done": true
+        },
+        {
+          "date": "2023-12",
+          "text": "98 launches in one year",
+          "done": true
+        },
+        {
+          "date": "2025-06",
+          "text": "Pad turnaround under 48hrs",
+          "done": true
+        },
+        {
+          "date": "2026-05-15",
+          "text": "Launch: Dragon CRS-2 SpX-34",
+          "done": true
+        },
+        {
+          "date": "2026-Q2",
+          "text": "Starship launch tower at 39A",
+          "done": false
+        }
       ],
-      "timeline": [50, 55, 60, 70, 78, 85, 90]
+      "timeline": [
+        50,
+        55,
+        60,
+        70,
+        78,
+        85,
+        90
+      ],
+      "sources": {
+        "wikipediaRevision": "2026-05-09",
+        "wikipediaTitle": "Space_Launch_Complex_40"
+      }
     },
     {
       "id": "vandenberg",
@@ -352,15 +770,52 @@
       "investment": "$200M+",
       "employees": "500+",
       "color": "#005288",
-      "lastUpdated": "2026-05-18",
+      "lastUpdated": "2026-05-19",
       "milestones": [
-        {"date": "2013-09", "text": "First Falcon 9 from Vandenberg", "done": true},
-        {"date": "2018-10", "text": "First booster landing at SLC-4", "done": true},
-        {"date": "2023-12", "text": "30+ polar launches in year", "done": true},
-        {"date": "2025-04", "text": "Rapid reuse: same pad, 5 days", "done": true},
-        {"date": "2026-Q3", "text": "SLC-6 Starship pad construction", "done": false}
+        {
+          "date": "2013-09",
+          "text": "First Falcon 9 from Vandenberg",
+          "done": true
+        },
+        {
+          "date": "2018-10",
+          "text": "First booster landing at SLC-4",
+          "done": true
+        },
+        {
+          "date": "2023-12",
+          "text": "30+ polar launches in year",
+          "done": true
+        },
+        {
+          "date": "2025-04",
+          "text": "Rapid reuse: same pad, 5 days",
+          "done": true
+        },
+        {
+          "date": "2026-05-12",
+          "text": "Launch: NROL-172",
+          "done": true
+        },
+        {
+          "date": "2026-Q3",
+          "text": "SLC-6 Starship pad construction",
+          "done": false
+        }
       ],
-      "timeline": [30, 40, 50, 60, 70, 80, 85]
+      "timeline": [
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        85
+      ],
+      "sources": {
+        "wikipediaRevision": "2026-05-19",
+        "wikipediaTitle": "Vandenberg_Space_Launch_Complex_4"
+      }
     },
     {
       "id": "colossus",
@@ -369,8 +824,8 @@
       "aka": "xAI Supercomputer Cluster",
       "flag": "🇺🇸",
       "location": "Memphis, Tennessee",
-      "lat": 35.0960,
-      "lng": -89.8140,
+      "lat": 35.096,
+      "lng": -89.814,
       "company": "xai",
       "status": "expanding",
       "progress": 60,
@@ -385,16 +840,52 @@
         "GPU Count": "200,000 H100s",
         "Power": "150 MW (Phase 1)"
       },
-      "lastUpdated": "2026-05-18",
+      "lastUpdated": "2026-05-19",
       "milestones": [
-        {"date": "2024-06", "text": "Memphis site announced", "done": true},
-        {"date": "2024-09", "text": "Phase 1: 100K H100s online (122 days build)", "done": true},
-        {"date": "2025-02", "text": "Grok-3 trained on Colossus", "done": true},
-        {"date": "2025-08", "text": "Phase 2: 200K GPUs operational", "done": true},
-        {"date": "2026-03", "text": "Grok-4 training begins", "done": true},
-        {"date": "2026-Q4", "text": "Phase 3: 1M GPU target", "done": false}
+        {
+          "date": "2024-06",
+          "text": "Memphis site announced",
+          "done": true
+        },
+        {
+          "date": "2024-09",
+          "text": "Phase 1: 100K H100s online (122 days build)",
+          "done": true
+        },
+        {
+          "date": "2025-02",
+          "text": "Grok-3 trained on Colossus",
+          "done": true
+        },
+        {
+          "date": "2025-08",
+          "text": "Phase 2: 200K GPUs operational",
+          "done": true
+        },
+        {
+          "date": "2026-03",
+          "text": "Grok-4 training begins",
+          "done": true
+        },
+        {
+          "date": "2026-Q4",
+          "text": "Phase 3: 1M GPU target",
+          "done": false
+        }
       ],
-      "timeline": [0, 0, 0, 0, 10, 40, 60]
+      "timeline": [
+        0,
+        0,
+        0,
+        0,
+        10,
+        40,
+        60
+      ],
+      "sources": {
+        "wikipediaRevision": "2026-05-17",
+        "wikipediaTitle": "Colossus_(supercomputer)"
+      }
     },
     {
       "id": "neuralink-fremont",
@@ -418,16 +909,52 @@
         "Implant": "N1 (1024 electrodes)",
         "Patients": "3 (as of 2025)"
       },
-      "lastUpdated": "2026-05-18",
+      "lastUpdated": "2026-05-19",
       "milestones": [
-        {"date": "2017-03", "text": "Neuralink founded", "done": true},
-        {"date": "2020-08", "text": "Live pig demo (Gertrude)", "done": true},
-        {"date": "2023-05", "text": "FDA human trial approval", "done": true},
-        {"date": "2024-01", "text": "First human implant (Noland Arbaugh)", "done": true},
-        {"date": "2025-03", "text": "Third patient implanted", "done": true},
-        {"date": "2026-H1", "text": "10-patient expanded trial", "done": false}
+        {
+          "date": "2017-03",
+          "text": "Neuralink founded",
+          "done": true
+        },
+        {
+          "date": "2020-08",
+          "text": "Live pig demo (Gertrude)",
+          "done": true
+        },
+        {
+          "date": "2023-05",
+          "text": "FDA human trial approval",
+          "done": true
+        },
+        {
+          "date": "2024-01",
+          "text": "First human implant (Noland Arbaugh)",
+          "done": true
+        },
+        {
+          "date": "2025-03",
+          "text": "Third patient implanted",
+          "done": true
+        },
+        {
+          "date": "2026-H1",
+          "text": "10-patient expanded trial",
+          "done": false
+        }
       ],
-      "timeline": [10, 20, 30, 40, 55, 70, 80]
+      "timeline": [
+        10,
+        20,
+        30,
+        40,
+        55,
+        70,
+        80
+      ],
+      "sources": {
+        "wikipediaRevision": "2026-05-18",
+        "wikipediaTitle": "Neuralink"
+      }
     },
     {
       "id": "neuralink-austin",
@@ -449,13 +976,41 @@
       "color": "#00875a",
       "lastUpdated": "2026-05-18",
       "milestones": [
-        {"date": "2025-01", "text": "Austin facility announced", "done": true},
-        {"date": "2025-06", "text": "Buildout begins", "done": true},
-        {"date": "2026-01", "text": "Cleanroom installation", "done": true},
-        {"date": "2026-Q3", "text": "Pilot production line", "done": false},
-        {"date": "2027", "text": "Full-scale manufacturing", "done": false}
+        {
+          "date": "2025-01",
+          "text": "Austin facility announced",
+          "done": true
+        },
+        {
+          "date": "2025-06",
+          "text": "Buildout begins",
+          "done": true
+        },
+        {
+          "date": "2026-01",
+          "text": "Cleanroom installation",
+          "done": true
+        },
+        {
+          "date": "2026-Q3",
+          "text": "Pilot production line",
+          "done": false
+        },
+        {
+          "date": "2027",
+          "text": "Full-scale manufacturing",
+          "done": false
+        }
       ],
-      "timeline": [0, 0, 0, 0, 0, 15, 30]
+      "timeline": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        15,
+        30
+      ]
     },
     {
       "id": "vegas-loop",
@@ -464,8 +1019,8 @@
       "aka": "LVCC Loop + City Expansion",
       "flag": "🇺🇸",
       "location": "Las Vegas, Nevada",
-      "lat": 36.1270,
-      "lng": -115.1530,
+      "lat": 36.127,
+      "lng": -115.153,
       "company": "boring",
       "status": "expanding",
       "progress": 35,
@@ -479,16 +1034,52 @@
         "Stations": "93 planned (5 open)",
         "Tunnel Miles": "3.2 mi open"
       },
-      "lastUpdated": "2026-05-18",
+      "lastUpdated": "2026-05-19",
       "milestones": [
-        {"date": "2021-06", "text": "LVCC Loop opens (1.7mi)", "done": true},
-        {"date": "2023-06", "text": "Resorts World station opens", "done": true},
-        {"date": "2024-11", "text": "City-wide expansion approved (68mi)", "done": true},
-        {"date": "2025-09", "text": "Strip tunnel boring begins", "done": true},
-        {"date": "2026-Q2", "text": "Strip segment Phase 1 open", "done": false},
-        {"date": "2028", "text": "Full 68-mile network target", "done": false}
+        {
+          "date": "2021-06",
+          "text": "LVCC Loop opens (1.7mi)",
+          "done": true
+        },
+        {
+          "date": "2023-06",
+          "text": "Resorts World station opens",
+          "done": true
+        },
+        {
+          "date": "2024-11",
+          "text": "City-wide expansion approved (68mi)",
+          "done": true
+        },
+        {
+          "date": "2025-09",
+          "text": "Strip tunnel boring begins",
+          "done": true
+        },
+        {
+          "date": "2026-Q2",
+          "text": "Strip segment Phase 1 open",
+          "done": false
+        },
+        {
+          "date": "2028",
+          "text": "Full 68-mile network target",
+          "done": false
+        }
       ],
-      "timeline": [0, 5, 10, 15, 20, 28, 35]
+      "timeline": [
+        0,
+        5,
+        10,
+        15,
+        20,
+        28,
+        35
+      ],
+      "sources": {
+        "wikipediaRevision": "2026-05-07",
+        "wikipediaTitle": "Vegas_Loop"
+      }
     }
   ]
 }
