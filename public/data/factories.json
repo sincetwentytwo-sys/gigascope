@@ -553,8 +553,8 @@
       "aka": "Boca Chica Launch Complex",
       "flag": "🇺🇸",
       "location": "Boca Chica, Texas",
-      "lat": 25.9972,
-      "lng": -97.1571,
+      "lat": 25.992,
+      "lng": -97.173,
       "company": "spacex",
       "status": "expanding",
       "progress": 70,
@@ -619,7 +619,7 @@
         "wikipediaRevision": "2026-05-13",
         "wikipediaTitle": "SpaceX_Starbase"
       },
-      "halfKm": 3
+      "halfKm": 4
     },
     {
       "id": "spacex-hawthorne",
