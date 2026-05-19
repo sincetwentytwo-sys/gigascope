@@ -8,10 +8,10 @@ export const megapack: ProductSpec = {
   category: "energy",
   description:
     "Container-format lithium iron phosphate (LFP) energy storage unit. ~3.9 MWh / 1.9 MW per unit at ~7.5 x 1.7 x 2.9 m. Liquid-cooled cell-to-pack modules, integrated bidirectional inverter, and a SCADA-ready Powerhub controller. Field-deployed in 1,300+ unit sites (Lyon BESS, Moss Landing). Manufactured at Megafactory Lathrop and Shanghai.",
-  cameraPosition: [9, 6, 12],
-  cameraTarget: [0, 1.5, 0],
-  cameraMinDistance: 8,
-  cameraMaxDistance: 40,
+  cameraPosition: [9.8, 8.0, 14.3],
+  cameraTarget: [0, 0.4, 0],
+  cameraMinDistance: 5,
+  cameraMaxDistance: 55,
   background: "#0a0a0f",
   parts: [
     {

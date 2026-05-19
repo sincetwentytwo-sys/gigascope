@@ -9,10 +9,10 @@ export const optimus: ProductSpec = {
   category: "robot",
   description:
     "1.73m tall, 57kg humanoid with 28 actuated body DOFs plus 22 DOFs per hand. Gen 3 swaps Gen 2's harmonic drives for Tesla-designed planetary actuators, drops mass ~10kg, and routes hand tendons through the forearm to cut end-effector inertia ~40%. Compute is a derivative HW4 SoC running the same vision-to-action policy pipeline as FSD — billions of video frames plus sim rollouts, ~50 Hz onboard inference inside a ~100 W envelope.",
-  cameraPosition: [2.5, 1.5, 3.5],
-  cameraTarget: [0, 0.9, 0],
-  cameraMinDistance: 2,
-  cameraMaxDistance: 15,
+  cameraPosition: [1.75, 1.45, 2.55],
+  cameraTarget: [0, 0.87, 0.08],
+  cameraMinDistance: 1,
+  cameraMaxDistance: 12,
   background: "#1a1d24",
   parts: [
     {

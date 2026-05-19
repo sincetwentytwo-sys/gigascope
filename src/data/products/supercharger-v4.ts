@@ -8,10 +8,10 @@ export const superchargerV4: ProductSpec = {
   category: "charging",
   description:
     "Fourth-generation Supercharger pillar: 500 kW peak capable (current rollout ~325 kW per stall), 1,000 VDC bus, native NACS plug, extra-long ~3 m liquid-cooled cable so non-Tesla EVs with side or rear charge ports can reach the stall. Powered from off-board 1.5 MW V4 cabinets shared across 4-8 stalls.",
-  cameraPosition: [2, 2, 3.5],
-  cameraTarget: [0, 1.0, 0],
-  cameraMinDistance: 2,
-  cameraMaxDistance: 12,
+  cameraPosition: [3.4, 2.8, 5.0],
+  cameraTarget: [-0.8, 1.2, 0.1],
+  cameraMinDistance: 1.5,
+  cameraMaxDistance: 18,
   background: "#0a0a0f",
   parts: [
     {

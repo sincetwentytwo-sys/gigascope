@@ -8,9 +8,9 @@ export const powerwall: ProductSpec = {
   category: "battery",
   description:
     "Wall-mounted residential lithium iron phosphate battery: 13.5 kWh usable, 11.5 kW continuous output, 185 A LRA motor-starting capacity. Powerwall 3 collapses the solar inverter, battery inverter, and energy storage into a single 1.10 x 0.61 x 0.19 m enclosure, eliminating string/micro-inverters on new PV installs.",
-  cameraPosition: [1.8, 1.0, 2.5],
-  cameraTarget: [0, 0.5, 0],
-  cameraMinDistance: 1.5,
+  cameraPosition: [1.15, 0.94, 1.67],
+  cameraTarget: [0, 0.55, 0],
+  cameraMinDistance: 0.7,
   cameraMaxDistance: 8,
   background: "#0a0a0f",
   parts: [

@@ -9,10 +9,10 @@ export const modelY: ProductSpec = {
   category: "vehicle",
   description:
     "Compact crossover SUV (4.79 x 1.92 x 1.62 m) built on a shared platform with Model 3. World's best-selling EV by volume and the first production car with front + rear megacastings plus a 4680 structural battery pack. Juniper refresh (2025) adds full-width front + rear lightbars, soft-close doors, an 8\" rear screen, and acoustic glass.",
-  cameraPosition: [6, 5, 8],
-  cameraTarget: [0, 0.8, 0],
-  cameraMinDistance: 5,
-  cameraMaxDistance: 25,
+  cameraPosition: [4.9, 4.0, 7.1],
+  cameraTarget: [0, 0.73, 0],
+  cameraMinDistance: 3,
+  cameraMaxDistance: 27,
   background: "#0a0a0f",
   parts: [
     {
