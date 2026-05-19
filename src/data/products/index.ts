@@ -67,12 +67,10 @@ export type ProductSpec = {
 };
 
 import { raptor } from "./raptor";
+import { falcon9 } from "./falcon9";
+import { starship } from "./starship";
 
-/**
- * Registry of available product breakdowns. Other agents add entries here
- * once their ProductSpec file exists.
- */
-export const KNOWN_PRODUCTS: ProductSpec[] = [raptor];
+export const KNOWN_PRODUCTS: ProductSpec[] = [raptor, falcon9, starship];
 
 export function getProduct(slug: string): ProductSpec | undefined {
   return KNOWN_PRODUCTS.find((p) => p.slug === slug);
