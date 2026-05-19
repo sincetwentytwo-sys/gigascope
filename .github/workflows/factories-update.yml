@@ -1,0 +1,50 @@
+name: Factories Data Update
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Run factories update script
+        run: node scripts/data/update-factories.mjs
+
+      - name: Detect changes
+        id: diff
+        run: |
+          if git diff --quiet public/data/factories.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create Pull Request
+        if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore(data): weekly factories.json refresh"
+          title: "chore(data): weekly factories.json refresh"
+          body: |
+            Automated weekly refresh of `public/data/factories.json` from public sources.
+
+            - Wikipedia REST API (revision timestamps)
+            - Launch Library 2 (SpaceX launch milestones)
+
+            Review milestone additions and progress fields before merging.
+          branch: bot/factories-update-${{ github.run_id }}
+          delete-branch: true
+          add-paths: |
+            public/data/factories.json
