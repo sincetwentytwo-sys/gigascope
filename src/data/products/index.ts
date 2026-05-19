@@ -61,6 +61,8 @@ export type ProductSpec = {
   description: string;
   cameraPosition: [number, number, number];
   cameraTarget?: [number, number, number];
+  cameraMinDistance?: number;
+  cameraMaxDistance?: number;
   background?: string;
   parts: PartSpec[];
   relatedSites?: string[];

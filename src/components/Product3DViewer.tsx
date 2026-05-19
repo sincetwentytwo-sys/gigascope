@@ -153,7 +153,6 @@ function Scene({
   return (
     <>
       <color attach="background" args={[product.background ?? "#1a1d24"]} />
-      <fog attach="fog" args={["#1a1d24", 20, 60]} />
 
       <Environment preset="studio" />
       <hemisphereLight args={["#b7c8e1", "#1a1d24", 0.6]} />
@@ -211,8 +210,8 @@ function Scene({
         ref={controlsRef}
         target={target as [number, number, number]}
         enablePan={false}
-        minDistance={3}
-        maxDistance={18}
+        minDistance={product.cameraMinDistance ?? 3}
+        maxDistance={product.cameraMaxDistance ?? 18}
         enableDamping
         dampingFactor={0.08}
       />
@@ -254,7 +253,7 @@ export default function Product3DViewer({ product }: { product: ProductSpec }) {
           position: product.cameraPosition,
           fov: 42,
           near: 0.1,
-          far: 200,
+          far: Math.max(500, (product.cameraMaxDistance ?? 18) * 4),
         }}
         dpr={[1, 2]}
         gl={{ antialias: true, powerPreference: "high-performance" }}

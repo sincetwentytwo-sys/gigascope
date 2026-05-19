@@ -8,8 +8,10 @@ export const neuralinkN1: ProductSpec = {
   category: "chip",
   description:
     "Coin-sized brain-computer interface implanted flush with the skull. The N1 hosts 1,024 electrodes across 64 polymer threads, each thread inserted by the R1 surgical robot at sub-100 micron precision. On-device ASIC digitizes neural spikes at ~20 kHz per channel and streams compressed activity over Bluetooth to an external app. Inductive charging through the skin replaces the percutaneous connectors that limited prior BCIs.",
-  cameraPosition: [0, 28, 22],
-  cameraTarget: [0, 0, 0],
+  cameraPosition: [14, 11, 16],
+  cameraMinDistance: 10,
+  cameraMaxDistance: 60,
+  cameraTarget: [0, 1.5, 0],
   background: "#080810",
   parts: [
     {

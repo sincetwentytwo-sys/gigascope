@@ -328,8 +328,10 @@ export const starship: ProductSpec = {
   category: "rocket",
   description:
     "Fully reusable two-stage methalox super-heavy launch vehicle. Full stack ~121m tall, 9m diameter, ~5,000t wet mass. Targets 100-150t to LEO reusable, 200t+ expendable. Booster catches at tower via chopstick arms; ship reenters bellyflop-style and (eventually) catches at orbital launch site. Stainless 304L primary structure, 33+6 Raptor 2 full-flow staged-combustion engines, hot-staging ring between stages.",
-  cameraPosition: [80, 70, 130],
-  cameraTarget: [0, 60, 0],
+  cameraPosition: [35, 65, 90],
+  cameraMinDistance: 30,
+  cameraMaxDistance: 250,
+  cameraTarget: [0, 55, 0],
   background: "#08090d",
   parts,
   relatedSites: ["starbase", "cape-canaveral"],

@@ -8,8 +8,10 @@ export const tesla4680: ProductSpec = {
   category: "battery",
   description:
     "46mm diameter by 80mm tall tabless cylindrical lithium-ion cell. The tabless current-collector architecture cuts internal resistance roughly in half versus 2170 cells, enabling ~6x peak power and dry-electrode coating that eliminates solvent ovens. Pack-level cell becomes a structural member, removing module housings. Manufactured at Giga Texas, Nevada, and Berlin.",
-  cameraPosition: [9, 6, 9],
-  cameraTarget: [0, 0, 0],
+  cameraPosition: [7, 4, 10],
+  cameraMinDistance: 5,
+  cameraMaxDistance: 30,
+  cameraTarget: [0, 2, 0],
   background: "#0a0a0f",
   parts: [
     {
