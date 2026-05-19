@@ -77,6 +77,7 @@ import { starship } from "./starship";
 import { tesla4680 } from "./4680";
 import { neuralinkN1 } from "./neuralink-n1";
 import { model3 } from "./model-3";
+import { modelY } from "./model-y";
 import { cybertruck } from "./cybertruck";
 import { optimus } from "./optimus";
 import { cybercab } from "./cybercab";
@@ -86,7 +87,7 @@ import { superchargerV4 } from "./supercharger-v4";
 
 export const KNOWN_PRODUCTS: ProductSpec[] = [
   raptor, falcon9, starship, tesla4680, neuralinkN1,
-  model3, cybertruck, optimus, cybercab,
+  model3, modelY, cybertruck, optimus, cybercab,
   megapack, powerwall, superchargerV4,
 ];
 
