@@ -246,9 +246,9 @@ export const falcon9: ProductSpec = {
   category: "rocket",
   description:
     "Two-stage partially reusable orbital launch vehicle. 70m tall, 3.7m diameter, ~549t wet mass. LEO payload 22.8t expendable / 17.4t reusable. Block 5 is the final iteration: titanium grid fins, retractable legs, composite-overwrapped pressure vessels rated for 10 flights without refurbishment and 100+ with inspections. As of 2025 individual boosters have flown 20+ missions.",
-  cameraPosition: [35, 35, 55],
+  cameraPosition: [60, 35, 100],
   cameraMinDistance: 20,
-  cameraMaxDistance: 120,
+  cameraMaxDistance: 400,
   cameraTarget: [0, 30, 0],
   background: "#0a0e14",
   parts,
