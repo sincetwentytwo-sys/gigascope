@@ -5,23 +5,23 @@ import VisitCounter from "@/components/VisitCounter";
 import SupportLinks from "@/components/SupportLinks";
 
 export const metadata: Metadata = {
-  title: "GIGASCOPE — Tesla Factory Construction Tracker",
+  title: "GIGASCOPE — Musk Empire Site Tracker",
   description:
-    "Track Tesla Terafab and 8 Gigafactory construction sites worldwide. Satellite imagery comparison, milestones, real-time news, and community updates.",
-  keywords: ["Tesla", "Gigafactory", "Terafab", "factory tracker", "satellite imagery", "construction", "Giga Texas", "Giga Berlin", "Giga Shanghai"],
+    "Track Tesla, SpaceX, xAI, Neuralink, and The Boring Company sites worldwide. Satellite imagery comparison, milestones, live SpaceX data, and community updates.",
+  keywords: ["Tesla", "SpaceX", "xAI", "Neuralink", "Boring Company", "Gigafactory", "Terafab", "Starbase", "Colossus", "Starlink", "satellite imagery", "construction tracker"],
   icons: { icon: "/favicon.svg" },
   manifest: "/manifest.json",
   metadataBase: new URL("https://gigascope.xyz"),
   openGraph: {
-    title: "GIGASCOPE — Tesla Factory Construction Tracker",
-    description: "Track Tesla's 8 factory construction sites with satellite imagery, milestones, and real-time community updates.",
+    title: "GIGASCOPE — Musk Empire Site Tracker",
+    description: "Track 16 sites across Tesla, SpaceX, xAI, Neuralink, and The Boring Company with satellite imagery, milestones, and live updates.",
     type: "website",
     siteName: "GIGASCOPE",
   },
   twitter: {
     card: "summary_large_image",
-    title: "GIGASCOPE — Tesla Factory Tracker",
-    description: "Track Tesla's 8 factory sites with satellite imagery and real-time updates.",
+    title: "GIGASCOPE — Musk Empire Tracker",
+    description: "Track 16 sites across Tesla, SpaceX, xAI, Neuralink & Boring Company with satellite imagery and live updates.",
   },
   robots: {
     index: true,
@@ -44,7 +44,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebApplication",
               name: "GIGASCOPE",
-              description: "Tesla factory construction tracker with satellite imagery, milestones, and community updates.",
+              description: "Musk Empire site tracker — Tesla, SpaceX, xAI, Neuralink, Boring Company with satellite imagery, milestones, and live updates.",
               url: "https://gigascope.xyz",
               applicationCategory: "ReferenceApplication",
               operatingSystem: "All",
@@ -100,7 +100,7 @@ export default function RootLayout({
         <main id="main-content" className="flex-1">{children}</main>
 
         <footer className="py-8 px-6 pb-20 sm:pb-8 text-center text-xs text-dim flex flex-col gap-3 items-center">
-          <div>GIGASCOPE — Community project. Not affiliated with Tesla, Inc.</div>
+          <div>GIGASCOPE — Community project. Not affiliated with Tesla, SpaceX, xAI, Neuralink, or The Boring Company.</div>
           <SupportLinks />
           <VisitCounter />
         </footer>

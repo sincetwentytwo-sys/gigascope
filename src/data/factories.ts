@@ -1,4 +1,4 @@
-import type { Factory } from "./types";
+import type { Company, Factory } from "./types";
 import localData from "../../public/data/factories.json";
 
 interface FactoryData {
@@ -8,7 +8,6 @@ interface FactoryData {
   factories: Factory[];
 }
 
-// At build time, use the local JSON directly
 const data: FactoryData = localData as FactoryData;
 
 export const DATA_LAST_UPDATED = data.lastUpdated;
@@ -17,6 +16,12 @@ export const factories: Factory[] = data.factories;
 
 export function getFactory(slug: string): Factory | undefined {
   return factories.find((f) => f.slug === slug);
+}
+
+export const getSite = getFactory;
+
+export function getSitesByCompany(company: Company): Factory[] {
+  return factories.filter((f) => f.company === company);
 }
 
 export function getTotalInvestment(): string {

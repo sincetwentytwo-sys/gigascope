@@ -3,8 +3,9 @@ import type { Factory } from "@/data/types";
 export default function FactoryCard({ factory }: { factory: Factory }) {
   return (
     <a
-      href={`/factory/${factory.slug}`}
-      className="group block bg-surface rounded-xl p-5 hover:shadow-lg transition-shadow"
+      href={`/site/${factory.slug}`}
+      className="group block bg-surface rounded-xl p-5 hover:shadow-lg transition-shadow border-l-[3px]"
+      style={{ borderLeftColor: factory.color }}
     >
       <div className="flex justify-between items-start mb-3">
         <span className="text-[11px] font-medium text-dim bg-surface px-2.5 py-1 rounded-full border border-border-custom">
@@ -16,7 +17,7 @@ export default function FactoryCard({ factory }: { factory: Factory }) {
       </div>
 
       <div className="h-1 bg-border-custom rounded-full mb-4">
-        <div className="h-full rounded-full bg-text" style={{ width: `${factory.progress}%` }} />
+        <div className="h-full rounded-full" style={{ width: `${factory.progress}%`, background: factory.color }} />
       </div>
 
       <div className="flex gap-2 items-center mb-3">
