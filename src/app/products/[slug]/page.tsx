@@ -18,9 +18,9 @@ const CATEGORY_COLORS: Record<ProductCategory, string> = {
   chip: "#c97aff",
   vehicle: "#ffd166",
   spacecraft: "#7adfff",
-  robot: "#ff7adf",
-  energy: "#a8e6a3",
-  charging: "#ffae7a",
+  robot: "#ff8fb1",
+  energy: "#9be37a",
+  charging: "#7af0d8",
 };
 
 export function generateStaticParams() {

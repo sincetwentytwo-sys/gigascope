@@ -78,8 +78,10 @@ import { tesla4680 } from "./4680";
 import { neuralinkN1 } from "./neuralink-n1";
 import { model3 } from "./model-3";
 import { cybertruck } from "./cybertruck";
+import { optimus } from "./optimus";
+import { cybercab } from "./cybercab";
 
-export const KNOWN_PRODUCTS: ProductSpec[] = [raptor, falcon9, starship, tesla4680, neuralinkN1, model3, cybertruck];
+export const KNOWN_PRODUCTS: ProductSpec[] = [raptor, falcon9, starship, tesla4680, neuralinkN1, model3, cybertruck, optimus, cybercab];
 
 export function getProduct(slug: string): ProductSpec | undefined {
   return KNOWN_PRODUCTS.find((p) => p.slug === slug);
