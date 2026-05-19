@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { safeJsonLd } from "@/lib/safeJsonLd";
 import GlobeBackground from "@/components/GlobeBackground";
 import VisitCounter from "@/components/VisitCounter";
 import SupportLinks from "@/components/SupportLinks";
@@ -40,7 +41,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
+            __html: safeJsonLd({
               "@context": "https://schema.org",
               "@type": "WebApplication",
               name: "GIGASCOPE",
@@ -55,6 +56,7 @@ export default function RootLayout({
             }),
           }}
         />
+        {/* dangerouslySetInnerHTML uses safeJsonLd() which escapes </script>, U+2028, U+2029 */}
       </head>
       <body className="min-h-full flex flex-col bg-bg text-text">
         <GlobeBackground />

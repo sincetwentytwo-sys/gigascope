@@ -4,6 +4,7 @@ import { factories, getFactory, TIMELINE_YEARS } from "@/data/factories";
 import { getCompanyMeta } from "@/data/companies";
 import SatelliteMapWrapper from "@/components/SatelliteMapWrapper";
 import { listProducts } from "@/data/products";
+import { safeJsonLd } from "@/lib/safeJsonLd";
 import { getESRIImageryDate } from "@/lib/satellite-date";
 import { FactoryNewsFeed } from "@/components/NewsFeed";
 import CommunityFeed from "@/components/CommunityFeed";
@@ -123,7 +124,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
     <div className="bg-[#121316] text-[#e3e2e6] min-h-screen">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
       />
 
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
