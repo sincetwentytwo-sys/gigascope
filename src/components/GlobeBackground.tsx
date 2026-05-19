@@ -14,6 +14,12 @@ function project(lat: number, lng: number, cx: number, cy: number, r: number, ro
   };
 }
 
+function hexToRgb(hex: string): { r: number; g: number; b: number } {
+  const m = hex.replace("#", "").match(/.{1,2}/g);
+  if (!m || m.length < 3) return { r: 0, g: 0, b: 0 };
+  return { r: parseInt(m[0], 16), g: parseInt(m[1], 16), b: parseInt(m[2], 16) };
+}
+
 export default function GlobeBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rotation = useRef(0);
@@ -32,6 +38,8 @@ export default function GlobeBackground() {
     const cx = 350, cy = 350, r = 280;
     const polygons = landData as number[][][][];
     let animId: number;
+
+    const siteColors = factories.map((f) => hexToRgb(f.color));
 
     const draw = () => {
       rotation.current += 0.1;
@@ -73,17 +81,29 @@ export default function GlobeBackground() {
         }
       }
 
-      // Factory dots + names
+      // Site dots + names (company-colored)
       ctx.font = "7px system-ui, sans-serif";
       ctx.textAlign = "left";
-      for (const f of factories) {
+      for (let i = 0; i < factories.length; i++) {
+        const f = factories[i];
         const p = project(f.lat, f.lng, cx, cy, r, rotation.current);
         if (p.z <= 0) continue;
+        const { r: cr, g: cg, b: cb } = siteColors[i];
+
+        // Outer glow
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${cr},${cg},${cb},${0.15 * p.z})`;
+        ctx.fill();
+
+        // Core dot
         ctx.beginPath();
         ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0,0,0,${0.3 * p.z})`;
+        ctx.fillStyle = `rgba(${cr},${cg},${cb},${0.85 * p.z})`;
         ctx.fill();
-        ctx.fillStyle = `rgba(0,0,0,${0.2 * p.z})`;
+
+        // Label
+        ctx.fillStyle = `rgba(${cr},${cg},${cb},${0.45 * p.z})`;
         ctx.fillText(f.name, p.x + 5, p.y + 2);
       }
 

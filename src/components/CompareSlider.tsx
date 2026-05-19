@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { factories } from "@/data/factories";
+import { factories, getSitesByCompany } from "@/data/factories";
+import { getCompanyMeta } from "@/data/companies";
 import { tileSources } from "@/lib/tiles";
-import type { Factory } from "@/data/types";
+import type { Company, Factory } from "@/data/types";
 
 const ESRI_URL = tileSources[1].url;
 const SENTINEL_URL = tileSources[2].url;
+
+const COMPANY_ORDER: Company[] = ["joint", "tesla", "spacex", "xai", "neuralink", "boring"];
 
 export default function CompareSlider() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -110,20 +113,41 @@ export default function CompareSlider() {
 
   return (
     <div className="flex flex-col gap-5">
-      <div role="group" aria-label="Factory selector" className="flex gap-2 flex-wrap">
-        {factories.map((f) => (
-          <button
-            key={f.id}
-            onClick={() => selectFactory(f)}
-            className={`px-3 py-1.5 text-xs rounded-full transition-colors ${
-              selectedId === f.id
-                ? "bg-text text-bg"
-                : "border border-border-custom text-dim hover:text-text"
-            }`}
-          >
-            {f.flag} {f.name}
-          </button>
-        ))}
+      <div className="flex flex-col gap-3">
+        {COMPANY_ORDER.map((companyId) => {
+          const sites = getSitesByCompany(companyId);
+          if (sites.length === 0) return null;
+          const meta = getCompanyMeta(companyId);
+          return (
+            <div key={companyId} className="flex items-center gap-3 flex-wrap">
+              <span
+                className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full"
+                style={{ background: meta.color, color: "#fff" }}
+              >
+                {meta.icon} {meta.name}
+              </span>
+              <div role="group" aria-label={`${meta.name} sites`} className="flex gap-2 flex-wrap">
+                {sites.map((f) => {
+                  const active = selectedId === f.id;
+                  return (
+                    <button
+                      key={f.id}
+                      onClick={() => selectFactory(f)}
+                      className="px-3 py-1.5 text-xs rounded-full transition-colors border"
+                      style={
+                        active
+                          ? { background: meta.color, color: "#fff", borderColor: meta.color }
+                          : { borderColor: "var(--border)", color: "var(--dim)" }
+                      }
+                    >
+                      {f.flag} {f.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <div
