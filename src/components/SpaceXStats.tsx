@@ -7,6 +7,7 @@ type SpaceXData = {
   launchDate: string;
   starlinkCount: number;
   launchesThisYear: number;
+  totalLaunches: number;
 };
 
 export default function SpaceXStats() {
@@ -43,20 +44,31 @@ export default function SpaceXStats() {
     );
   }
 
+  const year = new Date().getFullYear();
+
   return (
-    <div className="inline-flex items-center gap-3 text-sm flex-wrap">
+    <div className="inline-flex items-center gap-3 text-sm flex-wrap justify-center">
       <span className="font-bold" style={{ color: "#005288" }}>SpaceX</span>
-      <span>
-        <span className="text-dim">Starlink:</span>{" "}
-        <span className="font-semibold">{data.starlinkCount.toLocaleString()}</span>
-      </span>
-      <span>
-        <span className="text-dim">Launches {new Date().getFullYear()}:</span>{" "}
-        <span className="font-semibold">{data.launchesThisYear}</span>
-      </span>
-      <span className="text-dim text-xs">
-        Last: {data.latestLaunch} ({data.launchDate})
-      </span>
+      {data.starlinkCount > 0 && (
+        <span>
+          <span className="text-dim">Starlink:</span>{" "}
+          <span className="font-semibold">{data.starlinkCount.toLocaleString()}</span>
+        </span>
+      )}
+      {data.totalLaunches > 0 && (
+        <span>
+          <span className="text-dim">Launches:</span>{" "}
+          <span className="font-semibold">{data.totalLaunches}</span>
+          {data.launchesThisYear > 0 && (
+            <span className="text-dim"> ({data.launchesThisYear} in {year})</span>
+          )}
+        </span>
+      )}
+      {data.latestLaunch !== "N/A" && (
+        <span className="text-dim text-xs">
+          Last: {data.latestLaunch} ({data.launchDate})
+        </span>
+      )}
     </div>
   );
 }
