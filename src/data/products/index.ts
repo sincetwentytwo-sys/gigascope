@@ -80,8 +80,15 @@ import { model3 } from "./model-3";
 import { cybertruck } from "./cybertruck";
 import { optimus } from "./optimus";
 import { cybercab } from "./cybercab";
+import { megapack } from "./megapack";
+import { powerwall } from "./powerwall";
+import { superchargerV4 } from "./supercharger-v4";
 
-export const KNOWN_PRODUCTS: ProductSpec[] = [raptor, falcon9, starship, tesla4680, neuralinkN1, model3, cybertruck, optimus, cybercab];
+export const KNOWN_PRODUCTS: ProductSpec[] = [
+  raptor, falcon9, starship, tesla4680, neuralinkN1,
+  model3, cybertruck, optimus, cybercab,
+  megapack, powerwall, superchargerV4,
+];
 
 export function getProduct(slug: string): ProductSpec | undefined {
   return KNOWN_PRODUCTS.find((p) => p.slug === slug);
