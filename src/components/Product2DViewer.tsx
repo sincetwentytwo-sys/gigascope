@@ -66,14 +66,22 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
                     onClick={() => setSelectedId(p.id)}
                     onMouseEnter={() => setHoveredId(p.id)}
                     onMouseLeave={() => setHoveredId(null)}
-                    className={`pointer-events-auto cursor-pointer transition-all ${
-                      active
-                        ? "fill-[#ffb073]/35 stroke-[#ffb073]"
+                    style={{
+                      fill: active
+                        ? "rgba(255, 176, 115, 0.32)"
                         : hovered
-                        ? "fill-white/15 stroke-white"
-                        : "fill-transparent stroke-white/40 hover:stroke-white/90"
-                    }`}
-                    strokeWidth="0.0025"
+                        ? "rgba(255, 255, 255, 0.16)"
+                        : "transparent",
+                      stroke: active
+                        ? "#ffb073"
+                        : hovered
+                        ? "#ffffff"
+                        : "rgba(255, 255, 255, 0.65)",
+                      strokeWidth: 2,
+                      cursor: "pointer",
+                      transition: "fill 0.15s, stroke 0.15s",
+                      pointerEvents: "auto",
+                    }}
                     vectorEffect="non-scaling-stroke"
                   >
                     <title>{p.name}</title>
