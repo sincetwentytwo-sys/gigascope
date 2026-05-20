@@ -30,7 +30,7 @@ export const megapack: ProductSpec = {
       color: "#dcdde0",
       metalness: 0.6,
       roughness: 0.5,
-      hotspot: { x: 0.4417, y: 0.5222 },
+      hotspot: { x: 0.4500, y: 0.5500 },
     },
     {
       id: "top-panel",
@@ -43,7 +43,7 @@ export const megapack: ProductSpec = {
       color: "#9aa0a6",
       metalness: 0.7,
       roughness: 0.4,
-      hotspot: { x: 0.4384, y: 0.2028 },
+      hotspot: { x: 0.4500, y: 0.3200 },
     },
     {
       id: "hvac",

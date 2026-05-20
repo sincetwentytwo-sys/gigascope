@@ -36,7 +36,7 @@ export const raptor: ProductSpec = {
       color: "#5a5d66",
       metalness: 0.92,
       roughness: 0.28,
-      hotspot: { x: 0.6452, y: 0.7345 },
+      hotspot: { x: 0.4500, y: 0.7800 },
     },
     {
       id: "regen-channels",
@@ -50,6 +50,7 @@ export const raptor: ProductSpec = {
       emissive: "#3a1500",
       metalness: 0.85,
       roughness: 0.4,
+      hotspot: { x: 0.4500, y: 0.6600 },
     },
     {
       id: "throat",
@@ -63,7 +64,7 @@ export const raptor: ProductSpec = {
       emissive: "#220500",
       metalness: 0.8,
       roughness: 0.35,
-      hotspot: { x: 0.4890, y: 0.5408 },
+      hotspot: { x: 0.5000, y: 0.5500 },
     },
     {
       id: "chamber",
@@ -76,7 +77,7 @@ export const raptor: ProductSpec = {
       color: "#6b6e76",
       metalness: 0.9,
       roughness: 0.3,
-      hotspot: { x: 0.4388, y: 0.3731 },
+      hotspot: { x: 0.5000, y: 0.4500 },
     },
     {
       id: "injector",
@@ -89,6 +90,7 @@ export const raptor: ProductSpec = {
       color: "#3d3f45",
       metalness: 0.75,
       roughness: 0.45,
+      hotspot: { x: 0.5000, y: 0.4000 },
     },
     {
       id: "preburner-ox",
@@ -102,7 +104,7 @@ export const raptor: ProductSpec = {
       emissive: "#0a2a0a",
       metalness: 0.85,
       roughness: 0.35,
-      hotspot: { x: 0.7843, y: 0.1627 },
+      hotspot: { x: 0.6200, y: 0.2800 },
     },
     {
       id: "preburner-fuel",
@@ -116,7 +118,7 @@ export const raptor: ProductSpec = {
       emissive: "#2a1500",
       metalness: 0.85,
       roughness: 0.35,
-      hotspot: { x: 0.4856, y: 0.5403 },
+      hotspot: { x: 0.3800, y: 0.2800 },
     },
     {
       id: "turbopump-ox",
@@ -129,6 +131,7 @@ export const raptor: ProductSpec = {
       color: "#7a9ec2",
       metalness: 0.9,
       roughness: 0.25,
+      hotspot: { x: 0.6000, y: 0.1800 },
     },
     {
       id: "turbopump-fuel",
@@ -141,6 +144,7 @@ export const raptor: ProductSpec = {
       color: "#c2a878",
       metalness: 0.9,
       roughness: 0.25,
+      hotspot: { x: 0.4000, y: 0.1800 },
     },
     {
       id: "manifold",
@@ -153,6 +157,7 @@ export const raptor: ProductSpec = {
       color: "#46484e",
       metalness: 0.85,
       roughness: 0.4,
+      hotspot: { x: 0.5000, y: 0.2000 },
     },
     {
       id: "sensors",
@@ -166,6 +171,7 @@ export const raptor: ProductSpec = {
       emissive: "#001a33",
       metalness: 0.6,
       roughness: 0.5,
+      hotspot: { x: 0.5000, y: 0.1300 },
     },
     {
       id: "ignition",
@@ -191,7 +197,7 @@ export const raptor: ProductSpec = {
       color: "#9a9da5",
       metalness: 0.9,
       roughness: 0.3,
-      hotspot: { x: 0.4437, y: 0.0949 },
+      hotspot: { x: 0.5000, y: 0.1000 },
     },
     {
       id: "mount",
@@ -204,7 +210,7 @@ export const raptor: ProductSpec = {
       color: "#3a3c42",
       metalness: 0.85,
       roughness: 0.45,
-      hotspot: { x: 0.4447, y: 0.0729 },
+      hotspot: { x: 0.5000, y: 0.0800 },
     },
   ],
   photoCredit: {

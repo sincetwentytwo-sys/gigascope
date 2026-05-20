@@ -31,7 +31,7 @@ export const cybertruck: ProductSpec = {
       color: "#b8bcc2",
       metalness: 0.9,
       roughness: 0.25,
-      hotspot: { x: 0.5684, y: 0.5380 },
+      hotspot: { x: 0.5500, y: 0.4600 },
     },
     {
       id: "front-wedge",
@@ -45,7 +45,7 @@ export const cybertruck: ProductSpec = {
       color: "#b8bcc2",
       metalness: 0.9,
       roughness: 0.25,
-      hotspot: { x: 0.3450, y: 0.3031 },
+      hotspot: { x: 0.1800, y: 0.3600 },
     },
     {
       id: "windshield",
@@ -59,7 +59,7 @@ export const cybertruck: ProductSpec = {
       color: "#1f2228",
       metalness: 0.3,
       roughness: 0.15,
-      hotspot: { x: 0.4881, y: 0.5230 },
+      hotspot: { x: 0.4300, y: 0.3000 },
     },
     {
       id: "bed",
@@ -72,7 +72,7 @@ export const cybertruck: ProductSpec = {
       color: "#9ea4ab",
       metalness: 0.85,
       roughness: 0.35,
-      hotspot: { x: 0.4860, y: 0.5224 },
+      hotspot: { x: 0.7800, y: 0.5000 },
     },
     {
       id: "tonneau",
@@ -85,6 +85,7 @@ export const cybertruck: ProductSpec = {
       color: "#2a2d33",
       metalness: 0.5,
       roughness: 0.5,
+      hotspot: { x: 0.7400, y: 0.3600 },
     },
     {
       id: "lightbar-front",
@@ -98,7 +99,7 @@ export const cybertruck: ProductSpec = {
       emissive: "#fff4d8",
       metalness: 0.3,
       roughness: 0.3,
-      hotspot: { x: 0.1514, y: 0.5557 },
+      hotspot: { x: 0.1300, y: 0.4900 },
     },
     {
       id: "lightbar-rear",
@@ -125,7 +126,7 @@ export const cybertruck: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.6,
       roughness: 0.55,
-      hotspot: { x: 0.3635, y: 0.7548 },
+      hotspot: { x: 0.3000, y: 0.7400 },
     },
     {
       id: "wheel-fr",
@@ -152,7 +153,7 @@ export const cybertruck: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.6,
       roughness: 0.55,
-      hotspot: { x: 0.5464, y: 0.8627 },
+      hotspot: { x: 0.8000, y: 0.7400 },
     },
     {
       id: "wheel-rr",

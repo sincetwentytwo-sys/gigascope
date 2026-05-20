@@ -30,7 +30,7 @@ export const superchargerV4: ProductSpec = {
       color: "#1c1c20",
       metalness: 0.55,
       roughness: 0.45,
-      hotspot: { x: 0.4845, y: 0.4436 },
+      hotspot: { x: 0.5000, y: 0.5500 },
     },
     {
       id: "top-status",
@@ -44,6 +44,7 @@ export const superchargerV4: ProductSpec = {
       emissive: "#3a9ad9",
       metalness: 0.3,
       roughness: 0.3,
+      hotspot: { x: 0.5000, y: 0.1000 },
     },
     {
       id: "t-logo",
@@ -56,6 +57,7 @@ export const superchargerV4: ProductSpec = {
       color: "#d8d8dc",
       metalness: 0.9,
       roughness: 0.3,
+      hotspot: { x: 0.5000, y: 0.1700 },
     },
     {
       id: "holster",
@@ -69,6 +71,7 @@ export const superchargerV4: ProductSpec = {
       color: "#3a3a3f",
       metalness: 0.7,
       roughness: 0.4,
+      hotspot: { x: 0.5500, y: 0.4300 },
     },
     {
       id: "cable",
@@ -82,7 +85,7 @@ export const superchargerV4: ProductSpec = {
       color: "#202024",
       metalness: 0.4,
       roughness: 0.55,
-      hotspot: { x: 0.4841, y: 0.4431 },
+      hotspot: { x: 0.3000, y: 0.5500 },
     },
     {
       id: "connector",
@@ -95,6 +98,7 @@ export const superchargerV4: ProductSpec = {
       color: "#2a2a2f",
       metalness: 0.6,
       roughness: 0.4,
+      hotspot: { x: 0.3000, y: 0.6800 },
     },
     {
       id: "screen",
@@ -108,7 +112,7 @@ export const superchargerV4: ProductSpec = {
       emissive: "#1a1a1f",
       metalness: 0.3,
       roughness: 0.3,
-      hotspot: { x: 0.4866, y: 0.4447 },
+      hotspot: { x: 0.5000, y: 0.2200 },
     },
     {
       id: "rfid",
@@ -147,6 +151,7 @@ export const superchargerV4: ProductSpec = {
       color: "#3a3a3f",
       metalness: 0.7,
       roughness: 0.5,
+      hotspot: { x: 0.5000, y: 0.9200 },
     },
     {
       id: "coolant-strand",

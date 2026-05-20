@@ -31,7 +31,7 @@ export const model3: ProductSpec = {
       color: "#dadde2",
       metalness: 0.7,
       roughness: 0.35,
-      hotspot: { x: 0.4817, y: 0.5134 },
+      hotspot: { x: 0.4500, y: 0.5500 },
     },
     {
       id: "hood",
@@ -45,7 +45,7 @@ export const model3: ProductSpec = {
       color: "#dadde2",
       metalness: 0.7,
       roughness: 0.35,
-      hotspot: { x: 0.4849, y: 0.5119 },
+      hotspot: { x: 0.7800, y: 0.5000 },
     },
     {
       id: "roof-glass",
@@ -58,7 +58,7 @@ export const model3: ProductSpec = {
       color: "#1a1d22",
       metalness: 0.3,
       roughness: 0.1,
-      hotspot: { x: 0.5045, y: 0.2857 },
+      hotspot: { x: 0.4200, y: 0.1700 },
     },
     {
       id: "windshield",
@@ -72,7 +72,7 @@ export const model3: ProductSpec = {
       color: "#2a2d35",
       metalness: 0.3,
       roughness: 0.15,
-      hotspot: { x: 0.5057, y: 0.2867 },
+      hotspot: { x: 0.5500, y: 0.3000 },
     },
     {
       id: "wheel-fl",
@@ -86,7 +86,7 @@ export const model3: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.6,
       roughness: 0.5,
-      hotspot: { x: 0.4826, y: 0.8051 },
+      hotspot: { x: 0.6500, y: 0.6500 },
     },
     {
       id: "wheel-fr",
@@ -113,7 +113,7 @@ export const model3: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.6,
       roughness: 0.5,
-      hotspot: { x: 0.4820, y: 0.5113 },
+      hotspot: { x: 0.1800, y: 0.6500 },
     },
     {
       id: "wheel-rr",
@@ -139,7 +139,7 @@ export const model3: ProductSpec = {
       color: "#dadde2",
       metalness: 0.65,
       roughness: 0.4,
-      hotspot: { x: 0.4821, y: 0.5121 },
+      hotspot: { x: 0.9200, y: 0.5500 },
     },
     {
       id: "trunk",
@@ -153,7 +153,7 @@ export const model3: ProductSpec = {
       color: "#dadde2",
       metalness: 0.7,
       roughness: 0.35,
-      hotspot: { x: 0.4828, y: 0.5142 },
+      hotspot: { x: 0.0800, y: 0.4200 },
     },
     {
       id: "battery-pack",

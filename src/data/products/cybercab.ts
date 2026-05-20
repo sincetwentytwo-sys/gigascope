@@ -35,7 +35,7 @@ export const cybercab: ProductSpec = {
       color: "#c9b27a",
       metalness: 0.85,
       roughness: 0.25,
-      hotspot: { x: 0.4810, y: 0.5273 },
+      hotspot: { x: 0.4500, y: 0.5500 },
     },
     {
       id: "hood",
@@ -49,7 +49,7 @@ export const cybercab: ProductSpec = {
       color: "#c9b27a",
       metalness: 0.85,
       roughness: 0.25,
-      hotspot: { x: 0.3104, y: 0.5480 },
+      hotspot: { x: 0.7800, y: 0.4200 },
     },
     {
       id: "trunk",
@@ -76,7 +76,7 @@ export const cybercab: ProductSpec = {
       color: "#b8a26d",
       metalness: 0.85,
       roughness: 0.25,
-      hotspot: { x: 0.4809, y: 0.5272 },
+      hotspot: { x: 0.4200, y: 0.4500 },
     },
     {
       id: "door-r",
@@ -104,7 +104,6 @@ export const cybercab: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.5,
       roughness: 0.6,
-      hotspot: { x: 0.5344, y: 0.8867 },
     },
     {
       id: "wheel-fr",
@@ -118,6 +117,7 @@ export const cybercab: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.5,
       roughness: 0.6,
+      hotspot: { x: 0.7000, y: 0.7000 },
     },
     {
       id: "wheel-rl",
@@ -131,7 +131,6 @@ export const cybercab: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.5,
       roughness: 0.6,
-      hotspot: { x: 0.8301, y: 0.7847 },
     },
     {
       id: "wheel-rr",
@@ -145,6 +144,7 @@ export const cybercab: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.5,
       roughness: 0.6,
+      hotspot: { x: 0.1800, y: 0.6500 },
     },
     {
       id: "headlight-bar",
@@ -158,7 +158,7 @@ export const cybercab: ProductSpec = {
       emissive: "#a0c8ff",
       metalness: 0.4,
       roughness: 0.2,
-      hotspot: { x: 0.4823, y: 0.5257 },
+      hotspot: { x: 0.8300, y: 0.4000 },
     },
     // HW5 cameras (front cluster x3)
     {

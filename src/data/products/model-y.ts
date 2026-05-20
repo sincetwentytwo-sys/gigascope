@@ -31,7 +31,7 @@ export const modelY: ProductSpec = {
       color: "#1e2228",
       metalness: 0.6,
       roughness: 0.35,
-      hotspot: { x: 0.4767, y: 0.5055 },
+      hotspot: { x: 0.5000, y: 0.5000 },
     },
     {
       id: "hood",
@@ -45,7 +45,7 @@ export const modelY: ProductSpec = {
       color: "#22272f",
       metalness: 0.7,
       roughness: 0.3,
-      hotspot: { x: 0.3489, y: 0.4585 },
+      hotspot: { x: 0.7800, y: 0.4200 },
     },
     {
       id: "glass-roof",
@@ -58,7 +58,7 @@ export const modelY: ProductSpec = {
       color: "#0a0d12",
       metalness: 0.2,
       roughness: 0.05,
-      hotspot: { x: 0.4795, y: 0.5062 },
+      hotspot: { x: 0.4500, y: 0.1600 },
     },
     {
       id: "wheel-fl",
@@ -72,7 +72,7 @@ export const modelY: ProductSpec = {
       color: "#16181c",
       metalness: 0.5,
       roughness: 0.7,
-      hotspot: { x: 0.4776, y: 0.5031 },
+      hotspot: { x: 0.6500, y: 0.7000 },
     },
     {
       id: "wheel-fr",
@@ -99,7 +99,7 @@ export const modelY: ProductSpec = {
       color: "#16181c",
       metalness: 0.5,
       roughness: 0.7,
-      hotspot: { x: 0.4761, y: 0.5062 },
+      hotspot: { x: 0.2000, y: 0.6500 },
     },
     {
       id: "wheel-rr",
@@ -126,7 +126,7 @@ export const modelY: ProductSpec = {
       emissive: "#88aaff",
       metalness: 0.3,
       roughness: 0.2,
-      hotspot: { x: 0.4782, y: 0.5060 },
+      hotspot: { x: 0.8300, y: 0.4000 },
     },
     {
       id: "tail-lightbar",
@@ -152,7 +152,7 @@ export const modelY: ProductSpec = {
       color: "#1a1d22",
       metalness: 0.4,
       roughness: 0.55,
-      hotspot: { x: 0.4782, y: 0.5056 },
+      hotspot: { x: 0.9200, y: 0.5800 },
     },
     {
       id: "rear-hatch",

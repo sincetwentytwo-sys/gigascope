@@ -49,6 +49,7 @@ const parts: PartSpec[] = [
     color: SOOT,
     metalness: 0.7,
     roughness: 0.4,
+      hotspot: { x: 0.5700, y: 0.4600 },
   },
   {
     id: "stage1-tank",
@@ -61,7 +62,7 @@ const parts: PartSpec[] = [
     color: WHITE,
     metalness: 0.2,
     roughness: 0.6,
-      hotspot: { x: 0.5429, y: 0.3077 },
+      hotspot: { x: 0.5900, y: 0.3600 },
   },
   {
     id: "grid-fin-1",
@@ -187,7 +188,7 @@ const parts: PartSpec[] = [
     color: SOOT,
     metalness: 0.4,
     roughness: 0.5,
-      hotspot: { x: 0.5429, y: 0.3077 },
+      hotspot: { x: 0.6000, y: 0.2700 },
   },
   {
     id: "stage2-tank",
@@ -200,7 +201,7 @@ const parts: PartSpec[] = [
     color: WHITE,
     metalness: 0.2,
     roughness: 0.6,
-      hotspot: { x: 0.5430, y: 0.3077 },
+      hotspot: { x: 0.6100, y: 0.2200 },
   },
   {
     id: "mvac",
@@ -226,7 +227,7 @@ const parts: PartSpec[] = [
     color: WHITE,
     metalness: 0.2,
     roughness: 0.55,
-      hotspot: { x: 0.5430, y: 0.3078 },
+      hotspot: { x: 0.6200, y: 0.1200 },
   },
   {
     id: "fairing-half-2",

@@ -72,7 +72,7 @@ const parts: PartSpec[] = [
     color: STEEL,
     metalness: 0.85,
     roughness: 0.25,
-      hotspot: { x: 0.5115, y: 0.3542 },
+      hotspot: { x: 0.5500, y: 0.5800 },
   },
   {
     id: "booster-chines",
@@ -145,7 +145,7 @@ const parts: PartSpec[] = [
     color: SOOT,
     metalness: 0.5,
     roughness: 0.5,
-      hotspot: { x: 0.5113, y: 0.3542 },
+      hotspot: { x: 0.5600, y: 0.4200 },
   },
   // ===== Starship (ship) =====
   {
@@ -231,7 +231,7 @@ const parts: PartSpec[] = [
     color: STEEL,
     metalness: 0.85,
     roughness: 0.25,
-      hotspot: { x: 0.5114, y: 0.3546 },
+      hotspot: { x: 0.5800, y: 0.2700 },
   },
   {
     id: "ship-tiles",
