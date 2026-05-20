@@ -7,7 +7,7 @@ import {
   type ProductCategory,
 } from "@/data/products";
 import { getFactory } from "@/data/factories";
-import Product3DViewerWrapper from "@/components/Product3DViewerWrapper";
+import Product2DViewer from "@/components/Product2DViewer";
 
 const SITE_URL = "https://gigascope.xyz";
 
@@ -38,7 +38,7 @@ export async function generateMetadata({
     return { title: "Product — GIGASCOPE" };
   }
   const url = `${SITE_URL}/products/${p.slug}`;
-  const title = `${p.name} — Interactive 3D Breakdown — GIGASCOPE`;
+  const title = `${p.name} — Component Breakdown — GIGASCOPE`;
   const desc =
     p.description.length > 180
       ? p.description.slice(0, 177).trimEnd() + "…"
@@ -57,7 +57,7 @@ export async function generateMetadata({
           url: `${SITE_URL}/opengraph-image`,
           width: 1200,
           height: 630,
-          alt: `${p.name} interactive 3D breakdown`,
+          alt: `${p.name} component breakdown`,
         },
       ],
     },
@@ -114,8 +114,8 @@ export default async function ProductDetailPage({
         </div>
       </div>
 
-      {/* 3D viewer */}
-      <Product3DViewerWrapper product={product} />
+      {/* Photo viewer */}
+      <Product2DViewer product={product} />
 
       {/* Description + related */}
       <div className="mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
