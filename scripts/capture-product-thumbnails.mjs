@@ -136,7 +136,7 @@ for (const slug of targets) {
     // Resolve the viewer container so we can clip the page screenshot to it.
     // Compositor-mediated screenshots tend to capture WebGL pixels reliably
     // even when canvas.toDataURL returns black under headless.
-    const box = await page.evaluate(() => {
+    const clipBox = await page.evaluate(() => {
       const btn = Array.from(document.querySelectorAll("button")).find((b) =>
         (b.textContent || "").includes("Cutaway"),
       );
@@ -146,16 +146,16 @@ for (const slug of targets) {
       const r = c.getBoundingClientRect();
       return { x: r.x, y: r.y, width: r.width, height: r.height };
     });
-    if (!box) throw new Error("viewer canvas not found");
+    if (!clipBox) throw new Error("viewer canvas not found");
 
     const buf = await page.screenshot({
       type: "jpeg",
       quality: 86,
       clip: {
-        x: Math.round(box.x),
-        y: Math.round(box.y),
-        width: Math.round(box.width),
-        height: Math.round(box.height),
+        x: Math.round(clipBox.x),
+        y: Math.round(clipBox.y),
+        width: Math.round(clipBox.width),
+        height: Math.round(clipBox.height),
       },
     });
 
