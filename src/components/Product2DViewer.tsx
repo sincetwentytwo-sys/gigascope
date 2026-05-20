@@ -36,25 +36,22 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] border border-[#343538] bg-[#0a0a0c]">
       {/* Photo */}
       <div className="relative bg-[#f4f4f0] min-h-[55vh] flex items-center justify-center overflow-hidden p-4">
-        {/* CSS Grid stack — img and SVG share the same grid cell, so the SVG
-            inherits the img's intrinsic box. Combined with viewBox set to the
-            image's natural dimensions + preserveAspectRatio="xMidYMid meet",
-            the dot coordinates always land exactly on the photo regardless
-            of container width or photo aspect ratio. */}
+        {/* Wrapper has the photo's exact aspect ratio, capped by max-h:78vh
+            and max-w:100%. img + SVG both fill the wrapper at 100%/100%, so
+            they are pixel-aligned. Dot coords (0..1) map straight to the
+            SVG's viewBox (naturalW x naturalH) without aspect padding. */}
         <div
-          className="grid"
+          className="relative max-w-full"
           style={{
-            gridTemplateAreas: '"stack"',
-            gridTemplateColumns: "auto",
-            gridTemplateRows: "auto",
+            aspectRatio: `${naturalSize.w} / ${naturalSize.h}`,
+            maxHeight: "78vh",
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={src}
             alt={`${product.name} reference ${ext === "svg" ? "diagram" : "photo"}`}
-            className="block max-h-[78vh] max-w-full w-auto h-auto"
-            style={{ gridArea: "stack" }}
+            className="block w-full h-full object-contain"
             decoding="sync"
             loading="eager"
             fetchPriority="high"
@@ -66,15 +63,15 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
             }}
           />
 
-          {/* Hotspot dots — single point per part. viewBox uses the photo's
-              natural pixel dimensions so cx/cy match the part's true location;
-              meet keeps the aspect ratio so the dots track the image edges. */}
+          {/* Hotspot dots — SVG fills the wrapper; since the wrapper has the
+              photo's aspect ratio, preserveAspectRatio="none" maps the
+              natural-pixel viewBox 1:1 onto the visible image. */}
           {partsWithHotspots.length > 0 && (
             <svg
-              className="w-full h-full"
-              style={{ gridArea: "stack", pointerEvents: "none" }}
+              className="absolute inset-0 w-full h-full"
+              style={{ pointerEvents: "none" }}
               viewBox={`0 0 ${naturalSize.w} ${naturalSize.h}`}
-              preserveAspectRatio="xMidYMid meet"
+              preserveAspectRatio="none"
             >
               {partsWithHotspots.map((p) => {
                 const active = selectedId === p.id;
