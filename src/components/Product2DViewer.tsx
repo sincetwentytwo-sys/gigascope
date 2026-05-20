@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ProductSpec } from "@/data/products";
 
 /**
@@ -12,12 +12,23 @@ import type { ProductSpec } from "@/data/products";
 export default function Product2DViewer({ product }: { product: ProductSpec }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-  // Natural dimensions of the photo — used to size the SVG viewBox so the
-  // dots land on the photo (not the surrounding container).
+  // Natural dimensions of the photo — used to size the SVG viewBox AND the
+  // wrapper aspect-ratio so dots and image are pixel-aligned.
   const [naturalSize, setNaturalSize] = useState<{ w: number; h: number }>({
     w: 1000,
     h: 1000,
   });
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // When the image is already cached, React mounts the <img> *after* the
+  // browser fires `load`, so the onLoad handler never runs and aspect-ratio
+  // stays at the 1:1 default. Read it eagerly on mount too.
+  useEffect(() => {
+    const i = imgRef.current;
+    if (i && i.complete && i.naturalWidth > 0) {
+      setNaturalSize({ w: i.naturalWidth, h: i.naturalHeight });
+    }
+  }, [product.slug]);
   const selected = product.parts.find((p) => p.id === selectedId) ?? null;
   const partsWithHotspots = product.parts.filter(
     (p) => p.hotspot && typeof p.hotspot.x === "number",
@@ -50,6 +61,7 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            ref={imgRef}
             src={src}
             alt={`${product.name} reference ${ext === "svg" ? "diagram" : "photo"}`}
             className="block w-full h-full object-contain"
