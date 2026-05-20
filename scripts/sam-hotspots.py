@@ -45,13 +45,15 @@ SEEDS = {
         "wheel-rl":       (0.82, 0.78),  # rear wheel
     },
     "raptor": {  # vertical engine, 900x1600
-        "nozzle":         (0.50, 0.75),  # big black bell at the bottom
-        "throat":         (0.50, 0.46),  # narrow junction above bell
-        "chamber":        (0.50, 0.35),  # body between throat and turbopumps
-        "preburner-ox":   (0.62, 0.22),  # right cluster
-        "preburner-fuel": (0.36, 0.22),  # left cluster
-        "mount":          (0.50, 0.10),  # top vehicle interface
-        "gimbal":         (0.50, 0.13),  # ring near top mount
+        # nozzle seed deep into the bell so SAM doesn't reach for the
+        # building behind it
+        "nozzle":         (0.46, 0.68),
+        "throat":         (0.50, 0.46),
+        "chamber":        (0.50, 0.36),
+        "preburner-ox":   (0.62, 0.22),
+        "preburner-fuel": (0.36, 0.22),
+        "mount":          (0.50, 0.10),
+        "gimbal":         (0.50, 0.13),
     },
     "model-3": {  # front 3/4 view, 1600x1065
         "body":           (0.50, 0.55),
@@ -80,39 +82,40 @@ SEEDS = {
         "wheel-rl":       (0.78, 0.78),
         "door-l":         (0.45, 0.40),
     },
-    "optimus": {  # 900x1600 vertical humanoid
-        "head":           (0.50, 0.12),
-        "torso":          (0.50, 0.40),
-        "arm-l":          (0.30, 0.40),
-        "arm-r":          (0.70, 0.40),
-        "leg-l":          (0.42, 0.75),
-        "leg-r":          (0.58, 0.75),
+    "optimus": {  # 900x1600 vertical humanoid (showroom shot — robot mid-frame)
+        "head":           (0.50, 0.13),
+        "torso":          (0.50, 0.30),
+        "battery-pack":   (0.50, 0.35),
+        "pelvis":         (0.50, 0.48),
+        "upper-arm-l":    (0.36, 0.30),
+        "upper-arm-r":    (0.64, 0.30),
+        "forearm-l":      (0.36, 0.42),
+        "forearm-r":      (0.64, 0.42),
+        "thigh-l":        (0.44, 0.60),
+        "thigh-r":        (0.56, 0.60),
     },
-    "falcon9": {  # 1600x1339 launch photo
-        "stage1":         (0.50, 0.60),
-        "stage2":         (0.50, 0.35),
-        "interstage":     (0.50, 0.50),
-        "engines":        (0.50, 0.85),
-        "fairing":        (0.50, 0.20),
+    "falcon9": {  # Demo-2 launch — vertical rocket cleared the pad
+        "stage1-tank":           (0.50, 0.55),
+        "stage2-tank":           (0.50, 0.30),
+        "interstage":            (0.50, 0.45),
+        "fairing-half-1":        (0.50, 0.18),
     },
-    "starship": {  # 1600x1495 launch ignition
-        "booster":        (0.50, 0.60),
-        "ship":           (0.50, 0.25),
-        "hot-stage-ring": (0.50, 0.45),
-        "engines":        (0.50, 0.85),
+    "starship": {  # IFT-5 ignition — full stack on pad
+        "booster-body":          (0.50, 0.60),
+        "ship-body":              (0.50, 0.30),
+        "hot-stage-ring":        (0.50, 0.46),
     },
-    "megapack": {  # 1600x654 wide container
-        "enclosure":      (0.50, 0.50),
-        "ac-unit":        (0.50, 0.20),
-        "service-door":   (0.85, 0.55),
+    "megapack": {  # 1600x654 wide container farm
+        "shell":          (0.50, 0.50),
+        "top-panel":      (0.50, 0.25),
     },
     "powerwall": {  # 1600x1600 wall unit
-        "front-cover":    (0.50, 0.50),
-        "tesla-logo":     (0.50, 0.30),
+        "shell":          (0.50, 0.50),
+        "tesla-badge":    (0.50, 0.40),
     },
     "supercharger-v4": {  # 849x1134
         "pillar":         (0.50, 0.50),
-        "display":        (0.50, 0.25),
+        "screen":         (0.50, 0.25),
         "cable":          (0.30, 0.55),
     },
 }

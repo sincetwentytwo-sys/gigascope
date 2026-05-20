@@ -30,6 +30,7 @@ export const powerwall: ProductSpec = {
       color: "#f0f0f0",
       metalness: 0.4,
       roughness: 0.5,
+      hotspot: { points: "0.9431,0.0706 0.6181,0.0225 0.1181,0.1681 0.1600,0.9994 0.8812,0.9994" },
     },
     {
       id: "led-bar",
@@ -55,6 +56,7 @@ export const powerwall: ProductSpec = {
       color: "#222226",
       metalness: 0.6,
       roughness: 0.4,
+      hotspot: { points: "0.9425,0.0700 0.6175,0.0225 0.1175,0.1688 0.1606,0.9994 0.8812,0.9994" },
     },
     {
       id: "module-1",
