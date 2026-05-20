@@ -200,4 +200,9 @@ export const raptor: ProductSpec = {
       roughness: 0.45,
     },
   ],
+  photoCredit: {
+    author: "Brandon De Young",
+    license: "CC BY-SA 4.0",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:SpaceX_sea-level_Raptor_at_Hawthorne_-_2.jpg",
+  },
 };

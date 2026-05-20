@@ -46,6 +46,11 @@ export type PartSpec = {
   /** Cutaway hint. If true, render as low-opacity wireframe so internals show through.
    *  If undefined, viewer auto-classifies by name keyword (body/shell/glass/panel/...). */
   shell?: boolean;
+  /** Optional hotspot polygon on the product reference photo. Points are
+   *  whitespace-separated "x,y" pairs in 0..1 normalized image coordinates
+   *  (0,0 = top-left). Used by Product2DViewer to make parts clickable on
+   *  the photo itself; omit to make the part list-only. */
+  hotspot?: { points: string };
 };
 
 export type ProductCategory =
@@ -77,6 +82,15 @@ export type ProductSpec = {
   background?: string;
   parts: PartSpec[];
   relatedSites?: string[];
+  /** Attribution for the reference photo shown by Product2DViewer.
+   *  Required when the photo comes from Wikimedia Commons under CC-BY or
+   *  CC-BY-SA — license terms mandate credit. NASA/public-domain photos
+   *  technically don't require it but we still list them for transparency. */
+  photoCredit?: {
+    author: string;
+    license: string;  // e.g. "CC BY-SA 4.0", "Public domain"
+    sourceUrl: string;  // Commons file page URL
+  };
 };
 
 import { raptor } from "./raptor";

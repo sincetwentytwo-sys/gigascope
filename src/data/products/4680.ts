@@ -13,6 +13,11 @@ export const tesla4680: ProductSpec = {
   cameraMaxDistance: 80,
   cameraTarget: [0, 2, 0],
   background: "#0a0a0f",
+  photoCredit: {
+    author: "Jzh2074",
+    license: "CC BY-SA 4.0",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Tesla_4680_battery.svg",
+  },
   parts: [
     {
       id: "can",

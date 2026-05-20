@@ -7,12 +7,14 @@ import type { ProductSpec } from "@/data/products";
 /**
  * Photo-first product viewer. Shows a real reference photo of the product
  * alongside a scrollable component list; click/hover a component to read its
- * specs in the bottom panel. SVG-overlay hotspots are not wired yet — those
- * come once we author per-photo polygon coordinates.
+ * specs in the bottom panel. Components with `hotspot` coordinates also get
+ * a clickable SVG polygon overlaid on the photo.
  */
 export default function Product2DViewer({ product }: { product: ProductSpec }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
   const selected = product.parts.find((p) => p.id === selectedId) ?? null;
+  const partsWithHotspots = product.parts.filter((p) => p.hotspot);
 
   // 4680 has only an SVG diagram available; everything else is a JPG photo.
   const ext = product.slug === "4680" ? "svg" : "jpg";
@@ -22,29 +24,83 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] border border-[#343538] bg-[#0a0a0c]">
       {/* Photo */}
       <div className="relative bg-[#f4f4f0] min-h-[55vh] flex items-center justify-center overflow-hidden">
-        {ext === "svg" ? (
-          // Next/Image with SVG needs unoptimized prop; simpler to use <img>.
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={src}
-            alt={`${product.name} reference diagram`}
-            className="w-full h-auto max-h-[80vh] object-contain"
-          />
-        ) : (
-          <Image
-            src={src}
-            alt={`${product.name} reference photo`}
-            width={1600}
-            height={1600}
-            priority
-            sizes="(max-width: 1024px) 100vw, 70vw"
-            className="w-full h-auto max-h-[80vh] object-contain"
-          />
-        )}
+        <div className="relative w-full h-full max-h-[80vh] flex items-center justify-center">
+          {ext === "svg" ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={src}
+              alt={`${product.name} reference diagram`}
+              className="block w-full h-auto max-h-[80vh] object-contain"
+            />
+          ) : (
+            <Image
+              src={src}
+              alt={`${product.name} reference photo`}
+              width={1600}
+              height={1600}
+              priority
+              sizes="(max-width: 1024px) 100vw, 70vw"
+              className="block w-full h-auto max-h-[80vh] object-contain"
+            />
+          )}
+
+          {/* Clickable polygons over the photo. Coordinates are 0..1 of the
+              image; preserveAspectRatio="none" stretches the SVG to fit the
+              same box as the image (which is sized by object-contain). */}
+          {partsWithHotspots.length > 0 && (
+            <svg
+              className="absolute inset-0 w-full h-full pointer-events-none"
+              viewBox="0 0 1 1"
+              preserveAspectRatio="none"
+            >
+              {partsWithHotspots.map((p) => {
+                const active = selectedId === p.id;
+                const hovered = hoveredId === p.id;
+                return (
+                  <polygon
+                    key={p.id}
+                    points={p.hotspot!.points}
+                    onClick={() => setSelectedId(p.id)}
+                    onMouseEnter={() => setHoveredId(p.id)}
+                    onMouseLeave={() => setHoveredId(null)}
+                    className={`pointer-events-auto cursor-pointer transition-all ${
+                      active
+                        ? "fill-[#ffb073]/30 stroke-[#ffb073]"
+                        : hovered
+                        ? "fill-white/15 stroke-white/80"
+                        : "fill-transparent stroke-white/0 hover:stroke-white/60"
+                    }`}
+                    strokeWidth="0.003"
+                    vectorEffect="non-scaling-stroke"
+                  >
+                    <title>{p.name}</title>
+                  </polygon>
+                );
+              })}
+            </svg>
+          )}
+        </div>
 
         <div className="absolute top-3 left-3 bg-[#121316]/90 backdrop-blur-md px-3 py-1.5 border border-[#343538] font-mono text-[10px] text-[#b7c8e1] uppercase tracking-widest">
-          Reference photo · components on the right
+          {partsWithHotspots.length > 0
+            ? `Click parts on the photo  ·  ${partsWithHotspots.length}/${product.parts.length} mapped`
+            : "Components listed on the right"}
         </div>
+
+        {/* Photo credit — required by CC licenses */}
+        {product.photoCredit && (
+          <div className="absolute bottom-2 right-2 bg-[#121316]/85 backdrop-blur-md px-2 py-1 font-mono text-[9px] text-[#8292aa]">
+            Photo:{" "}
+            <a
+              href={product.photoCredit.sourceUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-[#b7c8e1] hover:underline"
+            >
+              {product.photoCredit.author} · {product.photoCredit.license}
+            </a>
+          </div>
+        )}
       </div>
 
       {/* Component list + detail */}

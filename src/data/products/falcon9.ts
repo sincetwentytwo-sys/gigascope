@@ -253,6 +253,11 @@ export const falcon9: ProductSpec = {
   background: "#0a0e14",
   parts,
   relatedSites: ["spacex-hawthorne", "cape-canaveral", "vandenberg", "starbase"],
+  photoCredit: {
+    author: "NASA / Joel Kowsky",
+    license: "Public domain (NASA)",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:SpaceX_Demo-2_Launch_(NHQ202005300044)_(cropped).jpg",
+  },
 };
 
 export default falcon9;

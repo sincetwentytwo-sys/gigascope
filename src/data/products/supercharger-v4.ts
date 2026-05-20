@@ -13,6 +13,11 @@ export const superchargerV4: ProductSpec = {
   cameraMinDistance: 1.5,
   cameraMaxDistance: 18,
   background: "#0a0a0f",
+  photoCredit: {
+    author: "Gamesyns",
+    license: "CC BY-SA 4.0",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Tesla_V4_Supercharger_(cropped).jpg",
+  },
   parts: [
     {
       id: "pillar",

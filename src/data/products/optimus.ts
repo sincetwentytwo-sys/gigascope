@@ -14,6 +14,11 @@ export const optimus: ProductSpec = {
   cameraMinDistance: 1,
   cameraMaxDistance: 12,
   background: "#1a1d24",
+  photoCredit: {
+    author: "Sikander Iqbal",
+    license: "CC BY-SA 4.0",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Optimus_bot_at_Tesla_showroom_-_20251118_-_01.jpg",
+  },
   parts: [
     {
       id: "head",

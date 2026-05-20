@@ -13,6 +13,11 @@ export const neuralinkN1: ProductSpec = {
   cameraMaxDistance: 120,
   cameraTarget: [0, 1.5, 0],
   background: "#080810",
+  photoCredit: {
+    author: "Wikimedia Commons contributors",
+    license: "CC BY-SA 4.0 (see source)",
+    sourceUrl: "https://commons.wikimedia.org/wiki/Category:Neuralink",
+  },
   parts: [
     {
       id: "housing",

@@ -14,6 +14,11 @@ export const cybertruck: ProductSpec = {
   cameraMinDistance: 3,
   cameraMaxDistance: 32,
   background: "#0a0c10",
+  photoCredit: {
+    author: "Mr.choppers",
+    license: "CC BY-SA 3.0",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:2024_Tesla_Cybertruck_Foundation_Series,_front_left_(Greenwich).jpg",
+  },
   parts: [
     {
       id: "exoskeleton",

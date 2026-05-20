@@ -335,6 +335,11 @@ export const starship: ProductSpec = {
   background: "#08090d",
   parts,
   relatedSites: ["starbase", "cape-canaveral"],
+  photoCredit: {
+    author: "Steve Jurvetson",
+    license: "CC BY 2.0",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:SpaceX_Starship_ignition_during_IFT-5.jpg",
+  },
 };
 
 export default starship;

@@ -14,6 +14,11 @@ export const modelY: ProductSpec = {
   cameraMinDistance: 3,
   cameraMaxDistance: 27,
   background: "#0a0a0f",
+  photoCredit: {
+    author: "Vauxford",
+    license: "CC BY-SA 4.0",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:2022_Tesla_Model_Y_Long_Range_AWD_Front.jpg",
+  },
   parts: [
     {
       id: "body-shell",

@@ -14,6 +14,11 @@ export const model3: ProductSpec = {
   cameraMinDistance: 3,
   cameraMaxDistance: 27,
   background: "#0b0d12",
+  photoCredit: {
+    author: "Alexander-93",
+    license: "CC BY-SA 4.0",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Tesla_Model_3_(2023)_Autofr%C3%BChling_Ulm_IMG_9282.jpg",
+  },
   parts: [
     {
       id: "body",

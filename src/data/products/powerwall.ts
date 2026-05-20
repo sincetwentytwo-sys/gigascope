@@ -13,6 +13,11 @@ export const powerwall: ProductSpec = {
   cameraMinDistance: 0.7,
   cameraMaxDistance: 8,
   background: "#0a0a0f",
+  photoCredit: {
+    author: "Wikimedia Commons contributors",
+    license: "CC BY-SA (see source)",
+    sourceUrl: "https://commons.wikimedia.org/wiki/Category:Tesla_Powerwall",
+  },
   parts: [
     {
       id: "shell",

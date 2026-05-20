@@ -18,6 +18,11 @@ export const cybercab: ProductSpec = {
   // halves) instead of chopping the car in half across its width.
   cutawayAxis: "x",
   background: "#15171c",
+  photoCredit: {
+    author: "Wikimedia Commons contributors",
+    license: "CC BY-SA (see source)",
+    sourceUrl: "https://commons.wikimedia.org/wiki/Category:Tesla_Robotaxi",
+  },
   parts: [
     {
       id: "body-shell",
