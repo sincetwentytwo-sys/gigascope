@@ -35,13 +35,14 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] border border-[#343538] bg-[#0a0a0c]">
       {/* Photo */}
-      <div className="relative bg-[#f4f4f0] min-h-[55vh] flex items-center justify-center overflow-hidden p-4">
-        {/* Wrapper has the photo's exact aspect ratio, capped by max-h:78vh
-            and max-w:100%. img + SVG both fill the wrapper at 100%/100%, so
-            they are pixel-aligned. Dot coords (0..1) map straight to the
-            SVG's viewBox (naturalW x naturalH) without aspect padding. */}
+      <div className="relative bg-[#f4f4f0] min-h-[55vh] overflow-hidden p-4 text-center">
+        {/* inline-block wrapper that pulls its size from the inline img
+            (which respects max-h:78vh + max-w:100%). flex parents kept
+            stretching this to 55vh and pushing the SVG below the photo —
+            text-align center on a block parent + inline-block here avoids
+            that and keeps the wrapper sized exactly to the image. */}
         <div
-          className="relative max-w-full"
+          className="relative inline-block align-top max-w-full"
           style={{
             aspectRatio: `${naturalSize.w} / ${naturalSize.h}`,
             maxHeight: "78vh",
