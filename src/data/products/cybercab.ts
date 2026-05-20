@@ -13,6 +13,10 @@ export const cybercab: ProductSpec = {
   cameraTarget: [0, 0.6, 0],
   cameraMinDistance: 2.5,
   cameraMaxDistance: 25,
+  // Cybercab is the one product where the long axis runs along Z (length 3.84m
+  // vs width 2.40m). Cut on X so the slice runs along the length (left/right
+  // halves) instead of chopping the car in half across its width.
+  cutawayAxis: "x",
   background: "#15171c",
   parts: [
     {

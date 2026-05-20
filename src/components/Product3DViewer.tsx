@@ -10,11 +10,26 @@ import type {
 } from "@/data/products";
 import * as THREE from "three";
 
-// World-space clipping plane that slices everything lengthwise at z = 0.
-// normal = (0,0,1), constant = 0  ⇒  keeps the z ≤ 0 half (cut face is towards +Z camera).
-// For ground-based models the long axis runs along X (car length, rocket fuselage),
-// so cutting on Z splits the model left/right and exposes the full front-to-back interior.
-const CUT_PLANE = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+// World-space clipping planes for the two cutaway orientations.
+// THREE clips points whose signed distance is negative. Since the default
+// camera sits at +X/+Y/+Z and we want the *near* half (between camera and
+// origin) to be removed so the cut face is the first thing seen, the plane
+// normals point AWAY from the camera (-Z and -X). That gives positive
+// distance on the far side (kept) and negative on the near side (clipped).
+const CUT_PLANE_Z = new THREE.Plane(new THREE.Vector3(0, 0, -1), 0);
+const CUT_PLANE_X = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0);
+
+function planeFor(axis: "x" | "z" | undefined): THREE.Plane {
+  return axis === "x" ? CUT_PLANE_X : CUT_PLANE_Z;
+}
+
+// Returns true if the world-space point lies in the clipped (removed) half
+// of the cutaway. Used to teach raycasting to fall through to the visible
+// part underneath — Three.js raycasting ignores clipping planes by default.
+function isClipped(point: THREE.Vector3, axis: "x" | "z" | undefined): boolean {
+  if (axis === "x") return point.x > 0.001;
+  return point.z > 0.001;
+}
 
 type GeometryProps = { kind: GeometryKind; args: Array<number | boolean> };
 
@@ -90,17 +105,34 @@ type PartProps = {
   active: boolean;
   hovered: boolean;
   cutaway: boolean;
+  cutawayAxis?: "x" | "z";
   onSelect: (id: string) => void;
   onHover: (id: string | null) => void;
 };
 
-function Part({ part, active, hovered, cutaway, onSelect, onHover }: PartProps) {
+function Part({
+  part,
+  active,
+  hovered,
+  cutaway,
+  cutawayAxis,
+  onSelect,
+  onHover,
+}: PartProps) {
   const emissiveBoost = active || hovered;
   const baseEmissive = part.emissive ?? "#000000";
   const emissive = emissiveBoost ? "#ffffff" : baseEmissive;
   const emissiveIntensity = emissiveBoost ? (active ? 0.45 : 0.22) : 0.15;
 
+  // When cutaway is on, the raycaster still hits the clipped (invisible) half
+  // of every part. We swallow those events without stopPropagation so r3f
+  // walks to the next intersection — eventually hitting the visible part
+  // underneath. Without this, clicks "pass through" only the outer shell.
+  const shouldSkip = (e: ThreeEvent<PointerEvent | MouseEvent>) =>
+    cutaway && isClipped(e.point, cutawayAxis);
+
   const handleOver = (e: ThreeEvent<PointerEvent>) => {
+    if (shouldSkip(e)) return;
     e.stopPropagation();
     onHover(part.id);
     document.body.style.cursor = "pointer";
@@ -111,13 +143,15 @@ function Part({ part, active, hovered, cutaway, onSelect, onHover }: PartProps) 
     document.body.style.cursor = "auto";
   };
   const handleClick = (e: ThreeEvent<MouseEvent>) => {
+    if (shouldSkip(e)) return;
     e.stopPropagation();
     onSelect(part.id);
   };
 
-  // Cutaway: cull the x > 0 half so the +X camera sees a clean cross-section.
-  // DoubleSide lets the inner walls render where the cut exposes them.
-  const clippingPlanes = cutaway ? [CUT_PLANE] : null;
+  // Cutaway: cull half the world along the chosen axis so the camera sees
+  // a clean cross-section. DoubleSide lets the inner walls render where the
+  // cut exposes them.
+  const clippingPlanes = cutaway ? [planeFor(cutawayAxis)] : null;
   const side = cutaway ? THREE.DoubleSide : THREE.FrontSide;
 
   return (
@@ -218,6 +252,7 @@ function Scene({
             active={selectedId === part.id}
             hovered={hoveredId === part.id}
             cutaway={cutaway}
+            cutawayAxis={product.cutawayAxis}
             onSelect={setSelectedId}
             onHover={setHoveredId}
           />

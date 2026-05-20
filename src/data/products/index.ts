@@ -69,6 +69,11 @@ export type ProductSpec = {
   cameraTarget?: [number, number, number];
   cameraMinDistance?: number;
   cameraMaxDistance?: number;
+  /** Which axis the cutaway plane is perpendicular to. Default "z" — slices
+   *  the model along its X-Y plane, which is correct for products whose long
+   *  axis runs along X (Cybertruck, Model 3, etc). Set to "x" for products
+   *  whose long axis runs along Z (e.g. Cybercab). */
+  cutawayAxis?: "x" | "z";
   background?: string;
   parts: PartSpec[];
   relatedSites?: string[];
