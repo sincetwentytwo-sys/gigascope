@@ -4,20 +4,32 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { listProducts, type ProductCategory } from "@/data/products";
 
-const PRODUCT_THUMBS = new Set(
-  listProducts()
-    .filter((p) => existsSync(resolve(process.cwd(), "public", "products", `${p.slug}.jpg`)))
-    .map((p) => p.slug),
+// Hub thumbnails now reuse the per-product main reference photo (real photo,
+// matches the detail page). Fall back to the legacy procedural screenshot
+// only if the photo is missing (shouldn't happen — 13 / 13 ship with photos).
+const PRODUCT_THUMB = new Map<string, string>(
+  listProducts().map((p) => {
+    const ext = p.slug === "4680" ? "svg" : "jpg";
+    const photo = `/products/photos/${p.slug}/main.${ext}`;
+    const legacy = `/products/${p.slug}.jpg`;
+    if (existsSync(resolve(process.cwd(), "public", "products", "photos", p.slug, `main.${ext}`))) {
+      return [p.slug, photo] as const;
+    }
+    if (existsSync(resolve(process.cwd(), "public", "products", `${p.slug}.jpg`))) {
+      return [p.slug, legacy] as const;
+    }
+    return [p.slug, ""] as const;
+  }),
 );
 
 export const metadata: Metadata = {
-  title: "Interactive Product Breakdowns — GIGASCOPE",
+  title: "Component Breakdowns — GIGASCOPE",
   description:
-    "3D interactive breakdowns of Musk Empire hardware — Raptor engine, Starship, Falcon 9, Tesla 4680, Neuralink N1. Click any part to learn how it actually works.",
+    "Click-to-explore breakdowns of Musk-empire hardware — Raptor engine, Starship, Falcon 9, Cybertruck, Optimus, 4680 cell, Megapack, and more. Each component links to a tech blurb you can actually read.",
   openGraph: {
-    title: "Interactive Product Breakdowns — GIGASCOPE",
+    title: "Component Breakdowns — GIGASCOPE",
     description:
-      "3D interactive breakdowns of Musk Empire hardware. Click any part to learn how it actually works.",
+      "Real reference photos with clickable parts. 13 flagship products across Tesla, SpaceX, xAI, Neuralink, and Boring.",
   },
 };
 
@@ -63,12 +75,12 @@ export default function ProductsHubPage() {
           GIGASCOPE / Products
         </div>
         <h1 className="text-3xl sm:text-5xl font-black tracking-tight mb-3">
-          Interactive Product Breakdown
+          Component Breakdowns
         </h1>
         <p className="text-dim text-base sm:text-lg leading-relaxed max-w-2xl">
-          Click any part to learn how it actually works. Procedural 3D models of
-          the hardware that defines the Musk empire — engines, rockets,
-          batteries, chips.
+          Real reference photos with clickable parts. Engines, rockets, cars,
+          batteries, robots — the hardware that defines the Musk empire,
+          dissected one component at a time.
         </p>
       </header>
 
@@ -95,11 +107,12 @@ export default function ProductsHubPage() {
                   className="aspect-[4/3] w-full relative overflow-hidden"
                   style={{ background: gradient }}
                 >
-                  {PRODUCT_THUMBS.has(p.slug) ? (
+                  {PRODUCT_THUMB.get(p.slug) ? (
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img
-                      src={`/products/${p.slug}.jpg`}
+                      src={PRODUCT_THUMB.get(p.slug)!}
                       alt={p.name}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      className={`absolute inset-0 w-full h-full ${p.slug === "4680" ? "object-contain bg-white" : "object-cover"} group-hover:scale-105 transition-transform duration-700`}
                     />
                   ) : (
                     <div
