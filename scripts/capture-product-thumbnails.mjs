@@ -133,31 +133,22 @@ for (const slug of targets) {
     // Final settle.
     await page.waitForTimeout(800);
 
-    // Resolve the viewer container so we can clip the page screenshot to it.
-    // Compositor-mediated screenshots tend to capture WebGL pixels reliably
-    // even when canvas.toDataURL returns black under headless.
-    const clipBox = await page.evaluate(() => {
+    // Pull pixels straight from the WebGL framebuffer via toDataURL — Playwright's
+    // compositor-mediated page.screenshot frequently captures a white frame even
+    // when the canvas has real content (Chromium DevTools quirk). The framebuffer
+    // is preserved because Product3DViewer sets gl={{ preserveDrawingBuffer: true }}.
+    const dataUrl = await page.evaluate(() => {
       const btn = Array.from(document.querySelectorAll("button")).find((b) =>
         (b.textContent || "").includes("Cutaway"),
       );
-      const viewer = btn?.closest("div.relative");
-      const c = viewer?.querySelector("canvas");
+      const c = btn?.closest("div.relative")?.querySelector("canvas");
       if (!c) return null;
-      const r = c.getBoundingClientRect();
-      return { x: r.x, y: r.y, width: r.width, height: r.height };
+      return c.toDataURL("image/jpeg", 0.88);
     });
-    if (!clipBox) throw new Error("viewer canvas not found");
-
-    const buf = await page.screenshot({
-      type: "jpeg",
-      quality: 86,
-      clip: {
-        x: Math.round(clipBox.x),
-        y: Math.round(clipBox.y),
-        width: Math.round(clipBox.width),
-        height: Math.round(clipBox.height),
-      },
-    });
+    if (!dataUrl || !dataUrl.startsWith("data:image/jpeg")) {
+      throw new Error("canvas.toDataURL returned empty");
+    }
+    const buf = Buffer.from(dataUrl.split(",")[1], "base64");
 
     if (buf.length < 4000) {
       throw new Error(`suspiciously small (${buf.length} bytes) — likely blank canvas`);
