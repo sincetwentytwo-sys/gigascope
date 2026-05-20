@@ -12,6 +12,12 @@ import type { ProductSpec } from "@/data/products";
 export default function Product2DViewer({ product }: { product: ProductSpec }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  // Natural dimensions of the photo — used to size the SVG viewBox so the
+  // dots land on the photo (not the surrounding container).
+  const [naturalSize, setNaturalSize] = useState<{ w: number; h: number }>({
+    w: 1000,
+    h: 1000,
+  });
   const selected = product.parts.find((p) => p.id === selectedId) ?? null;
   const partsWithHotspots = product.parts.filter(
     (p) => p.hotspot && typeof p.hotspot.x === "number",
@@ -30,35 +36,53 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] border border-[#343538] bg-[#0a0a0c]">
       {/* Photo */}
       <div className="relative bg-[#f4f4f0] min-h-[55vh] flex items-center justify-center overflow-hidden p-4">
-        {/* Inline-block wrapper sized exactly to the image so the SVG dot
-            overlay sits flush against the photo regardless of aspect ratio.
-            Without this, a portrait photo (Raptor, Optimus) shows dots
-            floating in the side bands of the container. */}
-        <div className="relative inline-block max-h-[78vh] max-w-full">
+        {/* CSS Grid stack — img and SVG share the same grid cell, so the SVG
+            inherits the img's intrinsic box. Combined with viewBox set to the
+            image's natural dimensions + preserveAspectRatio="xMidYMid meet",
+            the dot coordinates always land exactly on the photo regardless
+            of container width or photo aspect ratio. */}
+        <div
+          className="grid"
+          style={{
+            gridTemplateAreas: '"stack"',
+            gridTemplateColumns: "auto",
+            gridTemplateRows: "auto",
+          }}
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={src}
             alt={`${product.name} reference ${ext === "svg" ? "diagram" : "photo"}`}
             className="block max-h-[78vh] max-w-full w-auto h-auto"
+            style={{ gridArea: "stack" }}
             decoding="sync"
             loading="eager"
             fetchPriority="high"
+            onLoad={(e) => {
+              const i = e.currentTarget;
+              if (i.naturalWidth > 0 && i.naturalHeight > 0) {
+                setNaturalSize({ w: i.naturalWidth, h: i.naturalHeight });
+              }
+            }}
           />
 
-          {/* Hotspot dots — single point per part. Sized in viewBox units so
-              they scale with the image. */}
+          {/* Hotspot dots — single point per part. viewBox uses the photo's
+              natural pixel dimensions so cx/cy match the part's true location;
+              meet keeps the aspect ratio so the dots track the image edges. */}
           {partsWithHotspots.length > 0 && (
             <svg
-              className="absolute inset-0 w-full h-full pointer-events-none"
-              viewBox="0 0 1000 1000"
-              preserveAspectRatio="none"
+              className="w-full h-full"
+              style={{ gridArea: "stack", pointerEvents: "none" }}
+              viewBox={`0 0 ${naturalSize.w} ${naturalSize.h}`}
+              preserveAspectRatio="xMidYMid meet"
             >
               {partsWithHotspots.map((p) => {
                 const active = selectedId === p.id;
                 const hovered = hoveredId === p.id;
-                const cx = p.hotspot!.x * 1000;
-                const cy = p.hotspot!.y * 1000;
-                const r = active || hovered ? 22 : 16;
+                const cx = p.hotspot!.x * naturalSize.w;
+                const cy = p.hotspot!.y * naturalSize.h;
+                const baseR = Math.max(14, Math.min(naturalSize.w, naturalSize.h) * 0.018);
+                const r = active || hovered ? baseR * 1.35 : baseR;
                 const n = dotNumber.get(p.id);
                 return (
                   <g
@@ -68,29 +92,38 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
                     onMouseLeave={() => setHoveredId(null)}
                     style={{ pointerEvents: "auto", cursor: "pointer" }}
                   >
-                    {/* outer halo on hover/active */}
                     {(active || hovered) && (
                       <circle
                         cx={cx}
                         cy={cy}
-                        r={r + 10}
-                        fill={active ? "rgba(255, 176, 115, 0.18)" : "rgba(255, 255, 255, 0.18)"}
+                        r={r + baseR * 0.7}
+                        fill={
+                          active
+                            ? "rgba(255, 176, 115, 0.18)"
+                            : "rgba(255, 255, 255, 0.18)"
+                        }
                       />
                     )}
                     <circle
                       cx={cx}
                       cy={cy}
                       r={r}
-                      fill={active ? "#ffb073" : hovered ? "#ffffff" : "rgba(255, 255, 255, 0.92)"}
+                      fill={
+                        active
+                          ? "#ffb073"
+                          : hovered
+                          ? "#ffffff"
+                          : "rgba(255, 255, 255, 0.92)"
+                      }
                       stroke={active ? "#1a1a1a" : "rgba(10, 10, 12, 0.65)"}
-                      strokeWidth={2}
+                      strokeWidth={Math.max(1.5, baseR * 0.12)}
                     />
                     <text
                       x={cx}
                       y={cy}
                       textAnchor="middle"
                       dominantBaseline="central"
-                      fontSize={18}
+                      fontSize={baseR * 1.1}
                       fontWeight={700}
                       fontFamily="ui-monospace, Menlo, Consolas, monospace"
                       fill={active ? "#1a1a1a" : "#0a0a0c"}
