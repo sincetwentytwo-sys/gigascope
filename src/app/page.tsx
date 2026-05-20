@@ -13,7 +13,7 @@ const COMPANY_ORDER: Company[] = ["tesla", "spacex", "xai", "neuralink", "boring
 
 export default function Home() {
   const countries = new Set(factories.map((f) => f.flag)).size;
-  const announced = factories.filter((f) => f.status === "planned");
+  const announced = factories.filter((f) => f.status === "announced");
 
   return (
     <>
@@ -61,7 +61,7 @@ export default function Home() {
 
         <div className="flex flex-col gap-10">
           {COMPANY_ORDER.map((companyId) => {
-            const sites = getSitesByCompany(companyId).filter((f) => f.status !== "planned");
+            const sites = getSitesByCompany(companyId).filter((f) => f.status !== "announced");
             if (sites.length === 0) return null;
             const meta = getCompanyMeta(companyId);
             return (
