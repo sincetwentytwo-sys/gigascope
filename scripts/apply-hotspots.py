@@ -21,8 +21,8 @@ HOTSPOTS: dict[str, dict[str, tuple[float, float]]] = {
         "exoskeleton":    (0.55, 0.46),  # central side panel
         "front-wedge":    (0.18, 0.36),  # sloped hood/wedge
         "windshield":     (0.43, 0.30),  # angled dark glass
-        "bed":            (0.78, 0.50),  # rear vault
-        "tonneau":        (0.74, 0.36),  # cover top edge
+        "bed":            (0.85, 0.45),  # rear vault — side wall of cargo box
+        "tonneau":        (0.83, 0.32),  # cover top edge (above the bed)
         "lightbar-front": (0.13, 0.49),  # thin LED strip on nose
         "wheel-fl":       (0.30, 0.74),  # near (front) wheel
         "wheel-rl":       (0.80, 0.74),  # far (rear) wheel

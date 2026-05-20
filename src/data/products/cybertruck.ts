@@ -72,7 +72,7 @@ export const cybertruck: ProductSpec = {
       color: "#9ea4ab",
       metalness: 0.85,
       roughness: 0.35,
-      hotspot: { x: 0.7800, y: 0.5000 },
+      hotspot: { x: 0.8500, y: 0.4500 },
     },
     {
       id: "tonneau",
@@ -85,7 +85,7 @@ export const cybertruck: ProductSpec = {
       color: "#2a2d33",
       metalness: 0.5,
       roughness: 0.5,
-      hotspot: { x: 0.7400, y: 0.3600 },
+      hotspot: { x: 0.8300, y: 0.3200 },
     },
     {
       id: "lightbar-front",
