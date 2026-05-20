@@ -12,22 +12,26 @@
         {
           "date": "2026-04",
           "text": "Site selection & environmental review",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         },
         {
           "date": "2026-Q3",
           "text": "Pilot fab site prep begins",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         },
         {
           "date": "2026-H2",
           "text": "AI5 small-batch production",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         },
         {
           "date": "2027",
           "text": "Volume production target",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         }
       ]
     },
@@ -227,7 +231,8 @@
         {
           "date": "2027-H1",
           "text": "Production start (target)",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         }
       ]
     },
@@ -484,7 +489,8 @@
         {
           "date": "2026-Q4",
           "text": "Phase 3: 1M GPU target",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         }
       ]
     },
@@ -546,12 +552,14 @@
         {
           "date": "2026-Q3",
           "text": "Pilot production line",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         },
         {
           "date": "2027",
           "text": "Full-scale manufacturing",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         }
       ]
     },
@@ -582,22 +590,24 @@
         {
           "date": "2026-Q2",
           "text": "Strip segment Phase 1 open",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         },
         {
           "date": "2028",
           "text": "Full 68-mile network target",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         }
       ]
     }
   ],
-  "lastRun": "2026-05-19",
+  "lastRun": "2026-05-20",
   "spacex": {
-    "latestLaunch": "Falcon 9 Block 5 | Dragon CRS-2 SpX-34",
-    "latestLaunchDate": "2026-05-15T22:05:41Z",
-    "totalLaunches": 661,
-    "launchesThisYear": 57,
-    "starlinkCount": null
+    "latestLaunch": "Falcon 9 Block 5 | Starlink Group 17-42",
+    "latestLaunchDate": "2026-05-20T02:46:19Z",
+    "totalLaunches": 662,
+    "launchesThisYear": 58,
+    "starlinkCount": 10360
   }
 }
