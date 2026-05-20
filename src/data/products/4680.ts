@@ -208,9 +208,6 @@ export const tesla4680: ProductSpec = {
     },
   ],
   relatedSites: ["giga-texas", "giga-nevada", "giga-berlin"],
-};
-
-export default tesla4680;
   galleryPhotos: [
     {
       src: "/products/photos/4680/1.jpg",
@@ -222,4 +219,6 @@ export default tesla4680;
       },
     },
   ],
+};
 
+export default tesla4680;

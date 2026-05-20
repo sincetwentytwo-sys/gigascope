@@ -198,9 +198,6 @@ export const neuralinkN1: ProductSpec = {
     },
   ],
   relatedSites: ["neuralink-fremont", "neuralink-austin"],
-};
-
-export default neuralinkN1;
   galleryPhotos: [
     {
       src: "/products/photos/neuralink-n1/1.jpg",
@@ -221,4 +218,6 @@ export default neuralinkN1;
       },
     },
   ],
+};
 
+export default neuralinkN1;

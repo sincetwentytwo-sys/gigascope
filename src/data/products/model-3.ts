@@ -271,9 +271,6 @@ export const model3: ProductSpec = {
     },
   ],
   relatedSites: ["fremont", "giga-shanghai", "giga-berlin", "giga-texas"],
-};
-
-export default model3;
   galleryPhotos: [
     {
       src: "/products/photos/model-3/1.jpg",
@@ -303,4 +300,6 @@ export default model3;
       },
     },
   ],
+};
 
+export default model3;

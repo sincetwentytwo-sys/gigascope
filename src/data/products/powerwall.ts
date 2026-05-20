@@ -190,9 +190,6 @@ export const powerwall: ProductSpec = {
     },
   ],
   relatedSites: ["giga-nevada", "giga-buffalo"],
-};
-
-export default powerwall;
   galleryPhotos: [
     {
       src: "/products/photos/powerwall/1.jpg",
@@ -213,4 +210,6 @@ export default powerwall;
       },
     },
   ],
+};
 
+export default powerwall;

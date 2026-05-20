@@ -338,9 +338,6 @@ export const cybertruck: ProductSpec = {
     },
   ],
   relatedSites: ["giga-texas", "fremont"],
-};
-
-export default cybertruck;
   galleryPhotos: [
     {
       src: "/products/photos/cybertruck/1.jpg",
@@ -370,4 +367,6 @@ export default cybertruck;
       },
     },
   ],
+};
 
+export default cybertruck;

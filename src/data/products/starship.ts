@@ -340,9 +340,6 @@ export const starship: ProductSpec = {
     license: "CC BY 2.0",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:SpaceX_Starship_ignition_during_IFT-5.jpg",
   },
-};
-
-export default starship;
   galleryPhotos: [
     {
       src: "/products/photos/starship/1.jpg",
@@ -372,4 +369,6 @@ export default starship;
       },
     },
   ],
+};
 
+export default starship;

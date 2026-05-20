@@ -250,9 +250,6 @@ export const megapack: ProductSpec = {
     },
   ],
   relatedSites: ["giga-nevada", "giga-shanghai"],
-};
-
-export default megapack;
   galleryPhotos: [
     {
       src: "/products/photos/megapack/1.jpg",
@@ -264,4 +261,6 @@ export default megapack;
       },
     },
   ],
+};
 
+export default megapack;

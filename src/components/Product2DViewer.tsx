@@ -19,7 +19,7 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
 
   // 4680 has only an SVG diagram available; everything else is a JPG photo.
   const mainExt = product.slug === "4680" ? "svg" : "jpg";
-  const mainSrc = `/products/photos/${product.slug}.${mainExt}`;
+  const mainSrc = `/products/photos/${product.slug}/main.${mainExt}`;
   const mainCredit = product.photoCredit;
 
   const gallery = product.galleryPhotos ?? [];

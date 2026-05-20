@@ -311,9 +311,6 @@ export const modelY: ProductSpec = {
     },
   ],
   relatedSites: ["giga-texas", "giga-shanghai", "giga-berlin", "fremont"],
-};
-
-export default modelY;
   galleryPhotos: [
     {
       src: "/products/photos/model-y/1.jpg",
@@ -343,4 +340,6 @@ export default modelY;
       },
     },
   ],
+};
 
+export default modelY;

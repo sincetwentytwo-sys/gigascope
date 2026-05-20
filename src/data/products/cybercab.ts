@@ -304,9 +304,6 @@ export const cybercab: ProductSpec = {
     },
   ],
   relatedSites: ["giga-texas"],
-};
-
-export default cybercab;
   galleryPhotos: [
     {
       src: "/products/photos/cybercab/1.jpg",
@@ -327,4 +324,6 @@ export default cybercab;
       },
     },
   ],
+};
 
+export default cybercab;

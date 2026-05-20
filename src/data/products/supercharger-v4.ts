@@ -160,9 +160,6 @@ export const superchargerV4: ProductSpec = {
     },
   ],
   relatedSites: ["fremont", "giga-buffalo", "giga-texas"],
-};
-
-export default superchargerV4;
   galleryPhotos: [
     {
       src: "/products/photos/supercharger-v4/1.jpg",
@@ -192,4 +189,6 @@ export default superchargerV4;
       },
     },
   ],
+};
 
+export default superchargerV4;

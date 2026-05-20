@@ -258,9 +258,6 @@ export const falcon9: ProductSpec = {
     license: "Public domain (NASA)",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:SpaceX_Demo-2_Launch_(NHQ202005300044)_(cropped).jpg",
   },
-};
-
-export default falcon9;
   galleryPhotos: [
     {
       src: "/products/photos/falcon9/1.jpg",
@@ -290,4 +287,6 @@ export default falcon9;
       },
     },
   ],
+};
 
+export default falcon9;

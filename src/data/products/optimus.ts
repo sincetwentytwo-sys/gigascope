@@ -363,9 +363,6 @@ export const optimus: ProductSpec = {
     },
   ],
   relatedSites: ["fremont", "giga-texas", "terafab"],
-};
-
-export default optimus;
   galleryPhotos: [
     {
       src: "/products/photos/optimus/1.jpg",
@@ -386,4 +383,6 @@ export default optimus;
       },
     },
   ],
+};
 
+export default optimus;
