@@ -227,7 +227,9 @@ function Scene({
       <OrbitControls
         ref={controlsRef}
         target={target as [number, number, number]}
-        enablePan={false}
+        enablePan
+        screenSpacePanning
+        keyPanSpeed={12}
         minDistance={product.cameraMinDistance ?? 3}
         maxDistance={product.cameraMaxDistance ?? 18}
         enableDamping
@@ -295,11 +297,11 @@ export default function Product3DViewer({ product }: { product: ProductSpec }) {
       {/* Top-left instruction + reset */}
       <div className="absolute top-3 left-3 flex flex-col gap-2 pointer-events-none">
         <div className="pointer-events-auto bg-[#121316]/85 backdrop-blur-md px-3 py-1.5 border border-[#343538] font-mono text-[10px] text-[#b7c8e1] uppercase tracking-widest">
-          Click parts to learn how they work
+          Drag rotate · scroll zoom · right-click / shift-drag pan
         </div>
         {coarsePointerWarn && (
           <div className="pointer-events-auto bg-[#3a1500]/80 backdrop-blur-md px-3 py-1.5 border border-[#c97a3a]/40 font-mono text-[10px] text-[#ffb073] uppercase tracking-wide max-w-[260px]">
-            Touch device — performance may vary. Pinch to zoom, drag to orbit.
+            Touch device — pinch to zoom, one finger to orbit, two fingers to pan.
           </div>
         )}
       </div>
