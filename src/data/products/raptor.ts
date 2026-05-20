@@ -36,6 +36,7 @@ export const raptor: ProductSpec = {
       color: "#5a5d66",
       metalness: 0.92,
       roughness: 0.28,
+      hotspot: { points: "0.22,0.55 0.78,0.50 0.80,0.95 0.20,0.95" },
     },
     {
       id: "regen-channels",
@@ -62,6 +63,7 @@ export const raptor: ProductSpec = {
       emissive: "#220500",
       metalness: 0.8,
       roughness: 0.35,
+      hotspot: { points: "0.40,0.43 0.60,0.43 0.60,0.50 0.40,0.50" },
     },
     {
       id: "chamber",
@@ -74,6 +76,7 @@ export const raptor: ProductSpec = {
       color: "#6b6e76",
       metalness: 0.9,
       roughness: 0.3,
+      hotspot: { points: "0.38,0.30 0.62,0.30 0.62,0.43 0.38,0.43" },
     },
     {
       id: "injector",
@@ -99,6 +102,7 @@ export const raptor: ProductSpec = {
       emissive: "#0a2a0a",
       metalness: 0.85,
       roughness: 0.35,
+      hotspot: { points: "0.55,0.20 0.75,0.20 0.75,0.32 0.55,0.32" },
     },
     {
       id: "preburner-fuel",
@@ -112,6 +116,7 @@ export const raptor: ProductSpec = {
       emissive: "#2a1500",
       metalness: 0.85,
       roughness: 0.35,
+      hotspot: { points: "0.25,0.20 0.45,0.20 0.45,0.32 0.25,0.32" },
     },
     {
       id: "turbopump-ox",
@@ -198,6 +203,7 @@ export const raptor: ProductSpec = {
       color: "#3a3c42",
       metalness: 0.85,
       roughness: 0.45,
+      hotspot: { points: "0.40,0.05 0.60,0.05 0.60,0.13 0.40,0.13" },
     },
   ],
   photoCredit: {
