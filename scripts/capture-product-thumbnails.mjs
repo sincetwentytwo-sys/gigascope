@@ -82,8 +82,56 @@ for (const slug of targets) {
       );
       if (btn) btn.click();
     });
-    // Settle several frames so the WebGL framebuffer holds a real image.
-    await page.waitForTimeout(5000);
+
+    // Locate the viewer canvas so we can poke it.
+    const viewerHandle = await page.evaluateHandle(() => {
+      const btn = Array.from(document.querySelectorAll("button")).find((b) =>
+        (b.textContent || "").includes("Cutaway"),
+      );
+      return btn?.closest("div.relative");
+    });
+
+    // r3f's frameloop sometimes stays idle until input arrives in dev mode.
+    // Wiggle the mouse over the canvas to force OrbitControls + r3f invalidate.
+    const box = await viewerHandle.evaluate((el) => {
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
+      return { x: r.x + r.width / 2, y: r.y + r.height / 2, w: r.width, h: r.height };
+    });
+    if (box) {
+      await page.mouse.move(box.x - 40, box.y - 30);
+      await page.mouse.move(box.x + 40, box.y + 30, { steps: 8 });
+      await page.mouse.move(box.x, box.y, { steps: 4 });
+    }
+
+    // Wait until the canvas actually contains non-white pixels — that's our
+    // proof that r3f has drawn at least one real frame.
+    await page.waitForFunction(
+      () => {
+        const btn = Array.from(document.querySelectorAll("button")).find((b) =>
+          (b.textContent || "").includes("Cutaway"),
+        );
+        const c = btn?.closest("div.relative")?.querySelector("canvas");
+        if (!c) return false;
+        const gl = c.getContext("webgl2") || c.getContext("webgl");
+        if (!gl) return false;
+        // Sample center pixel from the framebuffer.
+        const px = new Uint8Array(4);
+        gl.readPixels(c.width / 2 | 0, c.height / 2 | 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+        // Reject white/black/transparent; require *some* color.
+        const [r, g, b, a] = px;
+        if (a < 8) return false;
+        if (r > 240 && g > 240 && b > 240) return false;
+        if (r < 16 && g < 16 && b < 16) return false;
+        return true;
+      },
+      { timeout: 15000 },
+    ).catch(() => {
+      // Don't fail hard — capture whatever's there. Caller will see the size hint.
+    });
+
+    // Final settle.
+    await page.waitForTimeout(800);
 
     // Resolve the viewer container so we can clip the page screenshot to it.
     // Compositor-mediated screenshots tend to capture WebGL pixels reliably
