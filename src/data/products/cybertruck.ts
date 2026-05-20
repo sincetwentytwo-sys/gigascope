@@ -341,3 +341,33 @@ export const cybertruck: ProductSpec = {
 };
 
 export default cybertruck;
+  galleryPhotos: [
+    {
+      src: "/products/photos/cybertruck/1.jpg",
+      label: "Side",
+      credit: {
+        author: "Mpelas199",
+        license: "CC0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATesla_Cybertruck_-_Side_6_-_Tesla_Store_Athens_2024.jpg",
+      },
+    },
+    {
+      src: "/products/photos/cybertruck/2.jpg",
+      label: "Rear",
+      credit: {
+        author: "Alexander-93",
+        license: "CC BY-SA 4.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3A2024_Tesla_Cybertruck_Foundation_Series_IMG_0634_%28cropped%29.jpg",
+      },
+    },
+    {
+      src: "/products/photos/cybertruck/3.jpg",
+      label: "Interior",
+      credit: {
+        author: "u/mrlewaynee",
+        license: "CC BY-SA 4.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3A20191121-tesla-cybertruck-interior-seat-backs.jpg",
+      },
+    },
+  ],
+

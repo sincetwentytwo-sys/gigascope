@@ -82,15 +82,29 @@ export type ProductSpec = {
   background?: string;
   parts: PartSpec[];
   relatedSites?: string[];
-  /** Attribution for the reference photo shown by Product2DViewer.
-   *  Required when the photo comes from Wikimedia Commons under CC-BY or
-   *  CC-BY-SA — license terms mandate credit. NASA/public-domain photos
-   *  technically don't require it but we still list them for transparency. */
+  /** Attribution for the *main* reference photo (the one with hotspots).
+   *  Required by CC-BY / CC-BY-SA terms. NASA/public-domain photos
+   *  technically don't need credit but we still list for transparency. */
   photoCredit?: {
     author: string;
-    license: string;  // e.g. "CC BY-SA 4.0", "Public domain"
-    sourceUrl: string;  // Commons file page URL
+    license: string;
+    sourceUrl: string;
   };
+  /** Additional photos shown as a thumbnail strip — front/side/rear/3-4
+   *  views, etc. The main photo (`/photos/<slug>.jpg`) is always shown
+   *  first; this array holds the *extras*. Hotspots only apply to the
+   *  main photo; the gallery views show the bare image. */
+  galleryPhotos?: Array<{
+    /** Path relative to /public, e.g. "/products/photos/cybertruck/side.jpg" */
+    src: string;
+    /** Short label shown on the thumbnail: "Side", "Rear", "Interior", etc. */
+    label: string;
+    credit: {
+      author: string;
+      license: string;
+      sourceUrl: string;
+    };
+  }>;
 };
 
 import { raptor } from "./raptor";

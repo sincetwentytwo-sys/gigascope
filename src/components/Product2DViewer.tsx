@@ -13,41 +13,51 @@ import type { ProductSpec } from "@/data/products";
 export default function Product2DViewer({ product }: { product: ProductSpec }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [galleryIdx, setGalleryIdx] = useState<number>(0); // 0 = main photo
   const selected = product.parts.find((p) => p.id === selectedId) ?? null;
   const partsWithHotspots = product.parts.filter((p) => p.hotspot);
 
   // 4680 has only an SVG diagram available; everything else is a JPG photo.
-  const ext = product.slug === "4680" ? "svg" : "jpg";
-  const src = `/products/photos/${product.slug}.${ext}`;
+  const mainExt = product.slug === "4680" ? "svg" : "jpg";
+  const mainSrc = `/products/photos/${product.slug}.${mainExt}`;
+  const mainCredit = product.photoCredit;
+
+  const gallery = product.galleryPhotos ?? [];
+  const isMain = galleryIdx === 0;
+  const currentSrc = isMain ? mainSrc : gallery[galleryIdx - 1].src;
+  const currentExt = isMain ? mainExt : "jpg";
+  const currentCredit = isMain ? mainCredit : gallery[galleryIdx - 1].credit;
+  // Hotspots only overlay the main photo — gallery views are bare.
+  const overlayHotspots = isMain && partsWithHotspots.length > 0;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] border border-[#343538] bg-[#0a0a0c]">
       {/* Photo */}
-      <div className="relative bg-[#f4f4f0] min-h-[55vh] flex items-center justify-center overflow-hidden">
-        <div className="relative w-full h-full max-h-[80vh] flex items-center justify-center">
-          {ext === "svg" ? (
+      <div className="relative bg-[#f4f4f0] min-h-[55vh] flex flex-col overflow-hidden">
+        <div className="relative flex-1 flex items-center justify-center min-h-[50vh]">
+          {currentExt === "svg" ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={src}
+              key={currentSrc}
+              src={currentSrc}
               alt={`${product.name} reference diagram`}
-              className="block w-full h-auto max-h-[80vh] object-contain"
+              className="block w-full h-auto max-h-[72vh] object-contain"
             />
           ) : (
             <Image
-              src={src}
+              key={currentSrc}
+              src={currentSrc}
               alt={`${product.name} reference photo`}
               width={1600}
               height={1600}
-              priority
+              priority={isMain}
               sizes="(max-width: 1024px) 100vw, 70vw"
-              className="block w-full h-auto max-h-[80vh] object-contain"
+              className="block w-full h-auto max-h-[72vh] object-contain"
             />
           )}
 
-          {/* Clickable polygons over the photo. Coordinates are 0..1 of the
-              image; preserveAspectRatio="none" stretches the SVG to fit the
-              same box as the image (which is sized by object-contain). */}
-          {partsWithHotspots.length > 0 && (
+          {/* Clickable polygons over the MAIN photo only. */}
+          {overlayHotspots && (
             <svg
               className="absolute inset-0 w-full h-full pointer-events-none"
               viewBox="0 0 1 1"
@@ -82,23 +92,56 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
         </div>
 
         <div className="absolute top-3 left-3 bg-[#121316]/90 backdrop-blur-md px-3 py-1.5 border border-[#343538] font-mono text-[10px] text-[#b7c8e1] uppercase tracking-widest">
-          {partsWithHotspots.length > 0
+          {overlayHotspots
             ? `Click parts on the photo  ·  ${partsWithHotspots.length}/${product.parts.length} mapped`
-            : "Components listed on the right"}
+            : isMain
+            ? "Components listed on the right"
+            : (gallery[galleryIdx - 1]?.label ?? "View")}
         </div>
 
         {/* Photo credit — required by CC licenses */}
-        {product.photoCredit && (
+        {currentCredit && (
           <div className="absolute bottom-2 right-2 bg-[#121316]/85 backdrop-blur-md px-2 py-1 font-mono text-[9px] text-[#8292aa]">
             Photo:{" "}
             <a
-              href={product.photoCredit.sourceUrl}
+              href={currentCredit.sourceUrl}
               target="_blank"
               rel="noreferrer noopener"
               className="text-[#b7c8e1] hover:underline"
             >
-              {product.photoCredit.author} · {product.photoCredit.license}
+              {currentCredit.author} · {currentCredit.license}
             </a>
+          </div>
+        )}
+
+        {/* Gallery thumbnail strip */}
+        {gallery.length > 0 && (
+          <div className="flex gap-2 p-2 bg-[#0a0a0c] border-t border-[#343538] overflow-x-auto">
+            {[{ src: mainSrc, label: "Main" }, ...gallery].map((g, i) => {
+              const active = galleryIdx === i;
+              return (
+                <button
+                  key={g.src}
+                  type="button"
+                  onClick={() => setGalleryIdx(i)}
+                  className={`relative shrink-0 w-20 h-14 sm:w-24 sm:h-16 overflow-hidden border-2 transition-colors ${
+                    active ? "border-[#ffb073]" : "border-[#343538] hover:border-[#6a7a8a]"
+                  }`}
+                  title={g.label}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={g.src}
+                    alt={g.label}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <span className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-[9px] font-mono uppercase tracking-wider px-1 py-0.5 text-center">
+                    {g.label}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         )}
       </div>
