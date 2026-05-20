@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { factories, DATA_LAST_UPDATED } from "@/data/factories";
+import { listProducts } from "@/data/products";
 
 const BASE_URL = "https://gigascope.xyz";
 
@@ -10,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: BASE_URL, lastModified: lastMod, changeFrequency: "daily", priority: 1 },
     { url: `${BASE_URL}/compare`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE_URL}/timeline`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.7 },
+    { url: `${BASE_URL}/products`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE_URL}/about`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.5 },
   ];
 
@@ -20,5 +22,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: f.featured ? 0.95 : 0.85,
   }));
 
-  return [...staticPages, ...factoryPages];
+  const productPages: MetadataRoute.Sitemap = listProducts().map((p) => ({
+    url: `${BASE_URL}/products/${p.slug}`,
+    lastModified: lastMod,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  return [...staticPages, ...factoryPages, ...productPages];
 }

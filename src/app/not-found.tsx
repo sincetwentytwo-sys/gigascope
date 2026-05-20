@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { factories } from "@/data/factories";
 
 export const metadata = {
   title: "Page not found — GIGASCOPE",
@@ -17,7 +16,7 @@ export default function NotFound() {
         </p>
         <div className="flex flex-col gap-2">
           <Link href="/" className="block bg-text text-bg rounded-lg px-5 py-3 font-semibold hover:opacity-90 transition-opacity">
-            ← Back to all factories
+            ← Back to all sites
           </Link>
           <Link href="/timeline" className="block text-sm text-dim hover:text-text py-2">
             Global Timeline →

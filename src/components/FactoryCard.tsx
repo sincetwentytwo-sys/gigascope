@@ -20,15 +20,28 @@ export default function FactoryCard({
 
   const filled = Math.max(1, Math.round((factory.progress / 100) * SEGMENTS));
 
+  // Announced visual differentiation: gold top bar + gold hover glow
+  const hoverShadow = isAnnounced
+    ? "hover:shadow-[0_0_18px_rgba(196,160,0,0.22)]"
+    : "hover:shadow-[0_0_15px_rgba(109,221,255,0.15)]";
+
   return (
     <a
       href={`/site/${factory.slug}`}
-      className="group relative flex flex-col gap-4 sm:gap-5 overflow-hidden border p-4 sm:p-5 transition-all duration-500 hover:shadow-[0_0_15px_rgba(109,221,255,0.15)]"
+      className={`group relative flex flex-col gap-4 sm:gap-5 overflow-hidden border p-4 sm:p-5 transition-all duration-500 ${hoverShadow}`}
       style={{
         background: "rgba(15, 17, 23, 0.92)",
         borderColor: `${accent}33`,
       }}
     >
+      {/* Gold accent bar for announced variant */}
+      {isAnnounced && (
+        <div
+          aria-hidden
+          className="absolute left-0 top-0 z-10 h-[3px] w-full bg-[#c4a000]"
+        />
+      )}
+
       <span
         aria-hidden
         className="pointer-events-none absolute -top-8 -right-8 h-16 w-16 rotate-45 transition-all"
@@ -56,10 +69,10 @@ export default function FactoryCard({
           </div>
         </div>
         <div
-          className={`border px-2 py-1 flex-shrink-0 ${isAlert ? "animate-pulse" : ""}`}
+          className={`border px-2 py-1 flex-shrink-0 ${isAlert ? "animate-pulse" : ""} ${isAnnounced ? "badge badge-announced" : ""}`}
           style={{
-            background: `${accent}1a`,
-            borderColor: `${accent}4d`,
+            background: isAnnounced ? undefined : `${accent}1a`,
+            borderColor: isAnnounced ? undefined : `${accent}4d`,
           }}
         >
           <span

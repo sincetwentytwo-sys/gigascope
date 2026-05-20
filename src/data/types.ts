@@ -29,7 +29,7 @@ export interface Factory {
   lat: number;
   lng: number;
   company: Company;
-  status: "operational" | "expanding" | "construction" | "planned" | "paused";
+  status: "operational" | "expanding" | "construction" | "announced" | "planned" | "paused";
   progress: number;
   area: string;
   capacity: string;

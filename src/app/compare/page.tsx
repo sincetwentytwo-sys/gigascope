@@ -3,7 +3,7 @@ import CompareSliderWrapper from "@/components/CompareSliderWrapper";
 
 export const metadata: Metadata = {
   title: "Compare — GIGASCOPE",
-  description: "Before/after satellite imagery comparison of Tesla factory construction sites",
+  description: "Before/after satellite imagery comparison of Musk Empire construction sites (Tesla, SpaceX, xAI, Neuralink, Boring)",
 };
 
 export default function ComparePage() {

@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { factories, getTotalInvestment } from "@/data/factories";
 
-export const alt = "GIGASCOPE — Tesla Factory Construction Tracker";
+export const alt = "GIGASCOPE — Musk Empire Site Tracker";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -28,14 +28,14 @@ export default function OGImage() {
               GIGASCOPE
             </div>
             <div style={{ fontSize: 18, color: "#86868b", marginTop: 4 }}>
-              Tesla Factory Construction Tracker
+              Musk Empire Site Tracker
             </div>
           </div>
           <div style={{ display: "flex", gap: 32 }}>
             {[
-              { value: String(factories.length), label: "Factories" },
+              { value: String(factories.length), label: "Sites" },
               { value: getTotalInvestment(), label: "Invested" },
-              { value: "4", label: "Countries" },
+              { value: String(new Set(factories.map((f) => f.flag)).size), label: "Countries" },
             ].map((s) => (
               <div key={s.label} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <div style={{ fontSize: 24, fontWeight: 700, color: "#1d1d1f" }}>{s.value}</div>
@@ -76,7 +76,7 @@ export default function OGImage() {
             gigascope.xyz — Satellite imagery + milestones + community
           </div>
           <div style={{ fontSize: 13, color: "#86868b" }}>
-            Open source · Not affiliated with Tesla
+            Open source · Not affiliated with Tesla, SpaceX, xAI, Neuralink or Boring Co.
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-05-19",
-  "lastChecked": "2026-05-19",
+  "lastUpdated": "2026-05-20",
+  "lastChecked": "2026-05-20",
   "totalInvestment": "$80B+",
   "timelineYears": [
     2020,
@@ -22,7 +22,7 @@
       "lat": 30.228,
       "lng": -97.612,
       "company": "joint",
-      "status": "construction",
+      "status": "announced",
       "progress": 2,
       "area": "Est. 10M+ sqft",
       "capacity": "1 TW compute/yr",
@@ -35,7 +35,16 @@
         "Partners": "Tesla, SpaceX, xAI",
         "Process Node": "2nm (TSMC-class)"
       },
-      "lastUpdated": "2026-05-18",
+      "lastUpdated": "2026-05-20",
+      "confidence": "speculative",
+      "lastVerified": "2026-05-20",
+      "sources": [
+        {
+          "url": "https://x.ai/",
+          "label": "xAI / Tesla / SpaceX announcements (Musk statements)",
+          "date": "2026-03-21"
+        }
+      ],
       "milestones": [
         {
           "date": "2026-03-21",
@@ -45,22 +54,26 @@
         {
           "date": "2026-04",
           "text": "Site selection & environmental review",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         },
         {
           "date": "2026-Q3",
           "text": "Pilot fab site prep begins",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         },
         {
           "date": "2026-H2",
           "text": "AI5 small-batch production",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         },
         {
           "date": "2027",
           "text": "Volume production target",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         }
       ],
       "timeline": [
@@ -70,7 +83,7 @@
         0,
         0,
         0,
-        2
+        0
       ],
       "halfKm": 3
     },
@@ -365,7 +378,7 @@
       "lat": 25.658,
       "lng": -100.435,
       "company": "tesla",
-      "status": "construction",
+      "status": "announced",
       "progress": 25,
       "area": "4.2M sqft (planned)",
       "capacity": "1M+ (planned)",
@@ -373,7 +386,16 @@
       "investment": "$5B (est)",
       "employees": "Est. 5,000+",
       "color": "#e31937",
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-05-20",
+      "confidence": "speculative",
+      "lastVerified": "2026-05-20",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Gigafactory_Mexico",
+          "label": "Wikipedia",
+          "date": "2026-05-16"
+        }
+      ],
       "milestones": [
         {
           "date": "2023-03",
@@ -403,22 +425,19 @@
         {
           "date": "2027-H1",
           "text": "Production start (target)",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         }
       ],
       "timeline": [
         0,
         0,
-        5,
-        10,
-        15,
-        20,
-        25
+        0,
+        0,
+        0,
+        0,
+        0
       ],
-      "sources": {
-        "wikipediaRevision": "2026-05-16",
-        "wikipediaTitle": "Gigafactory_Mexico"
-      },
       "halfKm": 3
     },
     {
@@ -834,7 +853,7 @@
       "lat": 35.096,
       "lng": -89.814,
       "company": "xai",
-      "status": "expanding",
+      "status": "announced",
       "progress": 60,
       "area": "500K+ sqft",
       "capacity": "200K H100 GPUs (Phase 2: 1M)",
@@ -847,7 +866,16 @@
         "GPU Count": "200,000 H100s",
         "Power": "150 MW (Phase 1)"
       },
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-05-20",
+      "confidence": "speculative",
+      "lastVerified": "2026-05-20",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Colossus_(supercomputer)",
+          "label": "Wikipedia",
+          "date": "2026-05-17"
+        }
+      ],
       "milestones": [
         {
           "date": "2024-06",
@@ -877,7 +905,8 @@
         {
           "date": "2026-Q4",
           "text": "Phase 3: 1M GPU target",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         }
       ],
       "timeline": [
@@ -885,14 +914,10 @@
         0,
         0,
         0,
-        10,
-        40,
-        60
-      ],
-      "sources": {
-        "wikipediaRevision": "2026-05-17",
-        "wikipediaTitle": "Colossus_(supercomputer)"
-      }
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": "neuralink-fremont",
@@ -974,7 +999,7 @@
       "lat": 30.2672,
       "lng": -97.7431,
       "company": "neuralink",
-      "status": "construction",
+      "status": "announced",
       "progress": 30,
       "area": "100K sqft (planned)",
       "capacity": "Mass implant production",
@@ -982,7 +1007,16 @@
       "investment": "$200M (est)",
       "employees": "Est. 200+",
       "color": "#00875a",
-      "lastUpdated": "2026-05-18",
+      "lastUpdated": "2026-05-20",
+      "confidence": "speculative",
+      "lastVerified": "2026-05-20",
+      "sources": [
+        {
+          "url": "https://neuralink.com/",
+          "label": "Neuralink official announcements",
+          "date": "2026-05-18"
+        }
+      ],
       "milestones": [
         {
           "date": "2025-01",
@@ -1002,12 +1036,14 @@
         {
           "date": "2026-Q3",
           "text": "Pilot production line",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         },
         {
           "date": "2027",
           "text": "Full-scale manufacturing",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         }
       ],
       "timeline": [
@@ -1016,8 +1052,8 @@
         0,
         0,
         0,
-        15,
-        30
+        0,
+        0
       ],
       "halfKm": 0.5
     },
@@ -1031,7 +1067,7 @@
       "lat": 36.127,
       "lng": -115.153,
       "company": "boring",
-      "status": "expanding",
+      "status": "announced",
       "progress": 35,
       "area": "68 miles (planned)",
       "capacity": "57,000 passengers/hr (full build)",
@@ -1043,7 +1079,7 @@
         "Stations": "93 planned (5 open)",
         "Tunnel Miles": "3.2 mi open"
       },
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-05-20",
       "milestones": [
         {
           "date": "2021-06",
@@ -1068,28 +1104,35 @@
         {
           "date": "2026-Q2",
           "text": "Strip segment Phase 1 open",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         },
         {
           "date": "2028",
           "text": "Full 68-mile network target",
-          "done": false
+          "done": false,
+          "confidence": "speculative"
         }
       ],
       "timeline": [
         0,
-        5,
-        10,
-        15,
-        20,
-        28,
-        35
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
       ],
-      "sources": {
-        "wikipediaRevision": "2026-05-07",
-        "wikipediaTitle": "Vegas_Loop"
-      },
-      "halfKm": 1
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Vegas_Loop",
+          "label": "Wikipedia",
+          "date": "2026-05-07"
+        }
+      ],
+      "halfKm": 1,
+      "confidence": "speculative",
+      "lastVerified": "2026-05-20"
     }
   ]
 }

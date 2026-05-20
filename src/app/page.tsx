@@ -1,5 +1,5 @@
 import { factories, getSitesByCompany, getTotalInvestment, DATA_LAST_UPDATED } from "@/data/factories";
-import { COMPANIES, getCompanyMeta } from "@/data/companies";
+import { getCompanyMeta } from "@/data/companies";
 import FactoryCard from "@/components/FactoryCard";
 import NewsFeed from "@/components/NewsFeed";
 import CommunityFeed from "@/components/CommunityFeed";
@@ -9,11 +9,11 @@ import type { Company } from "@/data/types";
 
 export const revalidate = 1800;
 
-const COMPANY_ORDER: Company[] = ["joint", "tesla", "spacex", "xai", "neuralink", "boring"];
+const COMPANY_ORDER: Company[] = ["tesla", "spacex", "xai", "neuralink", "boring"];
 
 export default function Home() {
-  const featured = factories.find((f) => f.featured);
   const countries = new Set(factories.map((f) => f.flag)).size;
+  const announced = factories.filter((f) => f.status === "planned");
 
   return (
     <>
@@ -32,36 +32,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured spotlight */}
-      {featured && (
-        <section className="max-w-[1200px] mx-auto px-6 pb-12">
-          <a href={`/site/${featured.slug}`} className="block bg-text text-bg rounded-2xl p-8 sm:p-10 group hover:opacity-95 transition-opacity">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-              <div>
-                <span className="text-[11px] font-semibold px-3 py-1 rounded-full bg-white/20 text-white">NEW</span>
-                <h2 className="text-2xl sm:text-3xl font-bold mt-3">
-                  {featured.flag} {featured.name}
-                </h2>
-                <p className="text-bg/60 mt-1">{featured.aka} &mdash; {featured.products}</p>
-              </div>
-              <div className="flex gap-8">
-                <div className="text-right">
-                  <div className="text-2xl sm:text-3xl font-bold">{featured.investment}</div>
-                  <div className="text-[11px] text-bg/50 mt-0.5">Investment</div>
-                </div>
-                <div className="text-right">
-                  <div className="text-2xl sm:text-3xl font-bold">{featured.capacity}</div>
-                  <div className="text-[11px] text-bg/50 mt-0.5">Capacity</div>
-                </div>
-              </div>
-            </div>
-            <div className="mt-6 flex items-center gap-3">
-              <div className="flex-1 h-1 bg-white/20 rounded-full overflow-hidden">
-                <div className="h-full rounded-full bg-white" style={{ width: `${featured.progress}%` }} />
-              </div>
-              <span className="text-sm font-bold text-white">{featured.progress}%</span>
-            </div>
-          </a>
+      {/* Announced Projects — uses variant="announced" for gold styling */}
+      {announced.length > 0 && (
+        <section className="max-w-[1200px] mx-auto px-6 pb-10">
+          <div className="flex items-end justify-between mb-6">
+            <h2 className="text-2xl font-bold">Announced Projects</h2>
+            <span className="text-xs text-dim">
+              {announced.length} project{announced.length > 1 ? "s" : ""}
+            </span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {announced.map((f) => (
+              <FactoryCard key={f.id} factory={f} variant="announced" />
+            ))}
+          </div>
         </section>
       )}
 
@@ -77,7 +61,7 @@ export default function Home() {
 
         <div className="flex flex-col gap-10">
           {COMPANY_ORDER.map((companyId) => {
-            const sites = getSitesByCompany(companyId).filter((f) => !f.featured);
+            const sites = getSitesByCompany(companyId).filter((f) => f.status !== "planned");
             if (sites.length === 0) return null;
             const meta = getCompanyMeta(companyId);
             return (

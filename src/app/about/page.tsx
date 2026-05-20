@@ -3,7 +3,7 @@ import { factories } from "@/data/factories";
 
 export const metadata: Metadata = {
   title: "About — GIGASCOPE",
-  description: "About GIGASCOPE — Tesla factory construction tracker powered by satellite imagery",
+  description: "About GIGASCOPE — Musk Empire site tracker (Tesla, SpaceX, xAI, Neuralink, Boring) powered by satellite imagery and public data",
 };
 
 export default function AboutPage() {
@@ -13,9 +13,9 @@ export default function AboutPage() {
       <div className="mb-12">
         <h1 className="text-3xl sm:text-4xl font-black mb-4">About GIGASCOPE</h1>
         <p className="text-dim text-base leading-relaxed max-w-2xl">
-          GIGASCOPE is a community-built dashboard that tracks Tesla factory construction
-          progress worldwide. Satellite imagery comparison, milestone tracking, news, and
-          community discussions in one place.
+          GIGASCOPE is a community-built dashboard that tracks construction and operations
+          progress across 16 Musk Empire sites (Tesla, SpaceX, xAI, Neuralink, Boring Company).
+          Satellite imagery comparison, milestone tracking, news, and community discussions in one place.
         </p>
       </div>
 
@@ -62,6 +62,49 @@ export default function AboutPage() {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Data Confidence & Announced Projects */}
+      <div className="glass-card p-6 mb-6">
+        <h2 className="text-lg font-bold mb-4">Data Confidence &amp; Announced Projects</h2>
+
+        <div className="space-y-5">
+          {/* Confidence Levels */}
+          <div>
+            <div className="text-sm font-medium mb-3">Confidence Levels</div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
+              {[
+                { l: "High", d: "Primary sources + direct verification (official filings, verified satellite observations)", c: "var(--cyan)" },
+                { l: "Medium", d: "Corroborated by multiple independent reports and public records", c: "var(--amber)" },
+                { l: "Low", d: "Estimated from limited evidence or single secondary sources", c: "var(--pink)" },
+                { l: "Speculative", d: "Plans or unverified announcements — active construction may not have started", c: "#c4a000" },
+              ].map((item) => (
+                <div key={item.l} className="flex items-start gap-2.5">
+                  <div className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ background: item.c }} />
+                  <div className="min-w-0">
+                    <div className="text-xs font-medium">{item.l}</div>
+                    <div className="text-[11px] text-dim leading-snug">{item.d}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Announced Projects */}
+          <div>
+            <div className="text-sm font-medium mb-1.5">Announced Projects</div>
+            <p className="text-xs text-dim leading-relaxed">
+              Projects labeled "Announced" are publicly declared future facilities or major expansions. Ground has not been broken, or no measurable construction progress is visible in current satellite imagery. They use gold (#c4a000) accent styling and a dashed placeholder instead of the progress bar.
+            </p>
+          </div>
+        </div>
+
+        {/* Reliability Policy */}
+        <div className="mt-5 pt-4 border-t border-white/10">
+          <p className="text-[11px] text-dim leading-relaxed">
+            <span className="font-medium text-text">Reliability policy:</span> Every milestone and factory record carries a confidence tag. Data is curated manually from public sources and cross-checked where possible. Last verification dates are recorded when available. We never fabricate progress or invent unannounced sites. All numbers are best-effort estimates and may be outdated. Cross-reference official sources before relying on any figure.
+          </p>
         </div>
       </div>
 
