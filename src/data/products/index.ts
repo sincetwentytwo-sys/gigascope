@@ -46,11 +46,12 @@ export type PartSpec = {
   /** Cutaway hint. If true, render as low-opacity wireframe so internals show through.
    *  If undefined, viewer auto-classifies by name keyword (body/shell/glass/panel/...). */
   shell?: boolean;
-  /** Optional hotspot polygon on the product reference photo. Points are
-   *  whitespace-separated "x,y" pairs in 0..1 normalized image coordinates
-   *  (0,0 = top-left). Used by Product2DViewer to make parts clickable on
-   *  the photo itself; omit to make the part list-only. */
-  hotspot?: { points: string };
+  /** Optional hotspot marker on the product reference photo. A single point
+   *  in 0..1 normalized image coords (0,0 = top-left). Rendered as a small
+   *  dot the user can click; omitted parts are list-only. We use a single
+   *  point rather than a polygon because SAM-derived polygons are easy to
+   *  trace wrong but a centroid is hard to misplace. */
+  hotspot?: { x: number; y: number };
 };
 
 export type ProductCategory =
