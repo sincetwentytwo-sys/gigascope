@@ -93,3 +93,5 @@ scripts/
 MIT — see [LICENSE](./LICENSE).
 
 Contributions welcome. Open an issue or PR.
+
+<!-- Push automation test with .env token (2026-05-20) -->
