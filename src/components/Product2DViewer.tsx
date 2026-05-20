@@ -29,13 +29,17 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] border border-[#343538] bg-[#0a0a0c]">
       {/* Photo */}
-      <div className="relative bg-[#f4f4f0] min-h-[55vh] flex items-center justify-center overflow-hidden">
-        <div className="relative w-full max-h-[78vh] flex items-center justify-center">
+      <div className="relative bg-[#f4f4f0] min-h-[55vh] flex items-center justify-center overflow-hidden p-4">
+        {/* Inline-block wrapper sized exactly to the image so the SVG dot
+            overlay sits flush against the photo regardless of aspect ratio.
+            Without this, a portrait photo (Raptor, Optimus) shows dots
+            floating in the side bands of the container. */}
+        <div className="relative inline-block max-h-[78vh] max-w-full">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={src}
             alt={`${product.name} reference ${ext === "svg" ? "diagram" : "photo"}`}
-            className="block w-full h-auto max-h-[78vh] object-contain"
+            className="block max-h-[78vh] max-w-full w-auto h-auto"
             decoding="sync"
             loading="eager"
             fetchPriority="high"
