@@ -35,14 +35,14 @@ SLUG_TO_FILE = {
 # the rest of the mask extent given a single point inside the part.
 SEEDS = {
     "cybertruck": {  # front-3/4 view, 1600x949, sloped wedge on the left
-        "exoskeleton":    (0.55, 0.45),  # central body panel
+        # exoskeleton seed point a plain area of the body side panel
+        "exoskeleton":    (0.65, 0.50),
         "front-wedge":    (0.18, 0.35),  # sloped hood/wedge
-        "windshield":     (0.40, 0.22),  # angled dark glass
-        "bed":            (0.80, 0.50),  # rear vault behind cab
+        "windshield":     (0.45, 0.22),  # angled dark glass
+        "bed":            (0.82, 0.50),  # rear vault behind cab
         "lightbar-front": (0.13, 0.52),  # thin LED strip on nose
         "wheel-fl":       (0.33, 0.78),  # front wheel — black + spokes
         "wheel-rl":       (0.82, 0.78),  # rear wheel
-        "door-l":         (0.48, 0.40),  # driver side door
     },
     "raptor": {  # vertical engine, 900x1600
         "nozzle":         (0.50, 0.75),  # big black bell at the bottom
@@ -169,9 +169,9 @@ def main():
     predictor = SamPredictor(sam)
 
     for slug in targets:
-        path = f"{PHOTOS}/{slug}.jpg"
+        path = f"{PHOTOS}/{slug}/main.jpg"
         if not os.path.exists(path):
-            print(f"  {slug}: photo missing"); continue
+            print(f"  {slug}: photo missing at {path}"); continue
         img_bgr = cv2.imread(path)
         img = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
         h, w = img.shape[:2]

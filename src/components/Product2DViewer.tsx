@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import type { ProductSpec } from "@/data/products";
 
 /**
@@ -35,28 +34,22 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
       {/* Photo */}
       <div className="relative bg-[#f4f4f0] min-h-[55vh] flex flex-col overflow-hidden">
         <div className="relative flex-1 flex items-center justify-center min-h-[50vh]">
-          {currentExt === "svg" ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={currentSrc}
-              src={currentSrc}
-              alt={`${product.name} reference diagram`}
-              className="block w-full h-auto max-h-[72vh] object-contain"
-            />
-          ) : (
-            <Image
-              key={currentSrc}
-              src={currentSrc}
-              alt={`${product.name} reference photo`}
-              width={1600}
-              height={1600}
-              priority={isMain}
-              sizes="(max-width: 1024px) 100vw, 70vw"
-              className="block w-full h-auto max-h-[72vh] object-contain"
-            />
-          )}
+          {/* Plain <img> rather than next/image — the optimizer pipeline was
+              showing a blank placeholder for ~1 second on every page load,
+              which felt broken. JPEGs are already <400KB so the perf cost
+              of skipping the optimizer is negligible. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            key={currentSrc}
+            src={currentSrc}
+            alt={`${product.name} reference ${currentExt === "svg" ? "diagram" : "photo"}`}
+            className="block w-full h-auto max-h-[72vh] object-contain"
+            decoding="async"
+          />
 
-          {/* Clickable polygons over the MAIN photo only. */}
+          {/* Clickable polygons over the MAIN photo only. Outlines are
+              visible by default (subtle white at ~25% opacity) so users see
+              that the photo is interactive without having to hover-hunt. */}
           {overlayHotspots && (
             <svg
               className="absolute inset-0 w-full h-full pointer-events-none"
@@ -75,12 +68,12 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
                     onMouseLeave={() => setHoveredId(null)}
                     className={`pointer-events-auto cursor-pointer transition-all ${
                       active
-                        ? "fill-[#ffb073]/30 stroke-[#ffb073]"
+                        ? "fill-[#ffb073]/35 stroke-[#ffb073]"
                         : hovered
-                        ? "fill-white/15 stroke-white/80"
-                        : "fill-transparent stroke-white/0 hover:stroke-white/60"
+                        ? "fill-white/15 stroke-white"
+                        : "fill-transparent stroke-white/40 hover:stroke-white/90"
                     }`}
-                    strokeWidth="0.003"
+                    strokeWidth="0.0025"
                     vectorEffect="non-scaling-stroke"
                   >
                     <title>{p.name}</title>
