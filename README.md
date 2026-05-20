@@ -5,7 +5,7 @@
 Public dashboard for 16 Tesla / SpaceX / xAI / Neuralink / Boring construction sites,
 13 interactive 3D product breakdowns, and 9-year Sentinel-2 timelapses of every site.
 
-🌐 Live: **https://gigascope-ten.vercel.app**
+🌐 Live: **https://gigascope.xyz**
 
 ---
 

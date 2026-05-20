@@ -1,7 +1,8 @@
 # GIGASCOPE — Session Handoff
 
 **Last updated**: 2026-05-20
-**Live**: https://gigascope-ten.vercel.app
+**Live (primary)**: https://gigascope.xyz
+**Live (alias)**: https://gigascope-ten.vercel.app
 **Repo**: https://github.com/sincetwentytwo-sys/gigascope
 **Main branch**: `main` (auto-deploy on every push)
 
@@ -96,7 +97,7 @@ X account is on Pay-Per-Use tier, ~$0.001/tweet, $5 balance (covers years at cur
 1. **8 product thumbnails missing** — hub cards for `model3`, `modelY`, `cybertruck`, `optimus`, `cybercab`, `megapack`, `powerwall`, `supercharger-v4` show category gradient placeholder instead of real 3D screenshot. Headless Chrome WebGL flaky for these. (First 5 products have real thumbnails captured.)
 2. **3D viewer initial camera** — Most products render fine, but some (especially Starship, Cybertruck) need user-drag to see model. Initial camera angle slightly off — drag/zoom works.
 3. **No license** — repo public but no LICENSE file. Should add MIT before community contributions.
-4. **No custom domain** — `gigascope.xyz` was mentioned in original handoff but not connected; site lives at `gigascope-ten.vercel.app`.
+4. ~~No custom domain~~ — `gigascope.xyz` IS connected and live (was stale info in prior handoff). Both gigascope.xyz and gigascope-ten.vercel.app serve the same Vercel build.
 
 ---
 
