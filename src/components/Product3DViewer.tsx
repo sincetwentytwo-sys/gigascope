@@ -10,9 +10,11 @@ import type {
 } from "@/data/products";
 import * as THREE from "three";
 
-// World-space clipping plane that slices everything at x = 0.
-// normal = (1,0,0), constant = 0  ⇒  keeps the x ≤ 0 half (cut face is towards +X camera).
-const CUT_PLANE = new THREE.Plane(new THREE.Vector3(1, 0, 0), 0);
+// World-space clipping plane that slices everything lengthwise at z = 0.
+// normal = (0,0,1), constant = 0  ⇒  keeps the z ≤ 0 half (cut face is towards +Z camera).
+// For ground-based models the long axis runs along X (car length, rocket fuselage),
+// so cutting on Z splits the model left/right and exposes the full front-to-back interior.
+const CUT_PLANE = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
 
 type GeometryProps = { kind: GeometryKind; args: Array<number | boolean> };
 
