@@ -48,6 +48,18 @@ Build:
 npm run build
 ```
 
+Refresh product thumbnails (`public/products/<slug>.jpg`) after editing models:
+
+```bash
+# Terminal 1
+npm run dev
+
+# Terminal 2 — opens a real Chromium window briefly per product.
+# Headless WebGL captures r3f scenes as black; headed is required.
+npm run capture:thumbnails
+# (or)  ONLY_SLUG=cybertruck npm run capture:thumbnails
+```
+
 ---
 
 ## Repo layout

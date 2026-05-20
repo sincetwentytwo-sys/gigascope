@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "update:factories": "node scripts/data/update-factories.mjs"
+    "update:factories": "node scripts/data/update-factories.mjs",
+    "capture:thumbnails": "node scripts/capture-product-thumbnails.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
@@ -25,6 +26,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/three": "^0.184.1",
+    "playwright": "^1.60.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
