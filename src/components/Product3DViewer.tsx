@@ -1,14 +1,18 @@
 "use client";
 
 import { Canvas, ThreeEvent } from "@react-three/fiber";
-import { OrbitControls, Stars, Environment, ContactShadows, Edges } from "@react-three/drei";
+import { OrbitControls, Stars, Environment, ContactShadows } from "@react-three/drei";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type {
   GeometryKind,
   PartSpec,
   ProductSpec,
 } from "@/data/products";
-import type * as THREE from "three";
+import * as THREE from "three";
+
+// World-space clipping plane that slices everything at x = 0.
+// normal = (1,0,0), constant = 0  ⇒  keeps the x ≤ 0 half (cut face is towards +X camera).
+const CUT_PLANE = new THREE.Plane(new THREE.Vector3(1, 0, 0), 0);
 
 type GeometryProps = { kind: GeometryKind; args: Array<number | boolean> };
 
@@ -83,24 +87,16 @@ type PartProps = {
   part: PartSpec;
   active: boolean;
   hovered: boolean;
+  cutaway: boolean;
   onSelect: (id: string) => void;
   onHover: (id: string | null) => void;
 };
 
-// Auto-classifies a part as outer "shell" (gets wireframe cutaway treatment)
-// based on its id/name. Explicit `part.shell` overrides this.
-const SHELL_KEYWORDS = /\b(body|shell|exoskeleton|hull|skin|fairing|aeroshell|nosecone|nose-cone|windshield|windscreen|window|glass|canopy|dome|panel|cover|casing|housing|enclosure|door|hood|bumper|fender|roof|tailgate|liftgate|tonneau|frunk-lid|trunk-lid|paint|wrap|cladding|skirt)\b/i;
-function isShellPart(part: PartSpec): boolean {
-  if (typeof part.shell === "boolean") return part.shell;
-  return SHELL_KEYWORDS.test(part.id) || SHELL_KEYWORDS.test(part.name);
-}
-
-function Part({ part, active, hovered, onSelect, onHover }: PartProps) {
+function Part({ part, active, hovered, cutaway, onSelect, onHover }: PartProps) {
   const emissiveBoost = active || hovered;
   const baseEmissive = part.emissive ?? "#000000";
   const emissive = emissiveBoost ? "#ffffff" : baseEmissive;
   const emissiveIntensity = emissiveBoost ? (active ? 0.45 : 0.22) : 0.15;
-  const shell = isShellPart(part);
 
   const handleOver = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
@@ -117,6 +113,11 @@ function Part({ part, active, hovered, onSelect, onHover }: PartProps) {
     onSelect(part.id);
   };
 
+  // Cutaway: cull the x > 0 half so the +X camera sees a clean cross-section.
+  // DoubleSide lets the inner walls render where the cut exposes them.
+  const clippingPlanes = cutaway ? [CUT_PLANE] : null;
+  const side = cutaway ? THREE.DoubleSide : THREE.FrontSide;
+
   return (
     <mesh
       position={part.position}
@@ -128,28 +129,16 @@ function Part({ part, active, hovered, onSelect, onHover }: PartProps) {
       receiveShadow
     >
       <Geometry kind={part.geometry} args={part.args} />
-      {shell ? (
-        <>
-          <meshBasicMaterial
-            color={part.color}
-            transparent
-            opacity={active || hovered ? 0.18 : 0.06}
-            depthWrite={false}
-          />
-          <Edges
-            threshold={15}
-            color={active || hovered ? "#ffffff" : part.color}
-          />
-        </>
-      ) : (
-        <meshStandardMaterial
-          color={part.color}
-          metalness={part.metalness ?? 0.7}
-          roughness={part.roughness ?? 0.4}
-          emissive={emissive}
-          emissiveIntensity={emissiveIntensity}
-        />
-      )}
+      <meshStandardMaterial
+        color={part.color}
+        metalness={part.metalness ?? 0.7}
+        roughness={part.roughness ?? 0.4}
+        emissive={emissive}
+        emissiveIntensity={emissiveIntensity}
+        clippingPlanes={clippingPlanes}
+        clipShadows
+        side={side}
+      />
     </mesh>
   );
 }
@@ -158,6 +147,7 @@ type SceneProps = {
   product: ProductSpec;
   selectedId: string | null;
   hoveredId: string | null;
+  cutaway: boolean;
   setSelectedId: (id: string | null) => void;
   setHoveredId: (id: string | null) => void;
   controlsRef: React.MutableRefObject<
@@ -169,6 +159,7 @@ function Scene({
   product,
   selectedId,
   hoveredId,
+  cutaway,
   setSelectedId,
   setHoveredId,
   controlsRef,
@@ -224,6 +215,7 @@ function Scene({
             part={part}
             active={selectedId === part.id}
             hovered={hoveredId === part.id}
+            cutaway={cutaway}
             onSelect={setSelectedId}
             onHover={setHoveredId}
           />
@@ -247,6 +239,7 @@ export default function Product3DViewer({ product }: { product: ProductSpec }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [coarsePointerWarn, setCoarsePointerWarn] = useState(false);
+  const [cutaway, setCutaway] = useState(true);
   const controlsRef = useRef<React.ComponentRef<typeof OrbitControls> | null>(
     null,
   );
@@ -280,12 +273,13 @@ export default function Product3DViewer({ product }: { product: ProductSpec }) {
           far: Math.max(500, (product.cameraMaxDistance ?? 18) * 4),
         }}
         dpr={[1, 2]}
-        gl={{ antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: true }}
+        gl={{ antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: true, localClippingEnabled: true }}
       >
         <Scene
           product={product}
           selectedId={selectedId}
           hoveredId={hoveredId}
+          cutaway={cutaway}
           setSelectedId={setSelectedId}
           setHoveredId={setHoveredId}
           controlsRef={
@@ -308,14 +302,28 @@ export default function Product3DViewer({ product }: { product: ProductSpec }) {
         )}
       </div>
 
-      {/* Top-right reset */}
-      <button
-        type="button"
-        onClick={resetCamera}
-        className="absolute top-3 right-3 bg-[#121316]/85 hover:bg-[#1f1f23] backdrop-blur-md px-3 py-1.5 border border-[#343538] font-mono text-[10px] text-white uppercase tracking-widest transition-colors"
-      >
-        Reset camera
-      </button>
+      {/* Top-right cutaway toggle + reset */}
+      <div className="absolute top-3 right-3 flex gap-2">
+        <button
+          type="button"
+          onClick={() => setCutaway((v) => !v)}
+          className={`bg-[#121316]/85 hover:bg-[#1f1f23] backdrop-blur-md px-3 py-1.5 border font-mono text-[10px] uppercase tracking-widest transition-colors ${
+            cutaway
+              ? "border-[#ffb073]/60 text-[#ffb073]"
+              : "border-[#343538] text-white"
+          }`}
+          title="Slice the model in half to expose internals"
+        >
+          Cutaway · {cutaway ? "On" : "Off"}
+        </button>
+        <button
+          type="button"
+          onClick={resetCamera}
+          className="bg-[#121316]/85 hover:bg-[#1f1f23] backdrop-blur-md px-3 py-1.5 border border-[#343538] font-mono text-[10px] text-white uppercase tracking-widest transition-colors"
+        >
+          Reset camera
+        </button>
+      </div>
 
       {/* Hover label */}
       {hoveredId && !selected && (
