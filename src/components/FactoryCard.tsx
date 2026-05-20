@@ -2,10 +2,22 @@ import type { Factory } from "@/data/types";
 
 const SEGMENTS = 8;
 
-export default function FactoryCard({ factory }: { factory: Factory }) {
+export default function FactoryCard({
+  factory,
+  variant = "default",
+}: {
+  factory: Factory;
+  variant?: "default" | "announced";
+}) {
   const color = factory.color;
-  const isAlert = factory.status === "paused" || factory.status === "planned";
-  const accent = isAlert ? "#ff716c" : color;
+
+  // Announced 프로젝트는 별도 취급
+  const isAnnounced = variant === "announced";
+  const isAlert = !isAnnounced && (factory.status === "paused" || factory.status === "planned");
+
+  // Announced일 때는 골드(#c4a000) 계열을 우선 사용
+  const accent = isAnnounced ? "#c4a000" : isAlert ? "#ff716c" : color;
+
   const filled = Math.max(1, Math.round((factory.progress / 100) * SEGMENTS));
 
   return (
@@ -54,7 +66,7 @@ export default function FactoryCard({ factory }: { factory: Factory }) {
             className="font-mono text-[10px] font-bold uppercase tracking-widest"
             style={{ color: accent }}
           >
-            {factory.status}
+            {isAnnounced ? "Announced" : factory.status}
           </span>
         </div>
       </div>
@@ -62,28 +74,34 @@ export default function FactoryCard({ factory }: { factory: Factory }) {
       <div className="space-y-2">
         <div className="flex items-end justify-between">
           <span className="font-mono text-[9px] uppercase tracking-widest text-[#aaaab3]">
-            Progress
+            {isAnnounced ? "Status" : "Progress"}
           </span>
           <span className="font-mono text-xs" style={{ color: accent }}>
-            {factory.progress}%
+            {isAnnounced ? "Announced" : `${factory.progress}%`}
           </span>
         </div>
-        <div className="flex h-1.5 w-full gap-1">
-          {Array.from({ length: SEGMENTS }).map((_, i) => (
-            <div
-              key={i}
-              className="h-full flex-grow transition-all"
-              style={
-                i < filled
-                  ? {
-                      background: accent,
-                      boxShadow: `0 0 8px ${accent}66`,
-                    }
-                  : { background: `${accent}33` }
-              }
-            />
-          ))}
-        </div>
+
+        {isAnnounced ? (
+          // Announced 전용: 얇은 점선 스타일의 placeholder
+          <div className="h-1.5 w-full rounded-full border border-[#c4a000]/40 bg-[#c4a000]/10" />
+        ) : (
+          <div className="flex h-1.5 w-full gap-1">
+            {Array.from({ length: SEGMENTS }).map((_, i) => (
+              <div
+                key={i}
+                className="h-full flex-grow transition-all"
+                style={
+                  i < filled
+                    ? {
+                        background: accent,
+                        boxShadow: `0 0 8px ${accent}66`,
+                      }
+                    : { background: `${accent}33` }
+                }
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       <div
@@ -92,17 +110,27 @@ export default function FactoryCard({ factory }: { factory: Factory }) {
       >
         <div className="min-w-0">
           <div className="font-mono text-[9px] uppercase text-[#64748b]">Area</div>
-          <div className="font-mono text-xs sm:text-sm text-[#e5e4ed] truncate">{factory.area}</div>
+          <div
+            className="font-mono text-xs sm:text-sm truncate"
+            style={{ color: isAnnounced ? "#a1a1aa" : "#e5e4ed" }}
+          >
+            {factory.area}
+          </div>
         </div>
         <div className="min-w-0">
           <div className="font-mono text-[9px] uppercase text-[#64748b]">Capacity</div>
-          <div className="font-mono text-xs sm:text-sm text-[#e5e4ed] truncate">{factory.capacity}</div>
+          <div
+            className="font-mono text-xs sm:text-sm truncate"
+            style={{ color: isAnnounced ? "#a1a1aa" : "#e5e4ed" }}
+          >
+            {factory.capacity}
+          </div>
         </div>
         <div className="min-w-0">
           <div className="font-mono text-[9px] uppercase text-[#64748b]">Invest</div>
           <div
             className="font-mono text-xs sm:text-sm truncate"
-            style={{ color: isAlert ? accent : "#e5e4ed" }}
+            style={{ color: isAnnounced ? "#a1a1aa" : isAlert ? accent : "#e5e4ed" }}
           >
             {factory.investment}
           </div>
