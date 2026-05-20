@@ -23,6 +23,13 @@ TS_DIR = "G:/claude/gigascope/src/data/products"
 MAX_PX = 1400
 JPG_Q = 85
 
+# Reject any result whose filename contains one of these tokens (case-insensitive).
+# Keeps F-22 fighter jets out of the Raptor *rocket engine* gallery, etc.
+SLUG_REJECT_TOKENS: dict[str, list[str]] = {
+    "raptor":   ["F-22", "F22", "Lockheed", "fighter", "Air_Force"],
+    "falcon9":  ["bird", "Peregrine", "owl"],
+}
+
 SLUG_TO_FILE = {
     "raptor": "raptor.ts", "falcon9": "falcon9.ts", "starship": "starship.ts",
     "4680": "4680.ts", "neuralink-n1": "neuralink-n1.ts", "model-3": "model-3.ts",
@@ -38,14 +45,14 @@ QUERIES = {
     "model-y":        ["Tesla Model Y side", "Tesla Model Y rear", "Tesla Model Y interior"],
     "cybercab":       ["Tesla Cybercab", "Tesla Robotaxi interior", "Tesla Cybercab rear"],
     "optimus":        ["Tesla Optimus robot front", "Tesla Optimus showroom", "Tesla Bot"],
-    "raptor":         ["SpaceX Raptor engine", "Raptor 2 engine", "Raptor vacuum"],
+    "raptor":         ["SpaceX Raptor rocket engine", "Raptor methalox", "Raptor turbopump"],
     "falcon9":        ["Falcon 9 landing", "Falcon 9 booster", "Falcon 9 launch pad"],
     "starship":       ["SpaceX Starship Ship", "SpaceX Super Heavy booster", "Starship launch"],
     "megapack":       ["Tesla Megapack farm", "Tesla Megapack installation", "Tesla Megapack 2 XL"],
     "powerwall":      ["Tesla Powerwall 3", "Tesla Powerwall installation", "Tesla Powerwall wall"],
     "supercharger-v4": ["Tesla Supercharger V4 stall", "Tesla Supercharger station", "Tesla Supercharger cable"],
-    "4680":           ["Tesla 4680 cell", "Tesla 4680 battery pack", "4680 lithium ion"],
-    "neuralink-n1":   ["Neuralink implant", "Neuralink electrode", "Neuralink chip"],
+    "4680":           ["4680 cell cylindrical", "Tesla cell pack module", "tabless cylindrical battery"],
+    "neuralink-n1":   ["Neuralink N1 implant device", "Neuralink coin device", "Neuralink threads electrode"],
 }
 
 # Slugs where I already have a clearly-identified main photo.
@@ -213,8 +220,13 @@ def main():
                 # skip the main photo
                 if main_file and (fn == main_file or fn.replace("'", "'") == main_file):
                     continue
-                # skip SVGs/PDFs
-                if fn.lower().endswith((".svg", ".pdf")):
+                # skip SVGs/PDFs/GIFs
+                if fn.lower().endswith((".svg", ".pdf", ".gif")):
+                    continue
+                # reject false positives (e.g. F-22 jet for "Raptor")
+                reject = SLUG_REJECT_TOKENS.get(slug, [])
+                if any(t.lower() in fn.lower() for t in reject):
+                    print(f"    skip (reject token): {fn[:50]}")
                     continue
                 info = file_info(title)
                 time.sleep(0.4)  # be gentle

@@ -261,3 +261,33 @@ export const falcon9: ProductSpec = {
 };
 
 export default falcon9;
+  galleryPhotos: [
+    {
+      src: "/products/photos/falcon9/1.jpg",
+      label: "Landing",
+      credit: {
+        author: "SpaceX Photos",
+        license: "CC0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFalcon_9_first_stage_at_LZ-1%28two%29.jpg",
+      },
+    },
+    {
+      src: "/products/photos/falcon9/2.jpg",
+      label: "Booster",
+      credit: {
+        author: "Juan Kulichevsky from Argentina",
+        license: "CC BY-SA 2.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFalcon_9_booster_B1019_%2835943121736%29.jpg",
+      },
+    },
+    {
+      src: "/products/photos/falcon9/3.jpg",
+      label: "Pad",
+      credit: {
+        author: "SpaceX",
+        license: "CC0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3A2016_Falcon_9_at_Vandenberg_Air_Force_Base.jpg",
+      },
+    },
+  ],
+

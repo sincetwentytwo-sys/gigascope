@@ -343,3 +343,33 @@ export const starship: ProductSpec = {
 };
 
 export default starship;
+  galleryPhotos: [
+    {
+      src: "/products/photos/starship/1.jpg",
+      label: "Ship",
+      credit: {
+        author: "National Weather Service in Puerto Rico",
+        license: "Public domain",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3ASpaceX_Starship_Ship_25_debris_re-entering_the_atmosphere.png",
+      },
+    },
+    {
+      src: "/products/photos/starship/2.jpg",
+      label: "Booster",
+      credit: {
+        author: "NASA",
+        license: "Public domain",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3ASpaceX_workers_looking_at_Super_Heavy_booster.jpg",
+      },
+    },
+    {
+      src: "/products/photos/starship/3.jpg",
+      label: "Launch",
+      credit: {
+        author: "Hotel Pika",
+        license: "CC BY-SA 2.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3AStarship_full_stack.jpg",
+      },
+    },
+  ],
+

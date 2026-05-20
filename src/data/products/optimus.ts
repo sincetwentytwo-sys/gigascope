@@ -366,3 +366,24 @@ export const optimus: ProductSpec = {
 };
 
 export default optimus;
+  galleryPhotos: [
+    {
+      src: "/products/photos/optimus/1.jpg",
+      label: "Showroom",
+      credit: {
+        author: "Sikander",
+        license: "CC BY-SA 4.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3AOptimus_bot_at_Tesla_showroom_-_20251118_-_02.jpg",
+      },
+    },
+    {
+      src: "/products/photos/optimus/2.jpg",
+      label: "Bot",
+      credit: {
+        author: "Benjamin Ceci",
+        license: "Public domain",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3AOptimus_Tesla.jpg",
+      },
+    },
+  ],
+

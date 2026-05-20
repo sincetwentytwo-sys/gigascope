@@ -163,3 +163,33 @@ export const superchargerV4: ProductSpec = {
 };
 
 export default superchargerV4;
+  galleryPhotos: [
+    {
+      src: "/products/photos/supercharger-v4/1.jpg",
+      label: "Stall",
+      credit: {
+        author: "Gamesyns",
+        license: "CC BY-SA 4.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATesla_V4_Supercharger.jpg",
+      },
+    },
+    {
+      src: "/products/photos/supercharger-v4/2.jpg",
+      label: "Station",
+      credit: {
+        author: "Dietmar Rabich",
+        license: "CC BY-SA 4.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMissoula_%28MT%2C_USA%29%2C_Tesla_Supercharger_--_2022_--_194228.jpg",
+      },
+    },
+    {
+      src: "/products/photos/supercharger-v4/3.jpg",
+      label: "Cable",
+      credit: {
+        author: "Paul Sladen",
+        license: "CC0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3AEu-tesla-supercharger-dual-cable-outlet-iec-type-2-notched-ccs-combo-2-artistic.jpg",
+      },
+    },
+  ],
+

@@ -211,4 +211,24 @@ export const raptor: ProductSpec = {
     license: "CC BY-SA 4.0",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:SpaceX_sea-level_Raptor_at_Hawthorne_-_2.jpg",
   },
+  galleryPhotos: [
+    {
+      src: "/products/photos/raptor/1.jpg",
+      label: "Engine",
+      credit: {
+        author: "Brandon De Young  @brandondeyoung_",
+        license: "CC BY-SA 4.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3ASpaceX_Merlin_and_sea-level_Raptor_at_Hawthorne.jpg",
+      },
+    },
+    {
+      src: "/products/photos/raptor/2.jpg",
+      label: "Turbopump",
+      credit: {
+        author: "Brandon De Young, with the Twitter handle @brandondeyoung_",
+        license: "CC BY-SA 4.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3ASpaceX_sea-level_Raptor_at_Hawthorne_-_1.jpg",
+      },
+    },
+  ],
 };

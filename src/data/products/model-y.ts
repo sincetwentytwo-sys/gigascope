@@ -314,3 +314,33 @@ export const modelY: ProductSpec = {
 };
 
 export default modelY;
+  galleryPhotos: [
+    {
+      src: "/products/photos/model-y/1.jpg",
+      label: "Side",
+      credit: {
+        author: "Daniel.Cardenas",
+        license: "CC BY-SA 4.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATesla_Model_Y_passenger_side_view.jpg",
+      },
+    },
+    {
+      src: "/products/photos/model-y/2.jpg",
+      label: "Rear",
+      credit: {
+        author: "Alexander Migl",
+        license: "CC BY-SA 4.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATesla_Model_Y_%282025%29_MYLE_Festival_2025_DSC_9570.jpg",
+      },
+    },
+    {
+      src: "/products/photos/model-y/3.jpg",
+      label: "Interior",
+      credit: {
+        author: "Ethan Llamas",
+        license: "CC BY-SA 4.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATesla_Model_Y_2025_interior.jpg",
+      },
+    },
+  ],
+

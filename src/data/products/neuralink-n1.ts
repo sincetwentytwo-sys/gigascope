@@ -201,3 +201,24 @@ export const neuralinkN1: ProductSpec = {
 };
 
 export default neuralinkN1;
+  galleryPhotos: [
+    {
+      src: "/products/photos/neuralink-n1/1.jpg",
+      label: "Implant",
+      credit: {
+        author: "Steve Jurvetson",
+        license: "CC BY 2.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3AElon_Musk_and_the_Neuralink_Future.jpg",
+      },
+    },
+    {
+      src: "/products/photos/neuralink-n1/2.jpg",
+      label: "Chip",
+      credit: {
+        author: "Rational Optimist Society",
+        license: "CC BY 3.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANoland_Arbaugh_on_ROP.jpg",
+      },
+    },
+  ],
+

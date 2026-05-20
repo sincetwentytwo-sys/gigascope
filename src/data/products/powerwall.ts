@@ -193,3 +193,24 @@ export const powerwall: ProductSpec = {
 };
 
 export default powerwall;
+  galleryPhotos: [
+    {
+      src: "/products/photos/powerwall/1.jpg",
+      label: "3",
+      credit: {
+        author: "Rsparks3",
+        license: "CC0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATwo_Tesla_power_wall_3_devices_installed_inside_in_a_residential_home.jpg",
+      },
+    },
+    {
+      src: "/products/photos/powerwall/2.jpg",
+      label: "Wall",
+      credit: {
+        author: "Photo by Greg Johnstone. – U.S. Department of Energy from United States",
+        license: "Public domain",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJohnstone_000178_172617_517894_4578_%2836736411886%29.jpg",
+      },
+    },
+  ],
+

@@ -307,3 +307,24 @@ export const cybercab: ProductSpec = {
 };
 
 export default cybercab;
+  galleryPhotos: [
+    {
+      src: "/products/photos/cybercab/1.jpg",
+      label: "Cybercab",
+      credit: {
+        author: "Dllu",
+        license: "CC BY-SA 4.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATesla_Cybercab_at_Santana_Row_side_view_dllu.jpg",
+      },
+    },
+    {
+      src: "/products/photos/cybercab/2.jpg",
+      label: "Rear",
+      credit: {
+        author: "Steve Jurvetson from Los Altos, USA",
+        license: "CC BY 2.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3ARear_of_the_Tesla_Cybercab.jpg",
+      },
+    },
+  ],
+

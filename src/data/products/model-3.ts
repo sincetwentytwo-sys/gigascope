@@ -274,3 +274,33 @@ export const model3: ProductSpec = {
 };
 
 export default model3;
+  galleryPhotos: [
+    {
+      src: "/products/photos/model-3/1.jpg",
+      label: "Side",
+      credit: {
+        author: "Carlquinn",
+        license: "CC BY-SA 4.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATesla_Model_3_parked%2C_front_driver_side.jpg",
+      },
+    },
+    {
+      src: "/products/photos/model-3/2.jpg",
+      label: "Rear",
+      credit: {
+        author: "メイド理世",
+        license: "CC BY-SA 4.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATesla_Model_3_rear_%28October_31%2C_2024%29.jpg",
+      },
+    },
+    {
+      src: "/products/photos/model-3/3.jpg",
+      label: "Interior",
+      credit: {
+        author: "Coolomon Tetris (also known as CoolT)",
+        license: "CC BY-SA 4.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATesla_Model_3_interior.jpg",
+      },
+    },
+  ],
+

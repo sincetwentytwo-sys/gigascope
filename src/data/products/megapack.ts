@@ -253,3 +253,15 @@ export const megapack: ProductSpec = {
 };
 
 export default megapack;
+  galleryPhotos: [
+    {
+      src: "/products/photos/megapack/1.jpg",
+      label: "Farm",
+      credit: {
+        author: "Wikideas1",
+        license: "CC0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3ASolar_landfill_with_Tesla_Megapacks_with_solar_canopies_3.webp",
+      },
+    },
+  ],
+

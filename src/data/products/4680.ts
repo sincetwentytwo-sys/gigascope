@@ -211,3 +211,15 @@ export const tesla4680: ProductSpec = {
 };
 
 export default tesla4680;
+  galleryPhotos: [
+    {
+      src: "/products/photos/4680/1.jpg",
+      label: "Cell",
+      credit: {
+        author: "Jzh2074",
+        license: "CC BY-SA 4.0",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File%3AElectron_Path_In_A_4680_Battery.gif",
+      },
+    },
+  ],
+
