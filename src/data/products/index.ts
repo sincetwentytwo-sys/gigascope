@@ -43,6 +43,9 @@ export type PartSpec = {
   metalness?: number;
   roughness?: number;
   href?: string;
+  /** Cutaway hint. If true, render as low-opacity wireframe so internals show through.
+   *  If undefined, viewer auto-classifies by name keyword (body/shell/glass/panel/...). */
+  shell?: boolean;
 };
 
 export type ProductCategory =

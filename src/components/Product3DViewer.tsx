@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, ThreeEvent } from "@react-three/fiber";
-import { OrbitControls, Stars, Environment, ContactShadows } from "@react-three/drei";
+import { OrbitControls, Stars, Environment, ContactShadows, Edges } from "@react-three/drei";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type {
   GeometryKind,
@@ -87,11 +87,20 @@ type PartProps = {
   onHover: (id: string | null) => void;
 };
 
+// Auto-classifies a part as outer "shell" (gets wireframe cutaway treatment)
+// based on its id/name. Explicit `part.shell` overrides this.
+const SHELL_KEYWORDS = /\b(body|shell|exoskeleton|hull|skin|fairing|aeroshell|nosecone|nose-cone|windshield|windscreen|window|glass|canopy|dome|panel|cover|casing|housing|enclosure|door|hood|bumper|fender|roof|tailgate|liftgate|tonneau|frunk-lid|trunk-lid|paint|wrap|cladding|skirt)\b/i;
+function isShellPart(part: PartSpec): boolean {
+  if (typeof part.shell === "boolean") return part.shell;
+  return SHELL_KEYWORDS.test(part.id) || SHELL_KEYWORDS.test(part.name);
+}
+
 function Part({ part, active, hovered, onSelect, onHover }: PartProps) {
   const emissiveBoost = active || hovered;
   const baseEmissive = part.emissive ?? "#000000";
   const emissive = emissiveBoost ? "#ffffff" : baseEmissive;
   const emissiveIntensity = emissiveBoost ? (active ? 0.45 : 0.22) : 0.15;
+  const shell = isShellPart(part);
 
   const handleOver = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
@@ -119,13 +128,28 @@ function Part({ part, active, hovered, onSelect, onHover }: PartProps) {
       receiveShadow
     >
       <Geometry kind={part.geometry} args={part.args} />
-      <meshStandardMaterial
-        color={part.color}
-        metalness={part.metalness ?? 0.7}
-        roughness={part.roughness ?? 0.4}
-        emissive={emissive}
-        emissiveIntensity={emissiveIntensity}
-      />
+      {shell ? (
+        <>
+          <meshBasicMaterial
+            color={part.color}
+            transparent
+            opacity={active || hovered ? 0.18 : 0.06}
+            depthWrite={false}
+          />
+          <Edges
+            threshold={15}
+            color={active || hovered ? "#ffffff" : part.color}
+          />
+        </>
+      ) : (
+        <meshStandardMaterial
+          color={part.color}
+          metalness={part.metalness ?? 0.7}
+          roughness={part.roughness ?? 0.4}
+          emissive={emissive}
+          emissiveIntensity={emissiveIntensity}
+        />
+      )}
     </mesh>
   );
 }
