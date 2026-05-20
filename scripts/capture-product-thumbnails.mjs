@@ -1,26 +1,57 @@
 // Captures a thumbnail screenshot of each product's 3D viewer to public/products/<slug>.jpg.
 //
 // **IMPORTANT — must be run on a desktop with a real GPU, not in CI/headless.**
-// react-three-fiber + Three.js clipping planes render as solid black/white under
-// Playwright's pure-headless mode (no GPU pipeline). The script therefore launches
-// a *headed* browser window for ~1 minute. Run it locally; don't bake it into CI.
+// react-three-fiber renders as a blank canvas under Playwright headless. The
+// script therefore launches a *headed* browser window for ~1 minute.
+//
+// Also: in `next dev` mode, React StrictMode + Turbopack HMR re-mount the
+// canvas twice, which leaves r3f in a broken state ("model appears then
+// disappears"). This script defaults to spinning up its OWN production
+// server (next build + next start on port 3100) to avoid that. Make sure
+// no other dev server is running on the same port.
 //
 // Quickstart:
-//   1.  npm run dev                              # in one terminal
-//   2.  npm run capture:thumbnails               # in another
-//      (or)  ONLY_SLUG=cybertruck npm run capture:thumbnails
-//      (or)  HEADLESS=1 npm run capture:thumbnails   # blank-canvas debug mode
+//   npm run capture:thumbnails
+//   (or)  ONLY_SLUG=cybertruck npm run capture:thumbnails
+//   (or)  BASE_URL=http://localhost:3000 SKIP_BUILD=1 npm run capture:thumbnails
+//          ↑ point at an already-running server (must be production, not dev)
 //
 // The script auto-toggles "Cutaway · Off" before capturing — the static
 // thumbnail shows the full exterior, while the live viewer defaults to cutaway.
 
 import { chromium } from "playwright";
+import { spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
+import net from "node:net";
 
-const BASE = process.env.BASE_URL || "http://localhost:3000";
+const PORT = parseInt(process.env.PORT || "3100", 10);
+const BASE = process.env.BASE_URL || `http://localhost:${PORT}`;
 const ONLY = process.env.ONLY_SLUG;
 const OUT_DIR = "public/products";
+const SKIP_BUILD = process.env.SKIP_BUILD === "1" || !!process.env.BASE_URL;
+
+function run(cmd, args, opts = {}) {
+  return new Promise((resolve, reject) => {
+    const p = spawn(cmd, args, { stdio: "inherit", shell: true, ...opts });
+    p.on("exit", (code) => (code === 0 ? resolve() : reject(new Error(`${cmd} ${args.join(" ")} exited ${code}`))));
+  });
+}
+
+function waitForPort(port, timeoutMs = 60000) {
+  return new Promise((resolve, reject) => {
+    const start = Date.now();
+    const tick = () => {
+      const sock = net.createConnection({ port, host: "127.0.0.1" });
+      sock.once("connect", () => { sock.destroy(); resolve(); });
+      sock.once("error", () => {
+        if (Date.now() - start > timeoutMs) return reject(new Error(`port ${port} never opened`));
+        setTimeout(tick, 500);
+      });
+    };
+    tick();
+  });
+}
 
 const SLUGS = [
   "raptor",
@@ -45,6 +76,31 @@ if (targets.length === 0) {
 }
 
 fs.mkdirSync(OUT_DIR, { recursive: true });
+
+// Build + start a production server unless the caller pointed us at one.
+let server;
+if (!SKIP_BUILD) {
+  console.log("→ building production bundle (this takes ~1 min)...");
+  await run("npx", ["next", "build"]);
+  console.log(`→ starting production server on :${PORT}...`);
+  server = spawn("npx", ["next", "start", "-p", String(PORT)], {
+    stdio: "ignore",
+    shell: true,
+    detached: false,
+  });
+  await waitForPort(PORT, 90000);
+  console.log("→ server ready.\n");
+} else {
+  console.log(`→ using existing server at ${BASE} (SKIP_BUILD set)\n`);
+}
+
+const cleanup = () => {
+  if (server && !server.killed) {
+    try { server.kill(); } catch {}
+  }
+};
+process.on("exit", cleanup);
+process.on("SIGINT", () => { cleanup(); process.exit(130); });
 
 // Default to headed Chromium — see file header for why.
 const browser = await chromium.launch({
@@ -164,5 +220,6 @@ for (const slug of targets) {
 }
 
 await browser.close();
+cleanup();
 console.log(`\nDone. ${okCount} ok, ${failCount} failed.`);
 process.exit(failCount > 0 ? 1 : 0);
