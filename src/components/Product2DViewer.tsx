@@ -44,7 +44,9 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
             src={currentSrc}
             alt={`${product.name} reference ${currentExt === "svg" ? "diagram" : "photo"}`}
             className="block w-full h-auto max-h-[72vh] object-contain"
-            decoding="async"
+            decoding="sync"
+            loading="eager"
+            fetchPriority="high"
           />
 
           {/* Clickable polygons over the MAIN photo only. Outlines are
