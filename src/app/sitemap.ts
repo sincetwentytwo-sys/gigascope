@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/supply-chain`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.85 },
     { url: `${BASE_URL}/investor`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.85 },
     { url: `${BASE_URL}/calendar`, lastModified: lastMod, changeFrequency: "daily", priority: 0.7 },
+    { url: `${BASE_URL}/downloads`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.6 },
     { url: `${BASE_URL}/watchlist`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE_URL}/compare`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE_URL}/timeline`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.7 },

@@ -91,6 +91,9 @@ export default async function CompanyPage({ params }: { params: Promise<{ slug: 
           <section>
             <h2 className="text-lg font-bold mb-2">Why this matters</h2>
             <p className="text-[15px] leading-relaxed">{t.thesis}</p>
+            {t.deepDive && (
+              <p className="text-[14px] leading-relaxed text-dim mt-4 whitespace-pre-line">{t.deepDive}</p>
+            )}
           </section>
 
           {/* Price chart */}
