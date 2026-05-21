@@ -105,6 +105,12 @@ export const EDGES: ChainEdge[] = [
   { from: "META", to: "AVGO", flow: "MTIA accelerator custom silicon design",                  criticality: "monopoly", fromTier: 4, toTier: 2 },
   { from: "MSFT", to: "OKLO", flow: "Long-term nuclear PPA (also Three Mile Island restart)",  criticality: "secondary", fromTier: 4, toTier: 4 },
   { from: "AMZN", to: "OKLO", flow: "AWS small-modular-reactor PPA letter of intent",          criticality: "secondary", fromTier: 4, toTier: 4 },
+
+  // Samsung strategic stake in Rainbow Robotics
+  { from: "277810.KQ", to: "005930.KS",
+    flow: "Samsung Electronics is largest shareholder (~14.7%) — robotics IP strategic stake",
+    criticality: "secondary", fromTier: 4, toTier: 4,
+    source: { label: "Rainbow Robotics DART", url: "https://dart.fss.or.kr" } },
 ];
 
 /** All ticker symbols that appear as either side of any edge. */

@@ -1476,9 +1476,17 @@ export const TICKERS: Ticker[] = [
     accent: "#0078d4",
     featured: true,
     lastVerified: "2026-05-22",
+    deepDive:
+      "Microsoft is the largest single channel of AI capital expenditure on Earth. CY2025 capex guidance crossed $100B for the first time, with the AI infrastructure share running ~70% — roughly 8% of US private nonresidential structures investment is now Microsoft datacenters. The OpenAI partnership is the defining relationship: Microsoft is OpenAI's exclusive cloud, gets right-of-first-refusal on commercial deployment of OpenAI models, and through the 2023 investment + revenue-share arrangement holds claims on profits up to a (large) capped amount. Azure OpenAI Service has become the dominant enterprise-LLM channel — banks, healthcare, government — and the integration into Microsoft 365 Copilot is converting the legacy Office suite into the world's largest AI-assisted workflow surface. The in-house silicon programs (Maia 100 AI accelerator + Cobalt 100 Arm CPU) are designed to gradually reduce NVIDIA dependency without breaking it; the realistic case is hybrid fleets for the next 5+ years. Underneath, Microsoft has signed nuclear PPAs (Three Mile Island Unit 1 restart with Constellation), wind/solar offtake at unprecedented scale, and a Helion fusion PPA with a 2028 first-power target. The bear case is that capex outruns AI revenue capture, and that the OpenAI relationship dilutes as OpenAI seeks more independence. The bull case is that Copilot becomes a per-seat utility across every enterprise user on Earth — and that the AI infrastructure investment compounds into a structural cost advantage no other hyperscaler can match without taking decades to build.",
     sources: [
       { label: "Microsoft 10-K (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K", tier: 1 },
       { label: "Microsoft IR", url: "https://www.microsoft.com/en-us/investor", tier: 1 },
+      { label: "Stargate / OpenAI infrastructure announcements", url: "https://news.microsoft.com/source/", tier: 1 },
+    ],
+    facilities: [
+      { name: "Redmond HQ", city: "Redmond, WA", country: "USA", flag: "🇺🇸", lat: 47.6398, lng: -122.1281, status: "operational" },
+      { name: "Wisconsin AI datacenter (Mt Pleasant)", city: "Mt Pleasant, WI", country: "USA", flag: "🇺🇸", lat: 42.7311, lng: -87.9215, status: "construction", blurb: "$3.3B AI campus on the old Foxconn site." },
+      { name: "Quincy WA datacenter cluster", city: "Quincy, WA", country: "USA", flag: "🇺🇸", lat: 47.2335, lng: -119.8531, status: "expanding" },
     ],
   },
   {
@@ -1509,9 +1517,17 @@ export const TICKERS: Ticker[] = [
     accent: "#4285f4",
     featured: true,
     lastVerified: "2026-05-22",
+    deepDive:
+      "Alphabet is the most vertically integrated AI shop in the world: silicon (TPU v5p/Trillium), foundation models (Gemini 2 + Imagen + Veo + Lumiere), data corpus (search + YouTube + Maps + Workspace), distribution (Search, YouTube, Android, Chrome, Gmail), and the application layer (NotebookLM, AI Overviews, Gemini app, Waymo). The TPU program — running since 2015 — is the only credible non-NVIDIA AI accelerator at hyperscale, and TPU v6 (Trillium) achieves ~4.7× the per-pod compute of TPU v5p. Google Cloud is now profitable and growing >30% YoY, with AI workloads carrying the operating leverage. Search faces a real but slow-burn disruption from chat-as-interface; Google's response — AI Overviews + Gemini app + Search Generative Experience — appears to be defending share even if ad RPM compresses. Waymo is the only US robotaxi service with paid public rides at scale (>150K weekly rides as of mid-2026), operating in 5+ metros with no human safety driver. The bear case is twofold: search ad revenue compression is real, and the federal antitrust case (US v. Google) could force structural changes to default placement deals (the Apple traffic-acquisition cost is the most-watched line item). The bull case is that Google's data + compute + model + distribution stack is the only one in the world that goes vertical end-to-end — and AI compounding favors the most integrated player.",
     sources: [
       { label: "Alphabet 10-K (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K", tier: 1 },
       { label: "Alphabet IR", url: "https://abc.xyz/investor/", tier: 1 },
+      { label: "Google DeepMind technical blog", url: "https://deepmind.google/discover/blog/", tier: 1 },
+    ],
+    facilities: [
+      { name: "Googleplex (Mountain View)", city: "Mountain View, CA", country: "USA", flag: "🇺🇸", lat: 37.4220, lng: -122.0841, status: "operational" },
+      { name: "Iowa datacenter (Council Bluffs)", city: "Council Bluffs, IA", country: "USA", flag: "🇺🇸", lat: 41.2619, lng: -95.8608, status: "expanding" },
+      { name: "Singapore datacenter region", city: "Singapore", country: "Singapore", flag: "🇸🇬", lat: 1.3521, lng: 103.8198, status: "operational" },
     ],
   },
   {
@@ -1542,10 +1558,17 @@ export const TICKERS: Ticker[] = [
     accent: "#0866ff",
     featured: true,
     lastVerified: "2026-05-22",
+    deepDive:
+      "Meta is the unconventional AI capex story: the ad business is the largest, fastest-growing cash machine in modern tech (>$170B revenue 2025 estimated), funding ~$60-80B in capital expenditure with no dilution. Llama is the most-downloaded open-weights LLM lineage in history; the strategic logic is that commoditizing the foundation-model layer prevents Microsoft+OpenAI from becoming a toll booth and gives Meta access to community-driven improvements it could not otherwise afford. MTIA (Meta Training and Inference Accelerator) is the in-house silicon program — designed by Broadcom — running at scale on recommendation workloads, freeing Hopper/Blackwell capacity for Llama training. The Hyperion AI campus in Richland Parish, Louisiana, will be the largest single AI datacenter under construction in the world at ~2 GW of power at full buildout. Reality Labs still burns ~$15-17B/year — the Quest hardware business is real but the metaverse-vision payoff remains diffuse. The bear case is that ad revenue is cyclical, AI capex magnitude relative to FCF compresses the multiple, and that Llama's open-weights strategy doesn't translate into a competitive moat. The bull case is that Meta is the only big-cap with both (a) a self-funding ad machine that absorbs the capex, and (b) the largest social-graph data set on Earth — which is genuinely useful training material that no other hyperscaler has.",
     sources: [
       { label: "Meta 10-K (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K", tier: 1 },
       { label: "Meta IR", url: "https://investor.fb.com/", tier: 1 },
       { label: "Llama models release notes", url: "https://ai.meta.com/blog/", tier: 1 },
+    ],
+    facilities: [
+      { name: "Menlo Park HQ", city: "Menlo Park, CA", country: "USA", flag: "🇺🇸", lat: 37.4848, lng: -122.1484, status: "operational" },
+      { name: "Hyperion AI campus", city: "Richland Parish, LA", country: "USA", flag: "🇺🇸", lat: 32.4170, lng: -91.5230, status: "construction", blurb: "Largest single AI datacenter on Earth at full buildout (~2 GW)." },
+      { name: "Prineville OR datacenter", city: "Prineville, OR", country: "USA", flag: "🇺🇸", lat: 44.2998, lng: -120.8341, status: "operational" },
     ],
   },
   {
@@ -1576,9 +1599,128 @@ export const TICKERS: Ticker[] = [
     accent: "#ff9900",
     featured: true,
     lastVerified: "2026-05-22",
+    deepDive:
+      "Amazon is the largest cloud + the oldest hyperscaler in-house AI silicon program (Trainium 1 since 2022, Trainium 2 ramping 2025-2026). AWS remains the largest cloud by revenue, though Azure has pulled even on AI workloads. The Anthropic equity stake ($8B committed across multiple rounds) gives Amazon a foundation-model partnership analogous to Microsoft-OpenAI — Anthropic uses AWS as primary training infrastructure, returns model access through Bedrock, and the partnership effectively positions Amazon as the second pole in the foundation-model partnership map. Bedrock is now a serious enterprise-LLM front door, hosting Claude, Llama, Mistral, and Amazon's own Titan/Nova model family. Project Kuiper — Amazon's LEO satellite broadband program — is the most credible Starlink challenger, with FCC-approved 3,236-satellite constellation and prototype launches underway in 2025-2026. The bear case is that retail margin is under structural pressure from Walmart + Temu, that AWS growth has slightly trailed Azure on AI-workload share, and that the Anthropic partnership is less exclusive than MSFT-OpenAI. The bull case is that Trainium 2 + 3 give Amazon the longest-running in-house AI silicon program (deeper expertise + cost advantage at scale), and that the AWS revenue base is large enough that even single-digit AI-workload share gains throw off enormous absolute dollars.",
     sources: [
       { label: "Amazon 10-K (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=10-K", tier: 1 },
       { label: "Amazon IR", url: "https://ir.aboutamazon.com/", tier: 1 },
+      { label: "AWS Trainium / Inferentia documentation", url: "https://aws.amazon.com/machine-learning/trainium/", tier: 1 },
+    ],
+    facilities: [
+      { name: "Seattle HQ", city: "Seattle, WA", country: "USA", flag: "🇺🇸", lat: 47.6062, lng: -122.3321, status: "operational" },
+      { name: "Northern Virginia datacenter cluster", city: "Ashburn, VA", country: "USA", flag: "🇺🇸", lat: 39.0438, lng: -77.4874, status: "operational", blurb: "World's largest concentration of AWS capacity." },
+      { name: "Project Kuiper sat ops (Redmond)", city: "Redmond, WA", country: "USA", flag: "🇺🇸", lat: 47.6740, lng: -122.1215, status: "operational" },
+    ],
+  },
+
+  // ─────────────────────── MORE KOREAN INDUSTRIAL (robotics + solar) ───────────────────────
+  {
+    symbol: "454910.KS",
+    yahooSymbol: "454910.KS",
+    name: "Doosan Robotics",
+    shortName: "Doosan Robotics",
+    exchange: "KRX",
+    hq: "Suwon, South Korea",
+    ceo: "Ryu Jung-hoon",
+    founded: 2015,
+    website: "https://www.doosanrobotics.com",
+    sectors: ["robotics-ai", "korea-industrial"],
+    marketCapB: 3,
+    marketCapAsOf: "2026-05",
+    koreanName: "두산로보틱스",
+    thesis:
+      "Korea's largest collaborative-robot (cobot) maker. H-series + M-series + A-series cover payloads 5-25 kg. Targeting US + EU industrial automation channels.",
+    bullCase: [
+      "Cobot market growing 25%+ CAGR as labor shortages bite.",
+      "Korea + Japan industrial customer base structurally strong.",
+      "F&B + logistics verticals expanding rapidly.",
+    ],
+    bearCase: [
+      "Universal Robots + Techman compete on the same per-unit price band.",
+      "Margin compression as Chinese vendors enter.",
+    ],
+    competitors: ["277810.KQ"],
+    accent: "#003478",
+    lastVerified: "2026-05-22",
+    sources: [
+      { label: "Doosan Robotics DART", url: "https://dart.fss.or.kr/dsab007/main.do?textCrpNm=%EB%91%90%EC%82%B0%EB%A1%9C%EB%B3%B4%ED%8B%B1%EC%8A%A4", tier: 1 },
+      { label: "Doosan Robotics IR", url: "https://www.doosanrobotics.com/en/ir", tier: 1 },
+    ],
+    facilities: [
+      { name: "Suwon HQ + factory", city: "Suwon", country: "South Korea", flag: "🇰🇷", lat: 37.2636, lng: 127.0286, status: "operational" },
+    ],
+  },
+  {
+    symbol: "277810.KQ",
+    yahooSymbol: "277810.KQ",
+    name: "Rainbow Robotics",
+    shortName: "Rainbow Robotics",
+    exchange: "KRX",
+    hq: "Daejeon, South Korea",
+    ceo: "Lee Jung-ho",
+    founded: 2011,
+    website: "https://www.rainbow-robotics.com",
+    sectors: ["robotics-ai", "korea-industrial"],
+    marketCapB: 2,
+    marketCapAsOf: "2026-05",
+    koreanName: "레인보우로보틱스",
+    thesis:
+      "KAIST HUBO-team spinoff. Humanoid + quadruped + cobot product line. Samsung Electronics is the largest shareholder (~14.7%) — strategic stake telegraphs Samsung's Optimus-equivalent ambitions.",
+    bullCase: [
+      "Samsung's strategic stake hints at internal Samsung robotics product line.",
+      "HUBO heritage — academically credible bipedal humanoid program.",
+      "Korean government-funded humanoid R&D programs as anchor customer.",
+    ],
+    bearCase: [
+      "Pre-revenue at scale; concentrated retail flow.",
+      "Tesla Optimus + Figure AI + Apptronik all chasing the same TAM with deeper pockets.",
+    ],
+    competitors: ["TSLA", "454910.KS"],
+    accent: "#5b59e8",
+    featured: true,
+    lastVerified: "2026-05-22",
+    sources: [
+      { label: "Rainbow Robotics DART", url: "https://dart.fss.or.kr/dsab007/main.do?textCrpNm=%EB%A0%88%EC%9D%B8%EB%B3%B4%EC%9A%B0%EB%A1%9C%EB%B3%B4%ED%8B%B1%EC%8A%A4", tier: 1 },
+      { label: "Samsung stake disclosure", url: "https://dart.fss.or.kr", tier: 1 },
+    ],
+    facilities: [
+      { name: "Daejeon HQ + R&D", city: "Daejeon", country: "South Korea", flag: "🇰🇷", lat: 36.3504, lng: 127.3845, status: "operational" },
+    ],
+  },
+  {
+    symbol: "009830.KS",
+    yahooSymbol: "009830.KS",
+    name: "Hanwha Solutions",
+    shortName: "Hanwha Solutions",
+    exchange: "KRX",
+    hq: "Seoul, South Korea",
+    ceo: "Lee Koo-young",
+    founded: 1965,
+    website: "https://www.hanwhasolutions.com",
+    sectors: ["batteries-ev", "korea-industrial"],
+    marketCapB: 4,
+    marketCapAsOf: "2026-05",
+    koreanName: "한화솔루션",
+    thesis:
+      "Korea's largest solar manufacturer (Q CELLS brand). Largest US solar module producer post-IRA via Dalton GA mega-fab. Chemicals + advanced materials add diversified industrial base.",
+    bullCase: [
+      "Dalton GA mega-fab makes Hanwha the largest non-Chinese cell + module producer.",
+      "IRA tailwind on US-domiciled solar production credits.",
+      "Korean industrial solar ecosystem genuinely competitive vs Chinese majors.",
+    ],
+    bearCase: [
+      "Solar pricing collapse from Chinese overcapacity ongoing.",
+      "IRA policy reversal under different administration is real risk.",
+    ],
+    accent: "#f7941d",
+    lastVerified: "2026-05-22",
+    sources: [
+      { label: "Hanwha Solutions DART", url: "https://dart.fss.or.kr/dsab007/main.do?textCrpNm=%ED%95%9C%ED%99%94%EC%86%94%EB%A3%A8%EC%85%98", tier: 1 },
+      { label: "Hanwha Solutions IR", url: "https://www.hanwhasolutions.com/en/ir/", tier: 1 },
+    ],
+    facilities: [
+      { name: "Q CELLS Dalton GA", city: "Dalton, GA", country: "USA", flag: "🇺🇸", lat: 34.7698, lng: -84.9700, status: "expanding", blurb: "Largest US solar cell + module fab post-IRA." },
+      { name: "Jincheon solar plant", city: "Jincheon", country: "South Korea", flag: "🇰🇷", lat: 36.8552, lng: 127.4359, status: "operational" },
     ],
   },
 ];
