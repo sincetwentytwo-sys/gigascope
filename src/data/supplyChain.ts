@@ -94,6 +94,17 @@ export const EDGES: ChainEdge[] = [
   // Korea industrial cross-edges
   { from: "012450.KS", to: "LMT", flow: "K9 howitzer is co-marketed alongside LMT artillery in some NATO competitions",
     criticality: "secondary", fromTier: 4, toTier: 4 },
+
+  // Hyperscaler capex → NVIDIA, AVGO, TSMC, Hynix, etc.
+  { from: "MSFT", to: "NVDA", flow: "Largest single buyer of Blackwell GPUs (OpenAI workloads)", criticality: "primary", fromTier: 4, toTier: 3,
+    source: { label: "MSFT capex disclosure", url: "https://www.microsoft.com/en-us/investor" } },
+  { from: "GOOG", to: "NVDA", flow: "GPU procurement alongside in-house TPU",                  criticality: "primary", fromTier: 4, toTier: 3 },
+  { from: "META", to: "NVDA", flow: "Llama training compute on 350K+ H100 + Blackwell ramp",   criticality: "primary", fromTier: 4, toTier: 3 },
+  { from: "AMZN", to: "NVDA", flow: "AWS Bedrock GPU fleet + Anthropic-dedicated capacity",    criticality: "primary", fromTier: 4, toTier: 3 },
+  { from: "GOOG", to: "AVGO", flow: "TPU v5/v6 ASIC custom silicon design",                    criticality: "monopoly", fromTier: 4, toTier: 2 },
+  { from: "META", to: "AVGO", flow: "MTIA accelerator custom silicon design",                  criticality: "monopoly", fromTier: 4, toTier: 2 },
+  { from: "MSFT", to: "OKLO", flow: "Long-term nuclear PPA (also Three Mile Island restart)",  criticality: "secondary", fromTier: 4, toTier: 4 },
+  { from: "AMZN", to: "OKLO", flow: "AWS small-modular-reactor PPA letter of intent",          criticality: "secondary", fromTier: 4, toTier: 4 },
 ];
 
 /** All ticker symbols that appear as either side of any edge. */

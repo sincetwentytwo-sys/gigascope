@@ -80,6 +80,7 @@ export default function RootLayout({
               <a href="/calendar" className="hover:text-text transition-colors">Calendar</a>
               <a href="/timeline" className="hover:text-text transition-colors">Timeline</a>
               <a href="/products" className="hover:text-text transition-colors">Products</a>
+              <a href="/learn" className="hover:text-text transition-colors">Learn</a>
               <a href="/compare" className="hover:text-text transition-colors">Compare</a>
               <a href="/about" className="hover:text-text transition-colors">About</a>
               <SearchOpener />

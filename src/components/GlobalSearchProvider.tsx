@@ -1,6 +1,7 @@
 import { TICKERS, SECTORS, tickerHref } from "@/data/tickers";
 import { factories } from "@/data/factories";
 import { listProducts } from "@/data/products";
+import { LEARN } from "@/data/learn";
 import GlobalSearch from "./GlobalSearch";
 
 const STATIC_PAGES: Array<{ title: string; href: string; subtitle: string }> = [
@@ -58,6 +59,16 @@ export default function GlobalSearchProvider() {
       subtitle: p.category,
       href: `/products/${p.slug}`,
       blob: `${p.name} ${p.aka ?? ""} ${p.category}`.toLowerCase(),
+    });
+  }
+  // learn entries
+  for (const l of LEARN) {
+    entries.push({
+      kind: "page",
+      title: l.term,
+      subtitle: l.oneLiner,
+      href: `/learn/${l.slug}`,
+      blob: `learn ${l.term} ${l.oneLiner} ${l.category}`.toLowerCase(),
     });
   }
   // static pages

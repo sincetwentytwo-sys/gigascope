@@ -22,7 +22,8 @@ export type SectorId =
   | "robotics-ai"
   | "batteries-ev"
   | "korea-industrial"
-  | "china-tech";
+  | "china-tech"
+  | "hyperscalers";
 
 export type Confidence = "high" | "medium" | "low" | "speculative";
 
@@ -197,6 +198,15 @@ export const SECTORS: Sector[] = [
       "Geopolitically sensitive but unavoidable for global supply-chain mapping. Tracked with primary-source caveats; export controls, sanctions, and listing-venue (HKEX vs Shenzhen vs ADR) all noted per name.",
     color: "#e60012",
     icon: "🇨🇳",
+  },
+  {
+    id: "hyperscalers",
+    name: "Hyperscalers",
+    blurb: "MSFT, GOOG, META, AMZN — they fund the whole AI build-out.",
+    longBlurb:
+      "The 4 US hyperscalers collectively guide ~$300-350B in capex for 2025-2026, with the AI-infra share above 60%. Every other company in the Atlas — chips, memory, lithography, packaging, datacenter real estate, nuclear PPAs, rare earths — gets paid downstream of these four. Track the capex calls, not just earnings.",
+    color: "#0066cc",
+    icon: "☁️",
   },
 ];
 
@@ -1433,6 +1443,142 @@ export const TICKERS: Ticker[] = [
       { name: "Lynas Malaysia (LAMP)", city: "Gebeng", country: "Malaysia", flag: "🇲🇾", lat: 3.9667, lng: 103.4167, status: "operational" },
       { name: "Lynas USA (Hondo, TX)", city: "Hondo, TX", country: "USA", flag: "🇺🇸", lat: 29.3505, lng: -99.1417, status: "construction", blurb: "Heavy-REE separation under DoD contract." },
       { name: "Kalgoorlie processing", city: "Kalgoorlie", country: "Australia", flag: "🇦🇺", lat: -30.7489, lng: 121.4655, status: "operational" },
+    ],
+  },
+
+  // ─────────────────────── HYPERSCALERS ───────────────────────
+  {
+    symbol: "MSFT",
+    yahooSymbol: "MSFT",
+    name: "Microsoft Corporation",
+    shortName: "Microsoft",
+    exchange: "NASDAQ",
+    hq: "Redmond, WA",
+    ceo: "Satya Nadella",
+    founded: 1975,
+    website: "https://www.microsoft.com",
+    sectors: ["hyperscalers", "semis-ai"],
+    marketCapB: 3500,
+    marketCapAsOf: "2026-05",
+    thesis:
+      "OpenAI's exclusive cloud + Azure AI's hyperscale moat + Microsoft Copilot's enterprise distribution. Capex guidance >$100B/year — the single largest individual AI infrastructure spender on Earth.",
+    bullCase: [
+      "OpenAI relationship is a multi-decade compute + IP partnership at scale.",
+      "Azure AI growth >30% YoY with margin lift.",
+      "Microsoft 365 Copilot attach rate climbing every quarter.",
+      "Maia + Cobalt in-house silicon programs reduce NVDA dependency over time.",
+    ],
+    bearCase: [
+      "Capex hits FCF; pressure to defend OpenAI economics.",
+      "Sovereign AI regulators are taking aim at hyperscaler concentration.",
+    ],
+    competitors: ["GOOG", "META", "AMZN"],
+    accent: "#0078d4",
+    featured: true,
+    lastVerified: "2026-05-22",
+    sources: [
+      { label: "Microsoft 10-K (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K", tier: 1 },
+      { label: "Microsoft IR", url: "https://www.microsoft.com/en-us/investor", tier: 1 },
+    ],
+  },
+  {
+    symbol: "GOOG",
+    yahooSymbol: "GOOG",
+    name: "Alphabet Inc. (Google)",
+    shortName: "Alphabet",
+    exchange: "NASDAQ",
+    hq: "Mountain View, CA",
+    ceo: "Sundar Pichai",
+    founded: 1998,
+    website: "https://abc.xyz",
+    sectors: ["hyperscalers", "semis-ai"],
+    marketCapB: 2200,
+    marketCapAsOf: "2026-05",
+    thesis:
+      "Most vertically integrated AI shop on Earth: TPU silicon, Gemini foundation models, full data center, search distribution, YouTube data, Android, Waymo. The capex story rivals MSFT but with a wider product surface.",
+    bullCase: [
+      "TPU v5/v6 + Trillium gives a real NVDA-alternative path.",
+      "Gemini 2 reaches model-quality parity with frontier OpenAI models.",
+      "Waymo is the leading robotaxi operator with paid-rides at scale.",
+    ],
+    bearCase: [
+      "Search disruption from chat is a real, unresolved business model risk.",
+      "Capex pressure on operating margin.",
+    ],
+    competitors: ["MSFT", "META", "AMZN"],
+    accent: "#4285f4",
+    featured: true,
+    lastVerified: "2026-05-22",
+    sources: [
+      { label: "Alphabet 10-K (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K", tier: 1 },
+      { label: "Alphabet IR", url: "https://abc.xyz/investor/", tier: 1 },
+    ],
+  },
+  {
+    symbol: "META",
+    yahooSymbol: "META",
+    name: "Meta Platforms",
+    shortName: "Meta",
+    exchange: "NASDAQ",
+    hq: "Menlo Park, CA",
+    ceo: "Mark Zuckerberg",
+    founded: 2004,
+    website: "https://about.meta.com",
+    sectors: ["hyperscalers", "robotics-ai"],
+    marketCapB: 1500,
+    marketCapAsOf: "2026-05",
+    thesis:
+      "Largest open-source AI model distributor (Llama 3, Llama 4). Capex commitment $60-80B/year. Llama is a strategic free option on infra positioning vs OpenAI/Anthropic.",
+    bullCase: [
+      "Ad business cash-flowing the AI investment, no dilution.",
+      "Llama distribution creates an open-weights ecosystem Meta benefits from.",
+      "MTIA in-house silicon ramping at scale.",
+    ],
+    bearCase: [
+      "Reality Labs continues to burn $15B+/year.",
+      "Capex magnitude relative to FCF pressures multiple.",
+    ],
+    competitors: ["MSFT", "GOOG"],
+    accent: "#0866ff",
+    featured: true,
+    lastVerified: "2026-05-22",
+    sources: [
+      { label: "Meta 10-K (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K", tier: 1 },
+      { label: "Meta IR", url: "https://investor.fb.com/", tier: 1 },
+      { label: "Llama models release notes", url: "https://ai.meta.com/blog/", tier: 1 },
+    ],
+  },
+  {
+    symbol: "AMZN",
+    yahooSymbol: "AMZN",
+    name: "Amazon.com Inc.",
+    shortName: "Amazon",
+    exchange: "NASDAQ",
+    hq: "Seattle, WA",
+    ceo: "Andy Jassy",
+    founded: 1994,
+    website: "https://www.amazon.com",
+    sectors: ["hyperscalers"],
+    marketCapB: 2000,
+    marketCapAsOf: "2026-05",
+    thesis:
+      "AWS still the largest cloud provider; Trainium + Inferentia are the longest-running hyperscaler in-house AI silicon programs. Anthropic equity stake gives a foundation-model option.",
+    bullCase: [
+      "AWS growth re-accelerating with Bedrock + Trainium 2.",
+      "Anthropic partnership + multi-billion equity gives MSFT-OpenAI parity narrative.",
+      "Project Kuiper (LEO satellites) gives Starlink-adjacent optionality.",
+    ],
+    bearCase: [
+      "Retail margin compression from Walmart + Temu competition.",
+      "AWS share losing slightly to Azure on AI workloads.",
+    ],
+    competitors: ["MSFT", "GOOG"],
+    accent: "#ff9900",
+    featured: true,
+    lastVerified: "2026-05-22",
+    sources: [
+      { label: "Amazon 10-K (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=10-K", tier: 1 },
+      { label: "Amazon IR", url: "https://ir.aboutamazon.com/", tier: 1 },
     ],
   },
 ];
