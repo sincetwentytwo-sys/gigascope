@@ -602,12 +602,12 @@
       ]
     }
   ],
-  "lastRun": "2026-05-20",
+  "lastRun": "2026-05-21",
   "spacex": {
-    "latestLaunch": "Falcon 9 Block 5 | Starlink Group 17-42",
-    "latestLaunchDate": "2026-05-20T02:46:19Z",
-    "totalLaunches": 662,
-    "launchesThisYear": 58,
-    "starlinkCount": 10360
+    "latestLaunch": "Falcon 9 Block 5 | Starlink Group 10-31",
+    "latestLaunchDate": "2026-05-21T10:04:20Z",
+    "totalLaunches": 663,
+    "launchesThisYear": 59,
+    "starlinkCount": 10359
   }
 }
