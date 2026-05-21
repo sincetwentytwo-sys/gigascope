@@ -6,23 +6,23 @@ import VisitCounter from "@/components/VisitCounter";
 import SupportLinks from "@/components/SupportLinks";
 
 export const metadata: Metadata = {
-  title: "GIGASCOPE — Musk Empire Site Tracker",
+  title: "GIGASCOPE — Industrial intelligence for the AI build-out",
   description:
-    "Track Tesla, SpaceX, xAI, Neuralink, and The Boring Company sites worldwide. Satellite imagery comparison, milestones, live SpaceX data, and community updates.",
-  keywords: ["Tesla", "SpaceX", "xAI", "Neuralink", "Boring Company", "Gigafactory", "Terafab", "Starbase", "Colossus", "Starlink", "satellite imagery", "construction tracker"],
+    "Live multi-sector dashboards: Musk Empire, NVIDIA & semis, HBM (Samsung, SK Hynix), quantum (RGTI, IONQ), critical materials (CRML), defense & space, fusion/nuclear. Satellite imagery, milestones, catalysts, news — one terminal.",
+  keywords: ["Tesla", "SpaceX", "xAI", "Neuralink", "NVIDIA", "Samsung", "SK Hynix", "RGTI", "IONQ", "CRML", "ASML", "TSMC", "Palantir", "Gigafactory", "Starlink", "satellite imagery", "AI compute", "HBM", "quantum computing", "critical materials"],
   icons: { icon: "/favicon.svg" },
   manifest: "/manifest.json",
   metadataBase: new URL("https://gigascope.xyz"),
   openGraph: {
-    title: "GIGASCOPE — Musk Empire Site Tracker",
-    description: "Track 16 sites across Tesla, SpaceX, xAI, Neuralink, and The Boring Company with satellite imagery, milestones, and live updates.",
+    title: "GIGASCOPE — Industrial intelligence for the AI build-out",
+    description: "Live multi-sector intel: Musk Empire, semis (NVDA/Samsung/Hynix/TSM), quantum (RGTI/IONQ), critical materials, defense, fusion. Satellite + catalysts + news in one terminal.",
     type: "website",
     siteName: "GIGASCOPE",
   },
   twitter: {
     card: "summary_large_image",
-    title: "GIGASCOPE — Musk Empire Tracker",
-    description: "Track 16 sites across Tesla, SpaceX, xAI, Neuralink & Boring Company with satellite imagery and live updates.",
+    title: "GIGASCOPE — Industrial intelligence terminal",
+    description: "Musk Empire + semis + quantum + materials + defense + nuclear. Live prices, catalysts, satellite, news.",
   },
   robots: {
     index: true,
@@ -70,12 +70,15 @@ export default function RootLayout({
             <a href="/" className="text-sm font-semibold tracking-wide">
               GIGASCOPE
             </a>
-            <div className="hidden sm:flex items-center gap-8 text-[13px] text-dim">
-              <a href="/compare" className="hover:text-text transition-colors">Compare</a>
+            <div className="hidden sm:flex items-center gap-5 text-[13px] text-dim">
+              <a href="/markets" className="hover:text-text transition-colors">Markets</a>
+              <a href="/sectors" className="hover:text-text transition-colors">Sectors</a>
+              <a href="/news" className="hover:text-text transition-colors">News</a>
               <a href="/timeline" className="hover:text-text transition-colors">Timeline</a>
+              <a href="/compare" className="hover:text-text transition-colors">Compare</a>
               <a href="/products" className="hover:text-text transition-colors">Products</a>
               <a href="/about" className="hover:text-text transition-colors">About</a>
-              <a href="https://github.com/sincetwentytwo-sys/gigascope" target="_blank" rel="noopener noreferrer" className="hover:text-text transition-colors">GitHub</a>
+              <a href="/pro" className="text-text font-bold hover:opacity-70 transition-opacity">Pro</a>
             </div>
           </div>
         </nav>
@@ -86,21 +89,21 @@ export default function RootLayout({
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
             Home
           </a>
-          <a href="/compare" className="flex flex-col items-center gap-0.5 text-dim text-[10px]">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="7" height="18"/><rect x="14" y="3" width="7" height="18"/></svg>
-            Compare
+          <a href="/markets" className="flex flex-col items-center gap-0.5 text-dim text-[10px]">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 17l5-5 4 4 8-8"/><path d="M14 8h7v7"/></svg>
+            Markets
           </a>
-          <a href="/timeline" className="flex flex-col items-center gap-0.5 text-dim text-[10px]">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="12" y1="2" x2="12" y2="22"/><circle cx="12" cy="8" r="2"/><circle cx="12" cy="16" r="2"/></svg>
-            Timeline
-          </a>
-          <a href="/products" className="flex flex-col items-center gap-0.5 text-dim text-[10px]">
+          <a href="/sectors" className="flex flex-col items-center gap-0.5 text-dim text-[10px]">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-            Products
+            Sectors
           </a>
-          <a href="/about" className="flex flex-col items-center gap-0.5 text-dim text-[10px]">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="8"/></svg>
-            About
+          <a href="/news" className="flex flex-col items-center gap-0.5 text-dim text-[10px]">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 4h13a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/><line x1="8" y1="8" x2="14" y2="8"/><line x1="8" y1="12" x2="14" y2="12"/></svg>
+            News
+          </a>
+          <a href="/pro" className="flex flex-col items-center gap-0.5 text-[10px] text-text font-bold">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+            Pro
           </a>
         </nav>
 
