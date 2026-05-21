@@ -803,6 +803,8 @@ export const TICKERS: Ticker[] = [
     accent: "#bf5600",
     featured: true,
     lastVerified: "2026-05-22",
+    deepDive:
+      "Critical Metals Corp (CRML) sits at the most politically charged intersection in critical materials: a Greenland-based rare-earth deposit at a moment when Western governments are openly desperate for non-China REE supply. The flagship Tanbreez deposit in southern Greenland is a kakortokite-hosted resource that — uniquely among publicly disclosed REE projects — has a heavy-REE-enriched assemblage (high in dysprosium, terbium, yttrium, the elements that actually limit defense + EV motor magnet production). Tanbreez was previously held by a Chinese-affiliated investor before Greenland blocked the transaction; CRML acquired the project specifically because the Greenland government wanted a Western counterparty. The Wolfsberg lithium project in Austria is the second leg — a hard-rock spodumene resource with EU-OEM offtake interest, sitting inside the EU customs union (i.e., not subject to import frictions). The bear case is real and ugly: tiny float, repeated dilution risk, multi-year permitting timelines for any Greenland operation (10+ years is not abnormal), and a global REE pricing environment still well below early-2020s peaks. The bull case rests on policy: a US-DoD funding commitment for Tanbreez (under the Defense Production Act framework that has funded MP Materials' magnet plant) would re-rate the equity in a single press release, as would a Trump-administration symbolic prioritization of Greenland-based critical minerals. This is option-value sizing, not a position-trade — but for owners who already have conviction on the structural REE supply gap, CRML is one of the very few public-market vehicles with credible exposure outside MP Materials and Lynas.",
     sources: [
       { label: "Critical Metals 20-F (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001932757&type=20-F", tier: 1 },
       { label: "Critical Metals IR", url: "https://www.criticalmetalscorp.com/investors", tier: 1 },
@@ -899,6 +901,8 @@ export const TICKERS: Ticker[] = [
     accent: "#0e1c2b",
     featured: true,
     lastVerified: "2026-05-22",
+    deepDive:
+      "Palantir is the highest-multiple defense name on the public market because, structurally, it isn't a defense name — it's an enterprise AI software company that happens to have spent two decades building government-grade data infrastructure. AIP (Artificial Intelligence Platform), launched in 2023, has become the company's growth engine: deals are closing at 7-figure ACVs within 60-day evaluation cycles, which is unheard-of for traditional government IT. The Foundry/Gotham/Apollo stack underneath AIP is the actual moat — a 15-year accumulation of ontology + lineage + permissioning tooling that no enterprise can replicate by buying an LLM API. On the government side: the Maven Smart System contract, the Army TITAN program, the Project Maven expansion, and the recent DOGE-adjacent civilian-agency consolidation play give Palantir entrenched position across the US national security state. The commercial business — once skepticism's favorite punching bag — is now growing >60% YoY across major Fortune 500 deployments. The bear case is unambiguous: the multiple is among the highest in software (>50× sales), which means any deceleration compresses the stock violently. The bull case is that AIP is creating a category — 'ontology-grounded AI' — that Palantir functionally invented and that hyperscalers can't trivially replicate. Founder Alex Karp's ideological alignment with US national security state (overt, public, written) is a feature for sticky government revenue and a feature for the cohort of commercial buyers who care about US-aligned vendors as China cleavage deepens.",
     sources: [
       { label: "Palantir 10-K (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=10-K", tier: 1 },
       { label: "Palantir IR", url: "https://investors.palantir.com/", tier: 1 },
@@ -1103,6 +1107,8 @@ export const TICKERS: Ticker[] = [
     accent: "#a50034",
     featured: true,
     lastVerified: "2026-05-22",
+    deepDive:
+      "LG Energy Solution is the only non-Chinese EV battery maker with global hyperscale OEM offtake commitments — the Ultium JV with GM in Ohio + Tennessee + Michigan, the Honda 40 GWh JV in Lansing, the Stellantis NextStar JV in Windsor, plus 80 GWh of nameplate capacity at Wrocław Poland. Korean cell technology has a generational head start in high-nickel NMC/NCMA chemistries, which deliver energy density that LFP cannot match — critical for the long-range premium EV segment where margins live. The LFP capability LGES is now bringing online at Holland MI is the company's strategic answer to CATL/BYD cost — building LFP at scale on the existing 18650/21700 form-factor process. The bear case is real: LFP commoditization erases premium pricing on the long-range tail; GM's EV growth has been choppy; capex intensity is brutal. The bull case is that ESS demand is structurally accelerating alongside utility-grid firming for AI data centers (a Tesla-Megapack adjacent market), and that LGES is genuinely the closest public-market analog to the Tesla Energy thesis on the cell side. R&D dollars on lithium-sulfur (Q4-2026 sampling guidance) and all-solid-state (post-2027) preserve technology optionality the Chinese cell majors haven't matched. Korean primary-source advantage: DART quarterly filings (분기보고서) disclose customer concentration ratios, plant utilization, and capex roadmap with more granularity than US 10-Q peers — a real moat for English-language analysts willing to translate.",
     sources: [
       { label: "LGES DART filings", url: "https://dart.fss.or.kr/dsab007/main.do?textCrpNm=LG%EC%97%90%EB%84%88%EC%A7%80%EC%86%94%EB%A3%A8%EC%85%98", tier: 1 },
       { label: "LGES IR (English)", url: "https://www.lgensol.com/en/ir-financial-info", tier: 1 },
@@ -1265,6 +1271,8 @@ export const TICKERS: Ticker[] = [
     accent: "#002c5f",
     featured: true,
     lastVerified: "2026-05-22",
+    deepDive:
+      "Hyundai Motor Company is the most underpriced EV pure-play on the global market — and few US-based analysts have actually internalized this. The dedicated E-GMP platform underpins the IONIQ 5/6/9 + Kia EV6/EV9 line, which have collected basically every major Car of the Year award (World Car of the Year 2022, 2023, 2025). Hyundai-Kia combined is the world's #3 automaker by volume, behind only Toyota and Volkswagen Group, but trades at a fraction of either's EV/EBITDA. The Hyundai Motor Group Metaplant America at Ellabell GA — a $7.6B EV-dedicated plant with an LG Energy Solution battery JV next door — is the operational lynchpin of the company's tariff-resilient North American strategy under the IRA framework. Beyond automobiles: Hyundai outright owns Boston Dynamics, the most-cited humanoid + quadruped robotics company on Earth. The Atlas humanoid is now electric-actuator (replacing hydraulics), and Spot is in 100s of industrial deployments globally. Hyundai is also the only automaker that has shipped a hydrogen fuel-cell passenger vehicle (NEXO) at scale and operates the largest fuel-cell stack production line in the world (Chungju). Add the Korean-listing structural multiple discount and the chaebol governance overhang, and you arrive at a company that is competing with Tesla on EVs, with Boston Dynamics on humanoids, with Toyota on hydrogen, and prints ~10% operating margins — yet trades at single-digit forward P/E. The bear case (China share collapse, Boston Dynamics revenue still nano-cap-sized, governance) is well-known. The bull case is mean-reversion-by-quality: at some point, the world's third-largest automaker should not trade like a value trap.",
     sources: [
       { label: "Hyundai DART filings", url: "https://dart.fss.or.kr/dsab007/main.do?textCrpNm=%ED%98%84%EB%8C%80%EC%9E%90%EB%8F%99%EC%B0%A8", tier: 1 },
       { label: "Hyundai IR", url: "https://www.hyundai.com/worldwide/en/company/ir/finance-information", tier: 1 },
@@ -1312,6 +1320,119 @@ export const TICKERS: Ticker[] = [
     facilities: [
       { name: "Changwon Plant (K9, engines)", city: "Changwon", country: "South Korea", flag: "🇰🇷", lat: 35.2280, lng: 128.6811, status: "operational" },
       { name: "Daejeon (rockets, Nuri)", city: "Daejeon", country: "South Korea", flag: "🇰🇷", lat: 36.3504, lng: 127.3845, status: "operational" },
+    ],
+  },
+  {
+    symbol: "079550.KS",
+    yahooSymbol: "079550.KS",
+    name: "LIG Nex1",
+    shortName: "LIG Nex1",
+    exchange: "KRX",
+    hq: "Seongnam, South Korea",
+    ceo: "Kim Ji-chan",
+    founded: 1976,
+    website: "https://www.lignex1.com",
+    sectors: ["defense-space", "korea-industrial"],
+    marketCapB: 5,
+    marketCapAsOf: "2026-05",
+    koreanName: "LIG넥스원",
+    thesis:
+      "Korea's missile + precision-guided munitions specialist. Cheongung-II (KM-SAM) air defense, Hyunmoo ballistic and cruise missiles, Sea-Skua. Operating leverage from Polish + Middle East orders.",
+    bullCase: [
+      "Cheongung-II export wins (UAE, Saudi Arabia) at a fraction of Patriot price.",
+      "Hyunmoo series — Korea's only domestically developed long-range strike option.",
+      "Sub-LMT pricing gives competitive global posture in cost-sensitive markets.",
+    ],
+    bearCase: [
+      "Single-product-line concentration on missiles.",
+      "Export-finance exposure to non-investment-grade buyers.",
+    ],
+    competitors: ["LMT", "012450.KS"],
+    accent: "#003366",
+    lastVerified: "2026-05-22",
+    sources: [
+      { label: "LIG Nex1 DART filings", url: "https://dart.fss.or.kr/dsab007/main.do?textCrpNm=LIG%EB%84%A5%EC%8A%A4%EC%9B%90", tier: 1 },
+      { label: "LIG Nex1 IR", url: "https://www.lignex1.com/web/eng/ir/financial/financialInfo.do", tier: 1 },
+    ],
+    facilities: [
+      { name: "Seongnam R&D HQ", city: "Seongnam", country: "South Korea", flag: "🇰🇷", lat: 37.3897, lng: 127.1230, status: "operational" },
+      { name: "Pangyo R&D + production", city: "Yongin", country: "South Korea", flag: "🇰🇷", lat: 37.3411, lng: 127.1230, status: "operational" },
+    ],
+  },
+  {
+    symbol: "IBM",
+    yahooSymbol: "IBM",
+    name: "International Business Machines",
+    shortName: "IBM",
+    exchange: "NYSE",
+    hq: "Armonk, NY",
+    ceo: "Arvind Krishna",
+    founded: 1911,
+    website: "https://www.ibm.com",
+    sectors: ["quantum", "semis-ai"],
+    marketCapB: 240,
+    marketCapAsOf: "2026-05",
+    thesis:
+      "Often dismissed as legacy, but: IBM Quantum is the most-deployed gate-model quantum stack on the planet (Heron, Condor, Flamingo, Kookaburra roadmap), and watsonx + Red Hat give a credible AI software franchise outside the hyperscaler triumvirate.",
+    bullCase: [
+      "IBM Quantum System Two with 1,121-qubit Condor + 462-qubit Flamingo modular roadmap.",
+      "Red Hat OpenShift is the de-facto hybrid-cloud Kubernetes layer.",
+      "watsonx as enterprise-LLM platform with Granite open-weights models.",
+    ],
+    bearCase: [
+      "Consulting business mature, software growth needs to do all the work.",
+      "Quantum revenue still rounding error vs other lines.",
+    ],
+    catalysts: [
+      { date: "2026", label: "Kookaburra 4,158-qubit milestone", confidence: "medium" },
+    ],
+    competitors: ["IONQ", "RGTI"],
+    accent: "#054ada",
+    lastVerified: "2026-05-22",
+    sources: [
+      { label: "IBM 10-K (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000051143&type=10-K", tier: 1 },
+      { label: "IBM Quantum roadmap", url: "https://www.ibm.com/quantum/roadmap", tier: 1 },
+    ],
+    facilities: [
+      { name: "IBM Quantum (Yorktown Heights)", city: "Yorktown Heights, NY", country: "USA", flag: "🇺🇸", lat: 41.2106, lng: -73.7956, status: "operational", blurb: "Quantum hardware R&D — Heron, Condor, Flamingo, Kookaburra." },
+    ],
+  },
+  {
+    symbol: "LYC.AX",
+    yahooSymbol: "LYC.AX",
+    name: "Lynas Rare Earths",
+    shortName: "Lynas",
+    exchange: "LSE",
+    hq: "Sydney, Australia",
+    ceo: "Amanda Lacaze",
+    founded: 1983,
+    website: "https://lynasrareearths.com",
+    sectors: ["critical-materials"],
+    marketCapB: 7,
+    marketCapAsOf: "2026-05",
+    thesis:
+      "Largest non-Chinese rare earth producer. Mt Weld (Australia) ore → Malaysia processing → US Texas separation facility (under DoD funding). The fully integrated allied-nation REE supply chain.",
+    bullCase: [
+      "Mt Weld is one of the highest-grade REE deposits on Earth.",
+      "Kalgoorlie cracking + leaching plant moves processing onshore Australia.",
+      "Texas separation facility (DoD-funded) brings heavy-REE separation to US soil first time.",
+    ],
+    bearCase: [
+      "REE pricing weak — operating margins compressed.",
+      "Malaysia plant licensing remains a recurring political risk.",
+    ],
+    competitors: ["MP", "CRML"],
+    accent: "#00857d",
+    lastVerified: "2026-05-22",
+    sources: [
+      { label: "Lynas IR (ASX)", url: "https://lynasrareearths.com/investors/", tier: 1 },
+      { label: "DoD REE separation award", url: "https://www.defense.gov/News/Releases/Release/Article/2625730/", tier: 1 },
+    ],
+    facilities: [
+      { name: "Mt Weld mine", city: "Mt Weld", country: "Australia", flag: "🇦🇺", lat: -28.8800, lng: 122.5400, status: "operational" },
+      { name: "Lynas Malaysia (LAMP)", city: "Gebeng", country: "Malaysia", flag: "🇲🇾", lat: 3.9667, lng: 103.4167, status: "operational" },
+      { name: "Lynas USA (Hondo, TX)", city: "Hondo, TX", country: "USA", flag: "🇺🇸", lat: 29.3505, lng: -99.1417, status: "construction", blurb: "Heavy-REE separation under DoD contract." },
+      { name: "Kalgoorlie processing", city: "Kalgoorlie", country: "Australia", flag: "🇦🇺", lat: -30.7489, lng: 121.4655, status: "operational" },
     ],
   },
 ];
