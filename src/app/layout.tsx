@@ -6,23 +6,23 @@ import VisitCounter from "@/components/VisitCounter";
 import SupportLinks from "@/components/SupportLinks";
 
 export const metadata: Metadata = {
-  title: "GIGASCOPE — Industrial intelligence for the AI build-out",
+  title: "GIGASCOPE — Visual atlas of how the future is being built",
   description:
-    "Live multi-sector dashboards: Musk Empire, NVIDIA & semis, HBM (Samsung, SK Hynix), quantum (RGTI, IONQ), critical materials (CRML), defense & space, fusion/nuclear. Satellite imagery, milestones, catalysts, news — one terminal.",
+    "The visual atlas of frontier industries. Tesla, SpaceX, NVIDIA, TSMC, Samsung, SK Hynix, Anduril, Helion — facility maps, 3D product breakdowns, supply chain, milestones. Primary sources, no fluff. Free to read.",
   keywords: ["Tesla", "SpaceX", "xAI", "Neuralink", "NVIDIA", "Samsung", "SK Hynix", "RGTI", "IONQ", "CRML", "ASML", "TSMC", "Palantir", "Gigafactory", "Starlink", "satellite imagery", "AI compute", "HBM", "quantum computing", "critical materials"],
   icons: { icon: "/favicon.svg" },
   manifest: "/manifest.json",
   metadataBase: new URL("https://gigascope.xyz"),
   openGraph: {
-    title: "GIGASCOPE — Industrial intelligence for the AI build-out",
-    description: "Live multi-sector intel: Musk Empire, semis (NVDA/Samsung/Hynix/TSM), quantum (RGTI/IONQ), critical materials, defense, fusion. Satellite + catalysts + news in one terminal.",
+    title: "GIGASCOPE — Visual atlas of how the future is being built",
+    description: "Tesla, SpaceX, NVIDIA, TSMC, Samsung, SK Hynix, Anduril, Helion. Facility maps, 3D product breakdowns, supply chain, milestones. Primary sources.",
     type: "website",
     siteName: "GIGASCOPE",
   },
   twitter: {
     card: "summary_large_image",
-    title: "GIGASCOPE — Industrial intelligence terminal",
-    description: "Musk Empire + semis + quantum + materials + defense + nuclear. Live prices, catalysts, satellite, news.",
+    title: "GIGASCOPE — Atlas of the frontier industries",
+    description: "Maps, milestones, 3D breakdowns, supply chain. From Gigafactory Texas to Hsinchu Fab 18. Primary sources.",
   },
   robots: {
     index: true,
@@ -78,7 +78,7 @@ export default function RootLayout({
               <a href="/compare" className="hover:text-text transition-colors">Compare</a>
               <a href="/products" className="hover:text-text transition-colors">Products</a>
               <a href="/about" className="hover:text-text transition-colors">About</a>
-              <a href="/pro" className="text-text font-bold hover:opacity-70 transition-opacity">Pro</a>
+              <a href="/investor" className="text-text font-bold hover:opacity-70 transition-opacity">Investor</a>
             </div>
           </div>
         </nav>
@@ -101,9 +101,9 @@ export default function RootLayout({
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 4h13a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/><line x1="8" y1="8" x2="14" y2="8"/><line x1="8" y1="12" x2="14" y2="12"/></svg>
             News
           </a>
-          <a href="/pro" className="flex flex-col items-center gap-0.5 text-[10px] text-text font-bold">
+          <a href="/investor" className="flex flex-col items-center gap-0.5 text-[10px] text-text font-bold">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
-            Pro
+            Investor
           </a>
         </nav>
 

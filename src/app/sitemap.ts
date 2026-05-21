@@ -13,7 +13,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/markets`, lastModified: lastMod, changeFrequency: "hourly", priority: 0.95 },
     { url: `${BASE_URL}/sectors`, lastModified: lastMod, changeFrequency: "daily", priority: 0.9 },
     { url: `${BASE_URL}/news`, lastModified: lastMod, changeFrequency: "hourly", priority: 0.85 },
-    { url: `${BASE_URL}/pro`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE_URL}/investor`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${BASE_URL}/calendar`, lastModified: lastMod, changeFrequency: "daily", priority: 0.7 },
+    { url: `${BASE_URL}/watchlist`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE_URL}/compare`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE_URL}/timeline`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE_URL}/products`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.7 },
@@ -27,11 +29,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
+  const companyPages: MetadataRoute.Sitemap = TICKERS.map((t) => ({
+    url: `${BASE_URL}/company/${t.symbol.toLowerCase().replace(/\./g, "-")}`,
+    lastModified: lastMod,
+    changeFrequency: "daily",
+    priority: t.featured ? 0.95 : 0.85,
+  }));
+
   const tickerPages: MetadataRoute.Sitemap = TICKERS.map((t) => ({
     url: `${BASE_URL}/ticker/${t.symbol.toLowerCase().replace(/\./g, "-")}`,
     lastModified: lastMod,
     changeFrequency: "hourly",
-    priority: t.featured ? 0.95 : 0.8,
+    priority: t.featured ? 0.85 : 0.7,
   }));
 
   const factoryPages: MetadataRoute.Sitemap = factories.map((f) => ({
@@ -48,5 +57,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...sectorPages, ...tickerPages, ...factoryPages, ...productPages];
+  return [...staticPages, ...sectorPages, ...companyPages, ...tickerPages, ...factoryPages, ...productPages];
 }

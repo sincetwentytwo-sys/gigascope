@@ -6,9 +6,9 @@ import TopMovers from "@/components/TopMovers";
 export const revalidate = 1800;
 
 export const metadata: Metadata = {
-  title: "Markets — Live multi-sector dashboard — GIGASCOPE",
+  title: "Atlas — Live company heatmap — GIGASCOPE",
   description:
-    "Live heatmap across the Musk Empire + Semis & AI + Quantum + Critical Materials + Defense & Space + Fusion/Nuclear universe.",
+    "Live snapshot across the Musk Empire + Semis & AI + Quantum + Critical Materials + Defense & Space + Fusion/Nuclear universe. Click any company for the full Atlas page: facilities, products, supply chain, sources.",
 };
 
 export default function MarketsPage() {
@@ -23,10 +23,10 @@ export default function MarketsPage() {
   return (
     <div className="max-w-[1200px] mx-auto px-6 py-10">
       <header className="mb-8">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-3">Markets</h1>
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-3">Atlas</h1>
         <p className="text-dim max-w-2xl">
-          Live snapshot across {TICKERS.length} tickers in {SECTORS.length} sectors. Prices via Yahoo Finance, refreshed every 30 seconds.
-          Click any cell for the full thesis, catalysts, and news feed.
+          Live snapshot across {TICKERS.length} public companies in {SECTORS.length} sectors. Click any cell to open the company's Atlas page —
+          facilities, products, supply chain, milestones, primary sources. Prices refresh every 30 seconds via Yahoo Finance.
         </p>
       </header>
 

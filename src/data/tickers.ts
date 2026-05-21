@@ -36,6 +36,27 @@ export interface KeyMetric {
   note?: string;
 }
 
+export interface Source {
+  /** Display label, e.g. "Tesla 10-K FY2024" */
+  label: string;
+  url: string;
+  /** Tier 1 = SEC/DART/IR/government/whitepaper, Tier 2 = vetted trade press, Tier 3 = general media */
+  tier?: 1 | 2 | 3;
+}
+
+export interface Facility {
+  name: string;
+  city: string;
+  country: string;
+  flag?: string;
+  lat: number;
+  lng: number;
+  status: "operational" | "construction" | "expanding" | "announced" | "planned";
+  blurb?: string;
+  /** Linked factory slug (if present in src/data/factories.ts) so we can deep-link to /site/[slug] */
+  siteSlug?: string;
+}
+
 export interface Ticker {
   symbol: string;                // canonical (uppercase, e.g., "TSLA", "005930.KS")
   yahooSymbol: string;           // symbol used by Yahoo Finance chart endpoint
@@ -60,6 +81,12 @@ export interface Ticker {
   relatedProducts?: string[];    // product slugs in src/data/products
   /** Free-form long-form section (markdown-ish, no actual markdown rendering yet) */
   deepDive?: string;
+  /** Primary-source citations rendered in the company-page sidebar. */
+  sources?: Source[];
+  /** Major physical facilities — used by /company/[slug] map. */
+  facilities?: Facility[];
+  /** Optional alias in Korean — surfaces on the page header. */
+  koreanName?: string;
   /** Color used in heatmap-style accents. Defaults to sector color. */
   accent?: string;
   /** Headline ticker shown in marquees. */
@@ -189,6 +216,18 @@ export const TICKERS: Ticker[] = [
     accent: "#e31937",
     featured: true,
     lastVerified: "2026-05-22",
+    sources: [
+      { label: "Tesla 10-K filings (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-K", tier: 1 },
+      { label: "Tesla IR — Quarterly updates", url: "https://ir.tesla.com/financial-information/quarterly-results", tier: 1 },
+      { label: "Tesla AI Day / Optimus presentations", url: "https://www.tesla.com/AI", tier: 1 },
+    ],
+    facilities: [
+      { name: "Gigafactory Texas", city: "Austin", country: "USA", flag: "🇺🇸", lat: 30.2225, lng: -97.6172, status: "operational", siteSlug: "gigafactory-texas", blurb: "Model Y, Cybertruck, 4680 cells, Optimus pilot line." },
+      { name: "Gigafactory Nevada", city: "Reno", country: "USA", flag: "🇺🇸", lat: 39.5388, lng: -119.4424, status: "operational", siteSlug: "gigafactory-nevada", blurb: "Battery cells, Semi, drive units." },
+      { name: "Gigafactory Berlin-Brandenburg", city: "Grünheide", country: "Germany", flag: "🇩🇪", lat: 52.4067, lng: 13.7841, status: "operational", siteSlug: "gigafactory-berlin", blurb: "Model Y for EU." },
+      { name: "Gigafactory Shanghai", city: "Shanghai", country: "China", flag: "🇨🇳", lat: 31.0011, lng: 121.7654, status: "operational", siteSlug: "gigafactory-shanghai", blurb: "Model 3 / Y for China + export." },
+      { name: "Gigafactory Mexico", city: "Monterrey", country: "Mexico", flag: "🇲🇽", lat: 25.7847, lng: -100.3897, status: "announced", siteSlug: "gigafactory-mexico", blurb: "Next-gen low-cost platform (Model 2)." },
+    ],
   },
   // SpaceX is private — placeholder for future tender-offer secondary tracking.
   // xAI is private — same.
@@ -237,6 +276,16 @@ export const TICKERS: Ticker[] = [
     accent: "#76b900",
     featured: true,
     lastVerified: "2026-05-22",
+    sources: [
+      { label: "NVIDIA 10-K (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=10-K", tier: 1 },
+      { label: "NVIDIA IR — Quarterly results", url: "https://investor.nvidia.com/financial-info/quarterly-results/default.aspx", tier: 1 },
+      { label: "NVIDIA GTC keynotes (technical roadmap)", url: "https://www.nvidia.com/gtc/", tier: 1 },
+      { label: "Blackwell architecture whitepaper", url: "https://resources.nvidia.com/en-us-blackwell-architecture", tier: 1 },
+    ],
+    facilities: [
+      { name: "NVIDIA HQ (Endeavor + Voyager)", city: "Santa Clara", country: "USA", flag: "🇺🇸", lat: 37.3697, lng: -121.9594, status: "operational", blurb: "R&D headquarters, no fab — fab-less designer." },
+      { name: "Israel R&D (ex-Mellanox)", city: "Yokneam", country: "Israel", flag: "🇮🇱", lat: 32.6601, lng: 35.1106, status: "operational", blurb: "Networking (NVLink, Spectrum-X)." },
+    ],
   },
   {
     symbol: "AMD",
@@ -331,6 +380,17 @@ export const TICKERS: Ticker[] = [
     accent: "#cc0033",
     featured: true,
     lastVerified: "2026-05-22",
+    sources: [
+      { label: "TSMC 20-F (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001046179&type=20-F", tier: 1 },
+      { label: "TSMC IR — Quarterly results", url: "https://investor.tsmc.com/english/quarterly-results", tier: 1 },
+      { label: "TSMC Annual Report", url: "https://investor.tsmc.com/english/annual-reports", tier: 1 },
+    ],
+    facilities: [
+      { name: "Fab 12 / 14 / 18 (Hsinchu-Tainan)", city: "Hsinchu/Tainan", country: "Taiwan", flag: "🇹🇼", lat: 23.0167, lng: 120.2192, status: "operational", blurb: "Leading-edge logic. N3 (2022) and N2 (2025 H2) HVM. CoWoS packaging at Longtan." },
+      { name: "Fab 21 Arizona", city: "Phoenix", country: "USA", flag: "🇺🇸", lat: 33.7375, lng: -112.1300, status: "construction", blurb: "Phase 1: N4 (production), Phase 2: N3, Phase 3: N2 — ~$65B total commitment." },
+      { name: "Fab 23 Kumamoto (JASM)", city: "Kikuyo", country: "Japan", flag: "🇯🇵", lat: 32.8867, lng: 130.8556, status: "operational", blurb: "JV with Sony / Denso. 28/22nm + 16/12nm. Second fab announced." },
+      { name: "Fab 24 Dresden (ESMC)", city: "Dresden", country: "Germany", flag: "🇩🇪", lat: 51.0823, lng: 13.7308, status: "construction", blurb: "JV with Bosch, Infineon, NXP. 28/22nm + 16/12nm for EU automotive." },
+    ],
   },
   {
     symbol: "ASML",
@@ -360,6 +420,16 @@ export const TICKERS: Ticker[] = [
     competitors: [],
     accent: "#005bbb",
     lastVerified: "2026-05-22",
+    sources: [
+      { label: "ASML Annual Report", url: "https://www.asml.com/en/investors/annual-report", tier: 1 },
+      { label: "ASML IR — Financial calendar", url: "https://www.asml.com/en/investors", tier: 1 },
+      { label: "High-NA EUV (EXE:5000) whitepaper", url: "https://www.asml.com/en/products/euv-lithography-systems/twinscan-exe5000", tier: 1 },
+    ],
+    facilities: [
+      { name: "Veldhoven HQ + factory", city: "Veldhoven", country: "Netherlands", flag: "🇳🇱", lat: 51.4083, lng: 5.4544, status: "operational", blurb: "Primary EUV + DUV assembly. Cleanroom Phase 2 ramping for High-NA." },
+      { name: "Wilton CT (US ops)", city: "Wilton", country: "USA", flag: "🇺🇸", lat: 41.1953, lng: -73.4376, status: "operational", blurb: "Cymer light source (acquired 2013)." },
+      { name: "Linkou", city: "Linkou", country: "Taiwan", flag: "🇹🇼", lat: 25.0772, lng: 121.3661, status: "operational", blurb: "Customer support hub for TSMC + UMC." },
+    ],
   },
   {
     symbol: "005930.KS",
@@ -398,6 +468,18 @@ export const TICKERS: Ticker[] = [
     accent: "#1428a0",
     featured: true,
     lastVerified: "2026-05-22",
+    koreanName: "삼성전자",
+    sources: [
+      { label: "Samsung Electronics DART filings", url: "https://dart.fss.or.kr/dsab007/main.do?textCrpNm=%EC%82%BC%EC%84%B1%EC%A0%84%EC%9E%90", tier: 1 },
+      { label: "Samsung IR (English)", url: "https://www.samsung.com/global/ir/", tier: 1 },
+      { label: "Samsung Foundry roadmap", url: "https://semiconductor.samsung.com/foundry/", tier: 1 },
+    ],
+    facilities: [
+      { name: "Pyeongtaek Campus (P1–P4)", city: "Pyeongtaek", country: "South Korea", flag: "🇰🇷", lat: 36.9636, lng: 127.0731, status: "operational", blurb: "World's largest semiconductor fab campus. DRAM, NAND, HBM, foundry. P4/P5 under construction." },
+      { name: "Hwaseong Campus", city: "Hwaseong", country: "South Korea", flag: "🇰🇷", lat: 37.1992, lng: 127.0744, status: "operational", blurb: "Foundry leading-edge (3nm GAA), memory. R&D center." },
+      { name: "Taylor Fab (Texas)", city: "Taylor", country: "USA", flag: "🇺🇸", lat: 30.5708, lng: -97.4093, status: "construction", blurb: "$17B+ fab. 4nm initial, 2nm planned. CHIPS Act funded." },
+      { name: "Xi'an NAND Fab", city: "Xi'an", country: "China", flag: "🇨🇳", lat: 34.3416, lng: 108.9398, status: "operational", blurb: "V-NAND. Export-control sensitive." },
+    ],
   },
   {
     symbol: "000660.KS",
@@ -436,6 +518,18 @@ export const TICKERS: Ticker[] = [
     accent: "#ff0027",
     featured: true,
     lastVerified: "2026-05-22",
+    koreanName: "SK하이닉스",
+    sources: [
+      { label: "SK Hynix DART filings", url: "https://dart.fss.or.kr/dsab007/main.do?textCrpNm=SK%ED%95%98%EC%9D%B4%EB%8B%89%EC%8A%A4", tier: 1 },
+      { label: "SK Hynix IR (English)", url: "https://www.skhynix.com/eng/ir/financialStatements.do", tier: 1 },
+      { label: "SK Hynix HBM3E announcement", url: "https://news.skhynix.com/", tier: 1 },
+    ],
+    facilities: [
+      { name: "Icheon Campus (M14, M16, M15X)", city: "Icheon", country: "South Korea", flag: "🇰🇷", lat: 37.2614, lng: 127.4814, status: "operational", blurb: "Primary DRAM + HBM site. M15X HBM-only fab ramping. M16 EUV DRAM." },
+      { name: "Cheongju Campus (M11, M12, M15)", city: "Cheongju", country: "South Korea", flag: "🇰🇷", lat: 36.6291, lng: 127.4892, status: "operational", blurb: "NAND production. M15 V-NAND." },
+      { name: "Yongin Cluster (planned)", city: "Yongin", country: "South Korea", flag: "🇰🇷", lat: 37.2411, lng: 127.1776, status: "planned", blurb: "$120B+ mega-cluster, 4 new fabs through 2046. National strategic project." },
+      { name: "West Lafayette (Purdue HBM packaging)", city: "West Lafayette", country: "USA", flag: "🇺🇸", lat: 40.4259, lng: -86.9081, status: "announced", blurb: "$3.87B advanced packaging facility — first US HBM packaging." },
+    ],
   },
   {
     symbol: "MU",
@@ -464,6 +558,16 @@ export const TICKERS: Ticker[] = [
     competitors: ["005930.KS", "000660.KS"],
     accent: "#0066b2",
     lastVerified: "2026-05-22",
+    sources: [
+      { label: "Micron 10-K (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000723125&type=10-K", tier: 1 },
+      { label: "Micron IR", url: "https://investors.micron.com/financial-information/quarterly-results", tier: 1 },
+      { label: "Micron Idaho/NY CHIPS Act announcement", url: "https://www.commerce.gov/news/press-releases/2024/12/biden-harris-administration-announces-finalized-625-billion-chips", tier: 1 },
+    ],
+    facilities: [
+      { name: "Boise HQ + Fab 8/9", city: "Boise", country: "USA", flag: "🇺🇸", lat: 43.5826, lng: -116.2230, status: "expanding", blurb: "New Idaho leading-edge fab — first US-HQ DRAM fab in 20+ years." },
+      { name: "Clay NY mega-fab (4 fabs)", city: "Clay", country: "USA", flag: "🇺🇸", lat: 43.1854, lng: -76.1849, status: "construction", blurb: "Up to $100B over 20 years. Largest single private investment in US history." },
+      { name: "Taichung Fab", city: "Taichung", country: "Taiwan", flag: "🇹🇼", lat: 24.1839, lng: 120.6478, status: "operational", blurb: "HBM3E assembly + advanced packaging." },
+    ],
   },
   {
     symbol: "ARM",
@@ -529,6 +633,11 @@ export const TICKERS: Ticker[] = [
     accent: "#7b2dbd",
     featured: true,
     lastVerified: "2026-05-22",
+    sources: [
+      { label: "Rigetti 10-K (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001838359&type=10-K", tier: 1 },
+      { label: "Rigetti IR", url: "https://investors.rigetti.com/", tier: 1 },
+      { label: "Ankaa-3 technical announcement", url: "https://www.rigetti.com/news", tier: 1 },
+    ],
   },
   {
     symbol: "IONQ",
@@ -563,6 +672,11 @@ export const TICKERS: Ticker[] = [
     accent: "#9b51e0",
     featured: true,
     lastVerified: "2026-05-22",
+    sources: [
+      { label: "IonQ 10-K (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001823794&type=10-K", tier: 1 },
+      { label: "IonQ IR", url: "https://investors.ionq.com/", tier: 1 },
+      { label: "IonQ Tempo + Forte architecture", url: "https://ionq.com/quantum-systems", tier: 1 },
+    ],
   },
   {
     symbol: "QBTS",
@@ -654,6 +768,16 @@ export const TICKERS: Ticker[] = [
     accent: "#bf5600",
     featured: true,
     lastVerified: "2026-05-22",
+    sources: [
+      { label: "Critical Metals 20-F (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001932757&type=20-F", tier: 1 },
+      { label: "Critical Metals IR", url: "https://www.criticalmetalscorp.com/investors", tier: 1 },
+      { label: "Tanbreez project page", url: "https://www.criticalmetalscorp.com/projects/tanbreez", tier: 1 },
+      { label: "USGS Mineral Commodity Summaries (REE)", url: "https://www.usgs.gov/centers/national-minerals-information-center/rare-earths-statistics-and-information", tier: 1 },
+    ],
+    facilities: [
+      { name: "Tanbreez REE project", city: "Killavaat Alannguat", country: "Greenland", flag: "🇬🇱", lat: 60.5500, lng: -45.0500, status: "planned", blurb: "Heavy-REE-rich kakortokite deposit. Among the largest REE resources outside China." },
+      { name: "Wolfsberg lithium project", city: "Wolfsberg", country: "Austria", flag: "🇦🇹", lat: 46.8333, lng: 14.8500, status: "planned", blurb: "EU-domiciled spodumene project; offtake interest from European OEMs." },
+    ],
   },
   {
     symbol: "MP",
@@ -740,6 +864,11 @@ export const TICKERS: Ticker[] = [
     accent: "#0e1c2b",
     featured: true,
     lastVerified: "2026-05-22",
+    sources: [
+      { label: "Palantir 10-K (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=10-K", tier: 1 },
+      { label: "Palantir IR", url: "https://investors.palantir.com/", tier: 1 },
+      { label: "USASpending.gov — Palantir contracts", url: "https://www.usaspending.gov/recipient/0027ae08-7e9c-67f2-1620-22fb8568f4d6-C/latest", tier: 1 },
+    ],
   },
   {
     symbol: "RKLB",
@@ -771,6 +900,16 @@ export const TICKERS: Ticker[] = [
     accent: "#000000",
     featured: true,
     lastVerified: "2026-05-22",
+    sources: [
+      { label: "Rocket Lab 10-K (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001819994&type=10-K", tier: 1 },
+      { label: "Rocket Lab IR", url: "https://investors.rocketlabusa.com/", tier: 1 },
+      { label: "Neutron development updates", url: "https://www.rocketlabusa.com/launch/neutron/", tier: 1 },
+    ],
+    facilities: [
+      { name: "Long Beach HQ + Neutron production", city: "Long Beach", country: "USA", flag: "🇺🇸", lat: 33.8120, lng: -118.1583, status: "operational", blurb: "Engineering HQ + Archimedes engine + Neutron stage manufacturing." },
+      { name: "Launch Complex 1 (Mahia)", city: "Mahia Peninsula", country: "New Zealand", flag: "🇳🇿", lat: -39.2630, lng: 177.8650, status: "operational", blurb: "Primary Electron launch site." },
+      { name: "Launch Complex 2 (Wallops)", city: "Wallops Island", country: "USA", flag: "🇺🇸", lat: 37.8338, lng: -75.4881, status: "operational", blurb: "Electron + Neutron US launch operations." },
+    ],
   },
   {
     symbol: "LMT",
@@ -830,6 +969,14 @@ export const TICKERS: Ticker[] = [
     accent: "#00875a",
     featured: true,
     lastVerified: "2026-05-22",
+    sources: [
+      { label: "Oklo 10-K (SEC EDGAR)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001849056&type=10-K", tier: 1 },
+      { label: "Oklo IR", url: "https://investors.oklo.com/", tier: 1 },
+      { label: "NRC Aurora COLA docket", url: "https://www.nrc.gov/reactors/non-power/new-fac/oklo.html", tier: 1 },
+    ],
+    facilities: [
+      { name: "Aurora pilot — INL", city: "Idaho Falls", country: "USA", flag: "🇺🇸", lat: 43.5208, lng: -112.0489, status: "planned", blurb: "First Aurora micro-reactor planned at Idaho National Lab." },
+    ],
   },
   {
     symbol: "SMR",
@@ -898,9 +1045,17 @@ export function getTicker(symbol: string): Ticker | undefined {
   return TICKERS.find((t) => t.symbol.toUpperCase() === s);
 }
 
-/** url-safe slug for [symbol] route. Replaces "." with "-" so "005930.KS" → "005930-ks" */
+/** url-safe slug. Replaces "." with "-" so "005930.KS" → "005930-ks". */
+export function tickerSlug(t: Ticker): string {
+  return t.symbol.toLowerCase().replace(/\./g, "-");
+}
+/** Canonical company Atlas page URL. */
 export function tickerHref(t: Ticker): string {
-  return `/ticker/${t.symbol.toLowerCase().replace(/\./g, "-")}`;
+  return `/company/${tickerSlug(t)}`;
+}
+/** Financial sidecar URL (price + thesis only). */
+export function tickerFinanceHref(t: Ticker): string {
+  return `/ticker/${tickerSlug(t)}`;
 }
 
 export function tickerSlugToSymbol(slug: string): string {

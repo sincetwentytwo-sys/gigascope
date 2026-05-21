@@ -7,60 +7,65 @@ import TickerLivePrice from "@/components/TickerLivePrice";
 import TickerNews from "@/components/TickerNews";
 import WatchlistButton from "@/components/WatchlistButton";
 import Sparkline from "@/components/Sparkline";
+import FacilityMapWrapper from "@/components/FacilityMapWrapper";
 
 export const revalidate = 1800;
 
 export function generateStaticParams() {
   return TICKERS.map((t) => ({
-    symbol: t.symbol.toLowerCase().replace(/\./g, "-"),
+    slug: t.symbol.toLowerCase().replace(/\./g, "-"),
   }));
 }
 
 export async function generateMetadata(
-  { params }: { params: Promise<{ symbol: string }> },
+  { params }: { params: Promise<{ slug: string }> },
 ): Promise<Metadata> {
-  const { symbol } = await params;
-  const canonical = tickerSlugToSymbol(symbol);
+  const { slug } = await params;
+  const canonical = tickerSlugToSymbol(slug);
   const t = getTicker(canonical);
-  if (!t) return { title: "Ticker — GIGASCOPE" };
+  if (!t) return { title: "Company — GIGASCOPE" };
   return {
-    title: `${t.symbol} ${t.shortName ?? t.name} — Live price, thesis, catalysts — GIGASCOPE`,
+    title: `${t.name} (${t.symbol}) — Facilities, products, supply chain — GIGASCOPE`,
     description: t.thesis,
   };
 }
 
-export default async function TickerPage({ params }: { params: Promise<{ symbol: string }> }) {
-  const { symbol: raw } = await params;
-  const canonical = tickerSlugToSymbol(raw);
+export default async function CompanyPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const canonical = tickerSlugToSymbol(slug);
   const t = getTicker(canonical);
   if (!t) return notFound();
 
   const sectors = t.sectors.map((id) => getSector(id)).filter(Boolean);
   const sites = (t.relatedSites ?? [])
-    .map((slug) => factories.find((f) => f.slug === slug))
+    .map((sl) => factories.find((f) => f.slug === sl))
     .filter((x): x is NonNullable<typeof x> => !!x);
   const productsAll = listProducts();
   const products = (t.relatedProducts ?? [])
-    .map((slug) => productsAll.find((p) => p.slug === slug))
+    .map((sl) => productsAll.find((p) => p.slug === sl))
+    .filter((x): x is NonNullable<typeof x> => !!x);
+
+  const competitors = (t.competitors ?? [])
+    .map((c) => getTicker(c))
     .filter((x): x is NonNullable<typeof x> => !!x);
 
   return (
-    <div className="max-w-[1100px] mx-auto px-6 py-10">
-      <a href="/sectors" className="text-xs text-dim hover:text-text">← Sectors</a>
+    <div className="max-w-[1200px] mx-auto px-6 py-10">
+      <a href="/markets" className="text-xs text-dim hover:text-text">← Atlas</a>
 
+      {/* Header */}
       <header className="mt-3 mb-8">
         <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-2">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">{t.symbol}</h1>
-          <span className="text-xl text-dim">{t.name}</span>
-          {t.koreanName && <span className="text-lg text-dim">· {t.koreanName}</span>}
+          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">{t.name}</h1>
+          {t.koreanName && <span className="text-2xl text-dim">{t.koreanName}</span>}
         </div>
         <div className="flex flex-wrap items-center gap-3 mb-4">
-          <TickerLivePrice symbol={t.symbol} size="lg" showSymbol={false} />
-          <span className="text-xs text-dim">· {t.exchange} · {t.hq}</span>
+          <a href={tickerHref(t)} className="text-xs font-mono px-2 py-1 rounded bg-surface border border-border-custom hover:border-text">
+            {t.symbol} · {t.exchange}
+          </a>
+          <TickerLivePrice symbol={t.symbol} size="md" showSymbol={false} />
+          <span className="text-xs text-dim">· HQ {t.hq}</span>
           <span className="ml-auto"><WatchlistButton symbol={t.symbol} /></span>
-        </div>
-        <div className="mb-4">
-          <Sparkline symbol={t.symbol} accent={t.accent ?? "#0066cc"} />
         </div>
         <div className="flex flex-wrap gap-1.5">
           {sectors.map((s) => s && (
@@ -77,12 +82,60 @@ export default async function TickerPage({ params }: { params: Promise<{ symbol:
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
-        <div className="flex flex-col gap-8">
-          {/* Thesis */}
+        <div className="flex flex-col gap-10">
+          {/* Why this matters */}
           <section>
-            <h2 className="text-lg font-bold mb-2">Thesis</h2>
+            <h2 className="text-lg font-bold mb-2">Why this matters</h2>
             <p className="text-[15px] leading-relaxed">{t.thesis}</p>
           </section>
+
+          {/* Price chart */}
+          <section>
+            <h2 className="text-lg font-bold mb-3">Price (recent)</h2>
+            <Sparkline symbol={t.symbol} accent={t.accent ?? "#0066cc"} />
+          </section>
+
+          {/* Facilities map */}
+          {t.facilities && t.facilities.length > 0 && (
+            <section>
+              <div className="flex items-end justify-between mb-3">
+                <h2 className="text-lg font-bold">Facilities</h2>
+                <span className="text-[11px] text-dim">{t.facilities.length} sites · satellite via ESRI</span>
+              </div>
+              <FacilityMapWrapper facilities={t.facilities} height={380} />
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3">
+                {t.facilities.map((f, i) => (
+                  <li key={i} className="p-3 rounded border border-border-custom">
+                    <div className="text-sm font-bold">{f.flag} {f.name}</div>
+                    <div className="text-[11px] text-dim mb-1">{f.city}, {f.country} · {f.status}</div>
+                    {f.blurb && <div className="text-xs">{f.blurb}</div>}
+                    {f.siteSlug && (
+                      <a href={`/site/${f.siteSlug}`} className="text-[11px] underline mt-1 inline-block">Full site dashboard →</a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {/* Products */}
+          {products.length > 0 && (
+            <section>
+              <h2 className="text-lg font-bold mb-3">Flagship products</h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                {products.map((p) => (
+                  <a
+                    key={p.slug}
+                    href={`/products/${p.slug}`}
+                    className="block p-3 rounded border border-border-custom hover:border-text"
+                  >
+                    <div className="text-sm font-bold">{p.name}</div>
+                    <div className="text-xs text-dim">{p.category}</div>
+                  </a>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* Bull / Bear */}
           <section className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -137,23 +190,32 @@ export default async function TickerPage({ params }: { params: Promise<{ symbol:
             </section>
           )}
 
-          {/* News */}
-          <section>
-            <h2 className="text-lg font-bold mb-3">Latest news</h2>
-            <TickerNews symbol={t.symbol} />
-          </section>
+          {/* Supply chain */}
+          {competitors.length > 0 && (
+            <section>
+              <h2 className="text-lg font-bold mb-3">Adjacent companies</h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+                {competitors.map((c) => (
+                  <a
+                    key={c.symbol}
+                    href={`/company/${c.symbol.toLowerCase().replace(/\./g, "-")}`}
+                    className="block p-2.5 rounded border border-border-custom hover:border-text"
+                  >
+                    <div className="text-sm font-bold">{c.symbol}</div>
+                    <div className="text-[11px] text-dim truncate">{c.shortName ?? c.name}</div>
+                  </a>
+                ))}
+              </div>
+            </section>
+          )}
 
-          {/* Related sites */}
+          {/* Related Musk-empire sites (if applicable) */}
           {sites.length > 0 && (
             <section>
-              <h2 className="text-lg font-bold mb-3">Related sites</h2>
+              <h2 className="text-lg font-bold mb-3">Related sites tracked here</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {sites.map((s) => (
-                  <a
-                    key={s.slug}
-                    href={`/site/${s.slug}`}
-                    className="block p-3 rounded border border-border-custom hover:border-text"
-                  >
+                  <a key={s.slug} href={`/site/${s.slug}`} className="block p-3 rounded border border-border-custom hover:border-text">
                     <div className="text-sm font-bold">{s.flag} {s.name}</div>
                     <div className="text-xs text-dim">{s.location} · {s.status}</div>
                   </a>
@@ -162,24 +224,11 @@ export default async function TickerPage({ params }: { params: Promise<{ symbol:
             </section>
           )}
 
-          {/* Related products */}
-          {products.length > 0 && (
-            <section>
-              <h2 className="text-lg font-bold mb-3">Related products</h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                {products.map((p) => (
-                  <a
-                    key={p.slug}
-                    href={`/products/${p.slug}`}
-                    className="block p-3 rounded border border-border-custom hover:border-text"
-                  >
-                    <div className="text-sm font-bold">{p.name}</div>
-                    <div className="text-xs text-dim">{p.category}</div>
-                  </a>
-                ))}
-              </div>
-            </section>
-          )}
+          {/* News */}
+          <section>
+            <h2 className="text-lg font-bold mb-3">Latest news</h2>
+            <TickerNews symbol={t.symbol} />
+          </section>
         </div>
 
         {/* Sidebar */}
@@ -187,6 +236,7 @@ export default async function TickerPage({ params }: { params: Promise<{ symbol:
           <div className="p-4 rounded border border-border-custom">
             <div className="text-xs text-dim mb-2">Snapshot</div>
             <dl className="grid grid-cols-[110px_1fr] gap-y-1 text-[13px]">
+              <dt className="text-dim">Ticker</dt><dd>{t.symbol}</dd>
               <dt className="text-dim">Exchange</dt><dd>{t.exchange}</dd>
               <dt className="text-dim">HQ</dt><dd>{t.hq}</dd>
               {t.ceo && (<><dt className="text-dim">CEO</dt><dd>{t.ceo}</dd></>)}
@@ -223,31 +273,6 @@ export default async function TickerPage({ params }: { params: Promise<{ symbol:
             </div>
           )}
 
-          {t.competitors && t.competitors.length > 0 && (
-            <div className="p-4 rounded border border-border-custom">
-              <div className="text-xs text-dim mb-2">Competitors</div>
-              <div className="flex flex-wrap gap-1.5">
-                {t.competitors.map((c) => {
-                  const peer = getTicker(c);
-                  if (!peer) return (
-                    <span key={c} className="text-[11px] font-mono px-2 py-0.5 rounded bg-surface border border-border-custom text-dim">
-                      {c}
-                    </span>
-                  );
-                  return (
-                    <a
-                      key={c}
-                      href={tickerHref(peer)}
-                      className="text-[11px] font-mono px-2 py-0.5 rounded bg-surface border border-border-custom hover:border-text"
-                    >
-                      {c}
-                    </a>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
           {t.sources && t.sources.length > 0 && (
             <div className="p-4 rounded border border-border-custom">
               <div className="text-xs text-dim mb-2">Primary sources</div>
@@ -280,22 +305,8 @@ export default async function TickerPage({ params }: { params: Promise<{ symbol:
             </div>
           )}
 
-          {t.facilities && t.facilities.length > 0 && (
-            <div className="p-4 rounded border border-border-custom">
-              <div className="text-xs text-dim mb-2">Facilities</div>
-              <ul className="flex flex-col gap-1.5 text-[12px]">
-                {t.facilities.map((f, i) => (
-                  <li key={i} className="leading-snug">
-                    {f.flag} <span className="font-medium">{f.name}</span>
-                    <div className="text-dim text-[11px]">{f.city}, {f.country} · {f.status}</div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
           <div className="text-[11px] text-dim leading-relaxed">
-            Data is editorial. Not investment advice. Always verify with a primary source before acting.
+            Atlas data is editorial. Verify everything against primary sources before acting.
             {t.lastVerified && <span> Last verified {t.lastVerified}.</span>}
           </div>
         </aside>

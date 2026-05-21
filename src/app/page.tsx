@@ -32,13 +32,13 @@ export default function Home() {
       {/* Hero */}
       <section className="text-center py-14 sm:py-20 px-6">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4">
-          Industrial intelligence
+          The visual atlas
           <br />
-          <span className="text-dim font-normal text-2xl sm:text-3xl md:text-4xl">for the AI build-out</span>
+          <span className="text-dim font-normal text-2xl sm:text-3xl md:text-4xl">of how the future is being built</span>
         </h1>
         <p className="text-base text-dim max-w-2xl mx-auto mb-6">
-          {factories.length} factories · {TICKERS.length} tickers · {SECTORS.length} sectors · {countries} countries · {getTotalInvestment()} invested.
-          One terminal for the Musk Empire, the semiconductor build-out, quantum, materials, defense, and nuclear.
+          {factories.length} factories · {TICKERS.length} companies · {SECTORS.length} sectors · {countries} countries · {getTotalInvestment()} invested.
+          From Gigafactory Texas to Hsinchu Fab 18 — facility maps, milestones, 3D product breakdowns, supply chain. Primary sources only.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm">
           <StockTicker />
@@ -46,8 +46,8 @@ export default function Home() {
           <SpaceXStats />
         </div>
         <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
-          <a href="/markets" className="px-4 py-2 rounded bg-text text-bg text-sm font-bold hover:opacity-80">Open the markets terminal →</a>
-          <a href="/pro" className="px-4 py-2 rounded border border-border-custom text-sm hover:border-text">See Pro tier</a>
+          <a href="/markets" className="px-4 py-2 rounded bg-text text-bg text-sm font-bold hover:opacity-80">Open the Atlas →</a>
+          <a href="/investor" className="px-4 py-2 rounded border border-border-custom text-sm hover:border-text">Become an Investor</a>
         </div>
       </section>
 
