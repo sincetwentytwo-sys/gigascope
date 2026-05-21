@@ -4,6 +4,8 @@ import { safeJsonLd } from "@/lib/safeJsonLd";
 import GlobeBackground from "@/components/GlobeBackground";
 import VisitCounter from "@/components/VisitCounter";
 import SupportLinks from "@/components/SupportLinks";
+import GlobalSearchProvider from "@/components/GlobalSearchProvider";
+import SearchOpener from "@/components/SearchOpener";
 
 export const metadata: Metadata = {
   title: "GIGASCOPE — Visual atlas of how the future is being built",
@@ -71,13 +73,16 @@ export default function RootLayout({
               GIGASCOPE
             </a>
             <div className="hidden sm:flex items-center gap-5 text-[13px] text-dim">
-              <a href="/markets" className="hover:text-text transition-colors">Markets</a>
+              <a href="/markets" className="hover:text-text transition-colors">Atlas</a>
               <a href="/sectors" className="hover:text-text transition-colors">Sectors</a>
+              <a href="/supply-chain" className="hover:text-text transition-colors">Supply</a>
               <a href="/news" className="hover:text-text transition-colors">News</a>
+              <a href="/calendar" className="hover:text-text transition-colors">Calendar</a>
               <a href="/timeline" className="hover:text-text transition-colors">Timeline</a>
-              <a href="/compare" className="hover:text-text transition-colors">Compare</a>
               <a href="/products" className="hover:text-text transition-colors">Products</a>
+              <a href="/compare" className="hover:text-text transition-colors">Compare</a>
               <a href="/about" className="hover:text-text transition-colors">About</a>
+              <SearchOpener />
               <a href="/investor" className="text-text font-bold hover:opacity-70 transition-opacity">Investor</a>
             </div>
           </div>
@@ -107,6 +112,7 @@ export default function RootLayout({
           </a>
         </nav>
 
+        <GlobalSearchProvider />
         <main id="main-content" className="flex-1">{children}</main>
 
         <footer className="py-8 px-6 pb-20 sm:pb-8 text-center text-xs text-dim flex flex-col gap-3 items-center">
