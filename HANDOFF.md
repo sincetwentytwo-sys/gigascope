@@ -1,184 +1,203 @@
 # GIGASCOPE — Session Handoff
 
-**Last updated**: 2026-05-20 (mid-day, products page rework session)
+**Last updated**: 2026-05-20 (late session — products page + hotspot dots)
 **Live (primary)**: https://gigascope.xyz
 **Live (alias)**: https://gigascope-ten.vercel.app
 **Repo**: https://github.com/sincetwentytwo-sys/gigascope
 **Main branch**: `main` (Vercel auto-deploys every push, ~1–2 min)
+
 **ComfyUI**: `G:\ComfyUI_windows_portable\run_with_python310.bat` (port 8188)
 **SAM/segmentation venv**: `G:\ComfyUI_windows_portable\venv\Scripts\python.exe`
   - `numpy<2` pinned (torch 2.0.1 compat). Don't reinstall numpy.
 
 ---
 
-## What just happened (this session)
+## What this session shipped
 
-Started from procedural 3D viewers that the user called "창피한 수준". Pivoted
-through several dead ends, landed on **real reference photos + clickable SVG
-polygon hotspots + side panel** at `/products/[slug]`. Live and deployed.
+Started from procedural 3D viewers the user called "창피한 수준". Ended with a
+photo-based component viewer where every product page shows a real reference
+photo plus numbered, clickable dots overlaying the parts.
 
-### What works now
-- 13 products with main reference photo from Wikimedia Commons (CC-BY/CC-BY-SA
-  attribution shown bottom-right of every photo, links to source file page).
-- Side panel lists every component; click/hover to read its 150-300 char tech blurb.
-- SVG polygons overlaid on the main photo for *some* parts — outlines visible
-  by default (white/65 stroke), amber on select, bright on hover.
-- `/products` hub uses the same photos as thumbnails ("Component Breakdowns").
-- All other pages (`/`, `/timeline`, `/compare`, `/site/[slug]`,
-  `/factory/[slug]`) untouched and working.
+### Now live and working
+- **`/` (home)**: Featured spotlight removed. New **"Announced Projects"**
+  section (gold variant cards, 5 sites: Terafab / Giga Mexico / Colossus /
+  Neuralink Austin / Vegas Loop) above the per-company All Sites grid.
+- **`/about`**: New **"Data Confidence & Announced Projects"** section
+  (High / Medium / Low / Speculative + reliability policy). Grok did the
+  initial design; an earlier filter bug (`status === "planned"` vs the
+  actual `"announced"` value in factories.json) was caught and fixed live.
+- **`/products` (hub)**: thumbnails now use the per-product reference
+  photo, headline rewritten to "Component Breakdowns".
+- **`/products/[slug]`**: photo viewer with hotspot dots (see below).
+- All other pages (`/timeline`, `/compare`, `/site/[slug]`, `/factory/[slug]`)
+  untouched and still working.
 
-### What was broken and is now fixed
-1. **Build was silently broken for several pushes** — gather-product-gallery.py
-   inserted `galleryPhotos` blocks *after* the `};` and the `export default`,
-   making them top-level statements. Vercel kept serving the previous build.
-   Fixed: relocator script ran across all 13 .ts files.
-2. **File/folder name collision** — `public/products/photos/cybertruck.jpg`
-   alongside `public/products/photos/cybertruck/` caused 404s on Vercel.
-   Fixed: everything now under `public/products/photos/<slug>/main.jpg` plus
-   `<slug>/1.jpg`, `<slug>/2.jpg`, … for the gallery.
-3. **`/products` hub copy + thumbs still said "Procedural 3D"** — fixed
-   ("Component Breakdowns" + real-photo thumbs).
-4. **Main photo blank for ~1 sec on every load** (next/image lazy) — replaced
-   with plain `<img loading="eager" fetchPriority="high" decoding="sync">`.
-5. **Hotspot outlines invisible until hover** (Tailwind opacity modifier broken
-   in prod) — switched to inline `style={{stroke: 'rgba(255,255,255,0.65)'}}`.
+### Product page architecture
+- 13 products. 11 have hotspot dots authored. 4680 is the only SVG diagram.
+  Neuralink N1's photo is a person (no real implant photo on Commons), so
+  no dots there.
+- `src/components/Product2DViewer.tsx` —
+  - Plain `<img>` (not `next/image` — optimizer was flashing a blank for ~1s).
+  - **CSS Grid stack**: wrapper has `aspectRatio: ${naturalW}/${naturalH}`,
+    img and SVG both fill it at 100%/100% → dot (x, y) in 0..1 normalized
+    coords lands on the exact pixel.
+  - `useEffect` reads `naturalSize` on mount when `img.complete` is already
+    true (cached image case — `onLoad` never fires).
+  - Each part with a `hotspot: { x, y }` renders as a white numbered dot
+    (amber when active, larger on hover).
+  - Side panel rows show the matching dot number badge.
+- Gallery strip (Main / Side / Rear / Interior) was **removed** — user said
+  "굳이 왜 있는지 모르겠고". `galleryPhotos` data is still in the .ts files
+  for possible future use; the viewer just doesn't render it.
+
+### Hotspot dot pipeline
+1. `scripts/sam-hotspots.py` — SAM ViT-H point-prompt → polygon (was the
+   original generator; output is now flagged stale by `apply-hotspots.py`).
+2. `scripts/polygon-to-points.py` — one-shot polygon→centroid migrator
+   (already run; safe to delete next session).
+3. `scripts/apply-hotspots.py` — **the source of truth now**. Has a
+   `HOTSPOTS` dict per slug with manually-tuned (x, y) per part. Strips
+   stale lines and inserts the dict's coords. Re-run after editing.
+
+Total: **87 hand-tuned hotspots** across 11 products.
 
 ---
 
-## Known problems the user explicitly flagged (still unresolved)
+## Known issues the user has explicitly flagged or that are still likely off
 
-### A. **Polygon hotspot regions are still wrong on several products.**
-SAM ViT-H with single-point seeds reaches the wrong region for some parts:
-- **Falcon 9**: `stage1-tank` polygon zigzags across the sky and pad. SAM can't
-  separate the rocket from launch smoke/water tower in a launch photo. Almost
-  certainly needs a different reference photo (booster-on-ground rather than
-  launch ignition) or multi-point prompts.
-- **Cybertruck `exoskeleton`**: seed at (0.65, 0.50) now grows a body-side
-  mask, but the polygon traces SAM's mask boundary which includes the bed
-  and door cutlines — looks busy.
-- **Raptor**: nozzle bell got tightened by moving the seed down, but the
-  big white outline visible on the page also traces background structure.
-  The Hawthorne photo has a building behind the engine — segmentation is
-  ambiguous near the rim of the bell.
-- General: outline is now *visible*, which makes inaccuracy more obvious.
+### Hotspot precision — user is iterating one report at a time
+The user accepted this loop: "[product]의 [part]가 [방향]으로 어긋남" →
+edit `apply-hotspots.py` → re-run → push.
 
-**To improve**: either (a) author per-part multi-point prompts (positive +
-background-negative points) in `scripts/sam-hotspots.py`, or (b) drop polygon
-hotspots entirely and replace with simple labeled dots/circles (1 point per
-part — much harder to look "wrong"). User leaned toward (b)-style alternative
-when polygon work first broke down.
+Last fix (this turn): Cybertruck `bed` and `tonneau` were over the cab
+rear door; nudged to the actual cargo vault side wall + top cover.
 
-### B. **The Main/Side/Rear/Interior gallery thumbnail strip has no real value.**
-User's words: "굳이 왜 있는지 모르겠고". Right now clicking a gallery thumb
-swaps the main photo with a bare image — hotspots disappear (only the main
-photo has them), so it's just a still-image swap. No 3D rotation, no part
-mapping, no comparison. **Recommend either removing the gallery entirely or
-authoring per-photo hotspots so the strip becomes a real angle-switch with
-parts mapped at every angle.**
+**Likely still imperfect** (only visually skimmed, not user-confirmed):
+- **Model 3**: front-left wheel and rear-left wheel positions may still be
+  ~5% off. The dots are at (0.65, 0.65) and (0.18, 0.65) — they should
+  probably move down to ~y=0.75 to sit on the wheel hubs.
+- **Cybercab**: the Wikipedia "Tesla Robotaxi" lead photo is actually a
+  Model Y, so the dots are placed on a Model Y silhouette. The credit
+  string reads "Wikimedia Commons contributors" because of this mismatch.
+- **Megapack / Powerwall**: only 2 dots each; the rest of the parts are
+  internal and can't reasonably be pinned on the exterior photo.
 
-### C. Other smaller issues noticed in this session
-- **4680**: still an SVG diagram, looks out-of-place next to JPGs.
-- **Neuralink N1**: photo is "Elon Musk and the Neuralink Future" (people),
-  not the actual coin-sized implant. No real implant photo on Commons.
-- **Hotspot count varies widely** (Cybertruck 7 / Raptor 7 / Optimus 10 /
-  Megapack 2 / Powerwall 2). The two-hotspot products feel sparse on screen.
-- **Mobile**: layout is fluid but never verified on a real phone.
+### Photos that should ideally be replaced
+- **`cybercab/main.jpg`**: currently a Model Y stand-in. Search Commons
+  again later (when actual Cybercab photos are added) or wait for a press
+  shot.
+- **`neuralink-n1/main.jpg`**: photo of Elon Musk + the surgical robot, not
+  the implant itself. Commons doesn't currently have a real N1 photo.
+- **`4680/main.svg`**: SVG diagram, looks visually different from the
+  other JPGs. Acceptable but inconsistent.
+
+### Mobile responsive
+Layout is fluid (`grid-cols-1 lg:grid-cols-[1fr_360px]`) but never tested
+on a real phone. Hotspot dots scale with the image so should be tappable;
+the side panel collapses below the photo.
 
 ---
 
 ## Stack & deploy (unchanged)
-
 - Next.js 16 (App Router, Turbopack), React 19, TypeScript 5, Tailwind 4
-- Plain `<img>` for product photos (next/image was causing blank-flash)
+- Plain `<img>` for product photos
 - Vercel auto-deploy on push to `main`
 - GitHub Actions: daily marketing, hourly launch monitor, weekly timelapse,
   data-freshness checks
 
 ---
 
-## Files that matter for the product page
+## Files that matter
 
 | Path | Purpose |
 |---|---|
-| `src/components/Product2DViewer.tsx` | The photo + side panel + gallery viewer |
-| `src/app/products/page.tsx` | Hub grid (uses photos/<slug>/main.{jpg,svg} as thumbs) |
-| `src/app/products/[slug]/page.tsx` | Per-product page that mounts the viewer |
-| `src/data/products/index.ts` | ProductSpec / PartSpec types including `hotspot`, `photoCredit`, `galleryPhotos`, `cutawayAxis` |
-| `src/data/products/<slug>.ts` | 13 product specs with parts + hotspot polygons + credit |
+| `src/components/Product2DViewer.tsx` | Photo viewer + dot overlay + side panel |
+| `src/app/products/page.tsx` | Hub grid using reference photos as thumbs |
+| `src/app/products/[slug]/page.tsx` | Per-product page mounting the viewer |
+| `src/app/page.tsx` | Home — Announced Projects above All Sites |
+| `src/app/about/page.tsx` | Has the "Data Confidence" section |
+| `src/data/products/index.ts` | ProductSpec / PartSpec types incl. `hotspot: {x,y}` |
+| `src/data/products/<slug>.ts` | 13 specs with parts + hotspots + credits |
+| `src/data/types.ts` | `Factory.status` includes `"announced"` |
+| `public/data/factories.json` | 5 sites marked status:"announced" + confidence:"speculative" |
 | `public/products/photos/<slug>/main.{jpg,svg}` | Main reference photo |
-| `public/products/photos/<slug>/{1,2,3}.jpg` | Gallery photos (Side/Rear/Interior/etc) |
-| `scripts/sam-hotspots.py` | Seed-point SAM polygon extractor (uses local ComfyUI SAM ckpt) |
-| `scripts/gather-product-gallery.py` | Wikimedia gallery fetcher (per-product queries + reject tokens) |
+| `public/products/photos/<slug>/{1,2,3}.jpg` | Old gallery photos (unused by viewer, kept on disk) |
+| `scripts/apply-hotspots.py` | **edit this when adjusting dot positions** |
+| `scripts/sam-hotspots.py` | Original SAM seed → polygon generator (legacy) |
+| `scripts/polygon-to-points.py` | One-shot migrator (already used; legacy) |
+| `scripts/gather-product-gallery.py` | Wikimedia gallery fetcher (legacy — gallery strip removed) |
 | `scripts/optimize-product-photos.py` | Pillow resize to ≤1600 px, q86 JPEG |
-| `scripts/capture-product-thumbnails.mjs` | Old 3D thumbnail capture script — no longer used |
-| `scripts/analyze-product-bounds.mjs` | Old 3D camera bounds — superseded |
 
-### Old code still in the repo (not in the live path)
-- `src/components/Product3DViewer.tsx` — the procedural 3D viewer.
-  Not imported anywhere; safe to delete next session.
-- `src/components/Product3DViewerWrapper.tsx` — same.
+### Dead code safe to delete next session
+- `src/components/Product3DViewer.tsx`
+- `src/components/Product3DViewerWrapper.tsx`
+- `scripts/capture-product-thumbnails.mjs`
+- `scripts/analyze-product-bounds.mjs`
+- `scripts/comfy-cutaway*.py` if any remain
+- `galleryPhotos: [...]` blocks in `src/data/products/*.ts`
 
 ---
 
-## Suggested next session — pick one
+## How to start the next session
 
-### 1. **Polygon accuracy (Plan A)** — heavy
-Per-product, per-part multi-point seed authoring. Build a small Python helper
-that lets the operator click on the photo to add positive/negative points
-interactively, write back to `SEEDS` in `sam-hotspots.py`, rerun. Probably
-~30 min per product if done well. Total ~6 hours for all 13.
+```
+HANDOFF.md 읽고 현재 상태 파악해줘.
+```
 
-### 2. **Replace polygons with dots (Plan B)** — light
-Drop SVG polygon hotspots. Switch to a single labeled circle per part (small
-amber dot + number badge + tooltip). Each part needs only ONE (x, y) coord,
-which is much harder to look wrong. Probably 1–2 hours to refactor viewer +
-re-author coords with the photos in front of you. **User leaned toward this.**
+Then pick one of these (most likely user priorities first):
 
-### 3. **Kill the gallery strip OR make it useful** — light/heavy fork
-- Light: delete `galleryPhotos` field rendering from the viewer. ~10 min.
-- Heavy: author hotspots on every gallery photo (Side / Rear / Interior),
-  so switching angles is a real interaction. ~1 hour per product × 13.
+### 1. Fine-tune more dots (most likely)
+User report format: `[product]의 [part_name] 점이 [방향]으로 어긋남`
 
-### 4. **Reduce the "Photoreal scrutiny" surface** — strategic
-The viewer reads as a photo gallery, and photo galleries invite "but this is
-just a stock photo of a Tesla". The whole *Component Breakdown* identity
-might need re-framing — e.g. small inset cutaway diagrams (commissioned or AI)
-instead of real photos, or shift the page emphasis to the *milestone /
-data dashboard* rather than the hardware.
+You: open `scripts/apply-hotspots.py`, edit the (x, y) for that product/part
+in the `HOTSPOTS` dict, then:
 
-### 5. **Other features** (deferred from prior handoffs)
-- B: Investor tier (Supabase + Stripe + email alerts)
-- C: RSS news / Reddit / X embed expansion
-- Custom-domain DNS work already done (`gigascope.xyz` connected and live).
+```bash
+PYTHONIOENCODING=utf-8 "G:/ComfyUI_windows_portable/venv/Scripts/python.exe" \
+  scripts/apply-hotspots.py
+git add -A && git commit -m "..." && git push
+```
+
+Verify by waiting ~90s and opening the page in the Claude-in-Chrome browser.
+Don't claim it's fixed until you've eyeballed the live screenshot.
+
+### 2. Add hotspots for missing products / parts
+Same `apply-hotspots.py` workflow. Read the photo first
+(`public/products/photos/<slug>/main.jpg`) to identify what's visible.
+
+### 3. Clean up legacy code
+Delete the 3D viewer files + galleryPhotos blocks. Verify build still passes.
+
+### 4. Mobile testing
+Open Claude-in-Chrome at a phone viewport (~390×844) and screenshot every
+key page. Note any overflow / illegible text.
+
+### 5. B option — investor tier MVP
+(Stripe + Supabase Auth + email alerts on milestone changes). Bigger task,
+3–5 hours.
 
 ---
 
 ## Important behavior memory (don't forget)
 
 User profile (`C:/Users/JIBBY/.claude/projects/G--claude/memory/`):
-- **Always merge to main immediately after every fix** — Vercel deploys from main.
-- Direct, fact-based communication. No marketing fluff. Push back when ideas are bad.
-- Korean. Use `~합니다` / `~해드릴게요` formal-but-warm tone.
-- Don't ask for confirmation on small reversible changes; do ask for risky ones.
-- **Never say "launchable" again** without doing a live browser smoke test first.
-  The user caught a fully broken build because I said it was "launchable".
-- **Verify with computer-use / claude-in-chrome** when claiming something works.
-  This session burned an hour of trust because I kept declaring victory on
-  pushes that hadn't actually deployed.
+- **Always merge to main immediately after every fix** — Vercel deploys from main
+- Direct, fact-based. Push back honestly when ideas are bad
+- Korean. `~합니다` / `~해드릴게요` formal-but-warm tone
+- Don't ask for confirmation on small reversible changes; do ask for risky ones
 
----
-
-## How to start the next session
-
-Open Claude Code in `G:/claude/gigascope` and paste:
-
-```
-HANDOFF.md 읽고 현재 상태 파악해줘. 그 다음 [1/2/3/4/5 중 선택] 작업 시작해줘.
-```
-
-Strongly recommend starting with **2 (dots)** + **3-light (kill gallery strip)** —
-together they clean up the two things the user just flagged, in well under an
-hour, and ship a cleaner page.
+Session-specific lessons (user has seen me fail on these):
+- **Never claim "launchable" without a live browser smoke test first.**
+  The user caught a fully broken Vercel deploy because I said it was ready.
+- **Verify with computer-use / claude-in-chrome whenever claiming a page works.**
+  In this session: cached image `onLoad` not firing, gallery-strip useless,
+  Announced filter typo — all only found by opening the live page.
+- **Grok-coded contributions are often hallucinated.** Read the diff and run
+  the page. Grok in this session shipped one PR with 4 of 6 claims being
+  full hallucinations.
+- **SAM polygon migrators silently fail.** SAM masks for ambiguous regions
+  (rocket vs launch smoke, car body vs door cutline) cluster at the center
+  or jump to background. Hand-tuning beats SAM here.
 
 ---
 
@@ -186,44 +205,38 @@ hour, and ship a cleaner page.
 
 ```bash
 # Local dev
-cd G:/claude/gigascope && npm install && npm run dev
+cd G:/claude/gigascope && npm run dev
 
-# Production build (sanity check before pushing)
+# Production build sanity (run before pushing big changes)
 npx next build
 
-# Re-run SAM hotspots after editing SEEDS in scripts/sam-hotspots.py
-G:/ComfyUI_windows_portable/venv/Scripts/python.exe scripts/sam-hotspots.py <slug>
-# or all 13:
-G:/ComfyUI_windows_portable/venv/Scripts/python.exe scripts/sam-hotspots.py
+# Adjust dots
+"G:/ComfyUI_windows_portable/venv/Scripts/python.exe" \
+  scripts/apply-hotspots.py
 
-# Re-pull Wikimedia gallery for a slug (rare — already done once)
-G:/ComfyUI_windows_portable/venv/Scripts/python.exe scripts/gather-product-gallery.py <slug>
-
-# Resize / rewrite the main photo from scripts/refs/<slug>.jpg
-G:/ComfyUI_windows_portable/venv/Scripts/python.exe scripts/optimize-product-photos.py
-
-# Vercel deploy status
+# Recent deploys
 gh run list --repo sincetwentytwo-sys/gigascope --limit 5
 
-# Check the X marketing pipeline
-gh workflow run daily-marketing.yml --repo sincetwentytwo-sys/gigascope
+# Latest commits
+git log --oneline -10
 ```
 
 ---
 
-## Repo state snapshot at end of session
+## Repo state at end of session
 
 Latest commits (newest first):
 ```
-417eeb0 SAM hotspots: align seed IDs with actual ProductSpec part IDs
-db2a4a9 viewer: prioritize main photo load (eager + sync decode + fetchPriority high)
-52f3326 Hotspot polygons: inline-styled stroke for guaranteed visibility
-d22a948 Viewer polish: instant photo, always-visible hotspot outlines, SAM rerun across 8 products
-13c1b09 Products hub: switch thumbnails + copy to match the photo-based detail page
-c1552fe Fix broken build: relocate galleryPhotos inside ProductSpec, normalize photo paths
-12753e0 Photo galleries for the remaining products + reject-list filter
-e33892d Photo gallery for Cybertruck — multi-angle thumbnail strip below main view
-097c50e Switch /products/[slug] from procedural 3D to real reference photos
+5dc4469 cybertruck: nudge bed + tonneau dots onto the actual cargo vault
+c9b8826 Hotspots: hand-tuned dots for all 11 products, verified against the actual reference photo
+bab4484 viewer: read naturalSize via useEffect — cached images never fire onLoad
+640a9fe viewer: block parent + text-align center to stop flex from stretching the photo wrapper
+ffb49d2 viewer: pin wrapper to photo aspect ratio so img and SVG are pixel-aligned
+59592c3 viewer: CSS Grid stack + viewBox=naturalSize so dots land exactly on the photo
+54c2809 viewer: wrap photo+dots in an inline-block so the SVG overlay sits flush with the image
+fb4e1ef Hotspots: numbered dots in place of polygons; remove gallery strip
+9e9d97f page: fix Announced Projects filter — was checking 'planned' but data uses 'announced'
+689f460 feat: full Announced Projects system + data cleanup + wiring improvements (Grok)
 ```
 
-Working tree should be clean. If it isn't, last session forgot to commit something.
+Working tree should be clean.
