@@ -88,6 +88,28 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Discoverability tiles */}
+      <section className="max-w-[1200px] mx-auto px-6 pb-14">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <a href="/supply-chain" className="p-4 rounded border border-border-custom hover:border-text" style={{ borderLeftWidth: 4, borderLeftColor: "#0066cc" }}>
+            <div className="text-sm font-bold mb-1">Supply chain</div>
+            <div className="text-[11px] text-dim leading-snug">ASML → TSMC → Hynix → NVIDIA → Tesla. 33 directional edges with primary sources.</div>
+          </a>
+          <a href="/learn" className="p-4 rounded border border-border-custom hover:border-text" style={{ borderLeftWidth: 4, borderLeftColor: "#76b900" }}>
+            <div className="text-sm font-bold mb-1">Learn</div>
+            <div className="text-[11px] text-dim leading-snug">First-principles explainers: HBM, EUV, GAA, CoWoS, qubits, LFP, SMR.</div>
+          </a>
+          <a href="/private" className="p-4 rounded border border-border-custom hover:border-text" style={{ borderLeftWidth: 4, borderLeftColor: "#7b2dbd" }}>
+            <div className="text-sm font-bold mb-1">Private companies</div>
+            <div className="text-[11px] text-dim leading-snug">SpaceX, xAI, Anduril, Helion, Commonwealth Fusion — valuation-cited estimates.</div>
+          </a>
+          <a href="/calendar" className="p-4 rounded border border-border-custom hover:border-text" style={{ borderLeftWidth: 4, borderLeftColor: "#bf5600" }}>
+            <div className="text-sm font-bold mb-1">Calendar</div>
+            <div className="text-[11px] text-dim leading-snug">Every upcoming catalyst + milestone, chronological, confidence-tagged.</div>
+          </a>
+        </div>
+      </section>
+
       {/* Announced Projects */}
       {announced.length > 0 && (
         <section className="max-w-[1200px] mx-auto px-6 pb-10">

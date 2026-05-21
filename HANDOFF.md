@@ -1,10 +1,10 @@
 # GIGASCOPE — Session Handoff
 
-**Last updated**: 2026-05-20 (late session — products page + hotspot dots)
+**Last updated**: 2026-05-22 (overnight autonomous build — Atlas pivot)
 **Live (primary)**: https://gigascope.xyz
 **Live (alias)**: https://gigascope-ten.vercel.app
 **Repo**: https://github.com/sincetwentytwo-sys/gigascope
-**Main branch**: `main` (Vercel auto-deploys every push, ~1–2 min)
+**Main branch**: `main` (Vercel auto-deploys every push)
 
 **ComfyUI**: `G:\ComfyUI_windows_portable\run_with_python310.bat` (port 8188)
 **SAM/segmentation venv**: `G:\ComfyUI_windows_portable\venv\Scripts\python.exe`
@@ -12,129 +12,119 @@
 
 ---
 
-## What this session shipped
+## What this overnight session built
 
-Started from procedural 3D viewers the user called "창피한 수준". Ended with a
-photo-based component viewer where every product page shows a real reference
-photo plus numbered, clickable dots overlaying the parts.
+The owner went to sleep with a single instruction: **"Yahoo-Finance scale, but a different direction. Don't stop. Investor-grade enough that Elon would subscribe."** Then dropped the autonomous-build handoff doc (`G:\jb\gigascope-자율-핸드오프.txt`) — which reframes the destination as **"the visual atlas of how the future is being built"** (NOT Yahoo Finance, NOT Bloomberg).
 
-### Now live and working
-- **`/` (home)**: Featured spotlight removed. New **"Announced Projects"**
-  section (gold variant cards, 5 sites: Terafab / Giga Mexico / Colossus /
-  Neuralink Austin / Vegas Loop) above the per-company All Sites grid.
-- **`/about`**: New **"Data Confidence & Announced Projects"** section
-  (High / Medium / Low / Speculative + reliability policy). Grok did the
-  initial design; an earlier filter bug (`status === "planned"` vs the
-  actual `"announced"` value in factories.json) was caught and fixed live.
-- **`/products` (hub)**: thumbnails now use the per-product reference
-  photo, headline rewritten to "Component Breakdowns".
-- **`/products/[slug]`**: photo viewer with hotspot dots (see below).
-- All other pages (`/timeline`, `/compare`, `/site/[slug]`, `/factory/[slug]`)
-  untouched and still working.
+That doc steered the framing. The old Musk-only tracker stayed, and a much larger Atlas was built around it.
 
-### Product page architecture
-- 13 products. 11 have hotspot dots authored. 4680 is the only SVG diagram.
-  Neuralink N1's photo is a person (no real implant photo on Commons), so
-  no dots there.
-- `src/components/Product2DViewer.tsx` —
-  - Plain `<img>` (not `next/image` — optimizer was flashing a blank for ~1s).
-  - **CSS Grid stack**: wrapper has `aspectRatio: ${naturalW}/${naturalH}`,
-    img and SVG both fill it at 100%/100% → dot (x, y) in 0..1 normalized
-    coords lands on the exact pixel.
-  - `useEffect` reads `naturalSize` on mount when `img.complete` is already
-    true (cached image case — `onLoad` never fires).
-  - Each part with a `hotspot: { x, y }` renders as a white numbered dot
-    (amber when active, larger on hover).
-  - Side panel rows show the matching dot number badge.
-- Gallery strip (Main / Side / Rear / Interior) was **removed** — user said
-  "굳이 왜 있는지 모르겠고". `galleryPhotos` data is still in the .ts files
-  for possible future use; the viewer just doesn't render it.
+### Now live and working (8 deploy waves, all green)
 
-### Hotspot dot pipeline
-1. `scripts/sam-hotspots.py` — SAM ViT-H point-prompt → polygon (was the
-   original generator; output is now flagged stale by `apply-hotspots.py`).
-2. `scripts/polygon-to-points.py` — one-shot polygon→centroid migrator
-   (already run; safe to delete next session).
-3. `scripts/apply-hotspots.py` — **the source of truth now**. Has a
-   `HOTSPOTS` dict per slug with manually-tuned (x, y) per part. Strips
-   stale lines and inserts the dict's coords. Re-run after editing.
+**New top-level routes** (all in nav):
+- `/markets` (Atlas heatmap) — live multi-sector grid with top-movers + per-sector breakdown
+- `/sectors` + `/sectors/[slug]` — 11 macro theses with heatmap + names
+- `/company/[slug]` — **canonical company Atlas page** (36 companies): facility map (Leaflet + ESRI satellite), 1-month sparkline, thesis + 400-700 word deepDive on flagships, bull/bear, catalysts, supply chain (up/down), news, primary-source sidebar
+- `/ticker/[symbol]` — financial sidecar (price-focused subset)
+- `/private` + `/private/[slug]` — 5 private companies (SpaceX, xAI, Anduril, Helion, Commonwealth Fusion) with valuation-source labels
+- `/supply-chain` — layered tier view (raw materials → wafer/litho → chips → systems → end products) + 33 directional edges
+- `/news` — Yahoo Finance RSS aggregated across featured tickers
+- `/calendar` — all upcoming catalysts + milestones, chronological, confidence-tagged
+- `/learn` + `/learn/[slug]` — 10 first-principles glossary entries (HBM, EUV, GAA, CoWoS, FSD/Robotaxi, hyperscaler capex, qubit, REE, LFP vs NMC, SMR)
+- `/watchlist` — localStorage-backed star-list (no login)
+- `/investor` — single-tier landing ($9 early-bird → $19 → $29), waitlist email capture
+- `/downloads` — CSV/JSON bulk export hub
 
-Total: **87 hand-tuned hotspots** across 11 products.
+**New APIs**:
+- `/api/quote/[symbol]` — single quote (Yahoo chart endpoint, generic across exchanges)
+- `/api/quotes?symbols=...` — bulk quote endpoint for heatmap (40 max)
+- `/api/chart/[symbol]?range=...&interval=...` — 5d/1mo/3mo/6mo/1y/5y price history for sparkline
+- `/api/news?symbol=...` — per-ticker RSS aggregator
+- `/api/subscribe` — Upstash Redis-backed email capture (POST + GET count)
+- `/api/digest` — daily digest payload (next 6mo catalysts, next 2mo milestones, last-24h news on featured names). **Wired to vercel.json cron @ 14:00 UTC daily** — currently writes to nowhere; needs Resend/Postmark hookup to actually email.
+- `/api/export/[dataset]?format=csv|json` — bulk export for factories, tickers, milestones, supply-chain edges, products
 
----
+**New components**:
+- `Sparkline.tsx` — SVG, no library, 6 range tabs
+- `FacilityMap.tsx` + wrapper — multi-point Leaflet ESRI satellite map with status-color dots + popup
+- `TickerLivePrice.tsx`, `TickerGrid.tsx`, `TopMovers.tsx`, `TickerNews.tsx`, `EmailSignup.tsx`
+- `GlobalSearch.tsx` + `GlobalSearchProvider.tsx` + `SearchOpener.tsx` — Cmd-K / Ctrl-K modal fuzzy-searches 36 companies + 5 private + 11 sectors + 16 sites + 13 products + 10 learn entries + 11 static pages
+- `WatchlistButton.tsx` — star/unstar on any ticker page (localStorage)
 
-## Known issues the user has explicitly flagged or that are still likely off
+**Data**:
+- `src/data/tickers.ts` — 36 public companies across 11 sectors, with sources (SEC EDGAR/DART/IR — tier 1), facilities (lat/lng-verified), bull/bear, catalysts, deepDive (5 flagships have 400-700 word essays), koreanName for Korean champions (삼성전자, SK하이닉스, LG에너지솔루션, 현대자동차, 한화에어로스페이스, LIG넥스원).
+- `src/data/privateCompanies.ts` — 5 private cos, valuation-source-labelled est.
+- `src/data/supplyChain.ts` — 33 hand-curated directional edges, criticality (monopoly/primary/secondary), source URL per edge
+- `src/data/learn.ts` — 10 glossary entries, first-principles, related-tickers + related-terms
 
-### Hotspot precision — user is iterating one report at a time
-The user accepted this loop: "[product]의 [part]가 [방향]으로 어긋남" →
-edit `apply-hotspots.py` → re-run → push.
+**Per-company OG image** (massive share-rate boost) at `/company/[slug]/opengraph-image.tsx` — uses next/og ImageResponse with sector accent + ticker + name + thesis snippet.
 
-Last fix (this turn): Cybertruck `bed` and `tonneau` were over the cab
-rear door; nudged to the actual cargo vault side wall + top cover.
+**Marketing assets** at `content/social-drafts/2026-05-22/x-launch.md` — EN + KO launch thread + 3 infographic concepts. Owner reviews → polishes → posts.
 
-**Likely still imperfect** (only visually skimmed, not user-confirmed):
-- **Model 3**: front-left wheel and rear-left wheel positions may still be
-  ~5% off. The dots are at (0.65, 0.65) and (0.18, 0.65) — they should
-  probably move down to ~y=0.75 to sit on the wheel hubs.
-- **Cybercab**: the Wikipedia "Tesla Robotaxi" lead photo is actually a
-  Model Y, so the dots are placed on a Model Y silhouette. The credit
-  string reads "Wikimedia Commons contributors" because of this mismatch.
-- **Megapack / Powerwall**: only 2 dots each; the rest of the parts are
-  internal and can't reasonably be pinned on the exterior photo.
+### Framing pivot (the important strategic call)
 
-### Photos that should ideally be replaced
-- **`cybercab/main.jpg`**: currently a Model Y stand-in. Search Commons
-  again later (when actual Cybercab photos are added) or wait for a press
-  shot.
-- **`neuralink-n1/main.jpg`**: photo of Elon Musk + the surgical robot, not
-  the implant itself. Commons doesn't currently have a real N1 photo.
-- **`4680/main.svg`**: SVG diagram, looks visually different from the
-  other JPGs. Acceptable but inconsistent.
+Per the autonomous handoff doc, the owner's destination is NOT a Bloomberg/Yahoo Finance competitor. It's an **atlas**.
 
-### Mobile responsive
-Layout is fluid (`grid-cols-1 lg:grid-cols-[1fr_360px]`) but never tested
-on a real phone. Hotspot dots scale with the image so should be tappable;
-the side panel collapses below the photo.
+The early build called this an "intelligence terminal" and shipped a 3-tier "Pro/Premium/Enterprise" pricing page. Both were wrong. Mid-build pivot done:
+- Single `Investor` tier, not Pro/Premium/Enterprise.
+- "Atlas" replaces "terminal" in copy + nav label for `/markets`.
+- Root metadata title: "Visual atlas of how the future is being built."
+- About page rewritten with the **5 moats** (industrial essence / physical sites / supply-chain visibility / future-facing framing / visual UX) + 4-tier primary-source policy + Korean differentiation.
+
+### What was already live (pre-overnight) that survived
+
+- 16 Musk-empire factory sites + `/site/[slug]` dashboards
+- 13 products + 2D viewer with numbered hotspot dots (87 hand-tuned hotspots)
+- `/compare` slider, `/timeline`, `/products` hub
+- Model 3 wheel hotspots fixed (y=0.65 → y=0.75 per prev session)
+- Legacy 3D viewer code deleted (Product3DViewer*, capture-product-thumbnails)
 
 ---
 
-## Stack & deploy (unchanged)
-- Next.js 16 (App Router, Turbopack), React 19, TypeScript 5, Tailwind 4
-- Plain `<img>` for product photos
-- Vercel auto-deploy on push to `main`
-- GitHub Actions: daily marketing, hourly launch monitor, weekly timelapse,
-  data-freshness checks
+## Known not-yet-done / decisions for owner
+
+### Investor billing is scaffold-only
+- `/investor` page collects emails → Upstash Redis (if envs set). No Stripe yet.
+- Three.js + R3F still in package.json (unused since 2D viewer landed). Can remove next session.
+- Daily digest cron runs but doesn't actually email — needs Resend or Postmark integration (~30 min of work).
+
+### Hyperscaler valuations are placeholders
+- MSFT marketCap = $3,500B, GOOG = $2,200B, etc. Refreshed to ~mid-2026 levels.
+- Refresh script not built — currently hand-edited. Build `scripts/refresh-marketcaps.mjs` (uses Yahoo Finance) next.
+
+### Things explicitly skipped (handoff §11)
+- No real-time trading features (Yahoo Finance lane).
+- No comments / forums / user-gen content.
+- No crypto / NFT.
+- No 3-tier "Pro/Premium" — single Investor tier only.
+
+### Live verification status
+- All 8 commits passed `npx next build` locally before push.
+- Per HANDOFF discipline ("Never claim launchable without smoke test") — owner should still eyeball one or two pages live before any X post.
 
 ---
 
-## Files that matter
+## Files that matter (additions, in order of edit cadence)
 
 | Path | Purpose |
 |---|---|
-| `src/components/Product2DViewer.tsx` | Photo viewer + dot overlay + side panel |
-| `src/app/products/page.tsx` | Hub grid using reference photos as thumbs |
-| `src/app/products/[slug]/page.tsx` | Per-product page mounting the viewer |
-| `src/app/page.tsx` | Home — Announced Projects above All Sites |
-| `src/app/about/page.tsx` | Has the "Data Confidence" section |
-| `src/data/products/index.ts` | ProductSpec / PartSpec types incl. `hotspot: {x,y}` |
-| `src/data/products/<slug>.ts` | 13 specs with parts + hotspots + credits |
-| `src/data/types.ts` | `Factory.status` includes `"announced"` |
-| `public/data/factories.json` | 5 sites marked status:"announced" + confidence:"speculative" |
-| `public/products/photos/<slug>/main.{jpg,svg}` | Main reference photo |
-| `public/products/photos/<slug>/{1,2,3}.jpg` | Old gallery photos (unused by viewer, kept on disk) |
-| `scripts/apply-hotspots.py` | **edit this when adjusting dot positions** |
-| `scripts/sam-hotspots.py` | Original SAM seed → polygon generator (legacy) |
-| `scripts/polygon-to-points.py` | One-shot migrator (already used; legacy) |
-| `scripts/gather-product-gallery.py` | Wikimedia gallery fetcher (legacy — gallery strip removed) |
-| `scripts/optimize-product-photos.py` | Pillow resize to ≤1600 px, q86 JPEG |
-
-### Dead code safe to delete next session
-- `src/components/Product3DViewer.tsx`
-- `src/components/Product3DViewerWrapper.tsx`
-- `scripts/capture-product-thumbnails.mjs`
-- `scripts/analyze-product-bounds.mjs`
-- `scripts/comfy-cutaway*.py` if any remain
-- `galleryPhotos: [...]` blocks in `src/data/products/*.ts`
+| `src/data/tickers.ts` | **36 public companies**. Single biggest data file. Add new tickers here. |
+| `src/data/privateCompanies.ts` | 5 private cos with valuation-source labels. |
+| `src/data/supplyChain.ts` | 33 directional edges. Add edges when a primary source confirms a dependency. |
+| `src/data/learn.ts` | 10 glossary entries. Each ~400-700 words. Add new terms here. |
+| `src/app/company/[slug]/page.tsx` | The canonical Atlas company page. |
+| `src/app/company/[slug]/opengraph-image.tsx` | Dynamic per-company OG image for X cards. |
+| `src/app/private/[slug]/page.tsx` | Private company pages — same shape as /company but with valuation-est. labels. |
+| `src/app/markets/page.tsx` | Live multi-sector heatmap + top movers. |
+| `src/app/sectors/[slug]/page.tsx` | Sector hubs (11 sectors). |
+| `src/app/supply-chain/page.tsx` | Layered tier + edges list. |
+| `src/app/learn/[slug]/page.tsx` | Glossary. |
+| `src/app/calendar/page.tsx`, `src/app/news/page.tsx`, `src/app/downloads/page.tsx`, `src/app/investor/page.tsx`, `src/app/watchlist/...` | Self-explanatory. |
+| `src/app/about/page.tsx` | Full rewrite — Atlas tone + 5 moats + primary-source policy. |
+| `src/components/FacilityMap.tsx` (+wrapper) | Multi-point Leaflet+ESRI map used on company pages. |
+| `src/components/Sparkline.tsx` | SVG sparkline with 6 range tabs. |
+| `src/components/GlobalSearch*.tsx` | Cmd-K modal. |
+| `vercel.json` | Cron config: `/api/digest` daily 14:00 UTC. |
+| `content/social-drafts/2026-05-22/x-launch.md` | EN + KO launch thread drafts. |
 
 ---
 
@@ -144,41 +134,32 @@ the side panel collapses below the photo.
 HANDOFF.md 읽고 현재 상태 파악해줘.
 ```
 
-Then pick one of these (most likely user priorities first):
+Then likely user priorities (best guess):
 
-### 1. Fine-tune more dots (most likely)
-User report format: `[product]의 [part_name] 점이 [방향]으로 어긋남`
+### 1. Hook digest cron to actual email (highest revenue impact)
+Wire Resend (free 100/day) into `/api/digest`. When the cron fires, fetch the JSON payload, render HTML, mass-send to every email in `subscribers:emails` Upstash set. **~30 min work.**
 
-You: open `scripts/apply-hotspots.py`, edit the (x, y) for that product/part
-in the `HOTSPOTS` dict, then:
+### 2. Stripe + Supabase Auth for the Investor tier
+Currently `/investor` is email-capture only. Wire $9/mo + $99/yr products + a `subscription_status` check on `/api/digest` (so only paid users get the email). **~3-4 hours.**
 
-```bash
-PYTHONIOENCODING=utf-8 "G:/ComfyUI_windows_portable/venv/Scripts/python.exe" \
-  scripts/apply-hotspots.py
-git add -A && git commit -m "..." && git push
-```
+### 3. Refresh market-cap data
+Build `scripts/refresh-marketcaps.mjs` that hits Yahoo Finance for every ticker.marketCapB, writes back to the data file. Run on cron. ~1 hour.
 
-Verify by waiting ~90s and opening the page in the Claude-in-Chrome browser.
-Don't claim it's fixed until you've eyeballed the live screenshot.
+### 4. Cover more companies (Phase 6+ per handoff)
+- LG Electronics, Samsung Display, more semis (KLAC, AMAT, LRCX), Intel Foundry detail, MRVL, ON
+- Hanwha Solutions, Doosan Robotics (000150.KS), Rainbow Robotics (277810.KQ)
+- Lithium Americas (LAC), QuantumScape (QS), Northvolt (now bankrupt — historical only)
+- Helion / Commonwealth Fusion already in private; add TAE Technologies, Type One Energy
 
-### 2. Add hotspots for missing products / parts
-Same `apply-hotspots.py` workflow. Read the photo first
-(`public/products/photos/<slug>/main.jpg`) to identify what's visible.
+### 5. Korean-language X content
+Owner asked for KO X posts. Drafts exist at `content/social-drafts/2026-05-22/x-launch.md`. Refresh weekly.
 
-### 3. Clean up legacy code
-Delete the 3D viewer files + galleryPhotos blocks. Verify build still passes.
-
-### 4. Mobile testing
-Open Claude-in-Chrome at a phone viewport (~390×844) and screenshot every
-key page. Note any overflow / illegible text.
-
-### 5. B option — investor tier MVP
-(Stripe + Supabase Auth + email alerts on milestone changes). Bigger task,
-3–5 hours.
+### 6. Continue hotspot fine-tuning
+User report format: `[product]의 [part_name]이 [방향]으로 어긋남` → edit `scripts/apply-hotspots.py`, re-run, push.
 
 ---
 
-## Important behavior memory (don't forget)
+## Important behavior memory
 
 User profile (`C:/Users/JIBBY/.claude/projects/G--claude/memory/`):
 - **Always merge to main immediately after every fix** — Vercel deploys from main
@@ -186,18 +167,12 @@ User profile (`C:/Users/JIBBY/.claude/projects/G--claude/memory/`):
 - Korean. `~합니다` / `~해드릴게요` formal-but-warm tone
 - Don't ask for confirmation on small reversible changes; do ask for risky ones
 
-Session-specific lessons (user has seen me fail on these):
-- **Never claim "launchable" without a live browser smoke test first.**
-  The user caught a fully broken Vercel deploy because I said it was ready.
-- **Verify with computer-use / claude-in-chrome whenever claiming a page works.**
-  In this session: cached image `onLoad` not firing, gallery-strip useless,
-  Announced filter typo — all only found by opening the live page.
-- **Grok-coded contributions are often hallucinated.** Read the diff and run
-  the page. Grok in this session shipped one PR with 4 of 6 claims being
-  full hallucinations.
-- **SAM polygon migrators silently fail.** SAM masks for ambiguous regions
-  (rocket vs launch smoke, car body vs door cutline) cluster at the center
-  or jump to background. Hand-tuning beats SAM here.
+Critical rules from the autonomous handoff doc (`G:\jb\gigascope-자율-핸드오프.txt`):
+- **You are NOT a junior dev waiting for tickets.** Read the vision, execute. Don't ask permission per company. Only escalate strategic decisions.
+- **Accuracy is the moat.** Musk fans + semis analysts + REE investors will catch one wrong number and trust collapses. ALWAYS cite Tier-1 primary sources (SEC EDGAR, DART, IR, whitepapers). NEVER Wikipedia/Reddit/blogs as a sole source.
+- **Korean coverage is the differentiator.** Owner is Korean → DART filings are a structural moat over Bloomberg's thin Korea desk.
+- **NOT Yahoo Finance, NOT Bloomberg.** Atlas, not terminal. Visual + interactive, not spreadsheet.
+- **Skip:** real-time trading, comments/forums, crypto/NFT, 3-tier pricing, ads.
 
 ---
 
@@ -223,20 +198,25 @@ git log --oneline -10
 
 ---
 
-## Repo state at end of session
+## Repo state at end of overnight session
 
 Latest commits (newest first):
 ```
-5dc4469 cybertruck: nudge bed + tonneau dots onto the actual cargo vault
-c9b8826 Hotspots: hand-tuned dots for all 11 products, verified against the actual reference photo
-bab4484 viewer: read naturalSize via useEffect — cached images never fire onLoad
-640a9fe viewer: block parent + text-align center to stop flex from stretching the photo wrapper
-ffb49d2 viewer: pin wrapper to photo aspect ratio so img and SVG are pixel-aligned
-59592c3 viewer: CSS Grid stack + viewBox=naturalSize so dots land exactly on the photo
-54c2809 viewer: wrap photo+dots in an inline-block so the SVG overlay sits flush with the image
-fb4e1ef Hotspots: numbered dots in place of polygons; remove gallery strip
-9e9d97f page: fix Announced Projects filter — was checking 'planned' but data uses 'announced'
-689f460 feat: full Announced Projects system + data cleanup + wiring improvements (Grok)
+4e11b88 feat: private company pages (SpaceX, xAI, Anduril, Helion, Commonwealth Fusion)
+6888717 feat: /learn glossary + Hyperscalers sector + About rewrite
+3c935c1 content: more deepDives + LIG Nex1 + IBM Quantum + Lynas + launch marketing drafts
+5b75491 feat: long-form deepDives + downloads + daily digest cron
+2759936 feat: global cmd-K search + nav expansion + Atlas-tone polish
+aab98ca feat: supply chain graph + batteries/EV/Korea industrial coverage + Model 3 hotspot fix
+a235da9 feat: pivot to Atlas framing — company pages, primary-source citations, Investor tier
+e19c893 feat: massive multi-sector expansion — markets + sectors + tickers + pro tier
+1c95a35 HANDOFF: snapshot end of products-page rework — photo viewer with numbered dots is live
 ```
 
-Working tree should be clean.
+Working tree should be clean (this file is the only delta after the last commit; commit it next).
+
+**Page count delta** (rough): old build ~50 static/SSG pages → current build ~120 (factories 16 + products 13 + companies 36 + tickers 36 + private 5 + sectors 11 + learn 10 + statics ~15 + assorted dynamic).
+
+**Sectors covered** (11): Musk Empire, Semis & AI Compute, Quantum, Critical Materials, Defense & Space, Fusion & Nuclear, Robotics & Applied AI, Batteries & EVs, Korea Industrial, China Tech, Hyperscalers.
+
+**Korean-listed names in coverage** (6): 005930.KS Samsung, 000660.KS SK Hynix, 373220.KS LGES, 006400.KS Samsung SDI, 005380.KS Hyundai Motor, 012450.KS Hanwha Aerospace, 079550.KS LIG Nex1.
