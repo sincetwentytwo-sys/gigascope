@@ -107,6 +107,46 @@ export const LEARN: LearnEntry[] = [
     relatedTickers: ["373220.KS", "006400.KS", "300750.SZ", "1211.HK", "TSLA"],
   },
   {
+    slug: "starship-reuse",
+    term: "Starship reuse",
+    oneLiner: "Full-stack rapid reusability of a 100-150t-to-LEO vehicle. Drops $/kg to LEO by 1-2 orders of magnitude.",
+    category: "space",
+    body:
+      "SpaceX's Falcon 9 demonstrated first-stage reuse starting in 2017, dropping per-kg-to-LEO cost from ~$10K (Atlas V, Shuttle-era) to ~$2-3K. Starship is the next-generation full-stack reusable vehicle — both the booster (Super Heavy) and the second stage (Starship) are designed to land and be reflown. The vehicle delivers 100-150 tonnes to LEO in expendable mode, and the same payload with reuse.\n\nThe technical challenges that remain (as of mid-2026): reliable second-stage reentry through Earth's atmosphere with thermal protection (ceramic-tile + actively-cooled approach has had visible damage on several flights); booster catch-by-Mechazilla precision at scale; orbital propellant transfer (required for any deep-space mission); full payload-bay deployment cadence at ~10-minute turnaround. Each one is solvable, none have been solved at production cadence yet.\n\nThe downstream implications: Starlink V3 satellites (2-3× bigger and heavier per unit) are designed assuming Starship lift, not Falcon 9. The Artemis lunar lander variant is contracted with NASA. Mars architecture is the eventual destination. Outside SpaceX, no other launcher — including Blue Origin's New Glenn, Rocket Lab's Neutron, Stoke Space's Nova, and China's Long March 9 — is in flight test at this scale. The structural advantage is multi-year and compounding: every Starship test article is a real-world data point that competitors cannot replicate from publications.",
+    relatedTickers: ["RKLB", "TSLA"],
+    relatedTerms: ["hyperscaler-capex"],
+  },
+  {
+    slug: "optimus-humanoid",
+    term: "Optimus / humanoid robots",
+    oneLiner: "General-purpose bipedal humanoid robots. Tesla's bet that the EV chassis platform also runs a robot.",
+    category: "autonomy",
+    body:
+      "A humanoid robot — bipedal, bimanual, in roughly human size and form factor — was, until ~2022, a research project. By mid-2026 it is a public-market competitive frontier with at least 8 credible programs: Tesla Optimus, Figure AI, Apptronik (Apollo), Agility Robotics (Digit), Sanctuary AI (Phoenix), 1X Technologies (Neo), Unitree (China), and Boston Dynamics (Atlas — owned by Hyundai). The thesis: the same neural-network architectures that drive end-to-end FSD can drive bimanual manipulation in unstructured environments.\n\nWhat makes humanoids interesting commercially: form-factor matters. A bipedal humanoid plugs into infrastructure designed for humans — factories, warehouses, kitchens, homes. A cobot or AGV requires environment redesign. The TAM, if humanoids work at <$30K per unit and >2-shift labor displacement, is measured in trillions.\n\nWhat's hard: actuation (force-controlled motion that's safe around humans), battery life (4-6 hours typical at task-relevant power), training data (you cannot scrape humanoid demonstrations from YouTube — every program is racing to record telemetry from human operators in teleop), and unit cost. Tesla's claim: Optimus comes off the same line that makes Cybertruck rear motors, leveraging existing Tesla supply chain. The bear case: Boston Dynamics has shipped industrial bipedal robots for years without economic disruption — fluency-of-motion is not enough.",
+    relatedTickers: ["TSLA", "005380.KS", "277810.KQ", "NVDA"],
+    relatedTerms: ["fsd-robotaxi"],
+  },
+  {
+    slug: "gigafactory",
+    term: "Gigafactory",
+    oneLiner: "Tesla's vertically-integrated EV + battery assembly model. Now copied by every legacy OEM.",
+    category: "energy",
+    body:
+      "Tesla popularized the term 'Gigafactory' for its Nevada (2014) facility — the first co-located battery cell production + vehicle pack + drivetrain assembly campus designed to push the cell-pack-vehicle integration as far upstream as possible. The architectural insight: the cost stack of an EV is dominated by the battery, and the battery cost is dominated by per-unit-of-energy economics that respond well to scale. A 50 GWh per year cell line + vehicle pack line at the same campus eliminates a layer of transport + intermediate inventory cost.\n\nThe original Tesla Gigafactories — Nevada, Shanghai, Berlin, Texas — define the playbook. Each iteration tightened the design (Texas is a 'unboxed manufacturing' concept where Cybertruck is built in parallel sub-assemblies). The Mexico (Giga Monterrey) site, paused in 2024, was the next-platform vehicle launch site. Every legacy OEM has now copied the model: GM Ultium with LG Energy Solution at Spring Hill TN + Lordstown OH, Stellantis NextStar with Samsung SDI + LGES, Hyundai Metaplant America with LGES, Toyota's Liberty NC plant with PPES.\n\nThe Korean cell makers are arguably the most under-appreciated beneficiaries of this trend: every credible non-Chinese gigafactory has a Korean cell maker as JV partner.",
+    relatedTickers: ["TSLA", "373220.KS", "006400.KS", "005380.KS"],
+    relatedTerms: ["lfp-vs-nmc"],
+  },
+  {
+    slug: "training-cluster",
+    term: "Training cluster (AI compute supercluster)",
+    oneLiner: "Tens-of-thousands-of-GPUs co-located for foundation-model pretraining. Network topology = the second most important number.",
+    category: "compute",
+    body:
+      "A frontier-AI 'training cluster' is a co-located fleet of typically 10,000 to 200,000+ AI accelerators (Hopper, Blackwell, TPU v5/v6) connected by a high-bandwidth network fabric. The training of a frontier LLM is a tightly-coupled distributed computation — gradient synchronization happens every few seconds at the limit of network bandwidth, so the cluster's effective FLOPS is bounded by network topology, not raw chip count.\n\nThe defining metric beyond raw GPU count is the all-reduce bandwidth at scale. NVIDIA's NVLink (between adjacent GPUs in a rack) + NVSwitch (within a rack-system like NVL72) + Spectrum-X or InfiniBand (between racks) define the bandwidth envelope. A 'good' cluster utilization on frontier-model training is ~30-40% Model FLOPs Utilization (MFU); a 'bad' one is 15%.\n\nMost-famous live clusters:\n• xAI Colossus (Memphis): 100K+ H100 + 50K H200 — built in 122 days from greenfield.\n• Microsoft + OpenAI clusters (multiple sites): >300K H100-equivalents in aggregate.\n• Meta superclusters (Tom's River + future Hyperion): 350K+ H100s, target 2M Blackwell-equivalents by 2025.\n• Google TPU pods (multiple regions): ~250 TPU v5p in a v5p pod, fabric-interconnected into multi-pod superclusters.\n\nThe physical limits — power (1+ GW), cooling (liquid by default at Blackwell density), siting (rural land + grid connection), water — are now binding the architecture, which is why hyperscaler nuclear PPAs (MSFT-Constellation, Helion-MSFT, GOOG-Kairos, AMZN-Talen) have become a structural side-bet.",
+    relatedTickers: ["NVDA", "MSFT", "GOOG", "META", "AMZN", "TSLA"],
+    relatedTerms: ["hyperscaler-capex", "hbm", "cowos"],
+  },
+  {
     slug: "smr",
     term: "SMR (Small Modular Reactor)",
     oneLiner: "Factory-built nuclear reactors <300 MWe each. The credible answer to AI data-center power demand.",
