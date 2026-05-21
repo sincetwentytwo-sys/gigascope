@@ -2,6 +2,7 @@ import { TICKERS, SECTORS, tickerHref } from "@/data/tickers";
 import { factories } from "@/data/factories";
 import { listProducts } from "@/data/products";
 import { LEARN } from "@/data/learn";
+import { listPrivateCompanies } from "@/data/privateCompanies";
 import GlobalSearch from "./GlobalSearch";
 
 const STATIC_PAGES: Array<{ title: string; href: string; subtitle: string }> = [
@@ -59,6 +60,16 @@ export default function GlobalSearchProvider() {
       subtitle: p.category,
       href: `/products/${p.slug}`,
       blob: `${p.name} ${p.aka ?? ""} ${p.category}`.toLowerCase(),
+    });
+  }
+  // private companies
+  for (const c of listPrivateCompanies()) {
+    entries.push({
+      kind: "company",
+      title: `${c.name} (private)`,
+      subtitle: c.thesis.slice(0, 110),
+      href: `/private/${c.slug}`,
+      blob: `${c.name} private ${c.hq} ${c.sectors.join(" ")}`.toLowerCase(),
     });
   }
   // learn entries

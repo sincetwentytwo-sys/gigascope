@@ -3,6 +3,7 @@ import { factories, DATA_LAST_UPDATED } from "@/data/factories";
 import { listProducts } from "@/data/products";
 import { SECTORS, TICKERS } from "@/data/tickers";
 import { LEARN } from "@/data/learn";
+import { listPrivateCompanies } from "@/data/privateCompanies";
 
 const BASE_URL = "https://gigascope.xyz";
 
@@ -19,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/calendar`, lastModified: lastMod, changeFrequency: "daily", priority: 0.7 },
     { url: `${BASE_URL}/downloads`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.6 },
     { url: `${BASE_URL}/learn`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.75 },
+    { url: `${BASE_URL}/private`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE_URL}/watchlist`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE_URL}/compare`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE_URL}/timeline`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.7 },
@@ -68,5 +70,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.65,
   }));
 
-  return [...staticPages, ...sectorPages, ...companyPages, ...tickerPages, ...factoryPages, ...productPages, ...learnPages];
+  const privatePages: MetadataRoute.Sitemap = listPrivateCompanies().map((c) => ({
+    url: `${BASE_URL}/private/${c.slug}`,
+    lastModified: lastMod,
+    changeFrequency: "weekly",
+    priority: 0.85,
+  }));
+
+  return [...staticPages, ...sectorPages, ...companyPages, ...tickerPages, ...factoryPages, ...productPages, ...learnPages, ...privatePages];
 }
