@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/markets`, lastModified: lastMod, changeFrequency: "hourly", priority: 0.95 },
     { url: `${BASE_URL}/sectors`, lastModified: lastMod, changeFrequency: "daily", priority: 0.9 },
     { url: `${BASE_URL}/news`, lastModified: lastMod, changeFrequency: "hourly", priority: 0.85 },
+    { url: `${BASE_URL}/supply-chain`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.85 },
     { url: `${BASE_URL}/investor`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.85 },
     { url: `${BASE_URL}/calendar`, lastModified: lastMod, changeFrequency: "daily", priority: 0.7 },
     { url: `${BASE_URL}/watchlist`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.5 },

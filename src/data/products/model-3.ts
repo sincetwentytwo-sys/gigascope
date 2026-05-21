@@ -86,7 +86,7 @@ export const model3: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.6,
       roughness: 0.5,
-      hotspot: { x: 0.6500, y: 0.6500 },
+      hotspot: { x: 0.6500, y: 0.7500 },
     },
     {
       id: "wheel-fr",
@@ -113,7 +113,7 @@ export const model3: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.6,
       roughness: 0.5,
-      hotspot: { x: 0.1800, y: 0.6500 },
+      hotspot: { x: 0.1800, y: 0.7500 },
     },
     {
       id: "wheel-rr",

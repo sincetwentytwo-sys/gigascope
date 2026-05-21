@@ -8,6 +8,7 @@ import TickerNews from "@/components/TickerNews";
 import WatchlistButton from "@/components/WatchlistButton";
 import Sparkline from "@/components/Sparkline";
 import FacilityMapWrapper from "@/components/FacilityMapWrapper";
+import { upstreamOf, downstreamOf } from "@/data/supplyChain";
 
 export const revalidate = 1800;
 
@@ -48,6 +49,9 @@ export default async function CompanyPage({ params }: { params: Promise<{ slug: 
   const competitors = (t.competitors ?? [])
     .map((c) => getTicker(c))
     .filter((x): x is NonNullable<typeof x> => !!x);
+
+  const upstream = upstreamOf(t.symbol);
+  const downstream = downstreamOf(t.symbol);
 
   return (
     <div className="max-w-[1200px] mx-auto px-6 py-10">
@@ -191,6 +195,70 @@ export default async function CompanyPage({ params }: { params: Promise<{ slug: 
           )}
 
           {/* Supply chain */}
+          {(upstream.length > 0 || downstream.length > 0) && (
+            <section>
+              <div className="flex items-end justify-between mb-3">
+                <h2 className="text-lg font-bold">Supply chain</h2>
+                <a href="/supply-chain" className="text-xs text-dim hover:text-text">Full graph →</a>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <div className="text-xs uppercase tracking-wider text-dim mb-2">Upstream — feeds into {t.symbol}</div>
+                  {upstream.length === 0 ? (
+                    <div className="text-xs text-dim p-3 rounded border border-dashed border-border-custom">
+                      No tracked upstream dependencies yet.
+                    </div>
+                  ) : (
+                    <ul className="flex flex-col gap-1.5">
+                      {upstream.map((e, i) => {
+                        const from = getTicker(e.from);
+                        return (
+                          <li key={i} className="p-2.5 rounded border border-border-custom">
+                            <div className="flex items-center gap-2 text-sm">
+                              {from ? (
+                                <a href={`/company/${from.symbol.toLowerCase().replace(/\./g, "-")}`} className="font-mono font-bold hover:underline">{e.from}</a>
+                              ) : (<span className="font-mono">{e.from}</span>)}
+                              <span className="text-dim">→</span>
+                              <span className="text-dim text-xs">{e.criticality}</span>
+                            </div>
+                            <div className="text-xs text-dim mt-0.5">{e.flow}</div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </div>
+                <div>
+                  <div className="text-xs uppercase tracking-wider text-dim mb-2">Downstream — {t.symbol} feeds into</div>
+                  {downstream.length === 0 ? (
+                    <div className="text-xs text-dim p-3 rounded border border-dashed border-border-custom">
+                      No tracked downstream customers yet.
+                    </div>
+                  ) : (
+                    <ul className="flex flex-col gap-1.5">
+                      {downstream.map((e, i) => {
+                        const to = getTicker(e.to);
+                        return (
+                          <li key={i} className="p-2.5 rounded border border-border-custom">
+                            <div className="flex items-center gap-2 text-sm">
+                              <span className="text-dim">→</span>
+                              {to ? (
+                                <a href={`/company/${to.symbol.toLowerCase().replace(/\./g, "-")}`} className="font-mono font-bold hover:underline">{e.to}</a>
+                              ) : (<span className="font-mono">{e.to}</span>)}
+                              <span className="text-dim text-xs">{e.criticality}</span>
+                            </div>
+                            <div className="text-xs text-dim mt-0.5">{e.flow}</div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Adjacent companies (competitors) */}
           {competitors.length > 0 && (
             <section>
               <h2 className="text-lg font-bold mb-3">Adjacent companies</h2>

@@ -35,8 +35,8 @@ HOTSPOTS: dict[str, dict[str, tuple[float, float]]] = {
         "roof-glass":     (0.42, 0.17),
         "windshield":     (0.55, 0.30),
         "front-bumper":   (0.92, 0.55),
-        "wheel-fl":       (0.65, 0.65),  # near (front) wheel
-        "wheel-rl":       (0.18, 0.65),  # far (rear) wheel
+        "wheel-fl":       (0.65, 0.75),  # near (front) wheel — nudged down onto the hub
+        "wheel-rl":       (0.18, 0.75),  # far (rear) wheel — nudged down onto the hub
         "trunk":          (0.08, 0.42),
     },
     # Front-3/4 right view; SUV

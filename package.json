@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "update:factories": "node scripts/data/update-factories.mjs",
-    "capture:thumbnails": "node scripts/capture-product-thumbnails.mjs"
+    "update:factories": "node scripts/data/update-factories.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

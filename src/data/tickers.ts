@@ -19,7 +19,10 @@ export type SectorId =
   | "critical-materials"
   | "defense-space"
   | "fusion-nuclear"
-  | "robotics-ai";
+  | "robotics-ai"
+  | "batteries-ev"
+  | "korea-industrial"
+  | "china-tech";
 
 export type Confidence = "high" | "medium" | "low" | "speculative";
 
@@ -167,6 +170,33 @@ export const SECTORS: Sector[] = [
       "Optimus is the canonical humanoid, but a public-market basket is forming: PLTR (defense AI), SYM (warehouse autonomy), and the next wave of robotics IPOs in queue.",
     color: "#0077b6",
     icon: "🤖",
+  },
+  {
+    id: "batteries-ev",
+    name: "Batteries & EVs",
+    blurb: "Cell makers + EV majors — LFP/NMC, solid-state, gigafactories.",
+    longBlurb:
+      "The physical-layer enablers of electrification. Korean trio (LGES / Samsung SDI / SK On) plus CATL and BYD dominate global cell output. Solid-state (QuantumScape) is the option-value contender.",
+    color: "#0066cc",
+    icon: "🔋",
+  },
+  {
+    id: "korea-industrial",
+    name: "Korea Industrial",
+    blurb: "Hyundai, Hanwha, LIG Nex1 — chaebol champions in EV, defense, energy.",
+    longBlurb:
+      "Korean industrial chaebols on the KOSPI. Hyundai Motor (EV/robotics — Boston Dynamics), Hanwha Aerospace (defense + space), LIG Nex1 (missiles). Underfollowed in English-language coverage — primary-source advantage from DART.",
+    color: "#003478",
+    icon: "🇰🇷",
+  },
+  {
+    id: "china-tech",
+    name: "China Tech",
+    blurb: "BYD, CATL, SMIC — the parallel industrial complex.",
+    longBlurb:
+      "Geopolitically sensitive but unavoidable for global supply-chain mapping. Tracked with primary-source caveats; export controls, sanctions, and listing-venue (HKEX vs Shenzhen vs ADR) all noted per name.",
+    color: "#e60012",
+    icon: "🇨🇳",
   },
 ];
 
@@ -1031,6 +1061,253 @@ export const TICKERS: Ticker[] = [
     ],
     accent: "#fdb913",
     lastVerified: "2026-05-22",
+  },
+
+  // ─────────────────────── BATTERIES & EVs ───────────────────────
+  {
+    symbol: "373220.KS",
+    yahooSymbol: "373220.KS",
+    name: "LG Energy Solution",
+    shortName: "LGES",
+    exchange: "KRX",
+    hq: "Seoul, South Korea",
+    ceo: "Kim Dong-myung",
+    founded: 2020,
+    website: "https://www.lgensol.com",
+    sectors: ["batteries-ev", "korea-industrial"],
+    marketCapB: 75,
+    marketCapAsOf: "2026-05",
+    koreanName: "LG에너지솔루션",
+    thesis:
+      "Largest non-Chinese EV battery maker. NMC/NCMA leadership + emerging LFP capability. GM, Hyundai/Kia, Stellantis JVs anchor demand.",
+    bullCase: [
+      "GM Ultium JV is durable, multi-decade footprint in N. America.",
+      "ESS demand inflecting alongside utility-scale storage (Tesla-style).",
+      "Solid-state R&D + lithium-sulfur on roadmap.",
+    ],
+    bearCase: [
+      "Margin pressure from Chinese LFP commoditization.",
+      "GM EV demand has been choppy — JV utilization risk.",
+      "Capex intensity for new gigafactory builds.",
+    ],
+    catalysts: [
+      { date: "2026-2H", label: "Holland MI LFP line online", confidence: "medium" },
+      { date: "2027", label: "Solid-state cell sampling", confidence: "speculative" },
+    ],
+    competitors: ["006400.KS", "300750.SZ", "1211.HK"],
+    accent: "#a50034",
+    featured: true,
+    lastVerified: "2026-05-22",
+    sources: [
+      { label: "LGES DART filings", url: "https://dart.fss.or.kr/dsab007/main.do?textCrpNm=LG%EC%97%90%EB%84%88%EC%A7%80%EC%86%94%EB%A3%A8%EC%85%98", tier: 1 },
+      { label: "LGES IR (English)", url: "https://www.lgensol.com/en/ir-financial-info", tier: 1 },
+    ],
+    facilities: [
+      { name: "Ochang Plant", city: "Ochang", country: "South Korea", flag: "🇰🇷", lat: 36.7172, lng: 127.4400, status: "operational", blurb: "Korea HQ + R&D + pilot. NMC + solid-state R&D." },
+      { name: "Wrocław Plant (Europe)", city: "Wrocław", country: "Poland", flag: "🇵🇱", lat: 51.1079, lng: 17.0385, status: "operational", blurb: "Largest EV battery plant in Europe (~80 GWh annual)." },
+      { name: "Holland MI (Ultium JV w/ GM)", city: "Holland", country: "USA", flag: "🇺🇸", lat: 42.7875, lng: -86.1089, status: "expanding", blurb: "GM Ultium JV. NMC + LFP capacity coming." },
+      { name: "Lansing JV w/ Honda", city: "Lansing", country: "USA", flag: "🇺🇸", lat: 42.7325, lng: -84.5555, status: "construction", blurb: "Honda 50:50 JV, 40 GWh." },
+    ],
+  },
+  {
+    symbol: "006400.KS",
+    yahooSymbol: "006400.KS",
+    name: "Samsung SDI",
+    shortName: "Samsung SDI",
+    exchange: "KRX",
+    hq: "Yongin, South Korea",
+    ceo: "Choi Joo-Sun",
+    founded: 1970,
+    website: "https://www.samsungsdi.com",
+    sectors: ["batteries-ev", "korea-industrial"],
+    marketCapB: 25,
+    marketCapAsOf: "2026-05",
+    koreanName: "삼성SDI",
+    thesis:
+      "Samsung-group battery arm. Premium NMC focus (BMW, Stellantis, GM JV). Solid-state most-advanced pilot among Korean trio.",
+    bullCase: [
+      "Pilot line for all-solid-state cell already operating at Suwon.",
+      "Stellantis StarPlus JV (33 GWh) operational from 2025.",
+      "ESS pivot taking share alongside EV slowdown.",
+    ],
+    bearCase: [
+      "Smaller scale than LGES — pricing leverage limited.",
+      "EV slowdown hits revenue concentration on premium auto.",
+    ],
+    competitors: ["373220.KS", "300750.SZ"],
+    accent: "#1428a0",
+    lastVerified: "2026-05-22",
+    sources: [
+      { label: "Samsung SDI DART", url: "https://dart.fss.or.kr/dsab007/main.do?textCrpNm=%EC%82%BC%EC%84%B1SDI", tier: 1 },
+      { label: "Samsung SDI IR", url: "https://www.samsungsdi.com/ir/financial-information.html", tier: 1 },
+    ],
+    facilities: [
+      { name: "Suwon HQ + R&D", city: "Suwon", country: "South Korea", flag: "🇰🇷", lat: 37.2636, lng: 127.0286, status: "operational" },
+      { name: "Cheonan Plant", city: "Cheonan", country: "South Korea", flag: "🇰🇷", lat: 36.8151, lng: 127.1139, status: "operational" },
+      { name: "StarPlus Stellantis JV", city: "Kokomo", country: "USA", flag: "🇺🇸", lat: 40.4864, lng: -86.1336, status: "operational", blurb: "First US battery JV: Stellantis-Samsung SDI, ~33 GWh." },
+    ],
+  },
+  {
+    symbol: "300750.SZ",
+    yahooSymbol: "300750.SZ",
+    name: "Contemporary Amperex Technology (CATL)",
+    shortName: "CATL",
+    exchange: "KRX",
+    hq: "Ningde, Fujian, China",
+    ceo: "Robin Zeng",
+    founded: 2011,
+    website: "https://www.catl.com",
+    sectors: ["batteries-ev", "china-tech"],
+    marketCapB: 180,
+    marketCapAsOf: "2026-05",
+    thesis:
+      "World's largest EV battery maker (~37% share). LFP cost leadership + sodium-ion roadmap + Shenxing fast-charge platform.",
+    bullCase: [
+      "Cost leadership in LFP is a 20-30% wedge vs Western/Korean cells.",
+      "Tesla, Ford, BMW, Mercedes all use CATL cells — diverse customer base.",
+      "Sodium-ion + condensed matter battery are real, not vapor.",
+    ],
+    bearCase: [
+      "US tariff + IRA exclusion drag on N. American addressable market.",
+      "Geopolitical tail risk.",
+      "Western OEMs vertical-integrating to displace.",
+    ],
+    competitors: ["373220.KS", "006400.KS", "1211.HK"],
+    accent: "#e60012",
+    featured: true,
+    lastVerified: "2026-05-22",
+    sources: [
+      { label: "CATL annual report (Shenzhen exchange)", url: "https://www.szse.cn/disclosure/listed/notice/index.html?stock=300750", tier: 1 },
+      { label: "CATL IR (English)", url: "https://www.catl.com/en/investors/", tier: 1 },
+    ],
+    facilities: [
+      { name: "Ningde HQ + main plant", city: "Ningde", country: "China", flag: "🇨🇳", lat: 26.6650, lng: 119.5478, status: "operational" },
+      { name: "Yibin (LFP mega)", city: "Yibin", country: "China", flag: "🇨🇳", lat: 28.7517, lng: 104.6402, status: "operational" },
+      { name: "Arnstadt (Germany)", city: "Arnstadt", country: "Germany", flag: "🇩🇪", lat: 50.8419, lng: 10.9494, status: "operational" },
+      { name: "Debrecen (Hungary)", city: "Debrecen", country: "Hungary", flag: "🇭🇺", lat: 47.5316, lng: 21.6273, status: "construction" },
+    ],
+  },
+  {
+    symbol: "1211.HK",
+    yahooSymbol: "1211.HK",
+    name: "BYD Company",
+    shortName: "BYD",
+    exchange: "HKEX",
+    hq: "Shenzhen, China",
+    ceo: "Wang Chuanfu",
+    founded: 1995,
+    website: "https://www.byd.com",
+    sectors: ["batteries-ev", "china-tech"],
+    marketCapB: 110,
+    marketCapAsOf: "2026-05",
+    thesis:
+      "Vertically integrated EV+battery champion. Cell-to-pack Blade LFP, cheapest mass-market BEV cost structure on Earth. Tesla's only credible global competitor on cost.",
+    bullCase: [
+      "Vehicle volume already past Tesla on quarterly basis.",
+      "Vertical integration (cells + motors + power electronics + chips).",
+      "Global expansion (Brazil, Hungary, Thailand) bypasses tariffs partially.",
+    ],
+    bearCase: [
+      "Locked out of US passenger-car market by tariffs.",
+      "Margin compression from domestic price war.",
+      "Single-country political concentration risk.",
+    ],
+    competitors: ["TSLA", "300750.SZ"],
+    accent: "#e60012",
+    featured: true,
+    lastVerified: "2026-05-22",
+    sources: [
+      { label: "BYD annual report (HKEX)", url: "https://www.hkexnews.hk/listedco/listconews/sehk/Annual_Report/2024/0428/1211_2024.htm", tier: 1 },
+      { label: "BYD IR", url: "https://www.byd.com/en/about-us/investor-information", tier: 1 },
+    ],
+    facilities: [
+      { name: "Shenzhen HQ + assembly", city: "Shenzhen", country: "China", flag: "🇨🇳", lat: 22.5431, lng: 114.0579, status: "operational" },
+      { name: "Hefei mega complex", city: "Hefei", country: "China", flag: "🇨🇳", lat: 31.8206, lng: 117.2272, status: "operational" },
+      { name: "Bahia plant", city: "Camaçari", country: "Brazil", flag: "🇧🇷", lat: -12.6989, lng: -38.3231, status: "construction" },
+      { name: "Szeged plant", city: "Szeged", country: "Hungary", flag: "🇭🇺", lat: 46.2530, lng: 20.1414, status: "construction" },
+    ],
+  },
+
+  // ─────────────────────── KOREA INDUSTRIAL ───────────────────────
+  {
+    symbol: "005380.KS",
+    yahooSymbol: "005380.KS",
+    name: "Hyundai Motor Company",
+    shortName: "Hyundai Motor",
+    exchange: "KRX",
+    hq: "Seoul, South Korea",
+    ceo: "Chang Jae-hoon",
+    founded: 1967,
+    website: "https://www.hyundai.com",
+    sectors: ["batteries-ev", "korea-industrial", "robotics-ai"],
+    marketCapB: 45,
+    marketCapAsOf: "2026-05",
+    koreanName: "현대자동차",
+    thesis:
+      "Hyundai-Kia is the only legacy OEM with a credible dedicated EV platform (E-GMP). Owns Boston Dynamics. Combined Hyundai-Kia is #3 global automaker — and trades at half the multiple of any other OEM with comparable EV mix.",
+    bullCase: [
+      "E-GMP and IONIQ 5/6/9 EVs critically acclaimed + winning EV market share globally.",
+      "Boston Dynamics ownership = humanoid + quadruped optionality.",
+      "Hydrogen FCEV bet (NEXO + commercial) genuinely unique.",
+      "Korea discount: KOSPI listings trade at structural multiple discount.",
+    ],
+    bearCase: [
+      "China market share collapse.",
+      "Boston Dynamics revenue tiny vs auto business.",
+      "Chaebol governance overhang on multiple.",
+    ],
+    competitors: ["TSLA", "1211.HK"],
+    accent: "#002c5f",
+    featured: true,
+    lastVerified: "2026-05-22",
+    sources: [
+      { label: "Hyundai DART filings", url: "https://dart.fss.or.kr/dsab007/main.do?textCrpNm=%ED%98%84%EB%8C%80%EC%9E%90%EB%8F%99%EC%B0%A8", tier: 1 },
+      { label: "Hyundai IR", url: "https://www.hyundai.com/worldwide/en/company/ir/finance-information", tier: 1 },
+      { label: "Boston Dynamics (subsidiary)", url: "https://bostondynamics.com", tier: 1 },
+    ],
+    facilities: [
+      { name: "Ulsan Plant (largest auto plant on Earth)", city: "Ulsan", country: "South Korea", flag: "🇰🇷", lat: 35.5104, lng: 129.3597, status: "operational", blurb: "5 plants, ~1.5M vehicles/year capacity." },
+      { name: "Hyundai Motor Group Metaplant America", city: "Ellabell, GA", country: "USA", flag: "🇺🇸", lat: 32.1450, lng: -81.4814, status: "expanding", blurb: "$7.6B EV-dedicated plant + LG batteries JV." },
+      { name: "Boston Dynamics HQ", city: "Waltham, MA", country: "USA", flag: "🇺🇸", lat: 42.3765, lng: -71.2356, status: "operational", blurb: "Atlas + Spot + Stretch robotics." },
+    ],
+  },
+  {
+    symbol: "012450.KS",
+    yahooSymbol: "012450.KS",
+    name: "Hanwha Aerospace",
+    shortName: "Hanwha Aero",
+    exchange: "KRX",
+    hq: "Changwon, South Korea",
+    ceo: "Sohn Jae-il",
+    founded: 1977,
+    website: "https://www.hanwhaaerospace.com",
+    sectors: ["defense-space", "korea-industrial"],
+    marketCapB: 22,
+    marketCapAsOf: "2026-05",
+    koreanName: "한화에어로스페이스",
+    thesis:
+      "Korea's defense + space national champion. K9 howitzer global hit (Poland, Egypt, UK, Australia). Korean SLV Nuri owns rocket IP. Most operating leverage of any defense name globally on the post-Ukraine demand cycle.",
+    bullCase: [
+      "K9 backlog runs through 2028+ across NATO allies.",
+      "Korea space agency contract anchors Nuri rocket commercialization.",
+      "Aerospace engine business + UAM optionality.",
+    ],
+    bearCase: [
+      "Peace breakouts compress multiple.",
+      "Korean won FX drag on USD-denominated contracts.",
+    ],
+    competitors: ["LMT"],
+    accent: "#f7941d",
+    featured: true,
+    lastVerified: "2026-05-22",
+    sources: [
+      { label: "Hanwha Aerospace DART", url: "https://dart.fss.or.kr/dsab007/main.do?textCrpNm=%ED%95%9C%ED%99%94%EC%97%90%EC%96%B4%EB%A1%9C%EC%8A%A4%ED%8E%98%EC%9D%B4%EC%8A%A4", tier: 1 },
+      { label: "Hanwha IR (English)", url: "https://www.hanwhaaerospace.com/eng/investor/ir-events.do", tier: 1 },
+    ],
+    facilities: [
+      { name: "Changwon Plant (K9, engines)", city: "Changwon", country: "South Korea", flag: "🇰🇷", lat: 35.2280, lng: 128.6811, status: "operational" },
+      { name: "Daejeon (rockets, Nuri)", city: "Daejeon", country: "South Korea", flag: "🇰🇷", lat: 36.3504, lng: 127.3845, status: "operational" },
+    ],
   },
 ];
 
