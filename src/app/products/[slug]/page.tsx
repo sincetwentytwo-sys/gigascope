@@ -89,7 +89,7 @@ export default async function ProductDetailPage({
       <div className="mb-4 sm:mb-6">
         <Link
           href="/products"
-          className="font-mono text-[10px] uppercase tracking-widest text-[#8292aa] hover:text-white"
+          className="font-mono text-[10px] uppercase tracking-widest text-dim hover:text-text"
         >
           &larr; All products
         </Link>
@@ -98,7 +98,7 @@ export default async function ProductDetailPage({
             {product.name}
           </h1>
           {product.aka && (
-            <span className="font-mono text-[11px] uppercase tracking-widest text-[#8292aa]">
+            <span className="font-mono text-[11px] uppercase tracking-widest text-dim">
               {product.aka}
             </span>
           )}
@@ -123,33 +123,33 @@ export default async function ProductDetailPage({
           <h2 className="font-bold text-sm uppercase tracking-widest text-white mb-3">
             Overview
           </h2>
-          <p className="text-base text-[#d6dde8] leading-relaxed whitespace-pre-line">
+          <p className="text-base text-text leading-relaxed whitespace-pre-line">
             {product.description}
           </p>
         </div>
 
         <aside className="flex flex-col gap-4">
-          <div className="border border-[#343538] bg-[#121316]/60 p-4">
-            <div className="font-mono text-[10px] uppercase tracking-widest text-[#8292aa] mb-3">
+          <div className="border border-border-custom bg-bg/60 p-4">
+            <div className="font-mono text-[10px] uppercase tracking-widest text-dim mb-3">
               Quick stats
             </div>
             <dl className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <dt className="text-[#8292aa]">Category</dt>
+                <dt className="text-dim">Category</dt>
                 <dd className="text-white" style={{ color: accent }}>
                   {product.category}
                 </dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-[#8292aa]">Parts modeled</dt>
+                <dt className="text-dim">Parts modeled</dt>
                 <dd className="text-white">{product.parts.length}</dd>
               </div>
             </dl>
           </div>
 
           {relatedFactories.length > 0 && (
-            <div className="border border-[#343538] bg-[#121316]/60 p-4">
-              <div className="font-mono text-[10px] uppercase tracking-widest text-[#8292aa] mb-3">
+            <div className="border border-border-custom bg-bg/60 p-4">
+              <div className="font-mono text-[10px] uppercase tracking-widest text-dim mb-3">
                 Built / launched at
               </div>
               <ul className="flex flex-col gap-2">
@@ -157,14 +157,14 @@ export default async function ProductDetailPage({
                   <li key={f.slug}>
                     <Link
                       href={`/site/${f.slug}`}
-                      className="flex items-center gap-2 text-sm text-[#d6dde8] hover:text-white"
+                      className="flex items-center gap-2 text-sm text-text hover:text-text"
                     >
                       <span
                         className="w-2 h-2 rounded-full flex-shrink-0"
                         style={{ background: f.color }}
                       />
                       <span className="flex-1">{f.name}</span>
-                      <span className="font-mono text-[10px] text-[#8292aa]">
+                      <span className="font-mono text-[10px] text-dim">
                         &rarr;
                       </span>
                     </Link>

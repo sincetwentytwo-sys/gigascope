@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import EmailSignup from "@/components/EmailSignup";
+import InvestorCheckout from "@/components/InvestorCheckout";
 
 export const metadata: Metadata = {
   title: "Investor tier — early-bird $9 — GIGASCOPE",
@@ -53,11 +54,13 @@ export default function InvestorPage() {
         ))}
       </div>
 
+      <section className="max-w-md mx-auto mb-12">
+        <InvestorCheckout />
+      </section>
+
       <section className="max-w-md mx-auto mb-16">
-        <EmailSignup tier="pro" source="investor:landing" variant="card" />
-        <p className="text-[11px] text-dim mt-3 text-center">
-          Billing turns on with the first 100 founders. You'll get an email with charter pricing the day it goes live.
-        </p>
+        <div className="text-center text-xs text-dim mb-3">— or just get the free daily digest —</div>
+        <EmailSignup tier="free" source="investor:landing" variant="card" />
       </section>
 
       <section>

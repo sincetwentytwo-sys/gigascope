@@ -9,13 +9,16 @@ export const metadata: Metadata = {
 };
 
 export default function SupplyChainPage() {
-  // Layered layout. Group symbols by their min tier seen as `from` or `to`.
+  // Layered layout. A symbol's tier = its "max appearance" — i.e. the highest
+  // value seen as either fromTier (where it acts as supplier) or toTier (where
+  // it acts as customer). Using max instead of min puts NVDA in tier 3 (since
+  // it's a customer of HBM in tier 3) instead of tier 2 (where it's a supplier).
   const symbolsTier = new Map<string, number>();
   for (const e of EDGES) {
     const prevFrom = symbolsTier.get(e.from);
-    if (prevFrom === undefined || e.fromTier < prevFrom) symbolsTier.set(e.from, e.fromTier);
+    if (prevFrom === undefined || e.fromTier > prevFrom) symbolsTier.set(e.from, e.fromTier);
     const prevTo = symbolsTier.get(e.to);
-    if (prevTo === undefined || e.toTier < prevTo) symbolsTier.set(e.to, e.toTier);
+    if (prevTo === undefined || e.toTier > prevTo) symbolsTier.set(e.to, e.toTier);
   }
 
   const tiers: Map<number, string[]> = new Map();

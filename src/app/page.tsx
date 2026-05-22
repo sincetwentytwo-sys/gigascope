@@ -8,6 +8,7 @@ import SpaceXStats from "@/components/SpaceXStats";
 import TickerGrid from "@/components/TickerGrid";
 import EmailSignup from "@/components/EmailSignup";
 import { SECTORS, TICKERS, featuredTickers, tickersBySector, tickerHref } from "@/data/tickers";
+import { listPrivateCompanies } from "@/data/privateCompanies";
 import type { Company } from "@/data/types";
 
 export const revalidate = 1800;
@@ -69,6 +70,8 @@ export default function Home() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {SECTORS.map((s) => {
             const ts = tickersBySector(s.id);
+            const privates = listPrivateCompanies().filter((c) => c.sectors.includes(s.id));
+            const total = ts.length + privates.length;
             return (
               <a
                 key={s.id}
@@ -81,7 +84,7 @@ export default function Home() {
                   <span className="text-sm font-bold">{s.name}</span>
                 </div>
                 <div className="text-[11px] text-dim line-clamp-2">{s.blurb}</div>
-                <div className="text-[10px] text-dim mt-1.5">{ts.length} names</div>
+                <div className="text-[10px] text-dim mt-1.5">{total} {total === 1 ? "name" : "names"}</div>
               </a>
             );
           })}

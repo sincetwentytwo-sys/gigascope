@@ -60,11 +60,14 @@ export default function TickerLivePrice({
     );
   }
 
-  const currencyPrefix = q.currency === "USD" ? "$" : q.currency === "KRW" ? "₩" : "";
+  const fmtPrice =
+    q.currency === "KRW"
+      ? "₩" + Math.round(parseFloat(q.price)).toLocaleString("en-US")
+      : (q.currency === "USD" ? "$" : "") + parseFloat(q.price).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   return (
     <span className={`inline-flex items-center gap-1.5 ${px} ${className}`}>
       {showSymbol && <span className="font-bold">{symbol}</span>}
-      <span>{currencyPrefix}{q.price}</span>
+      <span>{fmtPrice}</span>
       <span className={q.up ? "text-green-600" : "text-red-500"}>
         {q.change} ({q.changePercent})
       </span>

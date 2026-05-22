@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SECTORS, tickersBySector, getSector, tickerHref } from "@/data/tickers";
+import { listPrivateCompanies } from "@/data/privateCompanies";
 import TickerGrid from "@/components/TickerGrid";
 
 export const revalidate = 1800;
@@ -77,6 +78,22 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
                 )}
               </div>
               <p className="text-sm text-dim">{t.thesis}</p>
+            </a>
+          ))}
+          {listPrivateCompanies().filter((c) => c.sectors.includes(sector.id)).map((c) => (
+            <a
+              key={c.slug}
+              href={`/private/${c.slug}`}
+              className="block p-4 rounded-md border border-border-custom hover:border-text transition-colors"
+            >
+              <div className="flex items-center gap-3 mb-1.5">
+                <span className="font-bold text-base">{c.name}</span>
+                <span className="text-[10px] uppercase px-1.5 py-0.5 rounded bg-surface text-dim">Private</span>
+                {c.valuationB != null && (
+                  <span className="ml-auto text-xs text-dim tabular-nums">~${c.valuationB}B est. · {c.valuationAsOf}</span>
+                )}
+              </div>
+              <p className="text-sm text-dim">{c.thesis}</p>
             </a>
           ))}
         </div>

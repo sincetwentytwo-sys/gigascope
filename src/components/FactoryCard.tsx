@@ -11,142 +11,74 @@ export default function FactoryCard({
 }) {
   const color = factory.color;
 
-  // Announced 프로젝트는 별도 취급
   const isAnnounced = variant === "announced";
   const isAlert = !isAnnounced && (factory.status === "paused" || factory.status === "planned");
-
-  // Announced일 때는 골드(#c4a000) 계열을 우선 사용
-  const accent = isAnnounced ? "#c4a000" : isAlert ? "#ff716c" : color;
+  const accent = isAnnounced ? "#c4a000" : isAlert ? "#e63946" : color;
 
   const filled = Math.max(1, Math.round((factory.progress / 100) * SEGMENTS));
-
-  // Announced visual differentiation: gold top bar + gold hover glow
-  const hoverShadow = isAnnounced
-    ? "hover:shadow-[0_0_18px_rgba(196,160,0,0.22)]"
-    : "hover:shadow-[0_0_15px_rgba(109,221,255,0.15)]";
 
   return (
     <a
       href={`/site/${factory.slug}`}
-      className={`group relative flex flex-col gap-4 sm:gap-5 overflow-hidden border p-4 sm:p-5 transition-all duration-500 ${hoverShadow}`}
-      style={{
-        background: "rgba(15, 17, 23, 0.92)",
-        borderColor: `${accent}33`,
-      }}
+      className="group relative flex flex-col gap-3 overflow-hidden rounded-md border border-border-custom bg-bg hover:border-text transition-colors p-4"
+      style={{ borderLeftWidth: 4, borderLeftColor: accent }}
     >
-      {/* Gold accent bar for announced variant */}
-      {isAnnounced && (
-        <div
-          aria-hidden
-          className="absolute left-0 top-0 z-10 h-[3px] w-full bg-[#c4a000]"
-        />
-      )}
-
-      <span
-        aria-hidden
-        className="pointer-events-none absolute -top-8 -right-8 h-16 w-16 rotate-45 transition-all"
-        style={{ background: `${accent}14` }}
-      />
-
-      <div className="flex items-start justify-between gap-2 sm:gap-3">
-        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-          <div
-            className="flex h-6 w-10 items-center justify-center overflow-hidden border text-base"
-            style={{
-              background: "#1e293b",
-              borderColor: "rgba(255,255,255,0.1)",
-            }}
-          >
-            <span className="opacity-80">{factory.flag}</span>
-          </div>
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-lg leading-none flex-shrink-0">{factory.flag}</span>
           <div className="min-w-0">
-            <h3 className="font-bold tracking-wider text-sm sm:text-[15px] text-[#e5e4ed] uppercase truncate">
-              {factory.name}
-            </h3>
-            <p className="font-mono text-[10px] uppercase text-[#aaaab3] truncate">
-              {factory.location}
-            </p>
+            <h3 className="font-bold text-sm truncate">{factory.name}</h3>
+            <p className="text-[11px] text-dim truncate">{factory.location}</p>
           </div>
         </div>
-        <div
-          className={`border px-2 py-1 flex-shrink-0 ${isAlert ? "animate-pulse" : ""} ${isAnnounced ? "badge badge-announced" : ""}`}
+        <span
+          className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded font-bold flex-shrink-0"
           style={{
-            background: isAnnounced ? undefined : `${accent}1a`,
-            borderColor: isAnnounced ? undefined : `${accent}4d`,
+            background: `${accent}1a`,
+            color: accent,
           }}
         >
-          <span
-            className="font-mono text-[10px] font-bold uppercase tracking-widest"
-            style={{ color: accent }}
-          >
-            {isAnnounced ? "Announced" : factory.status}
-          </span>
-        </div>
+          {isAnnounced ? "Announced" : factory.status}
+        </span>
       </div>
 
-      <div className="space-y-2">
-        <div className="flex items-end justify-between">
-          <span className="font-mono text-[9px] uppercase tracking-widest text-[#aaaab3]">
+      <div>
+        <div className="flex items-end justify-between mb-1">
+          <span className="text-[10px] uppercase tracking-wider text-dim">
             {isAnnounced ? "Status" : "Progress"}
           </span>
-          <span className="font-mono text-xs" style={{ color: accent }}>
+          <span className="text-xs tabular-nums font-medium" style={{ color: accent }}>
             {isAnnounced ? "Announced" : `${factory.progress}%`}
           </span>
         </div>
 
         {isAnnounced ? (
-          // Announced 전용: 얇은 점선 스타일의 placeholder
-          <div className="h-1.5 w-full rounded-full border border-[#c4a000]/40 bg-[#c4a000]/10" />
+          <div className="h-1.5 w-full rounded border border-dashed" style={{ borderColor: `${accent}66` }} />
         ) : (
-          <div className="flex h-1.5 w-full gap-1">
+          <div className="flex h-1.5 w-full gap-0.5">
             {Array.from({ length: SEGMENTS }).map((_, i) => (
               <div
                 key={i}
-                className="h-full flex-grow transition-all"
-                style={
-                  i < filled
-                    ? {
-                        background: accent,
-                        boxShadow: `0 0 8px ${accent}66`,
-                      }
-                    : { background: `${accent}33` }
-                }
+                className="h-full flex-grow rounded-sm"
+                style={i < filled ? { background: accent } : { background: `${accent}1f` }}
               />
             ))}
           </div>
         )}
       </div>
 
-      <div
-        className="grid grid-cols-3 gap-2 sm:gap-4 border-t pt-3 sm:pt-4"
-        style={{ borderColor: "rgba(255,255,255,0.06)" }}
-      >
+      <div className="grid grid-cols-3 gap-2 border-t border-border-custom pt-3 text-[11px]">
         <div className="min-w-0">
-          <div className="font-mono text-[9px] uppercase text-[#64748b]">Area</div>
-          <div
-            className="font-mono text-xs sm:text-sm truncate"
-            style={{ color: isAnnounced ? "#a1a1aa" : "#e5e4ed" }}
-          >
-            {factory.area}
-          </div>
+          <div className="text-dim uppercase tracking-wider text-[9px]">Area</div>
+          <div className="font-medium truncate">{factory.area}</div>
         </div>
         <div className="min-w-0">
-          <div className="font-mono text-[9px] uppercase text-[#64748b]">Capacity</div>
-          <div
-            className="font-mono text-xs sm:text-sm truncate"
-            style={{ color: isAnnounced ? "#a1a1aa" : "#e5e4ed" }}
-          >
-            {factory.capacity}
-          </div>
+          <div className="text-dim uppercase tracking-wider text-[9px]">Capacity</div>
+          <div className="font-medium truncate">{factory.capacity}</div>
         </div>
         <div className="min-w-0">
-          <div className="font-mono text-[9px] uppercase text-[#64748b]">Invest</div>
-          <div
-            className="font-mono text-xs sm:text-sm truncate"
-            style={{ color: isAnnounced ? "#a1a1aa" : isAlert ? accent : "#e5e4ed" }}
-          >
-            {factory.investment}
-          </div>
+          <div className="text-dim uppercase tracking-wider text-[9px]">Invest</div>
+          <div className="font-medium truncate">{factory.investment}</div>
         </div>
       </div>
     </a>

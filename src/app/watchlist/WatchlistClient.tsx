@@ -105,14 +105,18 @@ export default function WatchlistClient() {
       <tbody>
         {validTickers.map((t) => {
           const q = quotes[t.yahooSymbol];
-          const cp = q?.currency === "USD" ? "$" : q?.currency === "KRW" ? "₩" : "";
+          const fmtPrice = q
+            ? q.currency === "KRW"
+              ? "₩" + Math.round(parseFloat(q.price)).toLocaleString("en-US")
+              : (q.currency === "USD" ? "$" : "") + parseFloat(q.price).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+            : null;
           return (
             <tr key={t.symbol} className="border-b border-border-custom">
               <td className="py-2.5">
                 <a href={tickerHref(t)} className="font-bold hover:underline">{t.symbol}</a>
               </td>
               <td className="py-2.5 text-dim">{t.shortName ?? t.name}</td>
-              <td className="py-2.5 text-right tabular-nums">{q ? `${cp}${q.price}` : "—"}</td>
+              <td className="py-2.5 text-right tabular-nums">{fmtPrice ?? "—"}</td>
               <td className={`py-2.5 text-right tabular-nums ${q ? (q.up ? "text-green-600" : "text-red-500") : ""}`}>
                 {q ? q.changePercent : "—"}
               </td>

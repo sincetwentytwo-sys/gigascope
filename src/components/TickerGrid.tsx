@@ -75,7 +75,11 @@ export default function TickerGrid({ rows }: { rows: Row[] }) {
           ? "rgba(230, 57, 70, 0.12)"
           : "rgba(230, 57, 70, 0.22)";
 
-        const currencyPrefix = q?.currency === "USD" ? "$" : q?.currency === "KRW" ? "₩" : "";
+        const fmtPrice = q
+          ? q.currency === "KRW"
+            ? "₩" + Math.round(parseFloat(q.price)).toLocaleString("en-US")
+            : (q.currency === "USD" ? "$" : "") + parseFloat(q.price).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+          : "";
         return (
           <a
             key={r.symbol}
@@ -92,10 +96,7 @@ export default function TickerGrid({ rows }: { rows: Row[] }) {
             <div className="text-[11px] text-dim truncate mb-2">{r.name}</div>
             {q ? (
               <>
-                <div className="text-sm tabular-nums">
-                  {currencyPrefix}
-                  {q.price}
-                </div>
+                <div className="text-sm tabular-nums">{fmtPrice}</div>
                 <div className={`text-[11px] tabular-nums ${q.up ? "text-green-600" : "text-red-500"}`}>
                   {q.change} ({q.changePercent})
                 </div>

@@ -44,9 +44,9 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
   const credit = product.photoCredit;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] border border-[#343538] bg-[#0a0a0c]">
+    <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] border border-border-custom bg-bg">
       {/* Photo */}
-      <div className="relative bg-[#f4f4f0] min-h-[55vh] overflow-hidden p-4 text-center">
+      <div className="relative bg-surface min-h-[55vh] overflow-hidden p-4 text-center">
         {/* inline-block wrapper that pulls its size from the inline img
             (which respects max-h:78vh + max-w:100%). flex parents kept
             stretching this to 55vh and pushing the SVG below the photo —
@@ -148,20 +148,20 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
           )}
         </div>
 
-        <div className="absolute top-3 left-3 bg-[#121316]/90 backdrop-blur-md px-3 py-1.5 border border-[#343538] font-mono text-[10px] text-[#b7c8e1] uppercase tracking-widest">
+        <div className="absolute top-3 left-3 bg-bg/90  px-3 py-1.5 border border-border-custom font-mono text-[10px] text-dim uppercase tracking-widest">
           {partsWithHotspots.length > 0
             ? `${partsWithHotspots.length} of ${product.parts.length} parts pinned on the photo  ·  click any dot`
             : `${product.parts.length} components on the right`}
         </div>
 
         {credit && (
-          <div className="absolute bottom-2 right-2 bg-[#121316]/85 backdrop-blur-md px-2 py-1 font-mono text-[9px] text-[#8292aa]">
+          <div className="absolute bottom-2 right-2 bg-bg/85  px-2 py-1 font-mono text-[9px] text-dim">
             Photo:{" "}
             <a
               href={credit.sourceUrl}
               target="_blank"
               rel="noreferrer noopener"
-              className="text-[#b7c8e1] hover:underline"
+              className="text-dim hover:underline"
             >
               {credit.author} · {credit.license}
             </a>
@@ -170,9 +170,9 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
       </div>
 
       {/* Component list + detail */}
-      <aside className="border-t lg:border-t-0 lg:border-l border-[#343538] bg-[#121316] flex flex-col min-h-[55vh]">
-        <div className="overflow-y-auto p-4 border-b border-[#343538] flex-1 lg:flex-none lg:max-h-[45vh]">
-          <h3 className="font-mono text-[10px] text-[#8292aa] uppercase tracking-widest mb-3">
+      <aside className="border-t lg:border-t-0 lg:border-l border-border-custom bg-bg flex flex-col min-h-[55vh]">
+        <div className="overflow-y-auto p-4 border-b border-border-custom flex-1 lg:flex-none lg:max-h-[45vh]">
+          <h3 className="font-mono text-[10px] text-dim uppercase tracking-widest mb-3">
             Components · {product.parts.length}
           </h3>
           <ul className="space-y-0.5">
@@ -188,17 +188,17 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
                     onMouseLeave={() => setHoveredId(null)}
                     className={`w-full text-left text-[13px] px-2 py-1.5 transition-colors flex items-center gap-2 ${
                       isActive
-                        ? "bg-[#1f1f23] text-white"
-                        : "text-[#b7c8e1] hover:bg-[#1a1d22] hover:text-white"
+                        ? "bg-surface text-white"
+                        : "text-dim hover:bg-surface hover:text-text"
                     }`}
                   >
                     <span
                       className={`shrink-0 inline-flex items-center justify-center w-5 h-5 rounded-full font-mono text-[10px] font-bold ${
                         n
                           ? isActive
-                            ? "bg-[#ffb073] text-black"
+                            ? "bg-accent-amber text-black"
                             : "bg-white/90 text-black"
-                          : "bg-transparent border border-[#343538] text-[#5a6e8f]"
+                          : "bg-transparent border border-border-custom text-dim"
                       }`}
                     >
                       {n ?? "·"}
@@ -217,20 +217,20 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
               <h4 className="text-white font-semibold mb-2 text-[15px]">
                 {selected.name}
               </h4>
-              <p className="text-[13px] text-[#b7c8e1] leading-relaxed whitespace-pre-wrap">
+              <p className="text-[13px] text-dim leading-relaxed whitespace-pre-wrap">
                 {selected.description}
               </p>
               {selected.href && (
                 <a
                   href={selected.href}
-                  className="mt-3 inline-block text-[11px] font-mono text-[#7aa6ff] uppercase tracking-widest hover:underline"
+                  className="mt-3 inline-block text-[11px] font-mono text-accent-blue uppercase tracking-widest hover:underline"
                 >
                   Open detail →
                 </a>
               )}
             </>
           ) : (
-            <p className="text-[13px] text-[#5a6e8f] italic">
+            <p className="text-[13px] text-dim italic">
               Click a numbered dot on the photo, or any component on the list.
             </p>
           )}

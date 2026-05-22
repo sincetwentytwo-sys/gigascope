@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { safeJsonLd } from "@/lib/safeJsonLd";
-import GlobeBackground from "@/components/GlobeBackground";
 import VisitCounter from "@/components/VisitCounter";
 import SupportLinks from "@/components/SupportLinks";
 import GlobalSearchProvider from "@/components/GlobalSearchProvider";
@@ -61,7 +60,7 @@ export default function RootLayout({
         {/* dangerouslySetInnerHTML uses safeJsonLd() which escapes </script>, U+2028, U+2029 */}
       </head>
       <body className="min-h-full flex flex-col bg-bg text-text">
-        <GlobeBackground />
+
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-text focus:text-bg focus:px-4 focus:py-2 focus:text-sm focus:font-bold">
           Skip to content
         </a>

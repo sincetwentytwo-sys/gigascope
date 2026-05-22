@@ -65,7 +65,10 @@ export default function TopMovers({ rows }: { rows: Row[] }) {
   const losers = ranked.filter((x) => pctNum(x.q!) < 0).slice(-5).reverse();
 
   const Cell = ({ row, q }: { row: Row; q: Quote }) => {
-    const cp = q.currency === "USD" ? "$" : q.currency === "KRW" ? "₩" : "";
+    const fmtPrice =
+      q.currency === "KRW"
+        ? "₩" + Math.round(parseFloat(q.price)).toLocaleString("en-US")
+        : (q.currency === "USD" ? "$" : "") + parseFloat(q.price).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     return (
       <a
         href={row.href}
@@ -76,7 +79,7 @@ export default function TopMovers({ rows }: { rows: Row[] }) {
           <div className="text-[11px] text-dim truncate">{row.name}</div>
         </div>
         <div className="text-right">
-          <div className="text-sm tabular-nums">{cp}{q.price}</div>
+          <div className="text-sm tabular-nums">{fmtPrice}</div>
           <div className={`text-[11px] tabular-nums ${q.up ? "text-green-600" : "text-red-500"}`}>
             {q.changePercent}
           </div>

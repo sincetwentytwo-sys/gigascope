@@ -71,7 +71,7 @@ export default function ProductsHubPage() {
   return (
     <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <header className="mb-10">
-        <div className="font-mono text-[10px] uppercase tracking-widest text-[#8292aa] mb-2">
+        <div className="font-mono text-[10px] uppercase tracking-widest text-dim mb-2">
           GIGASCOPE / Products
         </div>
         <h1 className="text-3xl sm:text-5xl font-black tracking-tight mb-3">
@@ -85,7 +85,7 @@ export default function ProductsHubPage() {
       </header>
 
       {products.length === 0 ? (
-        <div className="border border-[#343538] p-8 text-center text-dim">
+        <div className="border border-border-custom p-8 text-center text-dim">
           No product breakdowns available yet.
         </div>
       ) : (
@@ -101,7 +101,7 @@ export default function ProductsHubPage() {
               <Link
                 key={p.slug}
                 href={`/products/${p.slug}`}
-                className="group block border border-[#343538] bg-[#121316]/60 hover:border-white/40 transition-colors overflow-hidden"
+                className="group block border border-border-custom bg-bg/60 hover:border-text/40 transition-colors overflow-hidden"
               >
                 <div
                   className="aspect-[4/3] w-full relative overflow-hidden"
@@ -143,14 +143,14 @@ export default function ProductsHubPage() {
                     {p.name}
                   </h2>
                   {p.aka && (
-                    <div className="font-mono text-[10px] uppercase tracking-widest text-[#8292aa] mb-2">
+                    <div className="font-mono text-[10px] uppercase tracking-widest text-dim mb-2">
                       {p.aka}
                     </div>
                   )}
-                  <p className="text-sm text-[#b7c8e1] leading-relaxed">
+                  <p className="text-sm text-dim leading-relaxed">
                     {shortDesc}
                   </p>
-                  <div className="mt-3 font-mono text-[10px] uppercase tracking-widest text-[#8292aa] group-hover:text-white transition-colors">
+                  <div className="mt-3 font-mono text-[10px] uppercase tracking-widest text-dim group-hover:text-text transition-colors">
                     Open breakdown &rarr;
                   </div>
                 </div>

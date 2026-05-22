@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SECTORS, tickersBySector } from "@/data/tickers";
+import { listPrivateCompanies } from "@/data/privateCompanies";
 
 export const metadata: Metadata = {
   title: "Sectors — GIGASCOPE",
@@ -21,6 +22,8 @@ export default function SectorsHub() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {SECTORS.map((s) => {
           const ts = tickersBySector(s.id);
+          const privates = listPrivateCompanies().filter((c) => c.sectors.includes(s.id));
+          const total = ts.length + privates.length;
           return (
             <a
               key={s.id}
@@ -31,7 +34,7 @@ export default function SectorsHub() {
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-2xl">{s.icon}</span>
                 <h2 className="text-xl font-bold">{s.name}</h2>
-                <span className="ml-auto text-xs text-dim">{ts.length} names</span>
+                <span className="ml-auto text-xs text-dim">{total} {total === 1 ? "name" : "names"}</span>
               </div>
               <p className="text-sm text-dim mb-3">{s.blurb}</p>
               <div className="flex flex-wrap gap-1.5">

@@ -152,7 +152,7 @@ export default function TimelineContent({
                 />
               </div>
 
-              <div className={`flex-1 glass-card p-4 transition-all group-hover:border-white/15 ${isFuture ? "opacity-50" : ""}`}>
+              <div className={`flex-1 glass-card p-4 transition-all group-hover:border-text/15 ${isFuture ? "opacity-50" : ""}`}>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
                   <div className="flex items-center gap-2">
                     <span className="font-mono text-[10px]" style={{ color: m.factory.color }}>
