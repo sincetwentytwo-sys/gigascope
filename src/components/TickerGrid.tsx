@@ -20,18 +20,27 @@ type Row = {
 };
 
 function pctNum(q: Quote): number {
-  // "+2.34%" → 2.34
   const m = q.changePercent.match(/-?\d+\.?\d*/);
   return m ? parseFloat(m[0]) : 0;
 }
 
-export default function TickerGrid({ rows }: { rows: Row[] }) {
-  const [quotes, setQuotes] = useState<Record<string, Quote>>({});
+function formatPrice(q: Quote): string {
+  return q.currency === "KRW"
+    ? "₩" + Math.round(parseFloat(q.price)).toLocaleString("en-US")
+    : (q.currency === "USD" ? "$" : "") +
+        parseFloat(q.price).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
 
-  const symbolList = useMemo(
-    () => rows.map((r) => r.yahooSymbol).join(","),
-    [rows],
-  );
+export default function TickerGrid({
+  rows,
+  initialQuotes,
+}: {
+  rows: Row[];
+  initialQuotes?: Record<string, Quote>;
+}) {
+  const [quotes, setQuotes] = useState<Record<string, Quote>>(initialQuotes ?? {});
+
+  const symbolList = useMemo(() => rows.map((r) => r.yahooSymbol).join(","), [rows]);
 
   useEffect(() => {
     if (!symbolList) return;
@@ -60,7 +69,6 @@ export default function TickerGrid({ rows }: { rows: Row[] }) {
       {rows.map((r) => {
         const q = quotes[r.yahooSymbol];
         const pct = q ? pctNum(q) : 0;
-        // heatmap-ish background color from pct
         const bg = !q
           ? "transparent"
           : pct >= 5
@@ -75,11 +83,6 @@ export default function TickerGrid({ rows }: { rows: Row[] }) {
           ? "rgba(230, 57, 70, 0.12)"
           : "rgba(230, 57, 70, 0.22)";
 
-        const fmtPrice = q
-          ? q.currency === "KRW"
-            ? "₩" + Math.round(parseFloat(q.price)).toLocaleString("en-US")
-            : (q.currency === "USD" ? "$" : "") + parseFloat(q.price).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-          : "";
         return (
           <a
             key={r.symbol}
@@ -96,13 +99,13 @@ export default function TickerGrid({ rows }: { rows: Row[] }) {
             <div className="text-[11px] text-dim truncate mb-2">{r.name}</div>
             {q ? (
               <>
-                <div className="text-sm tabular-nums">{fmtPrice}</div>
+                <div className="text-sm tabular-nums">{formatPrice(q)}</div>
                 <div className={`text-[11px] tabular-nums ${q.up ? "text-green-600" : "text-red-500"}`}>
                   {q.change} ({q.changePercent})
                 </div>
               </>
             ) : (
-              <div className="text-[11px] text-dim">loading…</div>
+              <div className="text-[11px] text-dim opacity-50">—</div>
             )}
           </a>
         );

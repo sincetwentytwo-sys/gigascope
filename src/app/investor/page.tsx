@@ -22,14 +22,17 @@ export default function InvestorPage() {
     <div className="max-w-[900px] mx-auto px-6 py-12">
       <header className="text-center mb-10">
         <div className="inline-block px-3 py-1 rounded-full bg-text text-bg text-[11px] font-bold uppercase tracking-wider mb-4">
-          Early bird · first 100 founders only
+          Early bird · first 100 subscribers only
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-3">
           Investor tier
         </h1>
-        <p className="text-dim max-w-xl mx-auto">
-          GIGASCOPE is free to read. Investor unlocks alerts, AI digests, full 3D breakdowns, and data downloads —
-          so you can act on what you see in the Atlas.
+        <p className="text-dim max-w-xl mx-auto mb-3">
+          A <strong className="text-text">paid software subscription</strong> to GIGASCOPE. Unlocks satellite-drop alerts,
+          a curated daily digest, 3D product breakdowns, and CSV/JSON data exports.
+        </p>
+        <p className="text-[11px] text-dim max-w-md mx-auto">
+          ⚠ This is not equity in the project, not a token, not a security. It's a $9/month subscription to a software service. Cancel any time.
         </p>
       </header>
 

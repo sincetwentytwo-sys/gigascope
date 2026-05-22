@@ -15,15 +15,11 @@ const GENERAL_FEEDS = [
   { source: "CNBC", url: "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001147" },
 ];
 
-// Google News RSS — pre-filtered queries (no extra keyword filtering needed)
-// Captures Reuters + breaking news that other feeds miss
-const GOOGLE_NEWS_FEEDS = [
-  { source: "Reuters", url: "https://news.google.com/rss/search?q=(Tesla+OR+SpaceX+OR+%22Elon+Musk%22)+site:reuters.com&hl=en-US&gl=US&ceid=US:en" },
-  { source: "Bloomberg", url: "https://news.google.com/rss/search?q=(Tesla+OR+SpaceX+OR+%22Elon+Musk%22)+site:bloomberg.com&hl=en-US&gl=US&ceid=US:en" },
-  { source: "WSJ", url: "https://news.google.com/rss/search?q=(Tesla+OR+SpaceX+OR+%22Elon+Musk%22)+site:wsj.com&hl=en-US&gl=US&ceid=US:en" },
-  { source: "FT", url: "https://news.google.com/rss/search?q=(Tesla+OR+SpaceX+OR+%22Elon+Musk%22)+site:ft.com&hl=en-US&gl=US&ceid=US:en" },
-  { source: "Google News", url: "https://news.google.com/rss/search?q=Tesla+when:1d&hl=en-US&gl=US&ceid=US:en" },
-];
+// Removed: Google News RSS aggregator feeds. They violated our
+// "primary sources only" framing — Google News links were
+// double-aggregators of aggregators.  We now route direct to the publisher
+// for every source surfaced in this feed.
+const GOOGLE_NEWS_FEEDS: { source: string; url: string }[] = [];
 
 const TESLA_KEYWORDS = [
   "tesla", "terafab", "gigafactory", "giga texas", "giga berlin",

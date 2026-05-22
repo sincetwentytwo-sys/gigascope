@@ -23,8 +23,8 @@ function pctNum(q: Quote): number {
   return m ? parseFloat(m[0]) : 0;
 }
 
-export default function TopMovers({ rows }: { rows: Row[] }) {
-  const [quotes, setQuotes] = useState<Record<string, Quote>>({});
+export default function TopMovers({ rows, initialQuotes }: { rows: Row[]; initialQuotes?: Record<string, Quote> }) {
+  const [quotes, setQuotes] = useState<Record<string, Quote>>(initialQuotes ?? {});
 
   const symbolList = useMemo(() => rows.map((r) => r.yahooSymbol).join(","), [rows]);
 

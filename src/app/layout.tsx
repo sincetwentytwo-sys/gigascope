@@ -7,23 +7,23 @@ import GlobalSearchProvider from "@/components/GlobalSearchProvider";
 import SearchOpener from "@/components/SearchOpener";
 
 export const metadata: Metadata = {
-  title: "GIGASCOPE — Visual atlas of how the future is being built",
+  title: "GIGASCOPE — Satellite tracker for Tesla, SpaceX & xAI",
   description:
-    "The visual atlas of frontier industries. Tesla, SpaceX, NVIDIA, TSMC, Samsung, SK Hynix, Anduril, Helion — facility maps, 3D product breakdowns, supply chain, milestones. Primary sources, no fluff. Free to read.",
+    "16 Musk-empire sites with weekly satellite captures, milestone catalysts, and 3D product breakdowns. Tesla Gigafactories, SpaceX Starbase, xAI Colossus, Neuralink, Boring Co. Plus extended Atlas coverage of the AI build-out (NVIDIA, TSMC, Samsung, SK Hynix).",
   keywords: ["Tesla", "SpaceX", "xAI", "Neuralink", "NVIDIA", "Samsung", "SK Hynix", "RGTI", "IONQ", "CRML", "ASML", "TSMC", "Palantir", "Gigafactory", "Starlink", "satellite imagery", "AI compute", "HBM", "quantum computing", "critical materials"],
   icons: { icon: "/favicon.svg" },
   manifest: "/manifest.json",
   metadataBase: new URL("https://gigascope.xyz"),
   openGraph: {
-    title: "GIGASCOPE — Visual atlas of how the future is being built",
-    description: "Tesla, SpaceX, NVIDIA, TSMC, Samsung, SK Hynix, Anduril, Helion. Facility maps, 3D product breakdowns, supply chain, milestones. Primary sources.",
+    title: "GIGASCOPE — Satellite tracker for Tesla, SpaceX & xAI",
+    description: "Weekly satellite captures of 16 Musk-empire sites. Catalyst calendar, 3D product breakdowns, milestone tracking. Plus extended Atlas of the AI build-out.",
     type: "website",
     siteName: "GIGASCOPE",
   },
   twitter: {
     card: "summary_large_image",
-    title: "GIGASCOPE — Atlas of the frontier industries",
-    description: "Maps, milestones, 3D breakdowns, supply chain. From Gigafactory Texas to Hsinchu Fab 18. Primary sources.",
+    title: "GIGASCOPE — Musk Empire satellite tracker",
+    description: "Weekly satellite captures, catalyst calendar, 3D product breakdowns. Tesla / SpaceX / xAI / Neuralink / Boring Co.",
   },
   robots: {
     index: true,

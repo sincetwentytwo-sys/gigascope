@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SECTORS, TICKERS, tickersBySector, tickerHref } from "@/data/tickers";
 import TickerGrid from "@/components/TickerGrid";
 import TopMovers from "@/components/TopMovers";
+import { fetchQuotes } from "@/lib/quotes";
 
 export const revalidate = 1800;
 
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
     "Live snapshot across the Musk Empire + Semis & AI + Quantum + Critical Materials + Defense & Space + Fusion/Nuclear universe. Click any company for the full Atlas page: facilities, products, supply chain, sources.",
 };
 
-export default function MarketsPage() {
+export default async function MarketsPage() {
   const allRows = TICKERS.map((t) => ({
     symbol: t.symbol,
     yahooSymbol: t.yahooSymbol,
@@ -19,6 +20,7 @@ export default function MarketsPage() {
     href: tickerHref(t),
     accent: t.accent,
   }));
+  const initialQuotes = await fetchQuotes(allRows.map((r) => r.yahooSymbol), 300);
 
   return (
     <div className="max-w-[1200px] mx-auto px-6 py-10">
@@ -32,7 +34,7 @@ export default function MarketsPage() {
 
       <section className="mb-12">
         <h2 className="text-xl font-bold mb-3">Top movers</h2>
-        <TopMovers rows={allRows} />
+        <TopMovers rows={allRows} initialQuotes={initialQuotes} />
       </section>
 
       <section className="mb-12">
@@ -40,7 +42,7 @@ export default function MarketsPage() {
           <h2 className="text-xl font-bold">Full universe</h2>
           <a href="/sectors" className="text-xs text-dim hover:text-text">All sectors →</a>
         </div>
-        <TickerGrid rows={allRows} />
+        <TickerGrid rows={allRows} initialQuotes={initialQuotes} />
       </section>
 
       <section className="flex flex-col gap-10">

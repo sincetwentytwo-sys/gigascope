@@ -26,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/timeline`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE_URL}/products`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE_URL}/about`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${BASE_URL}/methodology`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.85 },
   ];
 
   const sectorPages: MetadataRoute.Sitemap = SECTORS.map((s) => ({
