@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
+import { Resend } from "resend";
+import WelcomeEmail from "@/emails/welcome";
 
 export const runtime = "nodejs";
 
@@ -8,6 +10,34 @@ function getRedis(): Redis | null {
   const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
   if (!url || !token) return null;
   return new Redis({ url, token });
+}
+
+function getResend(): Resend | null {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return null;
+  return new Resend(key);
+}
+
+async function sendWelcome(email: string, tier: "free" | "pro" | "terminal"): Promise<boolean> {
+  const resend = getResend();
+  if (!resend) return false;
+  const from = process.env.RESEND_FROM_EMAIL ?? "digest@gigascope.xyz";
+  const subject =
+    tier === "free"
+      ? "You're on the GIGASCOPE daily digest"
+      : "You're a charter Investor — $9/mo locked for life";
+  try {
+    await resend.emails.send({
+      from: `GIGASCOPE <${from}>`,
+      to: email,
+      subject,
+      react: WelcomeEmail({ email, tier }),
+    });
+    return true;
+  } catch (e) {
+    console.error("resend_send_failed", e);
+    return false;
+  }
 }
 
 const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -31,10 +61,13 @@ export async function POST(req: Request) {
   }
 
   const r = getRedis();
+  const typedTier = tier as "free" | "pro" | "terminal";
+
   if (!r) {
     // Without Redis, still accept (useful for local dev). The user can plumb
     // KV credentials in Vercel without breaking the API contract.
-    return NextResponse.json({ ok: true, stored: false, note: "no_redis_configured" });
+    const emailed = await sendWelcome(email, typedTier);
+    return NextResponse.json({ ok: true, stored: false, emailed, note: "no_redis_configured" });
   }
 
   const record = { email, tier, source, ts: Date.now() };
@@ -45,7 +78,10 @@ export async function POST(req: Request) {
   } catch (e) {
     return NextResponse.json({ ok: false, error: "redis_failed" }, { status: 500 });
   }
-  return NextResponse.json({ ok: true, stored: true });
+
+  // Welcome email is best-effort: never fail the subscribe over it.
+  const emailed = await sendWelcome(email, typedTier);
+  return NextResponse.json({ ok: true, stored: true, emailed });
 }
 
 export async function GET() {

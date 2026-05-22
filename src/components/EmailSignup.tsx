@@ -29,7 +29,13 @@ export default function EmailSignup({
       const json = await res.json();
       if (res.ok && json.ok) {
         setStatus("ok");
-        setMsg(json.stored ? "Subscribed. You'll get the daily digest." : "Got it. Storage not yet wired — saved locally.");
+        if (json.emailed) {
+          setMsg("Subscribed. Check your inbox for the welcome email.");
+        } else if (json.stored) {
+          setMsg("Subscribed. You'll get the daily digest.");
+        } else {
+          setMsg("Got it. Storage not yet wired — saved locally.");
+        }
         setEmail("");
       } else {
         setStatus("error");
