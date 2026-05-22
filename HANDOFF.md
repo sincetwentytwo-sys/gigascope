@@ -1,222 +1,293 @@
 # GIGASCOPE — Session Handoff
 
-**Last updated**: 2026-05-22 (overnight autonomous build — Atlas pivot)
+**Last updated**: 2026-05-22 (post-master-plan pivot)
 **Live (primary)**: https://gigascope.xyz
 **Live (alias)**: https://gigascope-ten.vercel.app
-**Repo**: https://github.com/sincetwentytwo-sys/gigascope
-**Main branch**: `main` (Vercel auto-deploys every push)
-
-**ComfyUI**: `G:\ComfyUI_windows_portable\run_with_python310.bat` (port 8188)
-**SAM/segmentation venv**: `G:\ComfyUI_windows_portable\venv\Scripts\python.exe`
-  - `numpy<2` pinned (torch 2.0.1 compat). Don't reinstall numpy.
+**Repo**: https://github.com/sincetwentytwo-sys/gigascope (main branch · Vercel auto-deploy)
 
 ---
 
-## What this overnight session built
+## 🔑 First message to paste in a new session
 
-The owner went to sleep with a single instruction: **"Yahoo-Finance scale, but a different direction. Don't stop. Investor-grade enough that Elon would subscribe."** Then dropped the autonomous-build handoff doc (`G:\jb\gigascope-자율-핸드오프.txt`) — which reframes the destination as **"the visual atlas of how the future is being built"** (NOT Yahoo Finance, NOT Bloomberg).
+```
+HANDOFF.md 읽고 현재 상태 파악해줘. 그리고 아래 "다음 작업" 섹션의 우선순위 1번부터 진행.
 
-That doc steered the framing. The old Musk-only tracker stayed, and a much larger Atlas was built around it.
-
-### Now live and working (8 deploy waves, all green)
-
-**New top-level routes** (all in nav):
-- `/markets` (Atlas heatmap) — live multi-sector grid with top-movers + per-sector breakdown
-- `/sectors` + `/sectors/[slug]` — 11 macro theses with heatmap + names
-- `/company/[slug]` — **canonical company Atlas page** (36 companies): facility map (Leaflet + ESRI satellite), 1-month sparkline, thesis + 400-700 word deepDive on flagships, bull/bear, catalysts, supply chain (up/down), news, primary-source sidebar
-- `/ticker/[symbol]` — financial sidecar (price-focused subset)
-- `/private` + `/private/[slug]` — 5 private companies (SpaceX, xAI, Anduril, Helion, Commonwealth Fusion) with valuation-source labels
-- `/supply-chain` — layered tier view (raw materials → wafer/litho → chips → systems → end products) + 33 directional edges
-- `/news` — Yahoo Finance RSS aggregated across featured tickers
-- `/calendar` — all upcoming catalysts + milestones, chronological, confidence-tagged
-- `/learn` + `/learn/[slug]` — 10 first-principles glossary entries (HBM, EUV, GAA, CoWoS, FSD/Robotaxi, hyperscaler capex, qubit, REE, LFP vs NMC, SMR)
-- `/watchlist` — localStorage-backed star-list (no login)
-- `/investor` — single-tier landing ($9 early-bird → $19 → $29), waitlist email capture
-- `/downloads` — CSV/JSON bulk export hub
-
-**New APIs**:
-- `/api/quote/[symbol]` — single quote (Yahoo chart endpoint, generic across exchanges)
-- `/api/quotes?symbols=...` — bulk quote endpoint for heatmap (40 max)
-- `/api/chart/[symbol]?range=...&interval=...` — 5d/1mo/3mo/6mo/1y/5y price history for sparkline
-- `/api/news?symbol=...` — per-ticker RSS aggregator
-- `/api/subscribe` — Upstash Redis-backed email capture (POST + GET count)
-- `/api/digest` — daily digest payload (next 6mo catalysts, next 2mo milestones, last-24h news on featured names). **Wired to vercel.json cron @ 14:00 UTC daily** — currently writes to nowhere; needs Resend/Postmark hookup to actually email.
-- `/api/export/[dataset]?format=csv|json` — bulk export for factories, tickers, milestones, supply-chain edges, products
-
-**New components**:
-- `Sparkline.tsx` — SVG, no library, 6 range tabs
-- `FacilityMap.tsx` + wrapper — multi-point Leaflet ESRI satellite map with status-color dots + popup
-- `TickerLivePrice.tsx`, `TickerGrid.tsx`, `TopMovers.tsx`, `TickerNews.tsx`, `EmailSignup.tsx`
-- `GlobalSearch.tsx` + `GlobalSearchProvider.tsx` + `SearchOpener.tsx` — Cmd-K / Ctrl-K modal fuzzy-searches 36 companies + 5 private + 11 sectors + 16 sites + 13 products + 10 learn entries + 11 static pages
-- `WatchlistButton.tsx` — star/unstar on any ticker page (localStorage)
-
-**Data**:
-- `src/data/tickers.ts` — 36 public companies across 11 sectors, with sources (SEC EDGAR/DART/IR — tier 1), facilities (lat/lng-verified), bull/bear, catalysts, deepDive (5 flagships have 400-700 word essays), koreanName for Korean champions (삼성전자, SK하이닉스, LG에너지솔루션, 현대자동차, 한화에어로스페이스, LIG넥스원).
-- `src/data/privateCompanies.ts` — 5 private cos, valuation-source-labelled est.
-- `src/data/supplyChain.ts` — 33 hand-curated directional edges, criticality (monopoly/primary/secondary), source URL per edge
-- `src/data/learn.ts` — 10 glossary entries, first-principles, related-tickers + related-terms
-
-**Per-company OG image** (massive share-rate boost) at `/company/[slug]/opengraph-image.tsx` — uses next/og ImageResponse with sector accent + ticker + name + thesis snippet.
-
-**Marketing assets** at `content/social-drafts/2026-05-22/x-launch.md` — EN + KO launch thread + 3 infographic concepts. Owner reviews → polishes → posts.
-
-### Framing pivot (the important strategic call)
-
-Per the autonomous handoff doc, the owner's destination is NOT a Bloomberg/Yahoo Finance competitor. It's an **atlas**.
-
-The early build called this an "intelligence terminal" and shipped a 3-tier "Pro/Premium/Enterprise" pricing page. Both were wrong. Mid-build pivot done:
-- Single `Investor` tier, not Pro/Premium/Enterprise.
-- "Atlas" replaces "terminal" in copy + nav label for `/markets`.
-- Root metadata title: "Visual atlas of how the future is being built."
-- About page rewritten with the **5 moats** (industrial essence / physical sites / supply-chain visibility / future-facing framing / visual UX) + 4-tier primary-source policy + Korean differentiation.
-
-### What was already live (pre-overnight) that survived
-
-- 16 Musk-empire factory sites + `/site/[slug]` dashboards
-- 13 products + 2D viewer with numbered hotspot dots (87 hand-tuned hotspots)
-- `/compare` slider, `/timeline`, `/products` hub
-- Model 3 wheel hotspots fixed (y=0.65 → y=0.75 per prev session)
-- Legacy 3D viewer code deleted (Product3DViewer*, capture-product-thumbnails)
+진행 원칙:
+- Master plan(G:\jb\gigascope-master-plan-2026-05-22.md) + audit(G:\jb\gigascope-audit-2026-05-22.md) 이 캐논. 둘 다 읽고 시작.
+- "Musk 제국 위성 트래커" 한 가지에 집중. 39개 회사·11개 섹터·Atlas extension은 코드베이스에 살아있지만 더 키우지 말 것.
+- 매 작업마다: build → commit → push → 라이브 검증(cache-buster query 필수).
+- HTML 응답이 직전과 100% 동일하면 → X-Vercel-Cache STALE 가능성. ?bust=$(date +%s%N) 로 재검증.
+```
 
 ---
 
-## Known not-yet-done / decisions for owner
+## 현재 상태 (한 줄)
 
-### Investor billing is scaffold-only
-- `/investor` page collects emails → Upstash Redis (if envs set). No Stripe yet.
-- Three.js + R3F still in package.json (unused since 2D viewer landed). Can remove next session.
-- Daily digest cron runs but doesn't actually email — needs Resend or Postmark integration (~30 min of work).
+**Master plan 1주차 Week 1 항목 완료, Week 2~6 미진행.**
 
-### Hyperscaler valuations are placeholders
-- MSFT marketCap = $3,500B, GOOG = $2,200B, etc. Refreshed to ~mid-2026 levels.
-- Refresh script not built — currently hand-edited. Build `scripts/refresh-marketcaps.mjs` (uses Yahoo Finance) next.
+홈 hero에 Giga Texas Sentinel-2 타임랩스 mp4 풀-블리드로 박혔고, 헤드라인은
+"Tesla Gigafactory Texas — six years from dirt." 21개 티커 그리드 + 11개
+섹터 스트립 + Extended Atlas tiles 전부 home에서 제거. 16개 Musk 사이트
+카드만 본문. Atlas 익스텐션(39 companies / 5 private / 11 sectors / 14 learn
+entries / 25 products) 코드는 모두 살아있지만 home에서 푸터 작은 링크로
+demote됨.
 
-### Things explicitly skipped (handoff §11)
-- No real-time trading features (Yahoo Finance lane).
-- No comments / forums / user-gen content.
-- No crypto / NFT.
-- No 3-tier "Pro/Premium" — single Investor tier only.
-
-### Live verification status
-- All 8 commits passed `npx next build` locally before push.
-- Per HANDOFF discipline ("Never claim launchable without smoke test") — owner should still eyeball one or two pages live before any X post.
+**Latest commit**: `98b4633 feat: master-plan execution — satellite-timelapse hero, cut Atlas extension from home`
 
 ---
 
-## Files that matter (additions, in order of edit cadence)
+## 오늘(2026-05-22) 한 일 — 17 commit 요약
 
-| Path | Purpose |
+### Wave 1-7 (밤): Atlas 확장 (오버슈팅 → 나중에 cut)
+- 다중 sector / multi-ticker / private companies / learn glossary 등
+- Stripe + Resend 결제·메일 scaffold
+- 39 public companies × 11 sectors × 5 privates × 14 learn × 25 products
+- 모든 인프라 코드 OK, 다만 정체성 흐려짐 → 다음 단계에서 좁혀짐
+
+### Audit 대응 (오전): 라이트 테마 통일 + 외부 audit 5개 fix
+- 다크/네온 hex 색 → 라이트 토큰 일괄 변환
+- GlobeBackground 워터마크 제거
+- KRW/USD `toLocaleString` 포맷
+- Supply chain tier max-of 계산
+- Stripe checkout + Resend 다이제스트 sender 실제 동작
+- "Become an Investor" → "Investor tier · $9/mo" + 명시적 "not equity"
+- Google News RSS aggregator 전부 제거 → 직접 RSS만
+- SSR prefetch로 "loading..." 텍스트 모두 제거 (홈 + /markets)
+- /methodology 페이지 신설
+- About 페이지 5 moats / 4-tier source policy로 리라이트
+
+### Master Plan 실행 (오후): Musk-only 좁히기
+- Home hero: Giga Texas 타임랩스 mp4 풀-블리드 (16:9, autoplay loop)
+- 헤드라인: "Tesla Gigafactory Texas — six years from dirt."
+- 21개 ticker grid + 11 sector strip + Extended Atlas tiles 전부 home에서 삭제
+- Nav: Musk-empire 메뉴 우선, Atlas는 70% opacity 단일 링크로 demote
+- Meta/OG: "Watch Musk's empire get built, one satellite frame at a time"
+- 푸터에 "broader Atlas" 작은 회색 링크로 익스텐션 유지
+
+### Products 확장 (저녁)
+- 13개 → 25개 product (12개 신규 + SVG 도식 + 번호 hotspot)
+- NVIDIA Blackwell B200, HBM3E, ASML EUV, TSMC CoWoS, Hyundai IONIQ 5,
+  Boston Dynamics Atlas, LGES Ultium, BYD Blade, Hanwha K9, Rocket Lab
+  Neutron, IonQ Tempo, Oklo Aurora
+- 각 부품 7-15개 번호 컴포넌트 + 정확한 hotspot 좌표
+- `scripts/generate-schematic-svgs.mjs` 로 모두 자동 생성
+
+---
+
+## 🎯 다음 작업 — Master plan Week 2-6 (우선순위 순)
+
+### **1. 사이트 카드에 위성 before/after 썸네일** (Week 2 핵심)
+Master plan §4 Step 3: 모든 진척도 카드에 위성 썸네일 — "78%" 옆에 위성영상 → 신뢰 폭발.
+
+```tsx
+// src/components/FactoryCard.tsx 수정
+// public/timelapses/<slug>.jpg 가 이미 존재 (poster image)
+// 카드 최상단에 <img src={`/timelapses/${factory.slug}.jpg`}/> 추가
+// 위 + 아래 비교가 핵심이라면 first-frame + last-frame 2장 필요 — public/timelapses/<slug>/0.jpg + last.jpg 같은 구조 추가
+```
+
+스크립트로 mp4에서 첫/마지막 프레임 추출:
+```bash
+ffmpeg -i public/timelapses/giga-texas.mp4 -vf "select=eq(n\,0)" -vframes 1 public/timelapses/giga-texas-first.jpg
+ffmpeg -i public/timelapses/giga-texas.mp4 -sseof -1 -update 1 public/timelapses/giga-texas-last.jpg
+```
+
+16개 사이트 일괄 처리하는 bash 루프. 약 2시간 작업.
+
+### **2. 각 카드에 last capture date + cloud cover %**
+Master plan §1.4 신뢰성: `Updated 2026-05-20` 한 줄로는 부족. 사이트별 last capture date 노출.
+
+이미 `factories.json` 의 각 사이트에 `lastUpdated` 가 있음. 추가로:
+- `lastCapture: { date: "2026-05-15", cloudCover: 0, source: "Sentinel-2" }` 필드 추가
+- FactoryCard 푸터에 작은 글씨로 노출 (`Last capture: 2026-05-15 · 0% cloud`)
+
+`public/timelapses/index.json` 에 `latest: "2026-05-15"` 이미 있으니 FactoryCard에서 import해서 쓰면 됨.
+
+### **3. /site/[slug] 페이지에 인터랙티브 타임 슬라이더**
+Master plan §3.2: 유일하게 정당화되는 인터랙티브.
+
+```
+[2020] ───●─────────────── [2026]
+         ↑ 드래그하면 위성영상이 시간순으로 모핑
+```
+
+구현 방법:
+- `<input type="range">` 슬라이더 + JS로 video.currentTime 제어 (mp4 frame seek)
+- 또는 33개 프레임 JPG로 추출 (`ffmpeg -i ... -vsync 0 frames/%03d.jpg`) → 슬라이더 인덱스로 <img src> 교체
+- 후자가 훨씬 부드러움. 사이트당 ~3MB 추가 (33 × 90KB).
+
+기존 `/site/[slug]/page.tsx` 의 "SATELLITE TIMELAPSE - 33 frames" 섹션을 인터랙티브로 업그레이드.
+
+### **4. Sentinel-2 자동 fetch 파이프라인 + 매주 업데이트 cron**
+Master plan §6 Week 4-5 핵심 moat 자산.
+
+현재 `public/timelapses/index.json` 에 `builtAt: 2026-05-19T13:53:48.485Z` 한번 빌드된 정적 자산. 매주 자동 갱신해야 진짜 가치.
+
+스택:
+- Sentinel Hub 무료 계정 + API key (env var `SENTINEL_INSTANCE_ID`)
+- `scripts/fetch-sentinel-frames.mjs` — 각 사이트별 lat/lng 박스로 NDVI/RGB 이미지 fetch
+- GitHub Actions weekly cron이 이미 있는지 확인: `.github/workflows/` 디렉토리 확인
+
+### **5. About 페이지에 운영 원칙 명시 (Week 5)**
+Master plan §4 Step 5: "No paid placements. No affiliate links. Open source on GitHub. Last full audit: 2026-05-22."
+
+About 페이지에 이미 5 moats / source policy / Korean differentiation 있음 — "운영 원칙" 박스 추가만 하면 됨.
+
+### **6. 뉴스 파이프라인 자동 큐레이션 (Week 6)**
+Master plan §6 Week 6: Teslarati / Electrek / Reuters / Bloomberg / FT 직접 RSS 6시간 cron.
+
+현재는 클라이언트 NewsFeed가 매 요청마다 RSS fetch. 자동 큐레이션 (키워드 필터 + 중복 제거 + 출처 가중치) 추가하면 더 좋음.
+
+---
+
+## ⚠️ 함정 — 같은 실수 다시 하지 말 것
+
+### 1. **Atlas 익스텐션 다시 키우지 말 것**
+오늘 야간에 39 companies + 11 sectors 확장 → 외부 audit으로 cut. 코드는 유지 (`/markets`, `/sectors/*`, `/company/*`, `/ticker/*`, `/learn/*`, `/private/*` 다 살아있음) 하지만 **home + nav에서 더 surface 시키지 말 것**. v3로 미룸.
+
+### 2. **Vercel 캐시 stale 함정**
+배포 직후 curl 하면 직전 버전이 나올 수 있음. 검증 시 항상:
+```bash
+curl -s "https://gigascope.xyz/?bust=$(date +%s%N)" | grep -oE "검증어"
+```
+또는 cache-buster query (`?v=$(date +%s)`)로 브라우저 검증.
+
+### 3. **테마 일관성**
+모든 페이지가 light theme (bg-bg, text-text, border-border-custom). 새 다크 hex 색(`#1f1f23`, `#00d4ff`, neon 등) 절대 추가하지 말 것.
+
+### 4. **3D viewer 부활 금지**
+three.js, @react-three/fiber, drei 다 제거됨. Product2DViewer (사진 + hotspot 점) 가 표준. 3D 다시 만들지 말 것.
+
+### 5. **GlobeBackground 부활 금지**
+워터마크 지구본은 라이트 테마와 충돌해서 제거함. 다시 import 하지 말 것.
+
+### 6. **광고/제휴 링크 금지**
+Master plan: "No paid placements. No affiliate links."
+
+### 7. **Stripe 결제 환경변수**
+`/api/checkout` 은 STRIPE_SECRET_KEY 없으면 503 정상 응답. 결제 실제 활성화는 owner가 Vercel env에 직접 추가 필요. 키 코드에 적지 말 것.
+
+---
+
+## 📂 파일 구조 (자주 만질 곳)
+
+| Path | 역할 |
 |---|---|
-| `src/data/tickers.ts` | **36 public companies**. Single biggest data file. Add new tickers here. |
-| `src/data/privateCompanies.ts` | 5 private cos with valuation-source labels. |
-| `src/data/supplyChain.ts` | 33 directional edges. Add edges when a primary source confirms a dependency. |
-| `src/data/learn.ts` | 10 glossary entries. Each ~400-700 words. Add new terms here. |
-| `src/app/company/[slug]/page.tsx` | The canonical Atlas company page. |
-| `src/app/company/[slug]/opengraph-image.tsx` | Dynamic per-company OG image for X cards. |
-| `src/app/private/[slug]/page.tsx` | Private company pages — same shape as /company but with valuation-est. labels. |
-| `src/app/markets/page.tsx` | Live multi-sector heatmap + top movers. |
-| `src/app/sectors/[slug]/page.tsx` | Sector hubs (11 sectors). |
-| `src/app/supply-chain/page.tsx` | Layered tier + edges list. |
-| `src/app/learn/[slug]/page.tsx` | Glossary. |
-| `src/app/calendar/page.tsx`, `src/app/news/page.tsx`, `src/app/downloads/page.tsx`, `src/app/investor/page.tsx`, `src/app/watchlist/...` | Self-explanatory. |
-| `src/app/about/page.tsx` | Full rewrite — Atlas tone + 5 moats + primary-source policy. |
-| `src/components/FacilityMap.tsx` (+wrapper) | Multi-point Leaflet+ESRI map used on company pages. |
-| `src/components/Sparkline.tsx` | SVG sparkline with 6 range tabs. |
-| `src/components/GlobalSearch*.tsx` | Cmd-K modal. |
-| `vercel.json` | Cron config: `/api/digest` daily 14:00 UTC. |
-| `content/social-drafts/2026-05-22/x-launch.md` | EN + KO launch thread drafts. |
+| `src/app/page.tsx` | 홈 (Master plan 대로 Musk-only 좁혀짐) |
+| `src/app/layout.tsx` | 글로벌 nav, metadata, 검색 |
+| `src/app/site/[slug]/page.tsx` | 개별 사이트 대시보드 (위성지도 + 타임랩스 + 마일스톤) |
+| `src/app/methodology/page.tsx` | 진척도 % 신뢰 자산 |
+| `src/app/investor/page.tsx` | 결제 랜딩 ($9/mo + $99/yr Stripe) |
+| `src/components/FactoryCard.tsx` | 사이트 카드 (다음 작업: 위성 썸네일 추가) |
+| `src/data/factories.ts` | 16개 Musk 사이트 (다음 작업: lastCapture 필드 추가) |
+| `src/data/products/*.ts` | 25개 product (12 Musk + 12 Atlas extension + 4680) |
+| `public/timelapses/<slug>.mp4` | 16개 사이트 mp4 타임랩스 (이미 존재) |
+| `public/timelapses/index.json` | 빌드 인덱스 (`frames`, `latest`, `builtAt`) |
+| `scripts/apply-hotspots.py` | 제품 hotspot 좌표 (Tesla 13개용; 신규 12개는 SVG 도식이라 별도) |
+| `scripts/generate-schematic-svgs.mjs` | 12개 신규 product SVG 도식 생성 |
+| `vercel.json` | cron: `/api/digest/send` daily 14:00 UTC |
+
+### Atlas 익스텐션 (v3까지 동결)
+| Path | 역할 (현재 home 비노출, 직접 URL 접근만) |
+|---|---|
+| `src/app/markets/page.tsx` | Atlas heatmap (39 companies × 11 sectors) |
+| `src/app/company/[slug]/page.tsx` | 회사 페이지 |
+| `src/app/sectors/[slug]/page.tsx` | 섹터 페이지 |
+| `src/app/private/[slug]/page.tsx` | 비상장 (SpaceX, xAI, Anduril, Helion, Commonwealth Fusion) |
+| `src/app/learn/[slug]/page.tsx` | 14개 glossary |
+| `src/app/supply-chain/page.tsx` | 직접 의존성 그래프 |
+| `src/data/tickers.ts` | 39개 ticker 메타 + deepDive |
+| `src/data/privateCompanies.ts` | 5개 비상장 |
+| `src/data/learn.ts` | 14개 glossary |
+| `src/data/supplyChain.ts` | 직접 의존성 edge 34개 |
 
 ---
 
-## How to start the next session
-
-```
-HANDOFF.md 읽고 현재 상태 파악해줘.
-```
-
-Then likely user priorities (best guess):
-
-### 1. Hook digest cron to actual email (highest revenue impact)
-Wire Resend (free 100/day) into `/api/digest`. When the cron fires, fetch the JSON payload, render HTML, mass-send to every email in `subscribers:emails` Upstash set. **~30 min work.**
-
-### 2. Stripe + Supabase Auth for the Investor tier
-Currently `/investor` is email-capture only. Wire $9/mo + $99/yr products + a `subscription_status` check on `/api/digest` (so only paid users get the email). **~3-4 hours.**
-
-### 3. Refresh market-cap data
-Build `scripts/refresh-marketcaps.mjs` that hits Yahoo Finance for every ticker.marketCapB, writes back to the data file. Run on cron. ~1 hour.
-
-### 4. Cover more companies (Phase 6+ per handoff)
-- LG Electronics, Samsung Display, more semis (KLAC, AMAT, LRCX), Intel Foundry detail, MRVL, ON
-- Hanwha Solutions, Doosan Robotics (000150.KS), Rainbow Robotics (277810.KQ)
-- Lithium Americas (LAC), QuantumScape (QS), Northvolt (now bankrupt — historical only)
-- Helion / Commonwealth Fusion already in private; add TAE Technologies, Type One Energy
-
-### 5. Korean-language X content
-Owner asked for KO X posts. Drafts exist at `content/social-drafts/2026-05-22/x-launch.md`. Refresh weekly.
-
-### 6. Continue hotspot fine-tuning
-User report format: `[product]의 [part_name]이 [방향]으로 어긋남` → edit `scripts/apply-hotspots.py`, re-run, push.
-
----
-
-## Important behavior memory
-
-User profile (`C:/Users/JIBBY/.claude/projects/G--claude/memory/`):
-- **Always merge to main immediately after every fix** — Vercel deploys from main
-- Direct, fact-based. Push back honestly when ideas are bad
-- Korean. `~합니다` / `~해드릴게요` formal-but-warm tone
-- Don't ask for confirmation on small reversible changes; do ask for risky ones
-
-Critical rules from the autonomous handoff doc (`G:\jb\gigascope-자율-핸드오프.txt`):
-- **You are NOT a junior dev waiting for tickets.** Read the vision, execute. Don't ask permission per company. Only escalate strategic decisions.
-- **Accuracy is the moat.** Musk fans + semis analysts + REE investors will catch one wrong number and trust collapses. ALWAYS cite Tier-1 primary sources (SEC EDGAR, DART, IR, whitepapers). NEVER Wikipedia/Reddit/blogs as a sole source.
-- **Korean coverage is the differentiator.** Owner is Korean → DART filings are a structural moat over Bloomberg's thin Korea desk.
-- **NOT Yahoo Finance, NOT Bloomberg.** Atlas, not terminal. Visual + interactive, not spreadsheet.
-- **Skip:** real-time trading, comments/forums, crypto/NFT, 3-tier pricing, ads.
-
----
-
-## Useful commands
+## 🔧 자주 쓰는 명령
 
 ```bash
-# Local dev
+# 로컬 개발
 cd G:/claude/gigascope && npm run dev
 
-# Production build sanity (run before pushing big changes)
+# 배포 전 빌드 검증 (필수)
 npx next build
 
-# Adjust dots
-"G:/ComfyUI_windows_portable/venv/Scripts/python.exe" \
-  scripts/apply-hotspots.py
+# Hotspot 조정 (Tesla 제품들)
+"G:/ComfyUI_windows_portable/venv/Scripts/python.exe" scripts/apply-hotspots.py
 
-# Recent deploys
-gh run list --repo sincetwentytwo-sys/gigascope --limit 5
+# 비-Tesla 제품 SVG 도식 재생성
+node scripts/generate-schematic-svgs.mjs
 
-# Latest commits
+# 최근 배포 상태
+gh api "repos/sincetwentytwo-sys/gigascope/deployments?per_page=3" | grep -oE '"state":"[^"]*"'
+
+# 라이브 변경사항 검증 (캐시 우회)
+curl -s "https://gigascope.xyz/?bust=$(date +%s%N)" | grep -oE "검증어"
+
+# 최근 commit
 git log --oneline -10
 ```
 
 ---
 
-## Repo state at end of overnight session
+## 🌐 환경변수 (Vercel)
+
+Owner가 Vercel 대시보드에서 직접 설정. **코드에 키 적지 말 것**.
+
+| 변수 | 용도 | 없을 때 동작 |
+|---|---|---|
+| `STRIPE_SECRET_KEY` | Investor 결제 | `/api/checkout` 503 graceful fail |
+| `RESEND_API_KEY` | 다이제스트 메일 | `/api/digest/send` 503 |
+| `UPSTASH_REDIS_REST_URL`+`_TOKEN` | 구독자 저장 | EmailSignup 성공 표시하지만 저장 안 됨 |
+| `CRON_SECRET` | 다이제스트 cron 보호 (선택) | 인증 없이 호출 가능 |
+| `DIGEST_FROM` | 보낸이 이메일 (선택) | "GIGASCOPE <digest@gigascope.xyz>" 디폴트 |
+| `FINNHUB_API_KEY` | TSLA 시세 1차 출처 (선택) | Yahoo로 폴백 |
+
+---
+
+## 📝 Owner 행동 메모리
+
+- Korean. `~합니다` / `~해드릴게요` 톤
+- Direct, fact-based. 아이디어 나쁘면 정직하게 push back
+- 모든 fix 후 즉시 main에 머지 (Vercel auto-deploy)
+- 소규모/되돌릴 수 있는 변경은 확인 안 받음. 위험한 변경은 확인 받음
+- "필요 없는 건 다 빼라" — additions보다 cuts 우선
+- "쩐다"는 정보 많이 보여서 나오는 게 아니라 **하나를 미친 듯이 잘** 보여줘야 나옴
+
+---
+
+## 🎯 6주 뒤 v2 출시 목표 (Master plan §6)
+
+- [x] **Week 1**: 정체성 정리 (헤드라인, CTA, 첫 화면 cut, loading… SSR)
+- [ ] **Week 2**: 위성영상 파이프라인 + Hero 비디오 → **Hero ✅ 이미 완료. 파이프라인 자동화 미완.**
+- [ ] **Week 3-4**: 11개 사이트 위성영상 확장 (썸네일 + 인터랙티브 슬라이더)
+- [ ] **Week 5**: 방법론 페이지 ✅ + 사이트별 last capture 노출 ❌
+- [ ] **Week 6**: 뉴스 파이프라인 자동 큐레이션
+
+오늘 Week 1을 끝냈고 Week 2의 hero 부분은 끝났음. **다음 세션은 Week 2 잔여 + Week 3 (사이트 카드 위성 썸네일 + 인터랙티브 타임 슬라이더)** 가 코어.
+
+---
+
+## Repo state at end of session
 
 Latest commits (newest first):
 ```
-4e11b88 feat: private company pages (SpaceX, xAI, Anduril, Helion, Commonwealth Fusion)
-6888717 feat: /learn glossary + Hyperscalers sector + About rewrite
-3c935c1 content: more deepDives + LIG Nex1 + IBM Quantum + Lynas + launch marketing drafts
-5b75491 feat: long-form deepDives + downloads + daily digest cron
+98b4633 feat: master-plan execution — satellite-timelapse hero, cut Atlas extension from home
+7be1858 content: add 12 non-Tesla products with SVG schematics + numbered hotspots
+1144d7e fix: replace 'loading...' placeholder with '—' (audit followup)
+15c418c fix: address external audit — pivot positioning, kill loading flash, strip aggregator news, ship /methodology, disambiguate Investor CTA
+3f7ca4e fix: replace text-white with text-text on remaining dark-theme holdouts
+80f995f fix: unified light theme, real Stripe + Resend monetization, dead-code prune
 2759936 feat: global cmd-K search + nav expansion + Atlas-tone polish
 aab98ca feat: supply chain graph + batteries/EV/Korea industrial coverage + Model 3 hotspot fix
 a235da9 feat: pivot to Atlas framing — company pages, primary-source citations, Investor tier
 e19c893 feat: massive multi-sector expansion — markets + sectors + tickers + pro tier
-1c95a35 HANDOFF: snapshot end of products-page rework — photo viewer with numbered dots is live
 ```
 
-Working tree should be clean (this file is the only delta after the last commit; commit it next).
+Working tree clean. main에 모두 push 됨.
 
-**Page count delta** (rough): old build ~50 static/SSG pages → current build ~120 (factories 16 + products 13 + companies 36 + tickers 36 + private 5 + sectors 11 + learn 10 + statics ~15 + assorted dynamic).
+---
 
-**Sectors covered** (11): Musk Empire, Semis & AI Compute, Quantum, Critical Materials, Defense & Space, Fusion & Nuclear, Robotics & Applied AI, Batteries & EVs, Korea Industrial, China Tech, Hyperscalers.
+**한 줄 요약 — 다음 세션이 명심할 것**:
 
-**Korean-listed names in coverage** (6): 005930.KS Samsung, 000660.KS SK Hynix, 373220.KS LGES, 006400.KS Samsung SDI, 005380.KS Hyundai Motor, 012450.KS Hanwha Aerospace, 079550.KS LIG Nex1.
+> Hero 비디오는 박혔다. 이제 매주 갱신되는 위성 컨텐츠 파이프라인(Week 2-3)과 사이트 카드의 before/after 썸네일이 다음 moat. **39 companies 같은 확장 더는 하지 말 것.**
