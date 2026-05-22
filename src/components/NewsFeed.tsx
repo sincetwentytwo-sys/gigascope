@@ -4,7 +4,6 @@ import type { NewsItem } from "@/data/types";
 const TESLA_FEEDS = [
   { source: "Electrek", url: "https://electrek.co/guides/tesla/feed/" },
   { source: "Teslarati", url: "https://www.teslarati.com/feed/" },
-  { source: "Not A Tesla App", url: "https://www.notateslaapp.com/feed/" },
 ];
 
 // General sources (need keyword filter)
@@ -153,7 +152,6 @@ async function fetchAllNews(): Promise<NewsItem[]> {
 const SOURCE_COLORS: Record<string, string> = {
   "Electrek": "bg-green-100 text-green-700",
   "Teslarati": "bg-blue-100 text-blue-700",
-  "Not A Tesla App": "bg-purple-100 text-purple-700",
   "InsideEVs": "bg-orange-100 text-orange-700",
   "CleanTechnica": "bg-emerald-100 text-emerald-700",
   "TorqueNews": "bg-red-100 text-red-700",

@@ -57,17 +57,27 @@ async function fetchLaunchesThisYear(): Promise<number | null> {
   return data?.count ?? null;
 }
 
+// Celestrak returns ~5.8MB of TLE data — too big for Next.js fetch cache (>2MB
+// limit throws), so we cache the resolved count in module memory instead.
+let starlinkCache: { count: number; ts: number } | null = null;
+const STARLINK_TTL_MS = 3_600_000;
+
 async function fetchStarlinkCount(): Promise<number | null> {
+  if (starlinkCache && Date.now() - starlinkCache.ts < STARLINK_TTL_MS) {
+    return starlinkCache.count;
+  }
   try {
     const res = await fetch(
       "https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=json",
-      { next: { revalidate: 3600 } }
+      { cache: "no-store" }
     );
-    if (!res.ok) return null;
+    if (!res.ok) return starlinkCache?.count ?? null;
     const json = (await res.json()) as unknown[];
-    return Array.isArray(json) ? json.length : null;
+    if (!Array.isArray(json)) return starlinkCache?.count ?? null;
+    starlinkCache = { count: json.length, ts: Date.now() };
+    return json.length;
   } catch {
-    return null;
+    return starlinkCache?.count ?? null;
   }
 }
 
