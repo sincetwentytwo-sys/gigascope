@@ -1,205 +1,222 @@
 # GIGASCOPE — Session Handoff
 
-**Last updated**: 2026-05-22 (post-master-plan pivot)
+**Last updated**: 2026-05-22 (Resend integration is next)
 **Live (primary)**: https://gigascope.xyz
 **Live (alias)**: https://gigascope-ten.vercel.app
-**Repo**: https://github.com/sincetwentytwo-sys/gigascope (main branch · Vercel auto-deploy)
+**Repo**: https://github.com/sincetwentytwo-sys/gigascope (main · Vercel auto-deploy)
+**Local repo path**: `G:\claude\gigascope` (⚠ NOT `G:\gigascope` as in some docs)
 
 ---
 
 ## 🔑 First message to paste in a new session
 
 ```
-HANDOFF.md 읽고 현재 상태 파악해줘. 그리고 아래 "다음 작업" 섹션의 우선순위 1번부터 진행.
+HANDOFF.md 읽고 현재 상태 파악해. 그 다음:
 
-진행 원칙:
-- Master plan(G:\jb\gigascope-master-plan-2026-05-22.md) + audit(G:\jb\gigascope-audit-2026-05-22.md) 이 캐논. 둘 다 읽고 시작.
-- "Musk 제국 위성 트래커" 한 가지에 집중. 39개 회사·11개 섹터·Atlas extension은 코드베이스에 살아있지만 더 키우지 말 것.
-- 매 작업마다: build → commit → push → 라이브 검증(cache-buster query 필수).
-- HTML 응답이 직전과 100% 동일하면 → X-Vercel-Cache STALE 가능성. ?bust=$(date +%s%N) 로 재검증.
+1) G:\jb\resend-integration-2026-05-22.md 전체 정독.
+2) 그 문서 Section 3 순서대로 Resend 통합 실행.
+3) 단, 실제 프로젝트 경로는 G:\claude\gigascope (G:\gigascope 아님).
+   - 모든 'app/' 경로는 'src/app/' 로 읽을 것.
+   - 'emails/welcome.tsx' 는 'src/emails/welcome.tsx' 로 생성.
+4) 기존 /api/subscribe 라우트가 이미 존재 (Upstash Redis 저장). 새로 만들지 말고
+   EXTEND — Upstash 저장 로직 유지 + Resend welcome 메일 발송 추가.
+5) RESEND_API_KEY 값은 owner가 Vercel + .env.local 에 직접 넣음. 코드에 적지 말 것.
+6) 매 단계: build → commit → push → 라이브 캐시 우회 검증.
+
+Master plan(G:\jb\gigascope-master-plan-2026-05-22.md) + audit
+(G:\jb\gigascope-audit-2026-05-22.md) 도 캐논. 두 문서와 Resend 통합 지시서
+세 개 모두 본 후 작업 시작.
 ```
 
 ---
 
-## 현재 상태 (한 줄)
+## ⭐ 다음 작업 — Resend 통합 (최우선)
 
-**Master plan 1주차 Week 1 항목 완료, Week 2~6 미진행.**
+**문서**: `G:\jb\resend-integration-2026-05-22.md`
+**목표**: waitlist welcome 메일 발송 라이브 → charter 100명 모집 시작
+**예상**: DNS 대기 빼면 1-2시간
 
-홈 hero에 Giga Texas Sentinel-2 타임랩스 mp4 풀-블리드로 박혔고, 헤드라인은
-"Tesla Gigafactory Texas — six years from dirt." 21개 티커 그리드 + 11개
-섹터 스트립 + Extended Atlas tiles 전부 home에서 제거. 16개 Musk 사이트
-카드만 본문. Atlas 익스텐션(39 companies / 5 private / 11 sectors / 14 learn
-entries / 25 products) 코드는 모두 살아있지만 home에서 푸터 작은 링크로
-demote됨.
+### 우리 프로젝트에 맞춘 path 매핑
 
-**Latest commit**: `98b4633 feat: master-plan execution — satellite-timelapse hero, cut Atlas extension from home`
+Resend 문서는 일반 Next.js 구조를 가정. 우리 프로젝트는 다음과 같이 적용:
 
----
+| 문서의 경로 | 실제 적용 경로 |
+|---|---|
+| `G:\gigascope\app\api\subscribe\route.ts` | `G:\claude\gigascope\src\app\api\subscribe\route.ts` ⚠ **이미 존재** |
+| `G:\gigascope\emails\welcome.tsx` | `G:\claude\gigascope\src\emails\welcome.tsx` (새로 생성) |
+| `app/(home)/page.tsx` 의 Daily digest 폼 | `src/components/EmailSignup.tsx` (이미 fetch '/api/subscribe' 사용 중) |
+| `/investor` 페이지 폼 | `src/app/investor/page.tsx` + `src/components/EmailSignup.tsx` (재사용) |
 
-## 오늘(2026-05-22) 한 일 — 17 commit 요약
+### 단계별 액션 (Resend 문서 Section 3 기준)
 
-### Wave 1-7 (밤): Atlas 확장 (오버슈팅 → 나중에 cut)
-- 다중 sector / multi-ticker / private companies / learn glossary 등
-- Stripe + Resend 결제·메일 scaffold
-- 39 public companies × 11 sectors × 5 privates × 14 learn × 25 products
-- 모든 인프라 코드 OK, 다만 정체성 흐려짐 → 다음 단계에서 좁혀짐
-
-### Audit 대응 (오전): 라이트 테마 통일 + 외부 audit 5개 fix
-- 다크/네온 hex 색 → 라이트 토큰 일괄 변환
-- GlobeBackground 워터마크 제거
-- KRW/USD `toLocaleString` 포맷
-- Supply chain tier max-of 계산
-- Stripe checkout + Resend 다이제스트 sender 실제 동작
-- "Become an Investor" → "Investor tier · $9/mo" + 명시적 "not equity"
-- Google News RSS aggregator 전부 제거 → 직접 RSS만
-- SSR prefetch로 "loading..." 텍스트 모두 제거 (홈 + /markets)
-- /methodology 페이지 신설
-- About 페이지 5 moats / 4-tier source policy로 리라이트
-
-### Master Plan 실행 (오후): Musk-only 좁히기
-- Home hero: Giga Texas 타임랩스 mp4 풀-블리드 (16:9, autoplay loop)
-- 헤드라인: "Tesla Gigafactory Texas — six years from dirt."
-- 21개 ticker grid + 11 sector strip + Extended Atlas tiles 전부 home에서 삭제
-- Nav: Musk-empire 메뉴 우선, Atlas는 70% opacity 단일 링크로 demote
-- Meta/OG: "Watch Musk's empire get built, one satellite frame at a time"
-- 푸터에 "broader Atlas" 작은 회색 링크로 익스텐션 유지
-
-### Products 확장 (저녁)
-- 13개 → 25개 product (12개 신규 + SVG 도식 + 번호 hotspot)
-- NVIDIA Blackwell B200, HBM3E, ASML EUV, TSMC CoWoS, Hyundai IONIQ 5,
-  Boston Dynamics Atlas, LGES Ultium, BYD Blade, Hanwha K9, Rocket Lab
-  Neutron, IonQ Tempo, Oklo Aurora
-- 각 부품 7-15개 번호 컴포넌트 + 정확한 hotspot 좌표
-- `scripts/generate-schematic-svgs.mjs` 로 모두 자동 생성
-
----
-
-## 🎯 다음 작업 — Master plan Week 2-6 (우선순위 순)
-
-### **1. 사이트 카드에 위성 before/after 썸네일** (Week 2 핵심)
-Master plan §4 Step 3: 모든 진척도 카드에 위성 썸네일 — "78%" 옆에 위성영상 → 신뢰 폭발.
-
-```tsx
-// src/components/FactoryCard.tsx 수정
-// public/timelapses/<slug>.jpg 가 이미 존재 (poster image)
-// 카드 최상단에 <img src={`/timelapses/${factory.slug}.jpg`}/> 추가
-// 위 + 아래 비교가 핵심이라면 first-frame + last-frame 2장 필요 — public/timelapses/<slug>/0.jpg + last.jpg 같은 구조 추가
-```
-
-스크립트로 mp4에서 첫/마지막 프레임 추출:
+**Step 1 — 패키지 설치**
 ```bash
-ffmpeg -i public/timelapses/giga-texas.mp4 -vf "select=eq(n\,0)" -vframes 1 public/timelapses/giga-texas-first.jpg
-ffmpeg -i public/timelapses/giga-texas.mp4 -sseof -1 -update 1 public/timelapses/giga-texas-last.jpg
+cd /g/claude/gigascope
+npm install resend react-email @react-email/components
 ```
 
-16개 사이트 일괄 처리하는 bash 루프. 약 2시간 작업.
+**Step 2 — 환경변수**
+- 로컬: `G:\claude\gigascope\.env.local` 에 `RESEND_API_KEY` + `RESEND_FROM_EMAIL=digest@gigascope.xyz`
+- Vercel: Dashboard → gigascope → Settings → Environment Variables (Production + Preview + Development)
+- 추가 후 **Redeploy 필수**
+- `.gitignore` 에 `.env*.local` 포함되어 있는지 확인 (없으면 추가)
 
-### **2. 각 카드에 last capture date + cloud cover %**
-Master plan §1.4 신뢰성: `Updated 2026-05-20` 한 줄로는 부족. 사이트별 last capture date 노출.
+**Step 3 — 이메일 템플릿**
+파일 생성: `G:\claude\gigascope\src\emails\welcome.tsx` — Resend 문서 Section 3 Step 3 의 React Email 컴포넌트 그대로. 우리 톤(dark hero, 흰 텍스트)에 맞춤.
 
-이미 `factories.json` 의 각 사이트에 `lastUpdated` 가 있음. 추가로:
-- `lastCapture: { date: "2026-05-15", cloudCover: 0, source: "Sentinel-2" }` 필드 추가
-- FactoryCard 푸터에 작은 글씨로 노출 (`Last capture: 2026-05-15 · 0% cloud`)
+**Step 4 — API Route EXTEND (새로 만들지 말 것)**
 
-`public/timelapses/index.json` 에 `latest: "2026-05-15"` 이미 있으니 FactoryCard에서 import해서 쓰면 됨.
+`src/app/api/subscribe/route.ts` 이미 존재 + Upstash Redis 저장 로직 있음. 다음 패턴으로 확장:
 
-### **3. /site/[slug] 페이지에 인터랙티브 타임 슬라이더**
-Master plan §3.2: 유일하게 정당화되는 인터랙티브.
+```ts
+// 기존 import 옆에 추가
+import { Resend } from "resend";
+import WelcomeEmail from "@/emails/welcome";
 
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+
+// 기존 POST handler 안에서, Upstash 저장 성공 직후:
+if (resend) {
+  try {
+    await resend.emails.send({
+      from: `GIGASCOPE <${process.env.RESEND_FROM_EMAIL ?? "digest@gigascope.xyz"}>`,
+      to: email,
+      subject: "You're on the charter list — $9/mo locked for life",
+      react: WelcomeEmail({ email }),
+    });
+  } catch (e) {
+    console.error("Resend send failed:", e);
+    // Don't fail the subscribe — email is best-effort.
+  }
+}
 ```
-[2020] ───●─────────────── [2026]
-         ↑ 드래그하면 위성영상이 시간순으로 모핑
+
+핵심: **Resend 키 없으면 graceful skip** (현재 graceful-degrade 패턴 유지).
+
+**Step 5 — 폼 연결 (이미 됨)**
+`src/components/EmailSignup.tsx` 가 이미 `/api/subscribe` POST 함. 추가 작업 없음.
+다만 응답 UI 카피 변경 ("Subscribed. Check your inbox for the welcome email.") 필요.
+
+**Step 6 — 로컬 테스트**
+```bash
+cd /g/claude/gigascope
+npm run dev
+```
+브라우저에서 `localhost:3000/investor` 또는 `localhost:3000` 의 Daily digest 박스로 sincetwentytwo@gmail.com 구독 → 받은편지함 확인.
+
+도메인 verify 전이면 `from: 'onboarding@resend.dev'` + `to: 'sincetwentytwo@gmail.com'` 으로 임시 테스트.
+
+**Step 7 — 배포**
+```bash
+git add -A && git commit -m "feat: Resend welcome email on waitlist signup"
+git push
 ```
 
-구현 방법:
-- `<input type="range">` 슬라이더 + JS로 video.currentTime 제어 (mp4 frame seek)
-- 또는 33개 프레임 JPG로 추출 (`ffmpeg -i ... -vsync 0 frames/%03d.jpg`) → 슬라이더 인덱스로 <img src> 교체
-- 후자가 훨씬 부드러움. 사이트당 ~3MB 추가 (33 × 90KB).
+**Step 8 — 라이브 검증** (필수)
+```bash
+# 캐시 우회
+curl -s "https://gigascope.xyz/?bust=$(date +%s%N)" | head -3
+# Resend dashboard → Logs 에서 delivery 상태 확인
+```
 
-기존 `/site/[slug]/page.tsx` 의 "SATELLITE TIMELAPSE - 33 frames" 섹션을 인터랙티브로 업그레이드.
+### Resend 검증 체크리스트 (Section 5 그대로)
 
-### **4. Sentinel-2 자동 fetch 파이프라인 + 매주 업데이트 cron**
-Master plan §6 Week 4-5 핵심 moat 자산.
+- [ ] Resend Dashboard `Verified ✓` 표시 (Tokyo region)
+- [ ] DMARC TXT 레코드 확인 (`_dmarc` → `v=DMARC1; p=none;`)
+- [ ] `npm install resend react-email @react-email/components` 성공
+- [ ] `.env.local` 에 RESEND_API_KEY + RESEND_FROM_EMAIL
+- [ ] Vercel 환경변수 등록 + Redeploy
+- [ ] `src/emails/welcome.tsx` 생성
+- [ ] `src/app/api/subscribe/route.ts` 에 Resend send 로직 EXTEND
+- [ ] 로컬 + 라이브 본인 메일 1회 발송 성공
+- [ ] Gmail에서 "Not spam" + 답장 (평판 축적)
+- [ ] Resend Dashboard Logs 에서 delivered 확인
 
-현재 `public/timelapses/index.json` 에 `builtAt: 2026-05-19T13:53:48.485Z` 한번 빌드된 정적 자산. 매주 자동 갱신해야 진짜 가치.
+---
 
-스택:
-- Sentinel Hub 무료 계정 + API key (env var `SENTINEL_INSTANCE_ID`)
-- `scripts/fetch-sentinel-frames.mjs` — 각 사이트별 lat/lng 박스로 NDVI/RGB 이미지 fetch
-- GitHub Actions weekly cron이 이미 있는지 확인: `.github/workflows/` 디렉토리 확인
+## 📍 현재 상태 (한 줄)
 
-### **5. About 페이지에 운영 원칙 명시 (Week 5)**
-Master plan §4 Step 5: "No paid placements. No affiliate links. Open source on GitHub. Last full audit: 2026-05-22."
+홈 hero에 Giga Texas Sentinel-2 타임랩스 mp4 풀-블리드. 헤드라인:
+"Tesla Gigafactory Texas — six years from dirt." 16개 Musk 사이트 카드.
+Atlas 익스텐션(39 companies / 5 private / 11 sectors / 14 learn / 25 products)
+코드 살아있지만 home/nav 에서 demote. **결제·메일은 scaffold만 있고 라이브
+아님 — Resend 통합이 next action.**
 
-About 페이지에 이미 5 moats / source policy / Korean differentiation 있음 — "운영 원칙" 박스 추가만 하면 됨.
+**Latest commit**: `2a51f7b HANDOFF: refresh for next session`
 
-### **6. 뉴스 파이프라인 자동 큐레이션 (Week 6)**
-Master plan §6 Week 6: Teslarati / Electrek / Reuters / Bloomberg / FT 직접 RSS 6시간 cron.
+---
 
-현재는 클라이언트 NewsFeed가 매 요청마다 RSS fetch. 자동 큐레이션 (키워드 필터 + 중복 제거 + 출처 가중치) 추가하면 더 좋음.
+## 오늘(2026-05-22) 했던 일 — 18 commit 요약
+
+| Wave | 작업 |
+|---|---|
+| 1-7 (밤) | Atlas 확장 — 39 companies × 11 sectors × 5 privates × 14 learn × 25 products + Stripe/Resend scaffold |
+| Audit (오전) | 라이트 테마 통일, GlobeBackground 제거, KRW 포맷, /methodology 신설, Google News RSS 제거, SSR prefetch, "Investor tier" disambiguation |
+| Master plan (오후) | Home hero를 Giga Texas mp4 풀-블리드로, 21 ticker grid + 11 sector strip + Atlas tiles 전부 cut, nav demote |
+| Products (저녁) | 12개 신규 제품 + SVG 도식 + 번호 hotspot (NVDA Blackwell, HBM3E, ASML EUV, TSMC CoWoS, Hyundai IONIQ 5, Boston Dynamics Atlas, LGES Ultium, BYD Blade, Hanwha K9, Rocket Lab Neutron, IonQ Tempo, Oklo Aurora) |
+
+---
+
+## 🎯 Resend 다음 우선순위 (Master plan Week 2-6 잔여)
+
+Resend 끝나면 다음 순서:
+
+1. **Stripe 결제 라이브** — 개인사업자 등록 + Stripe API + Webhook + DB (2-3일).
+   `/api/checkout` 라우트 이미 존재 (graceful 503). STRIPE_SECRET_KEY 만 넣으면 동작.
+2. **Waitlist drip 시퀀스 5통** — D+3, D+7, D+14, D+21, D+30 (1일). Resend `react-email` 템플릿 재사용.
+3. **/investor 페이지 카운트다운** — "Billing isn't live yet" → D-day 카운트다운 + reserved 카운터.
+4. **사이트 카드 위성 before/after 썸네일** — Master plan Week 2.
+   `ffmpeg -i public/timelapses/<slug>.mp4 -vf "select=eq(n\,0)" -vframes 1 public/timelapses/<slug>-first.jpg`
+5. **사이트별 last capture date + cloud cover %** — factories.json 확장 + FactoryCard 노출.
+6. **인터랙티브 타임 슬라이더** on `/site/[slug]` — 33 프레임 JPG + range input.
+7. **Sentinel-2 자동 fetch cron** — GitHub Actions weekly.
 
 ---
 
 ## ⚠️ 함정 — 같은 실수 다시 하지 말 것
 
 ### 1. **Atlas 익스텐션 다시 키우지 말 것**
-오늘 야간에 39 companies + 11 sectors 확장 → 외부 audit으로 cut. 코드는 유지 (`/markets`, `/sectors/*`, `/company/*`, `/ticker/*`, `/learn/*`, `/private/*` 다 살아있음) 하지만 **home + nav에서 더 surface 시키지 말 것**. v3로 미룸.
+야간에 39 companies + 11 sectors 확장 → 외부 audit으로 cut. 코드 유지하되 home/nav surface 금지. v3로 미룸.
 
 ### 2. **Vercel 캐시 stale 함정**
-배포 직후 curl 하면 직전 버전이 나올 수 있음. 검증 시 항상:
+배포 직후 curl 하면 직전 버전 나올 수 있음. 검증 시:
 ```bash
 curl -s "https://gigascope.xyz/?bust=$(date +%s%N)" | grep -oE "검증어"
 ```
-또는 cache-buster query (`?v=$(date +%s)`)로 브라우저 검증.
 
 ### 3. **테마 일관성**
-모든 페이지가 light theme (bg-bg, text-text, border-border-custom). 새 다크 hex 색(`#1f1f23`, `#00d4ff`, neon 등) 절대 추가하지 말 것.
+모든 페이지 light theme. `bg-bg`, `text-text`, `border-border-custom` 토큰만. 다크 hex 색(`#1f1f23`, `#00d4ff` neon 등) 추가 금지.
 
-### 4. **3D viewer 부활 금지**
-three.js, @react-three/fiber, drei 다 제거됨. Product2DViewer (사진 + hotspot 점) 가 표준. 3D 다시 만들지 말 것.
+### 4. **3D viewer / GlobeBackground 부활 금지**
+three.js, @react-three/fiber, drei 제거됨. Product2DViewer (사진 + hotspot 점) 가 표준.
 
-### 5. **GlobeBackground 부활 금지**
-워터마크 지구본은 라이트 테마와 충돌해서 제거함. 다시 import 하지 말 것.
-
-### 6. **광고/제휴 링크 금지**
+### 5. **광고/제휴 링크 금지**
 Master plan: "No paid placements. No affiliate links."
 
-### 7. **Stripe 결제 환경변수**
-`/api/checkout` 은 STRIPE_SECRET_KEY 없으면 503 정상 응답. 결제 실제 활성화는 owner가 Vercel env에 직접 추가 필요. 키 코드에 적지 말 것.
+### 6. **API 키 / 비밀번호 코드에 적지 말 것**
+Vercel env 또는 `.env.local` 만. `.env*.local` 은 .gitignore 됨 (확인 필수).
+
+### 7. **새 API 라우트 만들 때 graceful-degrade 패턴 유지**
+모든 외부 서비스 routes (`/api/checkout`, `/api/subscribe`, `/api/digest/send`) 가 키 없으면 503 + 명시적 에러 메시지 응답. Resend extend 할 때도 키 없으면 메일 skip하고 200 OK (구독 자체는 성공).
 
 ---
 
-## 📂 파일 구조 (자주 만질 곳)
+## 📂 파일 구조 (Resend 작업과 관련된 곳)
 
 | Path | 역할 |
 |---|---|
-| `src/app/page.tsx` | 홈 (Master plan 대로 Musk-only 좁혀짐) |
-| `src/app/layout.tsx` | 글로벌 nav, metadata, 검색 |
-| `src/app/site/[slug]/page.tsx` | 개별 사이트 대시보드 (위성지도 + 타임랩스 + 마일스톤) |
-| `src/app/methodology/page.tsx` | 진척도 % 신뢰 자산 |
-| `src/app/investor/page.tsx` | 결제 랜딩 ($9/mo + $99/yr Stripe) |
-| `src/components/FactoryCard.tsx` | 사이트 카드 (다음 작업: 위성 썸네일 추가) |
-| `src/data/factories.ts` | 16개 Musk 사이트 (다음 작업: lastCapture 필드 추가) |
-| `src/data/products/*.ts` | 25개 product (12 Musk + 12 Atlas extension + 4680) |
-| `public/timelapses/<slug>.mp4` | 16개 사이트 mp4 타임랩스 (이미 존재) |
-| `public/timelapses/index.json` | 빌드 인덱스 (`frames`, `latest`, `builtAt`) |
-| `scripts/apply-hotspots.py` | 제품 hotspot 좌표 (Tesla 13개용; 신규 12개는 SVG 도식이라 별도) |
-| `scripts/generate-schematic-svgs.mjs` | 12개 신규 product SVG 도식 생성 |
-| `vercel.json` | cron: `/api/digest/send` daily 14:00 UTC |
+| `src/app/api/subscribe/route.ts` | ⚠ **EXTEND 대상**. Upstash 저장 + Resend send 추가 |
+| `src/components/EmailSignup.tsx` | 이미 `/api/subscribe` POST 함. 응답 UI 카피만 업데이트 가능 |
+| `src/emails/welcome.tsx` | 🆕 새로 생성 (Resend 문서 Section 3 Step 3 그대로) |
+| `src/app/investor/page.tsx` | EmailSignup 사용. 별도 폼 핸들러 작성 불필요 |
+| `src/app/page.tsx` | EmailSignup 사용 (Daily digest 박스) |
+| `src/app/api/digest/send/route.ts` | 일별 다이제스트 발송 (이미 Resend 통합 코드 있음, env만 있으면 동작) |
+| `vercel.json` | cron `/api/digest/send` daily 14:00 UTC |
+| `.env.local` | ⚠ 로컬용. `.gitignore` 됨 |
 
-### Atlas 익스텐션 (v3까지 동결)
-| Path | 역할 (현재 home 비노출, 직접 URL 접근만) |
-|---|---|
-| `src/app/markets/page.tsx` | Atlas heatmap (39 companies × 11 sectors) |
-| `src/app/company/[slug]/page.tsx` | 회사 페이지 |
-| `src/app/sectors/[slug]/page.tsx` | 섹터 페이지 |
-| `src/app/private/[slug]/page.tsx` | 비상장 (SpaceX, xAI, Anduril, Helion, Commonwealth Fusion) |
-| `src/app/learn/[slug]/page.tsx` | 14개 glossary |
-| `src/app/supply-chain/page.tsx` | 직접 의존성 그래프 |
-| `src/data/tickers.ts` | 39개 ticker 메타 + deepDive |
-| `src/data/privateCompanies.ts` | 5개 비상장 |
-| `src/data/learn.ts` | 14개 glossary |
-| `src/data/supplyChain.ts` | 직접 의존성 edge 34개 |
+### Atlas 익스텐션 (Resend 작업과 무관, v3까지 동결)
+- `/markets`, `/sectors/*`, `/company/*`, `/private/*`, `/learn/*`, `/supply-chain` — 라이브
+- 모두 home/nav 에서 demote됨
 
 ---
 
@@ -212,7 +229,7 @@ cd G:/claude/gigascope && npm run dev
 # 배포 전 빌드 검증 (필수)
 npx next build
 
-# Hotspot 조정 (Tesla 제품들)
+# Hotspot 조정 (Tesla 제품 13개)
 "G:/ComfyUI_windows_portable/venv/Scripts/python.exe" scripts/apply-hotspots.py
 
 # 비-Tesla 제품 SVG 도식 재생성
@@ -224,23 +241,23 @@ gh api "repos/sincetwentytwo-sys/gigascope/deployments?per_page=3" | grep -oE '"
 # 라이브 변경사항 검증 (캐시 우회)
 curl -s "https://gigascope.xyz/?bust=$(date +%s%N)" | grep -oE "검증어"
 
-# 최근 commit
-git log --oneline -10
+# Resend 메일 발송 로컬 테스트 (resend 패키지 설치 후)
+node -e "import('resend').then(({Resend}) => new Resend(process.env.RESEND_API_KEY).emails.send({from: 'onboarding@resend.dev', to: 'sincetwentytwo@gmail.com', subject: 'test', html: 'hello'}).then(console.log))"
 ```
 
 ---
 
 ## 🌐 환경변수 (Vercel)
 
-Owner가 Vercel 대시보드에서 직접 설정. **코드에 키 적지 말 것**.
+Owner가 Vercel 대시보드에서 직접 설정. 코드에 키 적지 말 것.
 
-| 변수 | 용도 | 없을 때 동작 |
+| 변수 | 용도 | 없을 때 |
 |---|---|---|
-| `STRIPE_SECRET_KEY` | Investor 결제 | `/api/checkout` 503 graceful fail |
-| `RESEND_API_KEY` | 다이제스트 메일 | `/api/digest/send` 503 |
-| `UPSTASH_REDIS_REST_URL`+`_TOKEN` | 구독자 저장 | EmailSignup 성공 표시하지만 저장 안 됨 |
-| `CRON_SECRET` | 다이제스트 cron 보호 (선택) | 인증 없이 호출 가능 |
-| `DIGEST_FROM` | 보낸이 이메일 (선택) | "GIGASCOPE <digest@gigascope.xyz>" 디폴트 |
+| `RESEND_API_KEY` | **⭐ 이번 작업의 핵심** | `/api/subscribe` Resend send skip (저장은 됨) |
+| `RESEND_FROM_EMAIL` | 발신 주소 | "digest@gigascope.xyz" 디폴트 사용 |
+| `STRIPE_SECRET_KEY` | 결제 (Resend 다음 작업) | `/api/checkout` 503 |
+| `UPSTASH_REDIS_REST_URL` + `_TOKEN` | 구독자 저장 | EmailSignup 응답 OK 하지만 저장 안 됨 |
+| `CRON_SECRET` | 다이제스트 cron 보호 | 인증 없이 호출 가능 |
 | `FINNHUB_API_KEY` | TSLA 시세 1차 출처 (선택) | Yahoo로 폴백 |
 
 ---
@@ -250,21 +267,8 @@ Owner가 Vercel 대시보드에서 직접 설정. **코드에 키 적지 말 것
 - Korean. `~합니다` / `~해드릴게요` 톤
 - Direct, fact-based. 아이디어 나쁘면 정직하게 push back
 - 모든 fix 후 즉시 main에 머지 (Vercel auto-deploy)
-- 소규모/되돌릴 수 있는 변경은 확인 안 받음. 위험한 변경은 확인 받음
-- "필요 없는 건 다 빼라" — additions보다 cuts 우선
-- "쩐다"는 정보 많이 보여서 나오는 게 아니라 **하나를 미친 듯이 잘** 보여줘야 나옴
-
----
-
-## 🎯 6주 뒤 v2 출시 목표 (Master plan §6)
-
-- [x] **Week 1**: 정체성 정리 (헤드라인, CTA, 첫 화면 cut, loading… SSR)
-- [ ] **Week 2**: 위성영상 파이프라인 + Hero 비디오 → **Hero ✅ 이미 완료. 파이프라인 자동화 미완.**
-- [ ] **Week 3-4**: 11개 사이트 위성영상 확장 (썸네일 + 인터랙티브 슬라이더)
-- [ ] **Week 5**: 방법론 페이지 ✅ + 사이트별 last capture 노출 ❌
-- [ ] **Week 6**: 뉴스 파이프라인 자동 큐레이션
-
-오늘 Week 1을 끝냈고 Week 2의 hero 부분은 끝났음. **다음 세션은 Week 2 잔여 + Week 3 (사이트 카드 위성 썸네일 + 인터랙티브 타임 슬라이더)** 가 코어.
+- 작고 되돌릴 수 있는 변경은 확인 안 받음. 위험한 변경은 확인 받음
+- 하나를 미친 듯이 잘 하는 게 moat. 광범위한 확장은 거꾸로 가치 깎음
 
 ---
 
@@ -272,6 +276,7 @@ Owner가 Vercel 대시보드에서 직접 설정. **코드에 키 적지 말 것
 
 Latest commits (newest first):
 ```
+2a51f7b HANDOFF: refresh for next session — master-plan v1 done, Week 2-3 next
 98b4633 feat: master-plan execution — satellite-timelapse hero, cut Atlas extension from home
 7be1858 content: add 12 non-Tesla products with SVG schematics + numbered hotspots
 1144d7e fix: replace 'loading...' placeholder with '—' (audit followup)
@@ -281,13 +286,12 @@ Latest commits (newest first):
 2759936 feat: global cmd-K search + nav expansion + Atlas-tone polish
 aab98ca feat: supply chain graph + batteries/EV/Korea industrial coverage + Model 3 hotspot fix
 a235da9 feat: pivot to Atlas framing — company pages, primary-source citations, Investor tier
-e19c893 feat: massive multi-sector expansion — markets + sectors + tickers + pro tier
 ```
 
-Working tree clean. main에 모두 push 됨.
+Working tree clean. main에 모두 push 됨. Vercel 최신 deploy SHA = 98b4633.
 
 ---
 
-**한 줄 요약 — 다음 세션이 명심할 것**:
+**한 줄 요약**:
 
-> Hero 비디오는 박혔다. 이제 매주 갱신되는 위성 컨텐츠 파이프라인(Week 2-3)과 사이트 카드의 before/after 썸네일이 다음 moat. **39 companies 같은 확장 더는 하지 말 것.**
+> Hero 비디오 박혔다. 결제·메일 코드 다 있지만 **키만 없는 상태**. 다음 세션 = Resend API 키 받아서 `/api/subscribe` 에 welcome 메일 발송 로직 EXTEND → charter 100명 받기 시작. 39 companies 같은 확장 금지.
