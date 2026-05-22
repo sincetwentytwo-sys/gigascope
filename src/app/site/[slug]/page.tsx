@@ -189,7 +189,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                 {c.label}
               </span>
               <div className="mt-3 sm:mt-4">
-                <span className="font-mono text-xl sm:text-2xl font-bold text-white break-words">{c.value}</span>
+                <span className="font-mono text-xl sm:text-2xl font-bold text-text break-words">{c.value}</span>
               </div>
             </div>
           ))}
@@ -203,7 +203,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                 {label}
               </span>
               <div className="mt-4">
-                <span className="font-mono text-2xl font-bold text-white">{value}</span>
+                <span className="font-mono text-2xl font-bold text-text">{value}</span>
               </div>
             </div>
           ))}
@@ -219,7 +219,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                 style={{ borderColor: accent }}
               >
                 <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: accent }} />
-                <span className="font-mono text-[10px] font-bold tracking-widest text-white uppercase">
+                <span className="font-mono text-[10px] font-bold tracking-widest text-text uppercase">
                   {factory.name}
                 </span>
               </div>
@@ -296,15 +296,15 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
             <div className="mt-4 grid grid-cols-3 gap-3">
               <div className="bg-surface  p-3 border-t border-border-custom">
                 <span className="block font-mono text-[9px] text-dim mb-1 uppercase tracking-wider">Latitude</span>
-                <span className="font-mono text-base font-bold text-white">{lat.toFixed(4)}</span>
+                <span className="font-mono text-base font-bold text-text">{lat.toFixed(4)}</span>
               </div>
               <div className="bg-surface  p-3 border-t border-border-custom">
                 <span className="block font-mono text-[9px] text-dim mb-1 uppercase tracking-wider">Longitude</span>
-                <span className="font-mono text-base font-bold text-white">{lng.toFixed(4)}</span>
+                <span className="font-mono text-base font-bold text-text">{lng.toFixed(4)}</span>
               </div>
               <div className="bg-surface  p-3 border-t border-border-custom">
                 <span className="block font-mono text-[9px] text-dim mb-1 uppercase tracking-wider">Milestones</span>
-                <span className="font-mono text-base font-bold text-white">
+                <span className="font-mono text-base font-bold text-text">
                   {doneCount}/{factory.milestones.length}
                 </span>
               </div>
@@ -340,7 +340,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                       />
                     </div>
                     <span className="font-mono text-[10px] text-dim">{m.date}</span>
-                    <h4 className="font-semibold text-xs text-white uppercase mt-0.5 tracking-wide">
+                    <h4 className="font-semibold text-xs text-text uppercase mt-0.5 tracking-wide">
                       {m.text}
                     </h4>
                     <p
@@ -378,7 +378,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                         }}
                       />
                       <span
-                        className={`font-mono text-[9px] mt-1 ${isLatest ? "text-white font-bold" : "text-dim"}`}
+                        className={`font-mono text-[9px] mt-1 ${isLatest ? "text-text font-bold" : "text-dim"}`}
                       >
                         '{String(TIMELINE_YEARS[i]).slice(-2)}
                       </span>

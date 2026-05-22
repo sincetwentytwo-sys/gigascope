@@ -222,7 +222,7 @@ export default function CompareSlider() {
         <div className="absolute top-2 left-2 sm:top-4 sm:left-4 z-[1000]">
           <div className="bg-surface border-l-2 border-text px-2 py-1 sm:px-3 sm:py-2 ">
             <h3 className="font-mono text-[9px] sm:text-[11px] text-text font-bold uppercase tracking-wider"><span className="sm:hidden">SENTINEL-2</span><span className="hidden sm:inline">SENTINEL-2 — 2023 COMPOSITE</span></h3>
-            <p className="hidden sm:block font-mono text-[9px] text-white/40 mt-0.5 uppercase tracking-tighter">SOURCE: ESA / COPERNICUS HUB</p>
+            <p className="hidden sm:block font-mono text-[9px] text-text/40 mt-0.5 uppercase tracking-tighter">SOURCE: ESA / COPERNICUS HUB</p>
           </div>
         </div>
 
@@ -230,7 +230,7 @@ export default function CompareSlider() {
         <div className="absolute top-2 right-2 sm:top-4 sm:right-4 z-[1000] text-right">
           <div className="bg-surface border-r-2 border-text px-2 py-1 sm:px-3 sm:py-2 ">
             <h3 className="font-mono text-[9px] sm:text-[11px] text-text font-bold uppercase tracking-wider"><span className="sm:hidden">ESRI</span><span className="hidden sm:inline">ESRI — LATEST (~3-6 MO)</span></h3>
-            <p className="hidden sm:block font-mono text-[9px] text-white/40 mt-0.5 uppercase tracking-tighter">REF: WORLD IMAGERY SERVICE</p>
+            <p className="hidden sm:block font-mono text-[9px] text-text/40 mt-0.5 uppercase tracking-tighter">REF: WORLD IMAGERY SERVICE</p>
           </div>
         </div>
 

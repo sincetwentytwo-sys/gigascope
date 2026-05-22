@@ -188,7 +188,7 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
                     onMouseLeave={() => setHoveredId(null)}
                     className={`w-full text-left text-[13px] px-2 py-1.5 transition-colors flex items-center gap-2 ${
                       isActive
-                        ? "bg-surface text-white"
+                        ? "bg-surface text-text"
                         : "text-dim hover:bg-surface hover:text-text"
                     }`}
                   >
@@ -214,7 +214,7 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
         <div className="p-4 overflow-y-auto flex-1 min-h-[200px]">
           {selected ? (
             <>
-              <h4 className="text-white font-semibold mb-2 text-[15px]">
+              <h4 className="text-text font-semibold mb-2 text-[15px]">
                 {selected.name}
               </h4>
               <p className="text-[13px] text-dim leading-relaxed whitespace-pre-wrap">

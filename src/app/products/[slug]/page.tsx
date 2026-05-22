@@ -120,7 +120,7 @@ export default async function ProductDetailPage({
       {/* Description + related */}
       <div className="mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          <h2 className="font-bold text-sm uppercase tracking-widest text-white mb-3">
+          <h2 className="font-bold text-sm uppercase tracking-widest text-text mb-3">
             Overview
           </h2>
           <p className="text-base text-text leading-relaxed whitespace-pre-line">
@@ -136,13 +136,13 @@ export default async function ProductDetailPage({
             <dl className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <dt className="text-dim">Category</dt>
-                <dd className="text-white" style={{ color: accent }}>
+                <dd className="text-text" style={{ color: accent }}>
                   {product.category}
                 </dd>
               </div>
               <div className="flex justify-between">
                 <dt className="text-dim">Parts modeled</dt>
-                <dd className="text-white">{product.parts.length}</dd>
+                <dd className="text-text">{product.parts.length}</dd>
               </div>
             </dl>
           </div>

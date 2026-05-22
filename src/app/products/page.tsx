@@ -134,12 +134,12 @@ export default function ProductsHubPage() {
                       {p.category}
                     </span>
                   </div>
-                  <div className="absolute bottom-3 right-3 font-mono text-[10px] text-white/60 uppercase tracking-widest">
+                  <div className="absolute bottom-3 right-3 font-mono text-[10px] text-text/60 uppercase tracking-widest">
                     {p.parts.length} parts
                   </div>
                 </div>
                 <div className="p-4 sm:p-5">
-                  <h2 className="text-lg sm:text-xl font-bold text-white mb-1 leading-tight">
+                  <h2 className="text-lg sm:text-xl font-bold text-text mb-1 leading-tight">
                     {p.name}
                   </h2>
                   {p.aka && (
