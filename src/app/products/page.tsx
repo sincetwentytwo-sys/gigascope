@@ -38,31 +38,37 @@ const CATEGORY_COLORS: Record<ProductCategory, string> = {
   engine: "#ff7a40",
   battery: "#5dd39e",
   chip: "#c97aff",
+  compute: "#76b900",
+  memory: "#06b6d4",
+  lithography: "#005bbb",
+  packaging: "#ec4899",
   vehicle: "#ffd166",
   spacecraft: "#7adfff",
   robot: "#ff7adf",
   energy: "#7adf9e",
   charging: "#ffae40",
+  weapon: "#f7941d",
+  quantum: "#a855f7",
+  reactor: "#22c55e",
 };
 
 const CATEGORY_GRADIENTS: Record<ProductCategory, string> = {
-  rocket:
-    "linear-gradient(135deg, #1a2540 0%, #0a0a0c 50%, #2a1a40 100%)",
-  engine:
-    "linear-gradient(135deg, #2a1500 0%, #0a0a0c 50%, #3a1a00 100%)",
-  battery:
-    "linear-gradient(135deg, #0d2a1a 0%, #0a0a0c 50%, #1a3a2a 100%)",
+  rocket: "linear-gradient(135deg, #1a2540 0%, #0a0a0c 50%, #2a1a40 100%)",
+  engine: "linear-gradient(135deg, #2a1500 0%, #0a0a0c 50%, #3a1a00 100%)",
+  battery: "linear-gradient(135deg, #0d2a1a 0%, #0a0a0c 50%, #1a3a2a 100%)",
   chip: "linear-gradient(135deg, #2a0d3a 0%, #0a0a0c 50%, #1a0d2a 100%)",
-  vehicle:
-    "linear-gradient(135deg, #2a200d 0%, #0a0a0c 50%, #3a2a0d 100%)",
-  spacecraft:
-    "linear-gradient(135deg, #0d1f2a 0%, #0a0a0c 50%, #0d2a3a 100%)",
-  robot:
-    "linear-gradient(135deg, #2a0d22 0%, #0a0a0c 50%, #3a0d33 100%)",
-  energy:
-    "linear-gradient(135deg, #0d2a20 0%, #0a0a0c 50%, #1a3a2d 100%)",
-  charging:
-    "linear-gradient(135deg, #2a1a0d 0%, #0a0a0c 50%, #3a2a13 100%)",
+  compute: "linear-gradient(135deg, #1a2d0a 0%, #0a0a0c 50%, #2d3a0d 100%)",
+  memory: "linear-gradient(135deg, #052b3a 0%, #0a0a0c 50%, #0d3a4d 100%)",
+  lithography: "linear-gradient(135deg, #0a1a3a 0%, #0a0a0c 50%, #0d2d5a 100%)",
+  packaging: "linear-gradient(135deg, #3a0d2a 0%, #0a0a0c 50%, #4d0d3a 100%)",
+  vehicle: "linear-gradient(135deg, #2a200d 0%, #0a0a0c 50%, #3a2a0d 100%)",
+  spacecraft: "linear-gradient(135deg, #0d1f2a 0%, #0a0a0c 50%, #0d2a3a 100%)",
+  robot: "linear-gradient(135deg, #2a0d22 0%, #0a0a0c 50%, #3a0d33 100%)",
+  energy: "linear-gradient(135deg, #0d2a20 0%, #0a0a0c 50%, #1a3a2d 100%)",
+  charging: "linear-gradient(135deg, #2a1a0d 0%, #0a0a0c 50%, #3a2a13 100%)",
+  weapon: "linear-gradient(135deg, #2a1300 0%, #0a0a0c 50%, #3a1800 100%)",
+  quantum: "linear-gradient(135deg, #2d0d3a 0%, #0a0a0c 50%, #3a0d4d 100%)",
+  reactor: "linear-gradient(135deg, #0d2a0d 0%, #0a0a0c 50%, #1a3a1a 100%)",
 };
 
 export default function ProductsHubPage() {

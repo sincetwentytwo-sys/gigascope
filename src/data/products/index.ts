@@ -32,12 +32,13 @@ export type PartSpec = {
   id: string;
   name: string;
   description: string;
-  position: [number, number, number];
+  /** Legacy 3D viewer fields — kept optional for back-compat with the
+   *  original procedural-3D dataset. The current 2D photo/SVG viewer only
+   *  uses `name`, `description`, `color`, and `hotspot`. */
+  position?: [number, number, number];
   rotation?: [number, number, number];
-  geometry: GeometryKind;
-  /** Args forwarded to the matching three.js geometry constructor.
-   *  Most entries are numbers; cylinder/cone accept a trailing `openEnded` boolean. */
-  args: Array<number | boolean>;
+  geometry?: GeometryKind;
+  args?: Array<number | boolean>;
   color: string;
   emissive?: string;
   metalness?: number;
@@ -59,11 +60,18 @@ export type ProductCategory =
   | "engine"
   | "battery"
   | "chip"
+  | "compute"
+  | "memory"
+  | "lithography"
+  | "packaging"
   | "vehicle"
   | "spacecraft"
   | "robot"
   | "energy"
-  | "charging";
+  | "charging"
+  | "weapon"
+  | "quantum"
+  | "reactor";
 
 export type ProductSpec = {
   slug: string;
@@ -81,6 +89,9 @@ export type ProductSpec = {
    *  whose long axis runs along Z (e.g. Cybercab). */
   cutawayAxis?: "x" | "z";
   background?: string;
+  /** Reference image type — "jpg" by default (real photo), "svg" for stylised
+   *  schematic diagrams (used when a CC photo isn't available). */
+  imageType?: "jpg" | "svg";
   parts: PartSpec[];
   relatedSites?: string[];
   /** Attribution for the *main* reference photo (the one with hotspots).
@@ -122,10 +133,36 @@ import { megapack } from "./megapack";
 import { powerwall } from "./powerwall";
 import { superchargerV4 } from "./supercharger-v4";
 
+// Extended (non-Musk) Atlas products — semis, batteries, defense, quantum, nuclear.
+// All use stylised SVG schematics rather than real CC-licensed reference photos.
+import { nvdaBlackwell } from "./nvda-blackwell";
+import { hbm3e } from "./hbm3e";
+import { asmlEuv } from "./asml-euv";
+import { tsmcCowos } from "./tsmc-cowos";
+import { hyundaiIoniq5 } from "./hyundai-ioniq5";
+import { bostonDynamicsAtlas } from "./boston-dynamics-atlas";
+import { lgesUltium } from "./lges-ultium";
+import { bydBlade } from "./byd-blade";
+import { hanwhaK9 } from "./hanwha-k9";
+import { rklbNeutron } from "./rklb-neutron";
+import { ionqTempo } from "./ionq-tempo";
+import { okloAurora } from "./oklo-aurora";
+
 export const KNOWN_PRODUCTS: ProductSpec[] = [
+  // Musk Empire (primary)
   raptor, falcon9, starship, tesla4680, neuralinkN1,
   model3, modelY, cybertruck, optimus, cybercab,
   megapack, powerwall, superchargerV4,
+  // Extended Atlas (semis + memory + litho + packaging)
+  nvdaBlackwell, hbm3e, asmlEuv, tsmcCowos,
+  // Extended Atlas (vehicles + robotics)
+  hyundaiIoniq5, bostonDynamicsAtlas,
+  // Extended Atlas (batteries)
+  lgesUltium, bydBlade,
+  // Extended Atlas (defense + space)
+  hanwhaK9, rklbNeutron,
+  // Extended Atlas (quantum + nuclear)
+  ionqTempo, okloAurora,
 ];
 
 export function getProduct(slug: string): ProductSpec | undefined {

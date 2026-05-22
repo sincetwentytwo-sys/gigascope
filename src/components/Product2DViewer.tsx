@@ -38,8 +38,9 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
   const dotNumber = new Map<string, number>();
   partsWithHotspots.forEach((p, i) => dotNumber.set(p.id, i + 1));
 
-  // 4680 has only an SVG diagram available; everything else is a JPG photo.
-  const ext = product.slug === "4680" ? "svg" : "jpg";
+  // Products marked imageType: "svg" (or the legacy 4680) use a schematic
+  // diagram; everything else points to a JPG reference photo.
+  const ext = product.imageType === "svg" || product.slug === "4680" ? "svg" : "jpg";
   const src = `/products/photos/${product.slug}/main.${ext}`;
   const credit = product.photoCredit;
 
