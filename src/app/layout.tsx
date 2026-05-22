@@ -7,23 +7,23 @@ import GlobalSearchProvider from "@/components/GlobalSearchProvider";
 import SearchOpener from "@/components/SearchOpener";
 
 export const metadata: Metadata = {
-  title: "GIGASCOPE — Satellite tracker for Tesla, SpaceX & xAI",
+  title: "GIGASCOPE — Watch Musk's empire get built, one satellite frame at a time",
   description:
-    "16 Musk-empire sites with weekly satellite captures, milestone catalysts, and 3D product breakdowns. Tesla Gigafactories, SpaceX Starbase, xAI Colossus, Neuralink, Boring Co. Plus extended Atlas coverage of the AI build-out (NVIDIA, TSMC, Samsung, SK Hynix).",
+    "Weekly Sentinel-2 satellite timelapses of 16 Musk-empire sites. Tesla Gigafactories from dirt to delivery, SpaceX Starbase orbital launches, xAI Colossus GPU cluster, Neuralink, Boring Co. Methodology + catalyst calendar. Free.",
   keywords: ["Tesla", "SpaceX", "xAI", "Neuralink", "NVIDIA", "Samsung", "SK Hynix", "RGTI", "IONQ", "CRML", "ASML", "TSMC", "Palantir", "Gigafactory", "Starlink", "satellite imagery", "AI compute", "HBM", "quantum computing", "critical materials"],
   icons: { icon: "/favicon.svg" },
   manifest: "/manifest.json",
   metadataBase: new URL("https://gigascope.xyz"),
   openGraph: {
-    title: "GIGASCOPE — Satellite tracker for Tesla, SpaceX & xAI",
-    description: "Weekly satellite captures of 16 Musk-empire sites. Catalyst calendar, 3D product breakdowns, milestone tracking. Plus extended Atlas of the AI build-out.",
+    title: "Watch Musk's empire get built, one satellite frame at a time",
+    description: "16 sites · weekly Sentinel-2 satellite timelapses · methodology cited. Tesla, SpaceX, xAI, Neuralink, Boring Co.",
     type: "website",
     siteName: "GIGASCOPE",
   },
   twitter: {
     card: "summary_large_image",
-    title: "GIGASCOPE — Musk Empire satellite tracker",
-    description: "Weekly satellite captures, catalyst calendar, 3D product breakdowns. Tesla / SpaceX / xAI / Neuralink / Boring Co.",
+    title: "GIGASCOPE — Musk Empire from orbit",
+    description: "Weekly Sentinel-2 timelapses of every Gigafactory, every launch pad, Colossus GPU cluster. Methodology cited.",
   },
   robots: {
     index: true,
@@ -72,15 +72,15 @@ export default function RootLayout({
               GIGASCOPE
             </a>
             <div className="hidden sm:flex items-center gap-5 text-[13px] text-dim">
-              <a href="/markets" className="hover:text-text transition-colors">Atlas</a>
-              <a href="/sectors" className="hover:text-text transition-colors">Sectors</a>
-              <a href="/supply-chain" className="hover:text-text transition-colors">Supply</a>
-              <a href="/news" className="hover:text-text transition-colors">News</a>
-              <a href="/calendar" className="hover:text-text transition-colors">Calendar</a>
+              {/* Musk-empire primary */}
               <a href="/timeline" className="hover:text-text transition-colors">Timeline</a>
-              <a href="/products" className="hover:text-text transition-colors">Products</a>
-              <a href="/learn" className="hover:text-text transition-colors">Learn</a>
               <a href="/compare" className="hover:text-text transition-colors">Compare</a>
+              <a href="/products" className="hover:text-text transition-colors">Products</a>
+              <a href="/calendar" className="hover:text-text transition-colors">Calendar</a>
+              <a href="/news" className="hover:text-text transition-colors">News</a>
+              <a href="/methodology" className="hover:text-text transition-colors">Methodology</a>
+              {/* Extended atlas — demoted to secondary, single entry */}
+              <a href="/markets" className="hover:text-text transition-colors opacity-70">Atlas</a>
               <a href="/about" className="hover:text-text transition-colors">About</a>
               <SearchOpener />
               <a href="/investor" className="text-text font-bold hover:opacity-70 transition-opacity">Investor</a>

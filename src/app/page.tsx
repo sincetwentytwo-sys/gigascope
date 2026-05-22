@@ -5,69 +5,85 @@ import NewsFeed from "@/components/NewsFeed";
 import CommunityFeed from "@/components/CommunityFeed";
 import StockTicker from "@/components/StockTicker";
 import SpaceXStats from "@/components/SpaceXStats";
-import TickerGrid from "@/components/TickerGrid";
 import EmailSignup from "@/components/EmailSignup";
-import { SECTORS, TICKERS, featuredTickers, tickersBySector, tickerHref } from "@/data/tickers";
-import { listPrivateCompanies } from "@/data/privateCompanies";
-import { fetchQuotes } from "@/lib/quotes";
 import type { Company } from "@/data/types";
 
 export const revalidate = 1800;
 
 const COMPANY_ORDER: Company[] = ["tesla", "spacex", "xai", "neuralink", "boring"];
 
-export default async function Home() {
+export default function Home() {
   const countries = new Set(factories.map((f) => f.flag)).size;
   const announced = factories.filter((f) => f.status === "announced");
-  const featured = featuredTickers();
-  const initialQuotes = await fetchQuotes(featured.map((t) => t.yahooSymbol), 300);
-
-  const featuredRows = featured.map((t) => ({
-    symbol: t.symbol,
-    yahooSymbol: t.yahooSymbol,
-    name: t.shortName ?? t.name,
-    href: tickerHref(t),
-    accent: t.accent,
-  }));
 
   return (
     <>
-      {/* Hero — narrow back to Musk Empire as the primary product */}
-      <section className="text-center py-14 sm:py-20 px-6">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4">
-          The satellite tracker
-          <br />
-          <span className="text-dim font-normal text-2xl sm:text-3xl md:text-4xl">for Tesla, SpaceX & xAI</span>
-        </h1>
-        <p className="text-base text-dim max-w-2xl mx-auto mb-6">
-          {factories.length} Musk-empire sites · weekly satellite captures · catalyst calendar · 3D product breakdowns.
-          <br className="hidden sm:block" />
-          Plus extended Atlas coverage of the AI build-out — NVIDIA, TSMC, Samsung, SK Hynix.
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm">
-          <StockTicker />
-          <span className="hidden sm:inline text-dim">·</span>
-          <SpaceXStats />
-        </div>
-        <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
-          <a href="#sites" className="px-4 py-2 rounded bg-text text-bg text-sm font-bold hover:opacity-80">Browse the sites ↓</a>
-          <a href="/investor" className="px-4 py-2 rounded border border-border-custom text-sm hover:border-text">Investor tier · $9/mo</a>
-        </div>
-        <div className="mt-3 text-[11px] text-dim">
-          <a href="/methodology" className="underline hover:text-text">How we calculate progress %</a>
-          <span className="mx-2">·</span>
-          <a href="/about" className="underline hover:text-text">What this is (and isn't)</a>
+      {/* Full-bleed satellite-timelapse hero — Giga Texas 2020→2026, 33 frames */}
+      <section className="relative w-full overflow-hidden bg-black" style={{ aspectRatio: "16 / 9", maxHeight: "78vh" }}>
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/timelapses/giga-texas.jpg"
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/timelapses/giga-texas.mp4" type="video/mp4" />
+        </video>
+
+        {/* Gradient overlay for legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/40" />
+
+        {/* Hero copy */}
+        <div className="relative h-full flex flex-col justify-end px-6 sm:px-12 pb-10 sm:pb-16 text-white">
+          <div className="text-[11px] sm:text-xs uppercase tracking-widest text-white/70 mb-3 font-mono">
+            Tesla Gigafactory Texas · Sentinel-2 · 2020 → 2026
+          </div>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-3 max-w-3xl leading-[1.05]">
+            Tesla Gigafactory Texas —
+            <br />
+            <span className="text-white/85">six years from dirt.</span>
+          </h1>
+          <p className="text-sm sm:text-base text-white/80 max-w-xl mb-6">
+            The only place tracking Tesla, SpaceX & xAI from orbit.
+            <br className="hidden sm:block" />
+            {factories.length} Musk-empire sites, captured weekly.
+          </p>
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href="#sites"
+              className="px-4 py-2 rounded bg-white text-black text-sm font-bold hover:opacity-85"
+            >
+              See all {factories.length} sites →
+            </a>
+            <a
+              href="/methodology"
+              className="px-4 py-2 rounded border border-white/30 text-white text-sm hover:border-white"
+            >
+              How we calculate progress
+            </a>
+          </div>
         </div>
       </section>
 
-      {/* Featured ticker heatmap */}
-      {/* PRIMARY: Musk Empire sites — the core product */}
-      <section id="sites" className="max-w-[1200px] mx-auto px-6 pb-12">
+      {/* Live secondary stats — kept small, no atlas extension */}
+      <section className="border-b border-border-custom">
+        <div className="max-w-[1200px] mx-auto px-6 py-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[13px] text-dim">
+          <StockTicker />
+          <span className="hidden sm:inline">·</span>
+          <SpaceXStats />
+          <span className="hidden sm:inline">·</span>
+          <span>{countries} countries · {getTotalInvestment()} invested</span>
+        </div>
+      </section>
+
+      {/* PRIMARY: Musk Empire sites grouped by company */}
+      <section id="sites" className="max-w-[1200px] mx-auto px-6 pt-12 pb-12">
         <div className="flex items-end justify-between mb-8">
           <div>
             <h2 className="text-2xl font-bold">Musk Empire</h2>
             <p className="text-xs text-dim mt-1">
-              {factories.length} sites · weekly satellite captures · <a href="/methodology" className="underline">how we calculate progress %</a>
+              {factories.length} sites · weekly satellite captures · <a href="/methodology" className="underline">methodology →</a>
             </p>
           </div>
           <div className="flex gap-4 text-[13px] text-dim">
@@ -119,76 +135,7 @@ export default async function Home() {
         </section>
       )}
 
-      {/* SECONDARY: Extended Atlas of AI build-out */}
-      <section className="border-t border-border-custom mt-8">
-        <div className="max-w-[1200px] mx-auto px-6 pt-12 pb-2">
-          <div className="text-xs uppercase tracking-wider text-dim mb-1">Extended Atlas</div>
-          <h2 className="text-2xl font-bold">The AI build-out, beyond Musk</h2>
-          <p className="text-sm text-dim mt-1 max-w-2xl">
-            {TICKERS.length} public companies in {SECTORS.length} sectors with facility maps, supply chain, primary-source citations. Secondary coverage — Musk Empire is the core.
-          </p>
-        </div>
-      </section>
-
-      <section className="max-w-[1200px] mx-auto px-6 pt-6 pb-12">
-        <div className="flex items-end justify-between mb-3">
-          <h3 className="text-lg font-bold">Featured tickers</h3>
-          <a href="/markets" className="text-xs text-dim hover:text-text">Full heatmap →</a>
-        </div>
-        <TickerGrid rows={featuredRows} initialQuotes={initialQuotes} />
-      </section>
-
-      <section className="max-w-[1200px] mx-auto px-6 pb-14">
-        <div className="flex items-end justify-between mb-3">
-          <h3 className="text-lg font-bold">Sectors</h3>
-          <a href="/sectors" className="text-xs text-dim hover:text-text">All sectors →</a>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {SECTORS.map((s) => {
-            const ts = tickersBySector(s.id);
-            const privates = listPrivateCompanies().filter((c) => c.sectors.includes(s.id));
-            const total = ts.length + privates.length;
-            return (
-              <a
-                key={s.id}
-                href={`/sectors/${s.id}`}
-                className="block p-3 rounded-md border border-border-custom hover:border-text transition-colors"
-                style={{ borderLeftWidth: 4, borderLeftColor: s.color }}
-              >
-                <div className="flex items-center gap-2 mb-1.5">
-                  <span className="text-lg">{s.icon}</span>
-                  <span className="text-sm font-bold">{s.name}</span>
-                </div>
-                <div className="text-[11px] text-dim line-clamp-2">{s.blurb}</div>
-                <div className="text-[10px] text-dim mt-1.5">{total} {total === 1 ? "name" : "names"}</div>
-              </a>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="max-w-[1200px] mx-auto px-6 pb-14">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <a href="/supply-chain" className="p-4 rounded border border-border-custom hover:border-text" style={{ borderLeftWidth: 4, borderLeftColor: "#0066cc" }}>
-            <div className="text-sm font-bold mb-1">Supply chain</div>
-            <div className="text-[11px] text-dim leading-snug">ASML → TSMC → Hynix → NVIDIA → Tesla. Directional edges with primary sources.</div>
-          </a>
-          <a href="/learn" className="p-4 rounded border border-border-custom hover:border-text" style={{ borderLeftWidth: 4, borderLeftColor: "#76b900" }}>
-            <div className="text-sm font-bold mb-1">Learn</div>
-            <div className="text-[11px] text-dim leading-snug">First-principles explainers: HBM, EUV, GAA, CoWoS, qubits, LFP, SMR.</div>
-          </a>
-          <a href="/private" className="p-4 rounded border border-border-custom hover:border-text" style={{ borderLeftWidth: 4, borderLeftColor: "#7b2dbd" }}>
-            <div className="text-sm font-bold mb-1">Private companies</div>
-            <div className="text-[11px] text-dim leading-snug">SpaceX, xAI, Anduril, Helion, Commonwealth Fusion — valuation-cited estimates.</div>
-          </a>
-          <a href="/calendar" className="p-4 rounded border border-border-custom hover:border-text" style={{ borderLeftWidth: 4, borderLeftColor: "#bf5600" }}>
-            <div className="text-sm font-bold mb-1">Calendar</div>
-            <div className="text-[11px] text-dim leading-snug">Every upcoming catalyst + milestone, chronological, confidence-tagged.</div>
-          </a>
-        </div>
-      </section>
-
-      {/* Daily digest CTA */}
+      {/* Daily digest CTA — primary monetization funnel */}
       <section className="max-w-[900px] mx-auto px-6 pb-16">
         <EmailSignup tier="free" source="home" variant="card" />
       </section>
@@ -205,6 +152,14 @@ export default async function Home() {
             <h2 className="text-2xl font-bold mb-6">Community</h2>
             <CommunityFeed factoryName="Musk" />
           </div>
+        </div>
+      </section>
+
+      {/* Footnote: extended Atlas still exists, just not on home anymore */}
+      <section className="border-t border-border-custom">
+        <div className="max-w-[1200px] mx-auto px-6 py-8 text-center text-xs text-dim">
+          Looking for the broader Atlas?{" "}
+          <a href="/markets" className="underline hover:text-text">39 public companies across 11 sectors</a> · semis · quantum · batteries · defense — all secondary to the Musk Empire core above.
         </div>
       </section>
     </>
