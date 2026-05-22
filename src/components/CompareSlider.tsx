@@ -7,7 +7,11 @@ import { tileSources } from "@/lib/tiles";
 import type { Company, Factory } from "@/data/types";
 
 const ESRI_URL = tileSources[1].url;
-const SENTINEL_URL = tileSources[2].url;
+// Left feed locks to 2019 EOX cloudless mosaic so before/after is dramatic
+// for the post-2019 buildouts (Giga Texas, Berlin, Starbase, Memphis, Boring LV).
+// Don't read from tileSources — SatelliteMap cycles through that and wants latest.
+const SENTINEL_URL =
+  "https://tiles.maps.eox.at/wmts?layer=s2cloudless-2019_3857&style=default&tilematrixset=GoogleMapsCompatible&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/jpeg&TileMatrix={z}&TileCol={x}&TileRow={y}";
 
 const COMPANY_ORDER: Company[] = ["joint", "tesla", "spacex", "xai", "neuralink", "boring"];
 
@@ -221,8 +225,8 @@ export default function CompareSlider() {
         {/* Left label */}
         <div className="absolute top-2 left-2 sm:top-4 sm:left-4 z-[1000]">
           <div className="bg-surface border-l-2 border-text px-2 py-1 sm:px-3 sm:py-2 ">
-            <h3 className="font-mono text-[9px] sm:text-[11px] text-text font-bold uppercase tracking-wider"><span className="sm:hidden">SENTINEL-2</span><span className="hidden sm:inline">SENTINEL-2 — 2023 COMPOSITE</span></h3>
-            <p className="hidden sm:block font-mono text-[9px] text-text/40 mt-0.5 uppercase tracking-tighter">SOURCE: ESA / COPERNICUS HUB</p>
+            <h3 className="font-mono text-[9px] sm:text-[11px] text-text font-bold uppercase tracking-wider"><span className="sm:hidden">2019 BASELINE</span><span className="hidden sm:inline">SENTINEL-2 — 2019 BASELINE</span></h3>
+            <p className="hidden sm:block font-mono text-[9px] text-text/40 mt-0.5 uppercase tracking-tighter">SOURCE: ESA / EOX CLOUDLESS MOSAIC</p>
           </div>
         </div>
 
@@ -291,8 +295,8 @@ export default function CompareSlider() {
       {/* Footer info strip */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-[11px]">
         <div className="border border-border-custom bg-surface p-3">
-          <div className="text-dim uppercase text-[9px] tracking-[0.2em] mb-1">LEFT FEED</div>
-          <div className="text-text/80">SENTINEL-2 — annual composite (10m resolution)</div>
+          <div className="text-dim uppercase text-[9px] tracking-[0.2em] mb-1">LEFT FEED · BASELINE</div>
+          <div className="text-text/80">SENTINEL-2 — 2019 cloudless mosaic (10m). Pre-buildout reference for Giga Texas, Berlin, Starbase, Memphis, Boring LV.</div>
         </div>
         <div className="border border-border-custom bg-surface p-3">
           <div className="text-dim uppercase text-[9px] tracking-[0.2em] mb-1">RIGHT FEED</div>
