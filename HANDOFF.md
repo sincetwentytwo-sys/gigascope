@@ -1,10 +1,20 @@
 # GIGASCOPE — Session Handoff
 
-**Last updated**: 2026-05-22 (Resend integration is next)
+**Last updated**: 2026-05-22 (Resend integration LIVE — Stripe is next)
 **Live (primary)**: https://gigascope.xyz
 **Live (alias)**: https://gigascope-ten.vercel.app
 **Repo**: https://github.com/sincetwentytwo-sys/gigascope (main · Vercel auto-deploy)
 **Local repo path**: `G:\claude\gigascope` (⚠ NOT `G:\gigascope` as in some docs)
+
+## ✅ Resend integration — DONE (2026-05-22)
+
+- `RESEND_API_KEY` + `RESEND_FROM_EMAIL=digest@gigascope.xyz` set in Vercel **Production + Development**. ⚠ **Preview env NOT set** (Vercel CLI required a specific git branch; skip OK since `main` always deploys to Production target). Add via Vercel Dashboard later if PR previews need it.
+- Production deploy `dpl_Dz5joiAQB5y2Rqar568t9EzP1L26` carries the keys; subsequent commits inherit them.
+- Live POST `/api/subscribe` with valid email now returns `{"ok":true,"stored":true,"emailed":true}` — welcome mail delivered.
+- Vercel CLI authenticated on this machine as `sincetwentytwo-sys` and linked to project `gigascope`. Future sessions can just call `vercel env ls`, `vercel --prod`, etc. directly. CLI binary: `/c/Users/JIBBY/AppData/Roaming/npm/vercel.cmd`.
+- `.env.local` pulled from production env (Upstash + Resend + Finnhub + X tokens). Gitignored. Use for local dev / Node scripts that need prod data.
+
+**Resend domain status (check before mass send)**: `digest@gigascope.xyz` is verified (test send to sincetwentytwo@gmail.com succeeded). DMARC TXT (`_dmarc → v=DMARC1; p=none;`) — verify still active in Vercel DNS if a future broadcast bounces.
 
 ---
 
@@ -30,7 +40,21 @@ Master plan(G:\jb\gigascope-master-plan-2026-05-22.md) + audit
 
 ---
 
-## ⭐ 다음 작업 — Resend 통합 (최우선)
+## ⭐ 다음 작업 — Stripe 결제 라이브 (최우선)
+
+Resend 끝. 다음은 Stripe. 같은 패턴 사용 가능:
+1. Stripe Dashboard에서 secret key 발급
+2. `vercel env add STRIPE_SECRET_KEY production preview development` (CLI 이미 인증됨)
+3. `vercel --prod --yes` 로 redeploy
+4. `/api/checkout` 가 키 있을 때 자동 활성화 (graceful-degrade 패턴)
+5. Webhook 엔드포인트 설정 → Stripe Dashboard에 등록
+6. `Investor` 카드 라이브 결제 테스트
+
+상세 문서가 따로 있으면 그쪽 참조. 없으면 owner와 통합 지시서 생성부터.
+
+---
+
+## 📦 Resend 통합 기록 (완료 — 참고용)
 
 **문서**: `G:\jb\resend-integration-2026-05-22.md`
 **목표**: waitlist welcome 메일 발송 라이브 → charter 100명 모집 시작
