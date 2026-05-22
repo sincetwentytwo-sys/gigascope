@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
+import { unsubHeaders } from "@/lib/unsubscribe";
 
 export const runtime = "nodejs";
 
@@ -9,11 +10,6 @@ function getRedis(): Redis | null {
   if (!url || !token) return null;
   return new Redis({ url, token });
 }
-
-// TODO: add HTTPS one-click unsub at /api/unsubscribe?email=X&token=Y, then add second URL form + List-Unsubscribe-Post header.
-const UNSUB_HEADERS = {
-  "List-Unsubscribe": "<mailto:unsubscribe@gigascope.xyz?subject=unsubscribe>",
-};
 
 function authorized(req: Request): boolean {
   const expected = process.env.CRON_SECRET;
@@ -108,7 +104,7 @@ export async function POST(req: Request) {
               Authorization: `Bearer ${resendKey}`,
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ from, to, subject, html, headers: UNSUB_HEADERS }),
+            body: JSON.stringify({ from, to, subject, html, headers: unsubHeaders(to) }),
           });
           return res.ok;
         } catch {

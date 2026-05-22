@@ -6,6 +6,7 @@ import DripD7 from "@/emails/drip-d7";
 import DripD14 from "@/emails/drip-d14";
 import DripD21 from "@/emails/drip-d21";
 import DripD30 from "@/emails/drip-d30";
+import { unsubHeaders } from "@/lib/unsubscribe";
 
 export const runtime = "nodejs";
 
@@ -15,11 +16,6 @@ function getRedis(): Redis | null {
   if (!url || !token) return null;
   return new Redis({ url, token });
 }
-
-// TODO: add HTTPS one-click unsub at /api/unsubscribe?email=X&token=Y, then add second URL form + List-Unsubscribe-Post header.
-const UNSUB_HEADERS = {
-  "List-Unsubscribe": "<mailto:unsubscribe@gigascope.xyz?subject=unsubscribe>",
-};
 
 function authorized(req: Request): boolean {
   const expected = process.env.CRON_SECRET;
@@ -111,7 +107,7 @@ export async function POST(req: Request) {
           to: email,
           subject: drip.subject,
           react: drip.react({ email }),
-          headers: UNSUB_HEADERS,
+          headers: unsubHeaders(email),
         });
         sent.push({ email, drip: drip.key });
       } catch (e) {

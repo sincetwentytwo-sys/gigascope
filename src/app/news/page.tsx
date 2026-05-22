@@ -6,7 +6,21 @@ export const revalidate = 600;
 export const metadata: Metadata = {
   title: "News — Multi-sector intelligence feed — GIGASCOPE",
   description:
-    "Live news aggregated across the Musk Empire + Semis & AI + Quantum + Defense + Materials universe.",
+    "Live news aggregated across the Musk Empire + Semis & AI + Quantum + Defense + Materials universe — primary-source headlines, no aggregator churn.",
+  alternates: { canonical: "https://gigascope.xyz/news" },
+  openGraph: {
+    title: "News — Multi-sector intelligence feed — GIGASCOPE",
+    description:
+      "Live news aggregated across the Musk Empire + Semis & AI + Quantum + Defense + Materials universe — primary-source headlines, no aggregator churn.",
+    url: "https://gigascope.xyz/news",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "News — Multi-sector intelligence feed — GIGASCOPE",
+    description:
+      "Live news aggregated across the Musk Empire + Semis & AI + Quantum + Defense + Materials universe — primary-source headlines, no aggregator churn.",
+  },
 };
 
 type Item = {

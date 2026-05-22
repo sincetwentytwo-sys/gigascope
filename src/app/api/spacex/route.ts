@@ -1,6 +1,14 @@
 import { NextResponse } from "next/server";
+import { Redis } from "@upstash/redis";
 
 export const revalidate = 300;
+
+function getRedis(): Redis | null {
+  const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
+  if (!url || !token) return null;
+  return new Redis({ url, token });
+}
 
 type SpaceXData = {
   latestLaunch: string;
@@ -57,28 +65,35 @@ async function fetchLaunchesThisYear(): Promise<number | null> {
   return data?.count ?? null;
 }
 
-// Celestrak returns ~5.8MB of TLE data — too big for Next.js fetch cache (>2MB
-// limit throws), so we cache the resolved count in module memory instead.
-let starlinkCache: { count: number; ts: number } | null = null;
-const STARLINK_TTL_MS = 3_600_000;
+// Starlink count is written to Upstash by /api/spacex/refresh-starlink (cron).
+// The hot path never calls Celestrak — it would 403 due to rate-limits on Lambda
+// cold starts. Tiered reads: in-process memo → Upstash → null.
+let starlinkMemoCache: { count: number; ts: number } | null = null;
+const MEMO_TTL_MS = 300_000; // 5 min — in-process refresh window
 
 async function fetchStarlinkCount(): Promise<number | null> {
-  if (starlinkCache && Date.now() - starlinkCache.ts < STARLINK_TTL_MS) {
-    return starlinkCache.count;
+  // Tier 1: in-process memo (5 min)
+  if (starlinkMemoCache && Date.now() - starlinkMemoCache.ts < MEMO_TTL_MS) {
+    return starlinkMemoCache.count;
   }
-  try {
-    const res = await fetch(
-      "https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=json",
-      { cache: "no-store" }
-    );
-    if (!res.ok) return starlinkCache?.count ?? null;
-    const json = (await res.json()) as unknown[];
-    if (!Array.isArray(json)) return starlinkCache?.count ?? null;
-    starlinkCache = { count: json.length, ts: Date.now() };
-    return json.length;
-  } catch {
-    return starlinkCache?.count ?? null;
+  // Tier 2: Upstash (written by /api/spacex/refresh-starlink cron)
+  const r = getRedis();
+  if (r) {
+    try {
+      const cached = await r.get<number | string>("starlink:count");
+      if (cached !== null && cached !== undefined) {
+        const n = typeof cached === "number" ? cached : Number(cached);
+        if (Number.isFinite(n) && n > 0) {
+          starlinkMemoCache = { count: n, ts: Date.now() };
+          return n;
+        }
+      }
+    } catch {
+      // Upstash error — fall through to memo or null
+    }
   }
+  // Tier 3: stale memo if any, else null
+  return starlinkMemoCache?.count ?? null;
 }
 
 export async function GET() {

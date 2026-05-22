@@ -2,6 +2,22 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "You're an Investor — welcome — GIGASCOPE",
+  description:
+    "Charter Investor welcome page. Your subscription is active — first daily digest arrives within 24 hours.",
+  alternates: { canonical: "https://gigascope.xyz/investor/success" },
+  openGraph: {
+    title: "You're an Investor — welcome — GIGASCOPE",
+    description:
+      "Charter Investor welcome page. Your subscription is active — first daily digest arrives within 24 hours.",
+    url: "https://gigascope.xyz/investor/success",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "You're an Investor — welcome — GIGASCOPE",
+    description:
+      "Charter Investor welcome page. Your subscription is active — first daily digest arrives within 24 hours.",
+  },
   robots: { index: false, follow: false },
 };
 

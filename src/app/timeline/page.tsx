@@ -3,8 +3,23 @@ import { factories } from "@/data/factories";
 import TimelineContent from "@/components/TimelineContent";
 
 export const metadata: Metadata = {
-  title: "Timeline — GIGASCOPE",
-  description: "Global timeline across Tesla, SpaceX, xAI, Neuralink, and The Boring Company sites",
+  title: "Timeline — Construction milestones across Musk-empire sites — GIGASCOPE",
+  description:
+    "Date-sorted construction milestones from Tesla Gigafactories, SpaceX sites, xAI Colossus, Neuralink, and The Boring Company — primary-source citations.",
+  alternates: { canonical: "https://gigascope.xyz/timeline" },
+  openGraph: {
+    title: "Timeline — Construction milestones across Musk-empire sites — GIGASCOPE",
+    description:
+      "Date-sorted construction milestones from Tesla Gigafactories, SpaceX sites, xAI Colossus, Neuralink, and The Boring Company — primary-source citations.",
+    url: "https://gigascope.xyz/timeline",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Timeline — Construction milestones across Musk-empire sites — GIGASCOPE",
+    description:
+      "Date-sorted construction milestones from Tesla Gigafactories, SpaceX sites, xAI Colossus, Neuralink, and The Boring Company — primary-source citations.",
+  },
 };
 
 function getAllMilestones() {

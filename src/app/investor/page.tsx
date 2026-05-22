@@ -6,6 +6,20 @@ export const metadata: Metadata = {
   title: "Investor tier — early-bird $9 — GIGASCOPE",
   description:
     "GIGASCOPE Investor: real-time milestone alerts, AI-curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 early-bird → $19 → $29.",
+  alternates: { canonical: "https://gigascope.xyz/investor" },
+  openGraph: {
+    title: "Investor tier — early-bird $9 — GIGASCOPE",
+    description:
+      "GIGASCOPE Investor: real-time milestone alerts, AI-curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 early-bird → $19 → $29.",
+    url: "https://gigascope.xyz/investor",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Investor tier — early-bird $9 — GIGASCOPE",
+    description:
+      "GIGASCOPE Investor: real-time milestone alerts, AI-curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 early-bird → $19 → $29.",
+  },
 };
 
 const FEATURES = [

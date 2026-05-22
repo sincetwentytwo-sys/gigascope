@@ -347,7 +347,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                       className="font-mono text-[9px] mt-1"
                       style={{ color: m.done ? "var(--green)" : "var(--dim)" }}
                     >
-                      {m.done ? "STATUS: COMPLETED" : "STATUS: PENDING"}
+                      {m.done ? "Done" : "Upcoming"}
                     </p>
                   </div>
                 ))}

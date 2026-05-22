@@ -4,6 +4,20 @@ export const metadata: Metadata = {
   title: "Downloads — CSV/JSON exports — GIGASCOPE",
   description:
     "Bulk export the GIGASCOPE dataset: factories, tickers, milestones, supply-chain edges, products. CSV or JSON. Free during the Investor early-bird period.",
+  alternates: { canonical: "https://gigascope.xyz/downloads" },
+  openGraph: {
+    title: "Downloads — CSV/JSON exports — GIGASCOPE",
+    description:
+      "Bulk export the GIGASCOPE dataset: factories, tickers, milestones, supply-chain edges, products. CSV or JSON. Free during the Investor early-bird period.",
+    url: "https://gigascope.xyz/downloads",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Downloads — CSV/JSON exports — GIGASCOPE",
+    description:
+      "Bulk export the GIGASCOPE dataset: factories, tickers, milestones, supply-chain edges, products. CSV or JSON. Free during the Investor early-bird period.",
+  },
 };
 
 const DATASETS = [

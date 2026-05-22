@@ -26,7 +26,16 @@ export const metadata: Metadata = {
   title: "Component Breakdowns — GIGASCOPE",
   description:
     "Click-to-explore breakdowns of Musk-empire hardware — Raptor engine, Starship, Falcon 9, Cybertruck, Optimus, 4680 cell, Megapack, and more. Each component links to a tech blurb you can actually read.",
+  alternates: { canonical: "https://gigascope.xyz/products" },
   openGraph: {
+    title: "Component Breakdowns — GIGASCOPE",
+    description:
+      "Real reference photos with clickable parts. 13 flagship products across Tesla, SpaceX, xAI, Neuralink, and Boring.",
+    url: "https://gigascope.xyz/products",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "Component Breakdowns — GIGASCOPE",
     description:
       "Real reference photos with clickable parts. 13 flagship products across Tesla, SpaceX, xAI, Neuralink, and Boring.",

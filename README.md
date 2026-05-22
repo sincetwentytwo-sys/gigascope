@@ -1,41 +1,33 @@
 # Gigascope
 
-**Tracking the Musk empire — factory by factory, part by part.**
+**Watch Musk's empire get built, one satellite frame at a time.**
 
-Public dashboard for 16 Tesla / SpaceX / xAI / Neuralink / Boring construction sites,
-13 interactive 3D product breakdowns, and 9-year Sentinel-2 timelapses of every site.
+Public dashboard tracking 16 Tesla / SpaceX / xAI / Neuralink / Boring Company
+construction and production sites from orbit. Sentinel-2 weekly captures, ESRI
+high-resolution overlays, milestone timelines, and 2D product breakdowns for
+the hardware that ships from those sites.
 
-🌐 Live: **https://gigascope.xyz**
-
----
-
-## What's in it
-
-- **16 construction sites** with satellite maps (ESRI / Sentinel-2 toggle), milestones, news, related products
-- **13 interactive 3D product breakdowns** — Raptor, Starship, Falcon 9, 4680, Powerwall, Megapack, Neuralink N1, Model 3/Y, Cybertruck, Cybercab, Optimus, Supercharger V4 — 230+ clickable parts with tech descriptions
-- **9-year quarterly timelapses** (2018-Q1 → 2026-Q2) of all 16 sites, auto-built from Copernicus Sentinel-2
-- **Before/after slider** + **global milestone timeline**
-- **Live TSLA ticker** + SpaceX launch stats + community feed
+🌐 Live: **https://gigascope.xyz** (alias: https://gigascope-ten.vercel.app)
 
 ---
 
 ## Stack
 
 - Next.js 16 (App Router, Turbopack), React 19, TypeScript 5, Tailwind 4
-- Three.js + react-three-fiber + drei (3D product viewer)
-- Leaflet (satellite map)
-- Copernicus Sentinel-2 (timelapse source)
-- Vercel (auto-deploy on push to `main`)
-- GitHub Actions (daily marketing, hourly launch monitor, weekly timelapse rebuild)
+- Leaflet + react-leaflet (satellite map, before/after compare slider)
+- Resend + `@react-email/components` (welcome + drip sequence)
+- Upstash Redis (subscriber store, visit counter)
+- Stripe (checkout code present, billing not yet live)
+- Vercel (auto-deploy on push to `main`, cron hosting)
 
-All pages statically generated. No server cost.
+Most pages are statically generated; only API routes and cron jobs run on demand.
 
 ---
 
 ## Local dev
 
 ```bash
-git clone https://github.com/sincetwentytwo-sys/gigascope
+git clone https://github.com/sincetwentytwo-sys/gigascope.git
 cd gigascope
 npm install
 npm run dev
@@ -48,50 +40,41 @@ Build:
 npm run build
 ```
 
-Refresh product thumbnails (`public/products/<slug>.jpg`) after editing models:
+Refresh factory data after editing `public/data/factories.json`:
 
 ```bash
-# Terminal 1
-npm run dev
-
-# Terminal 2 — opens a real Chromium window briefly per product.
-# Headless WebGL captures r3f scenes as black; headed is required.
-npm run capture:thumbnails
-# (or)  ONLY_SLUG=cybertruck npm run capture:thumbnails
+npm run update:factories
 ```
+
+`.env.local` needs `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `UPSTASH_REDIS_REST_URL`,
+`UPSTASH_REDIS_REST_TOKEN`, and `UNSUBSCRIBE_SECRET` for full email functionality.
 
 ---
 
-## Repo layout
+## Deployment
 
-```
-src/
-  app/             # Next.js App Router pages
-  components/      # Globe, SatelliteMap, 3D viewer, etc.
-  data/products/   # 13 product part trees
-public/
-  data/factories.json  # 16 site definitions
-  timelapses/          # Pre-built MP4s + index.json
-scripts/
-  timelapse/       # Sentinel-2 capture + ffmpeg pipeline
-  marketing/       # Auto-tweet generator + X poster
-.github/workflows/ # cron pipelines
-```
+Push to `main` — Vercel builds and ships. Cron jobs (daily digest, drip sequence,
+Starlink refresh) are defined in `vercel.json`.
+
+---
+
+## Repo conventions
+
+- Contributor guide: see [`CONTRIBUTING.md`](./CONTRIBUTING.md) (data updates go via PR to `public/data/factories.json`)
+- Session handoffs land in [`HANDOFF.md`](./HANDOFF.md)
+- Project instructions for AI agents live in [`CLAUDE.md`](./CLAUDE.md) and [`AGENTS.md`](./AGENTS.md)
+- Commits: conventional-ish prefixes (`feat:`, `fix:`, `content:`, `chore:`)
 
 ---
 
 ## Disclaimers
 
-- Satellite imagery is **not real-time**. Sentinel-2 is ~5-day revisit, ESRI updates every 3–6 months.
-- Progress percentages and milestone dates are best-effort estimates from public sources (Wikipedia, NASASpaceflight, Electrek, company filings). Not investment advice.
-- Not affiliated with Tesla, SpaceX, xAI, Neuralink, or The Boring Company.
+- Satellite imagery is **not real-time**. Sentinel-2 has a ~5-day revisit cadence; ESRI World Imagery refreshes every 3–6 months.
+- Progress percentages and milestone dates are best-effort estimates from public sources (company filings, news outlets, Wikipedia). Not investment advice.
+- Community project. **Not affiliated with Tesla, SpaceX, xAI, Neuralink, or The Boring Company.**
 
 ---
 
 ## License
 
 MIT — see [LICENSE](./LICENSE).
-
-Contributions welcome. Open an issue or PR.
-
-<!-- Push automation test with .env token (2026-05-20) -->

@@ -5,6 +5,20 @@ export const metadata: Metadata = {
   title: "Methodology — How we calculate progress % — GIGASCOPE",
   description:
     "Satellite imagery sources, progress calculation, update cadence, limitations. The honest version of where our numbers come from.",
+  alternates: { canonical: "https://gigascope.xyz/methodology" },
+  openGraph: {
+    title: "Methodology — How we calculate progress % — GIGASCOPE",
+    description:
+      "Satellite imagery sources, progress calculation, update cadence, limitations. The honest version of where our numbers come from.",
+    url: "https://gigascope.xyz/methodology",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Methodology — How we calculate progress % — GIGASCOPE",
+    description:
+      "Satellite imagery sources, progress calculation, update cadence, limitations. The honest version of where our numbers come from.",
+  },
 };
 
 const IMAGERY = [

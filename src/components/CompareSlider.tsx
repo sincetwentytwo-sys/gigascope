@@ -203,7 +203,7 @@ export default function CompareSlider() {
         <div
           ref={lineRef}
           className="absolute top-0 bottom-0 z-[1000] w-px bg-text pointer-events-none"
-          style={{ left: "50%", boxShadow: "0 0 15px #00d4ff" }}
+          style={{ left: "50%", boxShadow: "0 0 8px rgba(0,0,0,0.2)" }}
         />
 
         {/* Slider handle */}
@@ -215,7 +215,7 @@ export default function CompareSlider() {
           onTouchStart={() => { dragging.current = true; }}
         >
           <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-text bg-bg/80 backdrop-blur-lg flex items-center justify-center ">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="15 18 9 12 15 6" />
               <polyline points="9 18 3 12 9 6" transform="translate(12 0)" />
             </svg>
@@ -263,18 +263,18 @@ export default function CompareSlider() {
           </button>
         </div>
 
-        {/* Sector greeble (top right) */}
-        <div className="hidden md:flex absolute top-4 right-[14rem] z-[1000] w-48 h-20 border border-border-custom p-2 flex-col gap-1 bg-black/30 backdrop-blur-sm">
-          <div className="text-[8px] font-mono text-dim flex justify-between uppercase">
-            <span>SECTOR_ID:</span>
-            <span>{selected.slug.toUpperCase()}</span>
+        {/* Site progress card (top right) */}
+        <div className="hidden md:flex absolute top-4 right-[14rem] z-[1000] w-48 h-20 border border-border-custom p-2 flex-col gap-1 bg-bg/80 backdrop-blur-sm">
+          <div className="text-[10px] text-dim flex justify-between">
+            <span>Site</span>
+            <span className="text-text">{selected.slug}</span>
           </div>
           <div className="h-1 bg-surface w-full relative overflow-hidden">
             <div className="absolute top-0 left-0 h-full bg-text" style={{ width: `${selected.progress}%` }} />
           </div>
-          <div className="text-[8px] font-mono text-dim flex justify-between uppercase mt-auto">
-            <span>PROGRESS:</span>
-            <span>{selected.progress}%</span>
+          <div className="text-[10px] text-dim flex justify-between mt-auto">
+            <span>Built</span>
+            <span className="text-text">{selected.progress}%</span>
           </div>
         </div>
 

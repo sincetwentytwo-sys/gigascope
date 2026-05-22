@@ -4,7 +4,22 @@ import { factories } from "@/data/factories";
 
 export const metadata: Metadata = {
   title: "Calendar — Catalysts & milestones — GIGASCOPE",
-  description: "All upcoming catalysts and milestones across the GIGASCOPE universe, chronologically. Earnings, fab ramps, launch dates, regulatory decisions.",
+  description:
+    "Earnings calls, fab ramps, launches, regulatory decisions, and construction milestones tracked across Tesla, SpaceX, xAI, Neuralink, and Boring — chronologically.",
+  alternates: { canonical: "https://gigascope.xyz/calendar" },
+  openGraph: {
+    title: "Calendar — Catalysts & milestones — GIGASCOPE",
+    description:
+      "Earnings calls, fab ramps, launches, regulatory decisions, and construction milestones tracked across Tesla, SpaceX, xAI, Neuralink, and Boring — chronologically.",
+    url: "https://gigascope.xyz/calendar",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Calendar — Catalysts & milestones — GIGASCOPE",
+    description:
+      "Earnings calls, fab ramps, launches, regulatory decisions, and construction milestones tracked across Tesla, SpaceX, xAI, Neuralink, and Boring — chronologically.",
+  },
 };
 
 type Entry = {
