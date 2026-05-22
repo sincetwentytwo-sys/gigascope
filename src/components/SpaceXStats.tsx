@@ -12,6 +12,7 @@ type SpaceXData = {
 
 export default function SpaceXStats() {
   const [data, setData] = useState<SpaceXData | null>(null);
+  const [fetchedAt, setFetchedAt] = useState<Date | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -21,7 +22,10 @@ export default function SpaceXStats() {
         const res = await fetch("/api/spacex", { cache: "no-store" });
         if (!res.ok) return;
         const json = (await res.json()) as SpaceXData;
-        if (!cancelled) setData(json);
+        if (!cancelled) {
+          setData(json);
+          setFetchedAt(new Date());
+        }
       } catch {
         // ignore
       }
@@ -69,6 +73,20 @@ export default function SpaceXStats() {
           Last: {data.latestLaunch} ({data.launchDate})
         </span>
       )}
+      <span
+        className="inline-flex items-center gap-1 text-[11px] text-dim"
+        title={
+          fetchedAt
+            ? `Auto-refresh every 5 minutes · last fetched ${fetchedAt.toLocaleTimeString()}`
+            : "Auto-refresh every 5 minutes"
+        }
+      >
+        <span
+          aria-hidden
+          className="inline-block w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"
+        />
+        live
+      </span>
     </div>
   );
 }
