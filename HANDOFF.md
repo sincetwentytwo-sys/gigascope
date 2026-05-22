@@ -1,6 +1,17 @@
 # GIGASCOPE — Session Handoff
 
-**Last updated**: 2026-05-22 (Resend integration LIVE — Stripe is next)
+**Last updated**: 2026-05-22 (Resend LIVE · payment infra parked per validate-before-overhead)
+
+## 📚 Canonical docs (read in this order)
+
+| 파일 | 상태 | 비고 |
+|---|---|---|
+| `G:\jb\gigascope-master-plan-2026-05-22.md` | ✅ **CANONICAL** | Musk-narrow 방향. 모든 방향 결정 기준 |
+| `G:\jb\gigascope-audit-2026-05-22.md` | ✅ Reference | Master plan과 같은 방향, 같은 날 작성. 호환 |
+| `G:\jb\resend-integration-2026-05-22.md` | ✅ Reference (done) | 이번 세션에 완료 |
+| `G:\jb\gigascope-사이트개선-명세서.md` | 🚫 **SUPERSEDED — 무시** | master plan 적용 후 8h 뒤 작성됐지만 demoted Atlas 페이지 보고 "39 회사 확장" 반대 방향 제안. Owner 2026-05-22에 명시적으로 폐기. 같은 함정 다시 안 빠지려면 이 파일 안 봄 |
+
+
 **Live (primary)**: https://gigascope.xyz
 **Live (alias)**: https://gigascope-ten.vercel.app
 **Repo**: https://github.com/sincetwentytwo-sys/gigascope (main · Vercel auto-deploy)
