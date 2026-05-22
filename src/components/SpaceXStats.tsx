@@ -39,7 +39,7 @@ export default function SpaceXStats() {
     return (
       <div className="inline-flex items-center gap-2 text-sm text-dim">
         <span className="font-bold">SpaceX</span>
-        <span>loading...</span>
+        <span className="opacity-60">—</span>
       </div>
     );
   }
