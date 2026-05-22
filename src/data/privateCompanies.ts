@@ -86,7 +86,7 @@ export const PRIVATE_COMPANIES: PrivateCompany[] = [
     ],
     accent: "#005288",
     featured: true,
-    relatedSites: ["starbase", "cape-canaveral", "starlink-bothell"],
+    relatedSites: ["starbase", "cape-canaveral"],
     relatedProducts: ["raptor", "falcon9", "starship"],
     relatedTickers: ["RKLB", "TSLA"],
   },

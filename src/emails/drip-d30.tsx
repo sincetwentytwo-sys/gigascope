@@ -52,7 +52,7 @@ export default function DripD30({ email }: DripProps) {
               → Earnings calls and launch manifests on the catalyst calendar
             </Text>
             <Text style={listItem}>
-              → 3D product breakdowns when new components land (Raptor revs, Optimus iterations, 4680 cell variants)
+              → Interactive component breakdowns when new components land (Raptor revs, Optimus iterations, 4680 cell variants)
             </Text>
           </Section>
 

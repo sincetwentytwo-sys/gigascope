@@ -55,8 +55,8 @@ export default function WelcomeEmail({ email, tier = "free" }: WelcomeEmailProps
               </Text>
               <Text style={text}>
                 The Investor tier ($9/mo charter rate, first 100 subscribers) is still
-                open if you want satellite-drop alerts, 3D product breakdowns, and
-                CSV/JSON data exports. Price grandfathered when it moves to $19, then $29.
+                open if you want satellite-drop alerts, interactive component breakdowns,
+                and CSV/JSON data exports. Price grandfathered when it moves to $19, then $29.
               </Text>
             </>
           )}

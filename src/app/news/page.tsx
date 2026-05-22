@@ -90,12 +90,9 @@ export default async function NewsPage() {
           {all.map((it, i) => (
             <li key={i} className="p-3 rounded border border-border-custom hover:border-text transition-colors">
               <div className="flex items-center gap-2 mb-1">
-                <a
-                  href={`/ticker/${it.symbol.toLowerCase().replace(/\./g, "-")}`}
-                  className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface border border-border-custom hover:border-text"
-                >
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface border border-border-custom">
                   {it.symbol}
-                </a>
+                </span>
                 <span className="text-[11px] text-dim">{it.source} · {timeAgo(it.pubDate)} ago</span>
               </div>
               <a href={it.link} target="_blank" rel="noopener noreferrer" className="block group">

@@ -7,7 +7,7 @@
  *
  * Adding a ticker:
  *   - Append to TICKERS below.
- *   - exchange: "NASDAQ" | "NYSE" | "KRX" | "TWSE" | "AMS" | "LSE" | "FRA"
+ *   - exchange: "NASDAQ" | "NYSE" | "KRX" | "TWSE" | "AMS" | "LSE" | "FRA" | "HKEX" | "SZSE" | "ASX"
  *   - yahooSymbol: the symbol Yahoo Finance recognizes
  *     (e.g. "TSLA", "005930.KS", "ASML.AS", "TSM"). Used by the quote API.
  */
@@ -66,7 +66,7 @@ export interface Ticker {
   yahooSymbol: string;           // symbol used by Yahoo Finance chart endpoint
   name: string;
   shortName?: string;
-  exchange: "NASDAQ" | "NYSE" | "KRX" | "TWSE" | "AMS" | "LSE" | "FRA" | "HKEX";
+  exchange: "NASDAQ" | "NYSE" | "KRX" | "TWSE" | "AMS" | "LSE" | "FRA" | "HKEX" | "SZSE" | "ASX";
   hq: string;
   ceo?: string;
   founded?: number;
@@ -251,7 +251,7 @@ export const TICKERS: Ticker[] = [
       { date: "2026-2027", label: "Giga Mexico groundbreaking", confidence: "speculative" },
     ],
     competitors: ["NVDA", "AVGO"],
-    relatedSites: ["gigafactory-texas", "gigafactory-nevada", "gigafactory-berlin", "gigafactory-shanghai", "gigafactory-mexico"],
+    relatedSites: ["giga-texas", "giga-nevada", "giga-berlin", "giga-shanghai", "giga-mexico"],
     relatedProducts: ["model-y", "model-3", "cybertruck", "cybercab", "optimus", "megapack", "powerwall", "4680", "supercharger-v4"],
     accent: "#e31937",
     featured: true,
@@ -259,11 +259,11 @@ export const TICKERS: Ticker[] = [
     deepDive:
       "Tesla today is not a single product company; it is four optionalities stapled together with a profitable auto business funding the rest. The first leg is automotive — Model Y is the best-selling vehicle on Earth, and a sub-$30K Model 2-class platform manufactured at the Berlin and (eventually) Mexico gigafactories is the next volume unlock. The second leg is energy storage — Megapack and Powerwall are growing >50% YoY, structurally tied to the new utility load from AI data centers and the broader grid-firming buildout. The third leg is FSD/Robotaxi: a regulatory unlock state-by-state would convert a software franchise that exists today (~6M vehicles with FSD-capable hardware) into a per-mile economic engine; the latency between regulatory event and revenue ramp is the variable. The fourth and most contested leg is Optimus — at any plausible production cost (Musk's stated <$20K target), every TAM assumption in robotics is upside, but the dispersion of outcomes is enormous. The vertical integration story — 4680 cell pack, lithium refining, casting, motor magnets, in-house compute (Dojo) — is the actual moat. Tesla doesn't have to beat BYD on cost in China; it has to extract margin per car globally while compounding the rest, which is what the Q3-Q4 2025 earnings prints have shown. The bear case is real (decelerating auto growth, Chinese price war, founder governance overhang), but a sum-of-the-parts that gives any non-zero value to Optimus and FSD makes the multiple defensible.",
     facilities: [
-      { name: "Gigafactory Texas", city: "Austin", country: "USA", flag: "🇺🇸", lat: 30.2225, lng: -97.6172, status: "operational", siteSlug: "gigafactory-texas", blurb: "Model Y, Cybertruck, 4680 cells, Optimus pilot line." },
-      { name: "Gigafactory Nevada", city: "Reno", country: "USA", flag: "🇺🇸", lat: 39.5388, lng: -119.4424, status: "operational", siteSlug: "gigafactory-nevada", blurb: "Battery cells, Semi, drive units." },
-      { name: "Gigafactory Berlin-Brandenburg", city: "Grünheide", country: "Germany", flag: "🇩🇪", lat: 52.4067, lng: 13.7841, status: "operational", siteSlug: "gigafactory-berlin", blurb: "Model Y for EU." },
-      { name: "Gigafactory Shanghai", city: "Shanghai", country: "China", flag: "🇨🇳", lat: 31.0011, lng: 121.7654, status: "operational", siteSlug: "gigafactory-shanghai", blurb: "Model 3 / Y for China + export." },
-      { name: "Gigafactory Mexico", city: "Monterrey", country: "Mexico", flag: "🇲🇽", lat: 25.7847, lng: -100.3897, status: "announced", siteSlug: "gigafactory-mexico", blurb: "Next-gen low-cost platform (Model 2)." },
+      { name: "Gigafactory Texas", city: "Austin", country: "USA", flag: "🇺🇸", lat: 30.2225, lng: -97.6172, status: "operational", siteSlug: "giga-texas", blurb: "Model Y, Cybertruck, 4680 cells, Optimus pilot line." },
+      { name: "Gigafactory Nevada", city: "Reno", country: "USA", flag: "🇺🇸", lat: 39.5388, lng: -119.4424, status: "operational", siteSlug: "giga-nevada", blurb: "Battery cells, Semi, drive units." },
+      { name: "Gigafactory Berlin-Brandenburg", city: "Grünheide", country: "Germany", flag: "🇩🇪", lat: 52.4067, lng: 13.7841, status: "operational", siteSlug: "giga-berlin", blurb: "Model Y for EU." },
+      { name: "Gigafactory Shanghai", city: "Shanghai", country: "China", flag: "🇨🇳", lat: 31.0011, lng: 121.7654, status: "operational", siteSlug: "giga-shanghai", blurb: "Model 3 / Y for China + export." },
+      { name: "Gigafactory Mexico", city: "Monterrey", country: "Mexico", flag: "🇲🇽", lat: 25.7847, lng: -100.3897, status: "announced", siteSlug: "giga-mexico", blurb: "Next-gen low-cost platform (Model 2)." },
     ],
   },
   // SpaceX is private — placeholder for future tender-offer secondary tracking.
@@ -481,7 +481,7 @@ export const TICKERS: Ticker[] = [
     shortName: "Samsung",
     exchange: "KRX",
     hq: "Suwon, South Korea",
-    ceo: "Han Jong-hee / Jay Y. Lee (chairman)",
+    ceo: "Jun Young-hyun / Lee Jae-yong (chairman)",
     founded: 1969,
     website: "https://www.samsung.com",
     sectors: ["semis-ai"],
@@ -1177,7 +1177,7 @@ export const TICKERS: Ticker[] = [
     yahooSymbol: "300750.SZ",
     name: "Contemporary Amperex Technology (CATL)",
     shortName: "CATL",
-    exchange: "KRX",
+    exchange: "SZSE",
     hq: "Ningde, Fujian, China",
     ceo: "Robin Zeng",
     founded: 2011,
@@ -1420,7 +1420,7 @@ export const TICKERS: Ticker[] = [
     yahooSymbol: "LYC.AX",
     name: "Lynas Rare Earths",
     shortName: "Lynas",
-    exchange: "LSE",
+    exchange: "ASX",
     hq: "Sydney, Australia",
     ceo: "Amanda Lacaze",
     founded: 1983,

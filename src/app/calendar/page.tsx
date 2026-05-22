@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { TICKERS, tickerHref, getTicker } from "@/data/tickers";
+import { TICKERS } from "@/data/tickers";
 import { factories } from "@/data/factories";
 
 export const metadata: Metadata = {
@@ -12,7 +12,6 @@ type Entry = {
   sortKey: number;
   kind: "catalyst" | "milestone";
   symbol?: string;
-  symbolHref?: string;
   siteSlug?: string;
   label: string;
   confidence?: string;
@@ -45,7 +44,6 @@ export default function CalendarPage() {
         sortKey: k,
         kind: "catalyst",
         symbol: t.symbol,
-        symbolHref: tickerHref(t),
         label: c.label,
         confidence: c.confidence,
         blurb: c.blurb,
@@ -109,9 +107,9 @@ export default function CalendarPage() {
                       {e.blurb && <div className="text-xs text-dim mt-0.5">{e.blurb}</div>}
                       <div className="flex items-center gap-2 mt-1">
                         {e.symbol && (
-                          <a href={e.symbolHref} className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface border border-border-custom hover:border-text">
+                          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface border border-border-custom">
                             {e.symbol}
-                          </a>
+                          </span>
                         )}
                         {e.siteSlug && (
                           <a href={`/site/${e.siteSlug}`} className="text-[10px] px-1.5 py-0.5 rounded bg-surface border border-border-custom hover:border-text">

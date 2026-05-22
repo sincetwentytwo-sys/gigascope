@@ -285,7 +285,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                       href={`/products/${p.slug}`}
                       className="font-mono text-[10px] uppercase tracking-widest px-2 py-1 border border-border-custom hover:border-text text-text hover:text-text transition-colors"
                     >
-                      {p.name} 3D &rarr;
+                      {p.name} &rarr;
                     </a>
                   ))}
                 </div>

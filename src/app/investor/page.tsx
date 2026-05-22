@@ -5,13 +5,13 @@ import InvestorCheckout from "@/components/InvestorCheckout";
 export const metadata: Metadata = {
   title: "Investor tier — early-bird $9 — GIGASCOPE",
   description:
-    "GIGASCOPE Investor: real-time milestone alerts, AI-curated daily digest, full 3D product breakdowns, data downloads, no ads. Single tier, no upsells. $9 early-bird → $19 → $29.",
+    "GIGASCOPE Investor: real-time milestone alerts, AI-curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 early-bird → $19 → $29.",
 };
 
 const FEATURES = [
-  { label: "Real-time alerts (email + Telegram)", note: "Construction progress jumps, fab milestones, regulatory decisions, earnings, launches." },
+  { label: "Real-time alerts (email)", note: "Construction progress jumps, fab milestones, regulatory decisions, earnings, launches." },
   { label: "AI-curated daily digest", note: "One email at 7am local. Cross-company synthesis: what mattered, what's next, with primary-source links." },
-  { label: "Full 3D interactive product breakdowns", note: "Click any component on Raptor, Optimus, Cybertruck, 4680, GB200 — see the part, the spec, the supplier." },
+  { label: "Interactive component breakdowns", note: "Click any component on Raptor, Optimus, Cybertruck, 4680, GB200 — see the part, the spec, the supplier." },
   { label: "Data downloads (CSV, JSON)", note: "Milestones, facility coordinates, supply-chain edges, historical timelines — bulk export for your own analysis." },
   { label: "Comparison tools", note: "Side-by-side: Gigafactories vs Pyeongtaek, MI300X vs B200, Tanbreez vs Mountain Pass." },
   { label: "No ads, no upsells", note: "Single tier. No 'Pro / Premium / Enterprise' nonsense. One identity: Investor." },
@@ -29,7 +29,7 @@ export default function InvestorPage() {
         </h1>
         <p className="text-dim max-w-xl mx-auto mb-3">
           A <strong className="text-text">paid software subscription</strong> to GIGASCOPE. Unlocks satellite-drop alerts,
-          a curated daily digest, 3D product breakdowns, and CSV/JSON data exports.
+          a curated daily digest, interactive component breakdowns, and CSV/JSON data exports.
         </p>
         <p className="text-[11px] text-dim max-w-md mx-auto">
           ⚠ This is not equity in the project, not a token, not a security. It's a $9/month subscription to a software service. Cancel any time.
@@ -83,7 +83,7 @@ export default function InvestorPage() {
           </div>
           <div>
             <dt className="font-bold mb-1">Why early bird at $9?</dt>
-            <dd className="text-dim">Charter members fund the next 50 company pages and the 3D product pipeline. You get lifetime price-lock at $9 even when we raise to $29.</dd>
+            <dd className="text-dim">Charter members fund the next 50 site pages and the interactive component pipeline. You get lifetime price-lock at $9 even when we raise to $29.</dd>
           </div>
           <div>
             <dt className="font-bold mb-1">What happens to my data if I cancel?</dt>

@@ -10,10 +10,19 @@ function getRedis(): Redis | null {
   return new Redis({ url, token });
 }
 
+// TODO: add HTTPS one-click unsub at /api/unsubscribe?email=X&token=Y, then add second URL form + List-Unsubscribe-Post header.
+const UNSUB_HEADERS = {
+  "List-Unsubscribe": "<mailto:unsubscribe@gigascope.xyz?subject=unsubscribe>",
+};
+
 function authorized(req: Request): boolean {
   const expected = process.env.CRON_SECRET;
-  if (!expected) return true; // not configured = allow (for owner manual testing)
+  if (!expected) {
+    // In production, fail closed. In dev/local, allow for manual testing.
+    return process.env.NODE_ENV !== "production";
+  }
   const got = req.headers.get("authorization");
+  if (!got) return false;
   return got === `Bearer ${expected}` || got === expected;
 }
 
@@ -37,7 +46,7 @@ function renderHtml(data: {
     .join("");
   return `<!doctype html><html><body style="font-family:-apple-system,system-ui,sans-serif;color:#1d1d1f;max-width:600px;margin:0 auto;padding:24px">
     <h1 style="font-size:22px;margin:0 0 8px">GIGASCOPE digest</h1>
-    <div style="color:#86868b;font-size:13px;margin-bottom:24px">The visual atlas of how the future is being built · <a href="https://gigascope.xyz" style="color:#86868b">gigascope.xyz</a></div>
+    <div style="color:#86868b;font-size:13px;margin-bottom:24px">Watch Musk's empire get built, one satellite frame at a time · <a href="https://gigascope.xyz" style="color:#86868b">gigascope.xyz</a></div>
     <h2 style="font-size:14px;text-transform:uppercase;letter-spacing:0.05em;color:#86868b;margin:24px 0 8px">Catalysts ahead</h2>
     <table style="width:100%;border-collapse:collapse">${cat || '<tr><td style="padding:8px;color:#86868b;font-size:13px">No upcoming catalysts in window.</td></tr>'}</table>
     <h2 style="font-size:14px;text-transform:uppercase;letter-spacing:0.05em;color:#86868b;margin:24px 0 8px">Last 24h news</h2>
@@ -99,7 +108,7 @@ export async function POST(req: Request) {
               Authorization: `Bearer ${resendKey}`,
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ from, to, subject, html }),
+            body: JSON.stringify({ from, to, subject, html, headers: UNSUB_HEADERS }),
           });
           return res.ok;
         } catch {

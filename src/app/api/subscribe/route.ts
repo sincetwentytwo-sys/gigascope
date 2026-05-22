@@ -18,6 +18,11 @@ function getResend(): Resend | null {
   return new Resend(key);
 }
 
+// TODO: add HTTPS one-click unsub at /api/unsubscribe?email=X&token=Y, then add second URL form + List-Unsubscribe-Post header.
+const UNSUB_HEADERS = {
+  "List-Unsubscribe": "<mailto:unsubscribe@gigascope.xyz?subject=unsubscribe>",
+};
+
 async function sendWelcome(email: string, tier: "free" | "pro" | "terminal"): Promise<boolean> {
   const resend = getResend();
   if (!resend) return false;
@@ -32,6 +37,7 @@ async function sendWelcome(email: string, tier: "free" | "pro" | "terminal"): Pr
       to: email,
       subject,
       react: WelcomeEmail({ email, tier }),
+      headers: UNSUB_HEADERS,
     });
     return true;
   } catch (e) {

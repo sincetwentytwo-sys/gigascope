@@ -56,9 +56,9 @@ export default function DripD14({ email }: DripProps) {
           </Section>
 
           <Text style={text}>
-            What charter funds: the next 50 company pages and the 3D product
-            pipeline. Charter members aren't buying a finished product — they're
-            buying it built faster, with a price locked in.
+            What charter funds: the next 50 site pages and the interactive
+            component pipeline. Charter members aren't buying a finished product —
+            they're buying it built faster, with a price locked in.
           </Text>
 
           <Text style={text}>
@@ -66,7 +66,7 @@ export default function DripD14({ email }: DripProps) {
           </Text>
           <Section style={list}>
             <Text style={listItem}>
-              → <strong>Real-time alerts (email + Telegram)</strong> — construction
+              → <strong>Real-time alerts (email)</strong> — construction
               progress jumps, fab milestones, regulatory decisions, earnings,
               launches
             </Text>
@@ -76,7 +76,7 @@ export default function DripD14({ email }: DripProps) {
               primary-source links
             </Text>
             <Text style={listItem}>
-              → <strong>Full 3D interactive product breakdowns</strong> — click
+              → <strong>Interactive component breakdowns</strong> — click
               any component on Raptor, Optimus, Cybertruck, 4680, GB200 to see
               the part, the spec, the supplier
             </Text>

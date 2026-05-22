@@ -16,10 +16,19 @@ function getRedis(): Redis | null {
   return new Redis({ url, token });
 }
 
+// TODO: add HTTPS one-click unsub at /api/unsubscribe?email=X&token=Y, then add second URL form + List-Unsubscribe-Post header.
+const UNSUB_HEADERS = {
+  "List-Unsubscribe": "<mailto:unsubscribe@gigascope.xyz?subject=unsubscribe>",
+};
+
 function authorized(req: Request): boolean {
   const expected = process.env.CRON_SECRET;
-  if (!expected) return true; // matches /api/digest/send pattern — unset = allow
+  if (!expected) {
+    // In production, fail closed. In dev/local, allow for manual testing.
+    return process.env.NODE_ENV !== "production";
+  }
   const got = req.headers.get("authorization");
+  if (!got) return false;
   return got === `Bearer ${expected}` || got === expected;
 }
 
@@ -82,12 +91,16 @@ export async function POST(req: Request) {
     const ageDays = (now - ts) / DAY_MS;
 
     for (const drip of DRIPS) {
-      // Eligible only inside the [day, day+1) window — 24h spread per drip.
-      if (ageDays < drip.day || ageDays >= drip.day + 1) continue;
+      // Eligible inside the [day, day+7) window — wide catch-up so a delayed
+      // cron run (incident, deploy, etc.) doesn't permanently miss a drip.
+      // The atomic SET-NX flag below guarantees no double-send.
+      if (ageDays < drip.day || ageDays >= drip.day + 7) continue;
 
       const flagKey = `drip:sent:${email}:${drip.key}`;
-      const already = await r.get(flagKey);
-      if (already) {
+      // Atomic claim BEFORE send — prevents read-then-write race between
+      // concurrent cron invocations (manual curl + scheduled run).
+      const acquired = await r.set(flagKey, "1", { nx: true, ex: FLAG_TTL_SECONDS });
+      if (!acquired) {
         skipped.push({ email, drip: drip.key, reason: "already_sent" });
         continue;
       }
@@ -98,10 +111,12 @@ export async function POST(req: Request) {
           to: email,
           subject: drip.subject,
           react: drip.react({ email }),
+          headers: UNSUB_HEADERS,
         });
-        await r.set(flagKey, "1", { ex: FLAG_TTL_SECONDS });
         sent.push({ email, drip: drip.key });
       } catch (e) {
+        // Release the flag so a later run can retry.
+        await r.del(flagKey);
         const err = e instanceof Error ? e.message.slice(0, 120) : "unknown";
         skipped.push({ email, drip: drip.key, reason: "send_failed", err } as { email: string; drip: string; reason: string });
       }

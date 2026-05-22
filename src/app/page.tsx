@@ -155,13 +155,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footnote: extended Atlas still exists, just not on home anymore */}
-      <section className="border-t border-border-custom">
-        <div className="max-w-[1200px] mx-auto px-6 py-8 text-center text-xs text-dim">
-          Looking for the broader Atlas?{" "}
-          <a href="/markets" className="underline hover:text-text">39 public companies across 11 sectors</a> · semis · quantum · batteries · defense — all secondary to the Musk Empire core above.
-        </div>
-      </section>
     </>
   );
 }
