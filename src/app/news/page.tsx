@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import NewsFeed from "@/components/NewsFeed";
+import NewsZigzag from "@/components/NewsZigzag";
 
 export const revalidate = 1800;
 
@@ -37,7 +37,7 @@ export default function NewsPage() {
         </p>
       </header>
 
-      <NewsFeed />
+      <NewsZigzag />
     </div>
   );
 }
