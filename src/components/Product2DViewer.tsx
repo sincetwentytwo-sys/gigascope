@@ -1,14 +1,30 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { ProductSpec } from "@/data/products";
 
 /**
- * Photo-first product viewer. Shows a real reference photo of the product
- * alongside a scrollable component list. Parts with a `hotspot: {x, y}`
- * get a small numbered dot on the photo — clicking a dot or a list row
- * surfaces the part's spec blurb in the bottom panel.
+ * Photo-first product viewer.
+ *
+ * Layout: reference photo on the left, scrollable component list on the right.
+ *
+ * Parts that have a `hotspot: {x, y}` get a numbered dot rendered on the photo
+ * via an SVG overlay. Clicking either a dot OR a list row surfaces that part's
+ * spec blurb in the bottom panel.
+ *
+ * Two interactions added 2026-05-24:
+ *   1. Auto-scroll: when the user clicks a dot, the right-side list scrolls
+ *      the matching <li> into view so they don't have to hunt for it.
+ *   2. Pinch / wheel / drag zoom: the photo + SVG dots share a CSS transform
+ *      wrapper, so zooming the wrapper visually scales BOTH the image AND
+ *      the dots in lockstep. Dots stay pinned to the correct part regardless
+ *      of zoom level. Resetting (double-click, dedicated button, or product
+ *      change) returns to 100% / pan=0.
  */
+const MIN_ZOOM = 1;
+const MAX_ZOOM = 4;
+const ZOOM_STEP = 0.25;
+
 export default function Product2DViewer({ product }: { product: ProductSpec }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
@@ -18,7 +34,29 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
     w: 1000,
     h: 1000,
   });
+
+  // Zoom / pan state. `pan` is a CSS-pixel offset applied to the inner
+  // transformed wrapper. The wrapper itself transforms both <img> and
+  // the SVG hotspot overlay together.
+  const [zoom, setZoom] = useState(1);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStart = useRef<
+    { x: number; y: number; panX: number; panY: number } | null
+  >(null);
+  // Pinch (2-touch) state — separate from 1-touch pan
+  const pinchStart = useRef<{ dist: number; zoom: number } | null>(null);
+  const touchPanStart = useRef<
+    { x: number; y: number; panX: number; panY: number } | null
+  >(null);
+
   const imgRef = useRef<HTMLImageElement>(null);
+  // The viewport receives wheel/touch events; the inner wrapper gets the
+  // transform. Splitting these so the viewport box is always the wheel
+  // target even when the inner content panned offscreen.
+  const viewportRef = useRef<HTMLDivElement>(null);
+  // <li> refs for auto-scroll
+  const liRefs = useRef<Map<string, HTMLLIElement>>(new Map());
 
   // When the image is already cached, React mounts the <img> *after* the
   // browser fires `load`, so the onLoad handler never runs and aspect-ratio
@@ -29,6 +67,15 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
       setNaturalSize({ w: i.naturalWidth, h: i.naturalHeight });
     }
   }, [product.slug]);
+
+  // Reset zoom / pan / selection when product changes (e.g., user navigates
+  // /products/raptor → /products/starship)
+  useEffect(() => {
+    setZoom(1);
+    setPan({ x: 0, y: 0 });
+    setSelectedId(null);
+  }, [product.slug]);
+
   const selected = product.parts.find((p) => p.id === selectedId) ?? null;
   const partsWithHotspots = product.parts.filter(
     (p) => p.hotspot && typeof p.hotspot.x === "number",
@@ -38,114 +85,296 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
   const dotNumber = new Map<string, number>();
   partsWithHotspots.forEach((p, i) => dotNumber.set(p.id, i + 1));
 
+  // Auto-scroll the selected list item into view. `nearest` avoids scrolling
+  // if the item is already visible (less jarring than always centering).
+  useEffect(() => {
+    if (!selectedId) return;
+    const li = liRefs.current.get(selectedId);
+    if (li) {
+      li.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }, [selectedId]);
+
+  // Wheel zoom. React's onWheel is passive:true by default so preventDefault
+  // gets ignored — we attach the native listener with passive:false to keep
+  // page scroll from competing with viewer zoom.
+  useEffect(() => {
+    const el = viewportRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const delta = -Math.sign(e.deltaY) * ZOOM_STEP;
+      setZoom((z) => clamp(z + delta, MIN_ZOOM, MAX_ZOOM));
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
+
+  // Mouse drag pan — only meaningful when zoomed in
+  const onMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      if (zoom <= 1) return;
+      setIsDragging(true);
+      dragStart.current = {
+        x: e.clientX,
+        y: e.clientY,
+        panX: pan.x,
+        panY: pan.y,
+      };
+    },
+    [zoom, pan],
+  );
+
+  useEffect(() => {
+    if (!isDragging) return;
+    const onMove = (e: MouseEvent) => {
+      if (!dragStart.current) return;
+      setPan({
+        x: dragStart.current.panX + (e.clientX - dragStart.current.x),
+        y: dragStart.current.panY + (e.clientY - dragStart.current.y),
+      });
+    };
+    const onUp = () => {
+      setIsDragging(false);
+      dragStart.current = null;
+    };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
+  }, [isDragging]);
+
+  // Touch: 2-finger pinch zoom, 1-finger pan (when zoomed in)
+  const onTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      if (e.touches.length === 2) {
+        const a = e.touches[0];
+        const b = e.touches[1];
+        pinchStart.current = {
+          dist: Math.hypot(b.clientX - a.clientX, b.clientY - a.clientY),
+          zoom,
+        };
+      } else if (e.touches.length === 1 && zoom > 1) {
+        touchPanStart.current = {
+          x: e.touches[0].clientX,
+          y: e.touches[0].clientY,
+          panX: pan.x,
+          panY: pan.y,
+        };
+      }
+    },
+    [zoom, pan],
+  );
+
+  const onTouchMove = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length === 2 && pinchStart.current) {
+      e.preventDefault();
+      const a = e.touches[0];
+      const b = e.touches[1];
+      const dist = Math.hypot(b.clientX - a.clientX, b.clientY - a.clientY);
+      const ratio = dist / pinchStart.current.dist;
+      setZoom(clamp(pinchStart.current.zoom * ratio, MIN_ZOOM, MAX_ZOOM));
+    } else if (e.touches.length === 1 && touchPanStart.current) {
+      e.preventDefault();
+      setPan({
+        x:
+          touchPanStart.current.panX +
+          (e.touches[0].clientX - touchPanStart.current.x),
+        y:
+          touchPanStart.current.panY +
+          (e.touches[0].clientY - touchPanStart.current.y),
+      });
+    }
+  }, []);
+
+  const onTouchEnd = useCallback(() => {
+    pinchStart.current = null;
+    touchPanStart.current = null;
+  }, []);
+
+  const resetZoom = useCallback(() => {
+    setZoom(1);
+    setPan({ x: 0, y: 0 });
+  }, []);
+
   // Products marked imageType: "svg" (or the legacy 4680) use a schematic
   // diagram; everything else points to a JPG reference photo.
   const ext = product.imageType === "svg" || product.slug === "4680" ? "svg" : "jpg";
   const src = `/products/photos/${product.slug}/main.${ext}`;
   const credit = product.photoCredit;
+  const hasPanOrZoom = zoom > 1 || pan.x !== 0 || pan.y !== 0;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] border border-border-custom bg-bg">
       {/* Photo */}
       <div className="relative bg-surface min-h-[55vh] overflow-hidden p-4 text-center">
-        {/* inline-block wrapper that pulls its size from the inline img
-            (which respects max-h:78vh + max-w:100%). flex parents kept
-            stretching this to 55vh and pushing the SVG below the photo —
-            text-align center on a block parent + inline-block here avoids
-            that and keeps the wrapper sized exactly to the image. */}
         <div
+          ref={viewportRef}
           className="relative inline-block align-top max-w-full"
           style={{
             aspectRatio: `${naturalSize.w} / ${naturalSize.h}`,
             maxHeight: "78vh",
+            cursor: zoom > 1 ? (isDragging ? "grabbing" : "grab") : "default",
+            touchAction: zoom > 1 ? "none" : "pinch-zoom",
           }}
+          onMouseDown={onMouseDown}
+          onDoubleClick={resetZoom}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+          onTouchCancel={onTouchEnd}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            ref={imgRef}
-            src={src}
-            alt={`${product.name} reference ${ext === "svg" ? "diagram" : "photo"}`}
-            className="block w-full h-full object-contain"
-            decoding="sync"
-            loading="eager"
-            fetchPriority="high"
-            onLoad={(e) => {
-              const i = e.currentTarget;
-              if (i.naturalWidth > 0 && i.naturalHeight > 0) {
-                setNaturalSize({ w: i.naturalWidth, h: i.naturalHeight });
-              }
+          {/* Inner wrapper gets the transform — both <img> and the SVG
+              overlay scale + pan together so dots stay pinned to parts. */}
+          <div
+            className="relative w-full h-full"
+            style={{
+              transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
+              transformOrigin: "center",
+              transition: isDragging ? "none" : "transform 0.15s ease-out",
+              willChange: "transform",
             }}
-          />
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              ref={imgRef}
+              src={src}
+              alt={`${product.name} reference ${ext === "svg" ? "diagram" : "photo"}`}
+              className="block w-full h-full object-contain select-none pointer-events-none"
+              decoding="sync"
+              loading="eager"
+              fetchPriority="high"
+              draggable={false}
+              onLoad={(e) => {
+                const i = e.currentTarget;
+                if (i.naturalWidth > 0 && i.naturalHeight > 0) {
+                  setNaturalSize({ w: i.naturalWidth, h: i.naturalHeight });
+                }
+              }}
+            />
 
-          {/* Hotspot dots — SVG fills the wrapper; since the wrapper has the
-              photo's aspect ratio, preserveAspectRatio="none" maps the
-              natural-pixel viewBox 1:1 onto the visible image. */}
-          {partsWithHotspots.length > 0 && (
-            <svg
-              className="absolute inset-0 w-full h-full"
-              style={{ pointerEvents: "none" }}
-              viewBox={`0 0 ${naturalSize.w} ${naturalSize.h}`}
-              preserveAspectRatio="none"
-            >
-              {partsWithHotspots.map((p) => {
-                const active = selectedId === p.id;
-                const hovered = hoveredId === p.id;
-                const cx = p.hotspot!.x * naturalSize.w;
-                const cy = p.hotspot!.y * naturalSize.h;
-                const baseR = Math.max(14, Math.min(naturalSize.w, naturalSize.h) * 0.018);
-                const r = active || hovered ? baseR * 1.35 : baseR;
-                const n = dotNumber.get(p.id);
-                return (
-                  <g
-                    key={p.id}
-                    onClick={() => setSelectedId(p.id)}
-                    onMouseEnter={() => setHoveredId(p.id)}
-                    onMouseLeave={() => setHoveredId(null)}
-                    style={{ pointerEvents: "auto", cursor: "pointer" }}
-                  >
-                    {(active || hovered) && (
+            {/* Hotspot dots — SVG fills the wrapper; since the wrapper has the
+                photo's aspect ratio, preserveAspectRatio="none" maps the
+                natural-pixel viewBox 1:1 onto the visible image. */}
+            {partsWithHotspots.length > 0 && (
+              <svg
+                className="absolute inset-0 w-full h-full"
+                style={{ pointerEvents: "none" }}
+                viewBox={`0 0 ${naturalSize.w} ${naturalSize.h}`}
+                preserveAspectRatio="none"
+              >
+                {partsWithHotspots.map((p) => {
+                  const active = selectedId === p.id;
+                  const hovered = hoveredId === p.id;
+                  const cx = p.hotspot!.x * naturalSize.w;
+                  const cy = p.hotspot!.y * naturalSize.h;
+                  const baseR = Math.max(
+                    14,
+                    Math.min(naturalSize.w, naturalSize.h) * 0.018,
+                  );
+                  const r = active || hovered ? baseR * 1.35 : baseR;
+                  const n = dotNumber.get(p.id);
+                  return (
+                    <g
+                      key={p.id}
+                      onClick={(e) => {
+                        // stopPropagation so dot click doesn't kick off a pan-drag.
+                        e.stopPropagation();
+                        setSelectedId(p.id);
+                      }}
+                      onMouseEnter={() => setHoveredId(p.id)}
+                      onMouseLeave={() => setHoveredId(null)}
+                      style={{ pointerEvents: "auto", cursor: "pointer" }}
+                    >
+                      {(active || hovered) && (
+                        <circle
+                          cx={cx}
+                          cy={cy}
+                          r={r + baseR * 0.7}
+                          fill={
+                            active
+                              ? "rgba(255, 176, 115, 0.18)"
+                              : "rgba(255, 255, 255, 0.18)"
+                          }
+                        />
+                      )}
                       <circle
                         cx={cx}
                         cy={cy}
-                        r={r + baseR * 0.7}
+                        r={r}
                         fill={
                           active
-                            ? "rgba(255, 176, 115, 0.18)"
-                            : "rgba(255, 255, 255, 0.18)"
+                            ? "#ffb073"
+                            : hovered
+                            ? "#ffffff"
+                            : "rgba(255, 255, 255, 0.92)"
                         }
+                        stroke={active ? "#1a1a1a" : "rgba(10, 10, 12, 0.65)"}
+                        strokeWidth={Math.max(1.5, baseR * 0.12)}
                       />
-                    )}
-                    <circle
-                      cx={cx}
-                      cy={cy}
-                      r={r}
-                      fill={
-                        active
-                          ? "#ffb073"
-                          : hovered
-                          ? "#ffffff"
-                          : "rgba(255, 255, 255, 0.92)"
-                      }
-                      stroke={active ? "#1a1a1a" : "rgba(10, 10, 12, 0.65)"}
-                      strokeWidth={Math.max(1.5, baseR * 0.12)}
-                    />
-                    <text
-                      x={cx}
-                      y={cy}
-                      textAnchor="middle"
-                      dominantBaseline="central"
-                      fontSize={baseR * 1.1}
-                      fontWeight={700}
-                      fontFamily="ui-monospace, Menlo, Consolas, monospace"
-                      fill={active ? "#1a1a1a" : "#0a0a0c"}
-                      style={{ pointerEvents: "none", userSelect: "none" }}
-                    >
-                      {n}
-                    </text>
-                  </g>
-                );
-              })}
-            </svg>
+                      <text
+                        x={cx}
+                        y={cy}
+                        textAnchor="middle"
+                        dominantBaseline="central"
+                        fontSize={baseR * 1.1}
+                        fontWeight={700}
+                        fontFamily="ui-monospace, Menlo, Consolas, monospace"
+                        fill={active ? "#1a1a1a" : "#0a0a0c"}
+                        style={{ pointerEvents: "none", userSelect: "none" }}
+                      >
+                        {n}
+                      </text>
+                    </g>
+                  );
+                })}
+              </svg>
+            )}
+          </div>
+        </div>
+
+        {/* Zoom controls — outside the transformed wrapper so they don't
+            scale with the photo. Positioned in the viewport's top-right. */}
+        <div className="absolute top-3 right-3 flex items-center gap-0 bg-bg/90 border border-border-custom font-mono text-[12px] select-none">
+          <button
+            type="button"
+            onClick={() =>
+              setZoom((z) => clamp(z - ZOOM_STEP, MIN_ZOOM, MAX_ZOOM))
+            }
+            disabled={zoom <= MIN_ZOOM}
+            className="w-8 h-8 flex items-center justify-center hover:bg-surface disabled:opacity-40 disabled:cursor-not-allowed text-text"
+            aria-label="Zoom out"
+            title="Zoom out (wheel)"
+          >
+            −
+          </button>
+          <span className="px-2 text-dim tabular-nums w-12 text-center text-[11px]">
+            {Math.round(zoom * 100)}%
+          </span>
+          <button
+            type="button"
+            onClick={() =>
+              setZoom((z) => clamp(z + ZOOM_STEP, MIN_ZOOM, MAX_ZOOM))
+            }
+            disabled={zoom >= MAX_ZOOM}
+            className="w-8 h-8 flex items-center justify-center hover:bg-surface disabled:opacity-40 disabled:cursor-not-allowed text-text"
+            aria-label="Zoom in"
+            title="Zoom in (wheel)"
+          >
+            +
+          </button>
+          {hasPanOrZoom && (
+            <button
+              type="button"
+              onClick={resetZoom}
+              className="px-2 h-8 text-dim hover:bg-surface uppercase tracking-wider text-[9px] border-l border-border-custom"
+              aria-label="Reset zoom and pan"
+              title="Reset (double-click photo)"
+            >
+              reset
+            </button>
           )}
         </div>
 
@@ -195,7 +424,14 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
               const n = dotNumber.get(p.id);
               const isActive = selectedId === p.id;
               return (
-                <li key={p.id}>
+                <li
+                  key={p.id}
+                  ref={(el) => {
+                    // Map<id, element> for the auto-scroll-into-view effect
+                    if (el) liRefs.current.set(p.id, el);
+                    else liRefs.current.delete(p.id);
+                  }}
+                >
                   <button
                     type="button"
                     onClick={() => setSelectedId(p.id)}
@@ -253,4 +489,8 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
       </aside>
     </div>
   );
+}
+
+function clamp(n: number, lo: number, hi: number): number {
+  return Math.max(lo, Math.min(hi, n));
 }

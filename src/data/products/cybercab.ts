@@ -76,7 +76,6 @@ export const cybercab: ProductSpec = {
       color: "#b8a26d",
       metalness: 0.85,
       roughness: 0.25,
-      hotspot: { x: 0.50, y: 0.20 },
     },
     {
       id: "door-r",
@@ -90,6 +89,7 @@ export const cybercab: ProductSpec = {
       color: "#b8a26d",
       metalness: 0.85,
       roughness: 0.25,
+      hotspot: { x: 0.50, y: 0.20 },
     },
     // Wheels (4)
     {
@@ -104,7 +104,6 @@ export const cybercab: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.5,
       roughness: 0.6,
-      hotspot: { x: 0.22, y: 0.78 },
     },
     {
       id: "wheel-fr",
@@ -118,6 +117,7 @@ export const cybercab: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.5,
       roughness: 0.6,
+      hotspot: { x: 0.22, y: 0.78 },
     },
     {
       id: "wheel-rl",
@@ -131,7 +131,6 @@ export const cybercab: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.5,
       roughness: 0.6,
-      hotspot: { x: 0.78, y: 0.68 },
     },
     {
       id: "wheel-rr",
@@ -145,6 +144,7 @@ export const cybercab: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.5,
       roughness: 0.6,
+      hotspot: { x: 0.78, y: 0.68 },
     },
     {
       id: "headlight-bar",
