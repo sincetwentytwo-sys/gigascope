@@ -8,7 +8,11 @@ export const okloAurora: ProductSpec = {
   description:
     "Oklo's flagship small modular reactor design. 15-50 MWe per unit. Sodium- or lead-cooled fast spectrum, HALEU fuel (19.75% enriched). Factory-built, ships to site as a single A-frame structure. First Aurora targeted for the Idaho National Laboratory under DOE collaboration. Hyperscaler PPA pipeline (Microsoft, Amazon AWS) anchors near-term commercial demand.",
   cameraPosition: [0, 0, 5],
-  imageType: "svg",
+  mainCredit: {
+    source: "Oklo press (Aurora groundbreaking)",
+    url: "https://oklo.com/newsroom/news-details/2025/Oklo-Breaks-Ground-on-First-Aurora-Powerhouse/default.aspx",
+    license: "Press kit (editorial use)",
+  },
   parts: [
     { id: "shelter", name: "A-frame roof / shelter", description: "Site-built A-frame structural shelter housing the entire reactor module. Designed to be visually unobtrusive — Aurora targets siting next to data centers, not isolated nuclear plants. Modular construction allows replication.", geometry: "box", args: [0,0,0], color: "#22c55e", hotspot: { x: 0.50, y: 0.20 } },
     { id: "vessel", name: "Reactor vessel", description: "Steel pressure vessel containing the reactor core + primary coolant loop. Designed for ~30-year fuel cycle without refueling (factory-loaded HALEU lasts the entire design lifetime).", geometry: "cylinder", args: [0,0,0], color: "#374151", hotspot: { x: 0.50, y: 0.40 } },

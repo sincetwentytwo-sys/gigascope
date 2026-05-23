@@ -8,7 +8,11 @@ export const hyundaiIoniq5: ProductSpec = {
   description:
     "First Hyundai built on the dedicated E-GMP electric platform. 800 V architecture (vs 400 V on most competitors) enables 350 kW DC fast charging — 10-80% in 18 minutes. Skateboard battery pack, fully flat floor, V2L (vehicle-to-load) bidirectional power. World Car of the Year 2022. Built at Hyundai Ulsan + Metaplant America (Ellabell GA).",
   cameraPosition: [0, 0, 5],
-  imageType: "svg",
+  mainCredit: {
+    source: "Wikimedia Commons (Vauxford)",
+    url: "https://commons.wikimedia.org/wiki/File:2021_Hyundai_Ioniq_5_Premium_EV.jpg",
+    license: "CC BY-SA 4.0",
+  },
   parts: [
     { id: "adas", name: "ADAS sensor stack", description: "Front-facing camera + radar + side ultrasonic sensors. Highway Driving Assist 2 (HDA 2) supports hands-off (eyes-on) lane changes. Hyundai is integrating L3 capability for select markets via the Pleos OS update.", geometry: "box", args: [0,0,0], color: "#a855f7", hotspot: { x: 0.50, y: 0.23 } },
     { id: "front-motor", name: "Front motor (100 kW)", description: "Permanent magnet synchronous motor on the front axle. AWD variants pair this with a larger rear motor for total 239 kW (320 hp) combined. The IONIQ 5 N tunes both motors to 478 kW combined.", geometry: "box", args: [0,0,0], color: "#22c55e", hotspot: { x: 0.205, y: 0.465 } },

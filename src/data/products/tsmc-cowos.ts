@@ -8,7 +8,11 @@ export const tsmcCowos: ProductSpec = {
   description:
     "TSMC's advanced 2.5D packaging technology — chiplets and HBM stacks placed on a silicon interposer with local Si interconnect bridges (LSI) for high-density inter-die communication. The actual physical bottleneck on every NVIDIA Blackwell shipment. CoWoS capacity at Longtan, Chiayi, and the AP6/7/8 sites is the structural constraint on the entire AI compute supply chain through 2026.",
   cameraPosition: [0, 0, 5],
-  imageType: "svg",
+  mainCredit: {
+    source: "Wikimedia Commons (Phiarc) — 150mm wafer with chips",
+    url: "https://commons.wikimedia.org/wiki/File:Exposed_150mm_6%22_wafer_with_hundreds_of_chips.jpg",
+    license: "CC BY-SA 4.0",
+  },
   parts: [
     { id: "lid", name: "Heat spreader / lid + TIM2", description: "Copper lid bonded to the die stack with thermal interface material (TIM2). For Blackwell-class power densities (~1,200 W), even the TIM2 selection is critical — TSMC uses liquid metal or graphene-loaded compounds. The lid distributes heat to the cooling solution above.", geometry: "box", args: [0,0,0], color: "#fbbf24", hotspot: { x: 0.50, y: 0.20 } },
     { id: "hbm-left", name: "HBM3E stack (left)", description: "Left-side HBM3E memory stack bonded to the interposer via micro-bumps (25 µm pitch). One of two HBM stacks per CoWoS-L module in the standard Blackwell configuration; more for next-gen packages.", geometry: "box", args: [0,0,0], color: "#06b6d4", hotspot: { x: 0.25, y: 0.43 } },

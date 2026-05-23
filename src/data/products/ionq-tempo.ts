@@ -8,7 +8,11 @@ export const ionqTempo: ProductSpec = {
   description:
     "IonQ's next-generation trapped-ion quantum computer. Targets 64 algorithmic qubits (#AQ). Uses ytterbium-171 ions held in a Sandia-fabricated surface ion trap, manipulated by Doppler-cooling + Raman gate lasers. 99.97% two-qubit gate fidelity demonstrated on prior Forte system. Cloud-accessible via AWS Braket, Microsoft Azure Quantum, and Google Cloud.",
   cameraPosition: [0, 0, 5],
-  imageType: "svg",
+  mainCredit: {
+    source: "IonQ press",
+    url: "https://www.ionq.com/quantum-systems/tempo",
+    license: "Press kit (editorial use)",
+  },
   parts: [
     { id: "chamber", name: "Ultra-high vacuum chamber", description: "Vacuum chamber operating at 10⁻¹¹ Torr (a thousand-billionth of atmospheric pressure). Isolates the ions from environmental noise. Maintained by ion + getter pumps.", geometry: "box", args: [0,0,0], color: "#374151", hotspot: { x: 0.20, y: 0.46 } },
     { id: "ion-chain", name: "¹⁷¹Yb⁺ ion chain (qubit register)", description: "Linear chain of ytterbium-171 ions. Each ion is one qubit — the hyperfine ground states |F=0⟩ and |F=1⟩ encode the qubit. Ions are naturally identical (unlike superconducting qubits which require nano-precision fabrication), and have the longest coherence times of any qubit modality.", geometry: "sphere", args: [0,0,0], color: "#fbbf24", hotspot: { x: 0.20, y: 0.46 } },

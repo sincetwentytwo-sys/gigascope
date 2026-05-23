@@ -8,7 +8,11 @@ export const hbm3e: ProductSpec = {
   description:
     "12 vertically stacked DRAM dies plus a logic base die, bonded by through-silicon vias (TSVs). Each stack delivers 24-36 GB at ~1.2 TB/s. The structural bottleneck on every NVIDIA Hopper/Blackwell GPU. SK Hynix holds ~55% market share and is sole-source on key Blackwell SKUs; Samsung pushing to qualify; Micron the smallest but only US-headquartered supplier.",
   cameraPosition: [0, 0, 5],
-  imageType: "svg",
+  mainCredit: {
+    source: "Wikimedia Commons (C. Spille / pcgameshardware.de)",
+    url: "https://commons.wikimedia.org/wiki/File:AMD_Fiji_GPU_package_with_GPU,_HBM_memory_and_interposer.jpg",
+    license: "CC BY-SA 4.0",
+  },
   parts: [
     { id: "die-12", name: "DRAM die 12 (top)", description: "Topmost DRAM die. Each die is a 16 Gb or 24 Gb DDR5-class device fabricated on a leading-edge DRAM node (1a/1b/1c). The top die has a slightly thicker substrate to allow handling during stack assembly.", geometry: "box", args: [0,0,0], color: "#06b6d4", hotspot: { x: 0.50, y: 0.185 } },
     { id: "die-11", name: "DRAM die 11", description: "DRAM die 11 of 12. All non-top dies are thinned to ~30-40 µm to keep the total stack height below ~720 µm (HBM3E spec).", geometry: "box", args: [0,0,0], color: "#06b6d4", hotspot: { x: 0.50, y: 0.24 } },

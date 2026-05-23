@@ -8,7 +8,11 @@ export const lgesUltium: ProductSpec = {
   description:
     "LG Energy Solution's flagship pouch-cell chemistry used on the GM Ultium platform (Hummer EV, Silverado EV, Lyriq, Equinox EV). High-nickel NCMA cathode (~90% Ni / 5% Co / 5% Mn-Al). Stacked-electrode design with 50+ alternating layers in a single pouch. Manufactured at Ochang Korea + Wrocław Poland + Holland MI (Ultium JV).",
   cameraPosition: [0, 0, 5],
-  imageType: "svg",
+  mainCredit: {
+    source: "Wikimedia Commons (Dinkun Chen)",
+    url: "https://commons.wikimedia.org/wiki/File:GENERAL_MOTORS_ULTIUM_PLATFORM_DEMO.jpg",
+    license: "CC BY-SA 4.0",
+  },
   parts: [
     { id: "pos-tab", name: "Positive tab (aluminum)", description: "Aluminum current collector tab that extends out of the pouch. Connects to the cell-level positive bus. Tabs are laser-welded to the bus bar at the module level.", geometry: "box", args: [0,0,0], color: "#fbbf24", hotspot: { x: 0.50, y: 0.285 } },
     { id: "cathode-1", name: "Cathode — NCM 9.5 (Ni 90% / Co 5% / Mn 5%)", description: "Lithium nickel-cobalt-manganese oxide cathode. ~90% Ni for high energy density, low Co for cost + ethics. Coated onto aluminum foil substrate. The 'high-nickel' chemistry that gives Korean cells their energy density advantage over Chinese LFP.", geometry: "box", args: [0,0,0], color: "#ef4444", hotspot: { x: 0.50, y: 0.38 } },

@@ -8,7 +8,11 @@ export const asmlEuv: ProductSpec = {
   description:
     "Next-generation EUV lithography tool from ASML — 0.55 NA (vs 0.33 NA for prior NXE series). ~$380M per system. Generates 13.5 nm extreme-ultraviolet light by hitting molten tin droplets with a CO₂ laser 50,000 times per second. Single-source on the entire planet for sub-2 nm logic. First systems shipping to TSMC, Intel, Samsung, SK Hynix in 2024-2026. The single most monopolistic asset in semiconductor manufacturing.",
   cameraPosition: [0, 0, 5],
-  imageType: "svg",
+  mainCredit: {
+    source: "Wikimedia Commons (The Next Web)",
+    url: "https://commons.wikimedia.org/wiki/File:Lens_from_ASML.jpg",
+    license: "CC BY-SA 2.0",
+  },
   parts: [
     { id: "laser", name: "CO₂ laser source (Cymer)", description: "30 kW pre-pulse + main-pulse CO₂ laser. Built by Cymer (ASML subsidiary). Generates the laser pulses that vaporize tin droplets to produce EUV plasma. The laser-produced plasma (LPP) architecture is unique to ASML.", geometry: "box", args: [0,0,0], color: "#ef4444", hotspot: { x: 0.15, y: 0.285 } },
     { id: "plasma", name: "Tin droplet plasma chamber", description: "50,000 molten tin droplets per second fall through a vacuum chamber. The CO₂ laser hits each droplet, vaporizing it to ~220,000 K plasma that emits 13.5 nm EUV light. Captured photons are routed via mirrors.", geometry: "box", args: [0,0,0], color: "#fbbf24", hotspot: { x: 0.36, y: 0.285 } },

@@ -8,7 +8,11 @@ export const nvdaBlackwell: ProductSpec = {
   description:
     "Two reticle-limited GPU dies fabricated on TSMC N4P, joined by a 10 TB/s NVLink-C2C interconnect into a single logical GPU. 208 billion transistors total. 8 HBM3E stacks deliver 192 GB at 8 TB/s. Packaged on a CoWoS-L interposer with local Si interconnect bridges. ~1,200 W thermal design point. The defining AI training accelerator of the 2024–2026 hyperscaler buildout.",
   cameraPosition: [0, 0, 5],
-  imageType: "svg",
+  mainCredit: {
+    source: "Wikimedia Commons (Geekerwan)",
+    url: "https://commons.wikimedia.org/wiki/File:Eindr%C3%BCcke_von_der_COMPUTEX_2024_(_%E6%9E%81%E5%AE%A2%E6%B9%BEGeekerwan)_22.png",
+    license: "CC BY 3.0",
+  },
   parts: [
     { id: "interposer", name: "Silicon interposer (CoWoS-L)", description: "TSMC CoWoS-L advanced packaging. Two reticle-limited GPU dies + 8 HBM3E stacks mounted on a fan-out interposer with local-silicon-interconnect (LSI) bridges between dies. The actual production bottleneck on every Blackwell shipment.", geometry: "box", args: [0,0,0], color: "#374151", hotspot: { x: 0.50, y: 0.55 } },
     { id: "gpu-die-1", name: "GPU die 1", description: "104 billion transistors. Reticle-limited at TSMC N4P node. Contains streaming multiprocessors, L2 cache, Tensor Cores (5th gen), Transformer Engine (2nd gen), NVLink-C2C south edge interface to GPU die 2.", geometry: "box", args: [0,0,0], color: "#76b900", hotspot: { x: 0.42, y: 0.53 } },

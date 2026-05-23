@@ -8,7 +8,11 @@ export const rklbNeutron: ProductSpec = {
   description:
     "Rocket Lab's next-generation medium-lift reusable launcher. 13 tonnes to LEO, fully reusable first stage. Methalox propellant, carbon-composite tanks, 7× Archimedes engines liftoff. Maiden flight target 2026 — the binary catalyst on RKLB's valuation. Built at Wallops Island VA + Long Beach CA.",
   cameraPosition: [0, 0, 5],
-  imageType: "svg",
+  mainCredit: {
+    source: "Wikimedia Commons (CaglayanKutay / Soumya-8974) — labeled diagram",
+    url: "https://commons.wikimedia.org/wiki/File:RocketLab_Neutron_ana_k%C4%B1s%C4%B1mlar_(en).png",
+    license: "CC BY-SA 4.0",
+  },
   parts: [
     { id: "fairing", name: "Hungry Hippo payload fairing", description: "Permanently attached payload fairing — the 'Hungry Hippo' design swings open like jaws to release the payload, then closes again for return. Unlike Falcon 9 fairings (which separate and are recovered separately), Neutron's stay attached and reusable.", geometry: "cone", args: [0,0,0], color: "#a855f7", hotspot: { x: 0.50, y: 0.155 } },
     { id: "stage-2", name: "2nd stage (expendable initially)", description: "Single Archimedes vacuum-optimized engine. Initially expendable, reuse roadmap is post-flight-10. Carbon-composite construction.", geometry: "cylinder", args: [0,0,0], color: "#06b6d4", hotspot: { x: 0.50, y: 0.25 } },

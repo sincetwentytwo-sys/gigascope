@@ -168,6 +168,20 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
             </a>
           </div>
         )}
+        {!credit && product.mainCredit && (
+          <div className="absolute bottom-2 right-2 bg-bg/85  px-2 py-1 font-mono text-[9px] text-dim">
+            Image:{" "}
+            <a
+              href={product.mainCredit.url}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-dim hover:underline"
+            >
+              {product.mainCredit.source}
+            </a>{" "}
+            · {product.mainCredit.license}
+          </div>
+        )}
       </div>
 
       {/* Component list + detail */}

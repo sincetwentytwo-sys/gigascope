@@ -8,7 +8,11 @@ export const bostonDynamicsAtlas: ProductSpec = {
   description:
     "Successor to the hydraulic Atlas. Fully electric actuation, target weight ~80 kg, 28 degrees of freedom. Hyundai-owned subsidiary; first commercial pilot at Hyundai Motor Group Metaplant America. Designed for unstructured industrial environments — picking, kitting, palletizing, last-meter material handling.",
   cameraPosition: [0, 0, 5],
-  imageType: "svg",
+  mainCredit: {
+    source: "Boston Dynamics press",
+    url: "https://bostondynamics.com/news/introducing-electric-atlas/",
+    license: "Press kit (editorial use)",
+  },
   parts: [
     { id: "head", name: "Head — stereo camera + LiDAR", description: "Stereo cameras + Velodyne-class spinning LiDAR. The head can rotate 360° (unlike previous Atlas) which gives the perception stack full situational awareness without moving the whole torso.", geometry: "sphere", args: [0,0,0], color: "#a855f7", hotspot: { x: 0.50, y: 0.19 } },
     { id: "torso", name: "Torso — battery + compute", description: "Lithium-ion battery pack and onboard compute (multi-GPU). ~4 hours of typical task runtime. NVIDIA Jetson + custom planning silicon. Houses the IMU and main thermal management.", geometry: "box", args: [0,0,0], color: "#06b6d4", hotspot: { x: 0.50, y: 0.34 } },

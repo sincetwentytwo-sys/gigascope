@@ -8,7 +8,11 @@ export const hanwhaK9: ProductSpec = {
   description:
     "Korea's flagship 155 mm / L52 self-propelled howitzer, in service with 9+ NATO/allied armies (Poland, Egypt, Turkey, Finland, Norway, Estonia, India, Australia, UK). 40 km range with base bleed rounds, 60 km with V-LAP. Autoloader supports burst-fire 3 rounds in 15 seconds. The most-exported Western 155 mm SPH of the 2020s.",
   cameraPosition: [0, 0, 5],
-  imageType: "svg",
+  mainCredit: {
+    source: "Wikimedia Commons (Kwon Soon-sam / Defense Citizen Network)",
+    url: "https://commons.wikimedia.org/wiki/File:K-9thunder.jpg",
+    license: "CC BY-SA 2.0 KR",
+  },
   parts: [
     { id: "barrel", name: "155 mm L52 main gun (40 km range)", description: "52-caliber main gun (8.06 m barrel length). 40 km base range, 60 km with V-LAP (velocity-enhanced long artillery projectile). Compatible with all NATO 155 mm ammunition standards including Excalibur GPS-guided rounds.", geometry: "box", args: [0,0,0], color: "#ef4444", hotspot: { x: 0.79, y: 0.375 } },
     { id: "turret", name: "Turret + autoloader", description: "Fully enclosed turret with armor against artillery splinter + small-arms. Autoloader supports burst-fire — 3 rounds in 15 seconds, 6 rounds/min sustained. The Polish K9PL variant uses a modified turret for compatibility with Polish ammunition.", geometry: "box", args: [0,0,0], color: "#fbbf24", hotspot: { x: 0.43, y: 0.42 } },

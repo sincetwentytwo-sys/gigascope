@@ -102,6 +102,19 @@ export type ProductSpec = {
     license: string;
     sourceUrl: string;
   };
+  /** Attribution for the main photo on the 2D viewer. Used for products
+   *  whose photo was sourced from press kits or Wikimedia Commons during
+   *  the SVG-placeholder → real-photo replacement pass. Rendered as a
+   *  small caption below the image. Either `mainCredit` or `photoCredit`
+   *  is acceptable; both are honored by Product2DViewer. */
+  mainCredit?: {
+    /** Display name of the source ("Wikimedia Commons", "Boston Dynamics press", etc). */
+    source: string;
+    /** Link to the source page (Commons file page or press release URL). */
+    url: string;
+    /** License identifier ("CC BY-SA 4.0", "Public domain", "Press kit (editorial use)", etc). */
+    license: string;
+  };
   /** Additional photos shown as a thumbnail strip — front/side/rear/3-4
    *  views, etc. The main photo (`/photos/<slug>.jpg`) is always shown
    *  first; this array holds the *extras*. Hotspots only apply to the
