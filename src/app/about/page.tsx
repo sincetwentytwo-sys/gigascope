@@ -99,15 +99,16 @@ export default function AboutPage() {
         </p>
         <ul className="flex flex-col gap-2 text-sm">
           <li className="flex gap-3">
-            <span className="text-dim w-20 flex-shrink-0">LinkedIn</span>
+            <span className="text-dim w-20 flex-shrink-0">X</span>
             <a
-              href="https://www.linkedin.com/in/jaebin-kim1/"
+              href="https://x.com/gigascopehq"
               target="_blank"
               rel="noopener noreferrer"
               className="underline"
             >
-              linkedin.com/in/jaebin-kim1
+              @gigascopehq
             </a>
+            <span className="text-dim text-xs">— live commentary &amp; site updates</span>
           </li>
           <li className="flex gap-3">
             <span className="text-dim w-20 flex-shrink-0">YouTube</span>

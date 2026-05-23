@@ -77,12 +77,12 @@ export default function RootLayout({
               founder: {
                 "@type": "Person",
                 name: "Jaebin Kim",
-                sameAs: "https://www.linkedin.com/in/jaebin-kim1/",
+                sameAs: "https://x.com/gigascopehq",
               },
               sameAs: [
                 "https://github.com/sincetwentytwo-sys/gigascope",
                 "https://www.youtube.com/@gigascopehq",
-                "https://www.linkedin.com/in/jaebin-kim1/",
+                "https://x.com/gigascopehq",
               ],
             }),
           }}
