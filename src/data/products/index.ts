@@ -146,36 +146,16 @@ import { megapack } from "./megapack";
 import { powerwall } from "./powerwall";
 import { superchargerV4 } from "./supercharger-v4";
 
-// Extended (non-Musk) Atlas products — semis, batteries, defense, quantum, nuclear.
-// All use stylised SVG schematics rather than real CC-licensed reference photos.
-import { nvdaBlackwell } from "./nvda-blackwell";
-import { hbm3e } from "./hbm3e";
-import { asmlEuv } from "./asml-euv";
-import { tsmcCowos } from "./tsmc-cowos";
-import { hyundaiIoniq5 } from "./hyundai-ioniq5";
-import { bostonDynamicsAtlas } from "./boston-dynamics-atlas";
-import { lgesUltium } from "./lges-ultium";
-import { bydBlade } from "./byd-blade";
-import { hanwhaK9 } from "./hanwha-k9";
-import { rklbNeutron } from "./rklb-neutron";
-import { ionqTempo } from "./ionq-tempo";
-import { okloAurora } from "./oklo-aurora";
-
+// Musk-empire only per master plan v1. The previously-bundled supply-chain
+// products (NVIDIA Blackwell, HBM3E, ASML EUV, TSMC CoWoS, Hyundai IONIQ 5,
+// Boston Dynamics Atlas, LGES Ultium, BYD Blade, Hanwha K9, RKLB Neutron,
+// IonQ Tempo, Oklo Aurora) were removed 2026-05-23 — the catalog stays
+// narrow on Tesla / SpaceX / Neuralink hardware. Their data files and
+// photo dirs were deleted in the same commit.
 export const KNOWN_PRODUCTS: ProductSpec[] = [
-  // Musk Empire (primary)
   raptor, falcon9, starship, tesla4680, neuralinkN1,
   model3, modelY, cybertruck, optimus, cybercab,
   megapack, powerwall, superchargerV4,
-  // Extended Atlas (semis + memory + litho + packaging)
-  nvdaBlackwell, hbm3e, asmlEuv, tsmcCowos,
-  // Extended Atlas (vehicles + robotics)
-  hyundaiIoniq5, bostonDynamicsAtlas,
-  // Extended Atlas (batteries)
-  lgesUltium, bydBlade,
-  // Extended Atlas (defense + space)
-  hanwhaK9, rklbNeutron,
-  // Extended Atlas (quantum + nuclear)
-  ionqTempo, okloAurora,
 ];
 
 export function getProduct(slug: string): ProductSpec | undefined {
