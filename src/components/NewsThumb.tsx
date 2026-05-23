@@ -36,6 +36,14 @@ export default function NewsThumb({
   const finalSrc =
     attempts === 0 ? src : `${src}${src.includes("?") ? "&" : "?"}_r=${attempts}`;
 
+  // `referrerPolicy="no-referrer"` is the actual fix here. CDNs like
+  // image.cnbcfm.com return 403 when the Referer is anything other than
+  // their own publication domain — i.e. they block hotlinking. The
+  // browser auto-attaches `Referer: https://gigascope.xyz/news` on the
+  // img request, which CNBC rejects. Telling the browser to send NO
+  // Referer at all bypasses the hotlink check (their server treats it
+  // the same as a direct-paste image-in-new-tab request, which they
+  // serve). No effect on publications that don't have hotlink defense.
   // eslint-disable-next-line @next/next/no-img-element
   return (
     <img
@@ -43,6 +51,7 @@ export default function NewsThumb({
       src={finalSrc}
       alt=""
       loading="lazy"
+      referrerPolicy="no-referrer"
       onError={() => setAttempts((a) => a + 1)}
       className="w-full aspect-video object-cover"
     />
