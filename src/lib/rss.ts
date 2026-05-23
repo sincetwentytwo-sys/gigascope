@@ -80,7 +80,7 @@ function extractImage(itemXml: string): string | undefined {
       url.includes("gravatar.com/avatar") ||
       url.includes("/wp-includes/images/smilies/")
     ) continue;
-    return url;
+    return decodeEntities(url);
   }
 
   return undefined;
@@ -220,22 +220,27 @@ function hashUrl(url: string): string {
 async function scrapeOgImage(articleUrl: string): Promise<string | undefined> {
   try {
     const res = await fetch(articleUrl, {
-      headers: { "User-Agent": "GIGASCOPE/1.0 (+https://gigascope.xyz)" },
+      headers: {
+        // Pretend to be Facebook's link-preview crawler — news sites whitelist it
+        // because they want their articles to render in social shares. A custom
+        // GIGASCOPE/1.0 UA gets 403'd by Cloudflare on insideevs.com and similar.
+        "User-Agent": "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)",
+        Accept: "text/html,application/xhtml+xml",
+      },
       signal: AbortSignal.timeout(4000),
     });
     if (!res.ok) return undefined;
     const html = await res.text();
     // og:image — attribute order varies, try both property-first and content-first.
     let m = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i);
-    if (m) return m[1];
-    m = html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
-    if (m) return m[1];
+    if (!m) m = html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
     // Fall back to twitter:image
-    m = html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i);
-    if (m) return m[1];
-    m = html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i);
-    if (m) return m[1];
-    return undefined;
+    if (!m) m = html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i);
+    if (!m) m = html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i);
+    if (!m) return undefined;
+    // Decode HTML entities — CNBC and others double-encode & in image URLs which
+    // would otherwise render as <img src="...&amp;amp;w=1920"> and fail to load.
+    return decodeEntities(m[1]);
   } catch {
     return undefined;
   }

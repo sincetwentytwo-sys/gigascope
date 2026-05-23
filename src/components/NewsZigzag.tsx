@@ -1,4 +1,5 @@
 import { fetchAllNews, timeAgo, type RichNewsItem } from "@/lib/rss";
+import NewsThumb from "@/components/NewsThumb";
 
 const SOURCE_COLORS: Record<string, string> = {
   Electrek: "bg-green-100 text-green-700",
@@ -19,21 +20,7 @@ function NewsCard({ item }: { item: RichNewsItem }) {
         rel="noopener noreferrer"
         className="block"
       >
-        {item.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={item.image}
-            alt=""
-            loading="lazy"
-            className="w-full aspect-video object-cover"
-          />
-        ) : (
-          <div className="w-full aspect-video bg-gradient-to-br from-surface to-border-custom flex items-center justify-center">
-            <span className="text-dim text-xs font-mono uppercase tracking-widest">
-              {item.source}
-            </span>
-          </div>
-        )}
+        <NewsThumb src={item.image} source={item.source} />
         <div className="p-4 bg-bg">
           <div className="text-[11px] mb-2 flex items-center gap-2">
             <span
