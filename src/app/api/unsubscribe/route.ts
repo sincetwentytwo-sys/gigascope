@@ -34,6 +34,17 @@ async function doUnsub(
       r.del(`drip:sent:${email}:d21`),
       r.del(`drip:sent:${email}:d30`),
     ]);
+    // Also drop the Telegram binding (if any). The user explicitly asked
+    // to leave — keeping the chat_id around would mean alerts still fire on
+    // Telegram after they unsubscribed from email.
+    try {
+      const chatIdRaw = await r.get(`telegram:chat:${email}`);
+      const chatId = typeof chatIdRaw === "string" ? chatIdRaw : null;
+      await r.del(`telegram:chat:${email}`);
+      if (chatId) await r.del(`telegram:email:${chatId}`);
+    } catch {
+      /* best-effort cleanup — don't block unsub on a stray key */
+    }
   } catch (e) {
     console.error("unsubscribe_redis_failed", e);
     return { ok: false, status: 500, message: "redis_failed" };

@@ -162,6 +162,11 @@ export default function MethodologyPage() {
           across Q2-Q3 2026 — most pre-pivot site records still carry a Wikipedia revision pointer as the entry reference while
           that migration is in flight. Reddit and AI-generated content are never used as a sole source.
         </p>
+        <p className="text-sm text-dim leading-relaxed mb-3">
+          Each milestone on a site page may include an inline <span className="font-mono">[source]</span> link to the primary record
+          (FAA notice, SEC filing, county permit, IR press release, NASA mission page, or ClinicalTrials.gov registry entry).
+          Milestones without a verified primary-source URL are left uncited rather than padded with weak references — under-citing beats inventing.
+        </p>
         <p className="text-sm text-dim leading-relaxed">
           When sources conflict, both are noted (e.g., "company guidance $20-25B, industry estimate $35-45B"). When something is an estimate, we say "est."
         </p>

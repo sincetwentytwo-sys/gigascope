@@ -17,6 +17,14 @@ export interface Milestone {
   sources?: Source[];
   /** 사람이 마지막으로 검증한 날짜 (YYYY-MM-DD) */
   lastVerified?: string;
+
+  /**
+   * Primary-source URL for this milestone (FAA notice, SEC filing,
+   * county building permit, IR press release, etc.). Rendered as a small
+   * "[source]" link on the site detail page. Optional — milestones without
+   * a verified URL fall back to a citation-less entry.
+   */
+  sourceUrl?: string;
 }
 
 export interface Factory {

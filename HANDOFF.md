@@ -347,3 +347,95 @@ Working tree clean. main에 모두 push 됨. Vercel 최신 deploy SHA = 98b4633.
 **한 줄 요약**:
 
 > Hero 비디오 박혔다. 결제·메일 코드 다 있지만 **키만 없는 상태**. 다음 세션 = Resend API 키 받아서 `/api/subscribe` 에 welcome 메일 발송 로직 EXTEND → charter 100명 받기 시작. 39 companies 같은 확장 금지.
+
+---
+
+## 🤖 Telegram bot activation (infra scaffolded 2026-05-23)
+
+**상태**: 코드 완성, env 키 + 웹훅 등록 대기. Graceful-degrade — `TELEGRAM_BOT_TOKEN`
+없으면 `isTelegramConfigured()` false 리턴, 아무것도 안 보냄.
+
+### 파일
+
+| Path | 역할 |
+|---|---|
+| `src/lib/telegram.ts` | sendTelegramMessage, makeLinkToken, encodeStartPayload, botStartUrl |
+| `src/app/api/telegram/webhook/route.ts` | Telegram → 우리 서버. `/start <payload>` + `/stop` + `/help` |
+| `src/app/api/telegram/link/route.ts` | 사이트 → t.me 딥링크 생성 (POST {email} → {url}) |
+| `scripts/telegram-setwebhook.mjs` | 일회성 웹훅 등록 스크립트 |
+
+### Owner activation 순서
+
+1. **봇 생성**
+   - Telegram에서 `@BotFather` 검색 → `/newbot` → 이름/유저네임 입력
+   - **저장**: bot token (`123:ABC…`) + bot username (예: `gigascopebot`)
+
+2. **Env 등록 (Vercel)**
+   ```bash
+   vercel env add TELEGRAM_BOT_TOKEN production preview development
+   # paste token from BotFather
+
+   vercel env add TELEGRAM_BOT_USERNAME production preview development
+   # paste username WITHOUT the @ (e.g. "gigascopebot")
+   ```
+
+3. **웹훅 secret 생성 + 등록**
+   ```bash
+   node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+   # copy hex output
+
+   vercel env add TELEGRAM_WEBHOOK_SECRET production preview development
+   # paste hex
+   ```
+
+4. **재배포** (env 적용)
+   ```bash
+   vercel --prod --yes
+   ```
+
+5. **웹훅 등록 (Telegram → 우리 서버)**
+   `.env.local` 에 위 3개 env 들어있는지 확인 후:
+   ```bash
+   cd G:/claude/gigascope
+   node --env-file=.env.local scripts/telegram-setwebhook.mjs
+   ```
+   `"ok": true, "result": true, "description": "Webhook was set"` 출력되면 성공.
+   같이 `getWebhookInfo` 응답도 출력 — `pending_update_count: 0` 확인.
+
+6. **수동 라이브 테스트**
+   - Telegram에서 본인이 봇 검색 → `/help` 보내기 → 명령어 목록 응답 받으면 OK
+   - `https://gigascope.xyz/api/telegram/link` 에 POST `{"email":"sincetwentytwo@gmail.com"}`
+     → 응답 `{"ok":true,"url":"https://t.me/<bot>?start=…"}`
+   - 그 URL 열기 → 봇 자동 시작 → "Linked." 메시지
+   - Upstash 확인: `telegram:chat:sincetwentytwo@gmail.com` 에 chat_id 저장됨
+
+7. **카피 복원 (이제 안전)**
+   다음 파일에서 "(email)" → "(email + Telegram)" 으로 복원:
+   - `src/app/investor/page.tsx` FEATURES 배열
+   - `src/emails/drip-d14.tsx`
+   - `src/emails/welcome.tsx`
+   - `src/app/investor/success/page.tsx` (있으면)
+   `grep -rn "(email)" src/` 로 찾아서 한 번에. **활성화 전엔 복원 금지.**
+
+### 봇 명령어 (구현 완료)
+
+| Command | 동작 |
+|---|---|
+| `/start <payload>` | 딥링크로 email ↔ chat_id 바인딩 (Upstash 저장) |
+| `/start` (no payload) | help 메시지 |
+| `/stop` | 바인딩 해제 |
+| `/help` | 명령어 목록 |
+| 기타 | "Unknown command. Send /help" 응답 |
+
+### Alert 발송 (자동, 이미 통합됨)
+
+- **Catalyst alerts** (T-7/T-1/T-0): `chatId` 매핑 있으면 이메일과 동시에 Telegram 발송
+- **Drip 시퀀스** (D+3/7/14/21/30): 동일
+- **Digest**: Telegram에는 보내지 않음 (오너 지시 — 시간 민감하지 않은 다이제스트는 메일만)
+
+### 보안 메모
+
+- Webhook 인증: `X-Telegram-Bot-Api-Secret-Token` 헤더 = `TELEGRAM_WEBHOOK_SECRET`
+- Email forgery 방지: 딥링크 payload = `<email_b64>.<hmac(email)>`. 웹훅이 HMAC 검증 후에만 바인딩
+- HMAC secret: `CRON_SECRET` 재사용 (unsubscribe 토큰과 동일 키)
+- Unsubscribe 시 Telegram 바인딩도 함께 삭제 (`unsubscribe/route.ts` 에서 처리)

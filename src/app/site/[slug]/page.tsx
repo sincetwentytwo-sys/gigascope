@@ -15,6 +15,13 @@ const TIMELAPSE_INDEX: Record<string, { frames: number; latest: string; builtAt:
   ? JSON.parse(readFileSync(timelapseIndexPath, "utf8"))
   : {};
 
+function hasBeforeAfterThumbnails(slug: string): boolean {
+  return (
+    existsSync(resolve(process.cwd(), "public", "timelapses", `${slug}-first.jpg`)) &&
+    existsSync(resolve(process.cwd(), "public", "timelapses", `${slug}-last.jpg`))
+  );
+}
+
 const SITE_URL = "https://gigascope.xyz";
 
 export const revalidate = 1800;
@@ -122,6 +129,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
     const db = b.date.replace(/Q\d|H\d/g, "").trim();
     return db.localeCompare(da);
   });
+  const showBeforeAfter = hasBeforeAfterThumbnails(factory.slug);
 
   return (
     <div className="bg-bg text-text min-h-screen">
@@ -178,6 +186,39 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
             {imageryDate && <> &middot; Satellite imagery {imageryDate}</>}
           </p>
         </div>
+
+        {/* Before / after satellite thumbnails — first and last frame of the timelapse */}
+        {showBeforeAfter && (
+          <div className="mb-6 border border-border-custom overflow-hidden">
+            <div className="grid grid-cols-2 gap-px bg-border-custom">
+              <div className="relative">
+                <img
+                  src={`/timelapses/${factory.slug}-first.jpg`}
+                  alt={`${factory.name} — earlier satellite view`}
+                  loading="lazy"
+                  className="w-full aspect-video object-cover"
+                />
+                <span className="absolute top-2 left-2 px-2 py-1 text-[10px] font-mono uppercase tracking-wider bg-black/65 text-white/90 rounded">
+                  Before
+                </span>
+              </div>
+              <div className="relative">
+                <img
+                  src={`/timelapses/${factory.slug}-last.jpg`}
+                  alt={`${factory.name} — recent satellite view`}
+                  loading="lazy"
+                  className="w-full aspect-video object-cover"
+                />
+                <span className="absolute top-2 right-2 px-2 py-1 text-[10px] font-mono uppercase tracking-wider bg-black/65 text-white/90 rounded">
+                  Now
+                </span>
+              </div>
+            </div>
+            <p className="px-3 py-2 text-[10px] font-mono text-dim border-t border-border-custom bg-surface">
+              First and most-recent frames from the Sentinel-2 timelapse.
+            </p>
+          </div>
+        )}
 
         {/* Stat cards */}
         <div className={`grid gap-3 sm:gap-4 mb-8 ${extraEntries.length > 0 ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"}`}>
@@ -341,6 +382,16 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                     <span className="font-mono text-[10px] text-dim">{m.date}</span>
                     <h4 className="font-semibold text-sm text-text mt-0.5">
                       {m.text}
+                      {m.sourceUrl && (
+                        <a
+                          href={m.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="ml-2 text-[11px] text-dim hover:text-text underline underline-offset-2"
+                        >
+                          [source]
+                        </a>
+                      )}
                     </h4>
                     <p
                       className="font-mono text-[9px] mt-1"

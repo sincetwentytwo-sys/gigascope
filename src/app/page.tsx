@@ -12,24 +12,69 @@ export const revalidate = 1800;
 
 const COMPANY_ORDER: Company[] = ["tesla", "spacex", "xai", "neuralink", "boring"];
 
-export default function Home() {
+type Hero = {
+  slug: string;
+  kicker: string;
+  headlineLead: string;
+  headlineTail: string;
+};
+
+const HEROES: Hero[] = [
+  {
+    slug: "giga-texas",
+    kicker: "Tesla Gigafactory Texas · Sentinel-2 · 2020 → 2026",
+    headlineLead: "Tesla Gigafactory Texas —",
+    headlineTail: "six years from dirt.",
+  },
+  {
+    slug: "starbase",
+    kicker: "SpaceX Starbase · Sentinel-2 · 2019 → 2026",
+    headlineLead: "Starbase —",
+    headlineTail: "from sand to Starship pad in five years.",
+  },
+  {
+    slug: "colossus",
+    kicker: "xAI Colossus · Memphis · 2024 → 2026",
+    headlineLead: "Memphis Colossus —",
+    headlineTail: "200,000 GPUs online in 12 months.",
+  },
+];
+
+function pickHero(slugOverride?: string): Hero {
+  if (slugOverride) {
+    const found = HEROES.find((h) => h.slug === slugOverride);
+    if (found) return found;
+  }
+  // Daily rotation — deterministic, cache-friendly
+  const idx = Math.floor(Date.now() / 86400000) % HEROES.length;
+  return HEROES[idx];
+}
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ hero?: string }>;
+}) {
+  const params = await searchParams;
+  const hero = pickHero(params?.hero);
   const countries = new Set(factories.map((f) => f.flag)).size;
   const announced = factories.filter((f) => f.status === "announced");
 
   return (
     <>
-      {/* Full-bleed satellite-timelapse hero — Giga Texas 2020→2026, 33 frames */}
+      {/* Full-bleed satellite-timelapse hero — rotates daily across Giga Texas / Starbase / Colossus */}
       <section className="relative w-full overflow-hidden bg-black" style={{ aspectRatio: "16 / 9", maxHeight: "78vh" }}>
         <video
+          key={hero.slug}
           autoPlay
           muted
           loop
           playsInline
           preload="metadata"
-          poster="/timelapses/giga-texas.jpg"
+          poster={`/timelapses/${hero.slug}.jpg`}
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/timelapses/giga-texas.mp4" type="video/mp4" />
+          <source src={`/timelapses/${hero.slug}.mp4`} type="video/mp4" />
         </video>
 
         {/* Gradient overlay for legibility */}
@@ -38,12 +83,12 @@ export default function Home() {
         {/* Hero copy */}
         <div className="relative h-full flex flex-col justify-end px-6 sm:px-12 pb-10 sm:pb-16 text-white">
           <div className="text-[11px] sm:text-xs uppercase tracking-widest text-white/70 mb-3 font-mono">
-            Tesla Gigafactory Texas · Sentinel-2 · 2020 → 2026
+            {hero.kicker}
           </div>
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-3 max-w-3xl leading-[1.05]">
-            Tesla Gigafactory Texas —
+            {hero.headlineLead}
             <br />
-            <span className="text-white/85">six years from dirt.</span>
+            <span className="text-white/85">{hero.headlineTail}</span>
           </h1>
           <p className="text-sm sm:text-base text-white/80 max-w-xl mb-6">
             The only place tracking Tesla, SpaceX & xAI from orbit.

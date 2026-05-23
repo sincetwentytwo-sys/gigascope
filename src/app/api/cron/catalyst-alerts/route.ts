@@ -6,6 +6,7 @@ import CatalystAlertEmail, { type CatalystAlertWindow } from "@/emails/catalyst-
 import { unsubHeaders } from "@/lib/unsubscribe";
 import { TICKERS } from "@/data/tickers";
 import { factories } from "@/data/factories";
+import { isTelegramConfigured, sendTelegramMessage } from "@/lib/telegram";
 
 export const runtime = "nodejs";
 
@@ -60,6 +61,33 @@ function subjectFor(window: CatalystAlertWindow, symbol: string, label: string):
   if (window === "t-7") return `GIGASCOPE · T-7: ${symbol} ${label}`;
   if (window === "t-1") return `GIGASCOPE · T-1: ${symbol} ${label}`;
   return `GIGASCOPE · Today: ${symbol} ${label}`;
+}
+
+// Escape Telegram Markdown V1 special chars so labels with `_`, `*`, `[`, etc.
+// don't break parsing. We use V1 (not V2) because it has a smaller escape set
+// and is forgiving — V2 is strict and breaks on any unescaped punctuation.
+function escapeMd(s: string): string {
+  return s.replace(/([_*`\[])/g, "\\$1");
+}
+
+function windowTag(window: CatalystAlertWindow): string {
+  if (window === "t-7") return "T-7";
+  if (window === "t-1") return "T-1";
+  return "Today";
+}
+
+function formatCatalystForTelegram(
+  catalyst: { symbol: string; label: string; date: string; confidence: string },
+  window: CatalystAlertWindow,
+): string {
+  // 4-6 line Markdown message. Emoji is fine in Telegram body — renders
+  // natively across mobile/desktop clients.
+  return [
+    `Catalyst ${windowTag(window)} — *${escapeMd(catalyst.symbol)}*`,
+    `*${escapeMd(catalyst.label)}*`,
+    `${catalyst.date} · ${escapeMd(catalyst.confidence)} confidence`,
+    `https://gigascope.xyz/calendar`,
+  ].join("\n");
 }
 
 // Stable per-catalyst key: sha256(symbol|date|label) → first 16 hex chars.
@@ -184,6 +212,11 @@ export async function POST(req: Request) {
 
   const sent: Array<{ email: string; symbol: string; window: CatalystAlertWindow }> = [];
   const skipped: Array<{ email: string; symbol: string; window: CatalystAlertWindow; reason: string }> = [];
+  // Telegram counters live alongside email — bot send is opportunistic and
+  // never gates the email send, so we track outcomes separately.
+  const tgSent: Array<{ email: string; symbol: string; window: CatalystAlertWindow }> = [];
+  const tgSkipped: Array<{ email: string; symbol: string; window: CatalystAlertWindow; reason: string }> = [];
+  const tgEnabled = isTelegramConfigured();
 
   for (const email of subscribers) {
     for (const c of eligible) {
@@ -220,6 +253,26 @@ export async function POST(req: Request) {
         const err = e instanceof Error ? e.message.slice(0, 120) : "unknown";
         skipped.push({ email, symbol: c.symbol, window: c.window, reason: "send_failed", ...({ err } as object) });
       }
+
+      // Opportunistic Telegram send. Best-effort — if it fails we don't
+      // release the email send flag (email already went out). The bot send
+      // shares the same per-(email,catalyst,window) flag with email so the
+      // "already sent" guard upstream covers both — no separate flag needed.
+      if (tgEnabled) {
+        const chatIdRaw = await r.get(`telegram:chat:${email}`);
+        const chatId = typeof chatIdRaw === "string" ? chatIdRaw : null;
+        if (!chatId) {
+          tgSkipped.push({ email, symbol: c.symbol, window: c.window, reason: "no_chat_id" });
+        } else {
+          const text = formatCatalystForTelegram(
+            { symbol: c.symbol, label: c.label, date: c.date, confidence: c.confidence },
+            c.window,
+          );
+          const ok = await sendTelegramMessage(chatId, text, { disable_web_page_preview: true });
+          if (ok) tgSent.push({ email, symbol: c.symbol, window: c.window });
+          else tgSkipped.push({ email, symbol: c.symbol, window: c.window, reason: "telegram_send_failed" });
+        }
+      }
     }
   }
 
@@ -231,6 +284,13 @@ export async function POST(req: Request) {
     eligibleCatalysts: eligible.length,
     sentSamples: sent.slice(0, 5),
     skippedSamples: skipped.slice(0, 5),
+    telegram: {
+      enabled: tgEnabled,
+      sent: tgSent.length,
+      skipped: tgSkipped.length,
+      sentSamples: tgSent.slice(0, 5),
+      skippedSamples: tgSkipped.slice(0, 5),
+    },
   });
 }
 

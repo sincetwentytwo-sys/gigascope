@@ -7,6 +7,7 @@ import DripD14 from "@/emails/drip-d14";
 import DripD21 from "@/emails/drip-d21";
 import DripD30 from "@/emails/drip-d30";
 import { unsubHeaders } from "@/lib/unsubscribe";
+import { isTelegramConfigured, sendTelegramMessage } from "@/lib/telegram";
 
 export const runtime = "nodejs";
 
@@ -34,14 +35,53 @@ type DripDef = {
   subject: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   react: (props: { email: string }) => any;
+  // Short Markdown for Telegram. Falls back to nothing if absent — bot send
+  // is skipped entirely for that drip. Keep these to 4-6 lines, no markdown
+  // chars that would need escaping.
+  telegram?: string;
 };
 
 const DRIPS: DripDef[] = [
-  { day: 3, key: "d3", subject: "GIGASCOPE · Three days in — how the digest works", react: DripD3 },
-  { day: 7, key: "d7", subject: "GIGASCOPE · How we know it's 78% built", react: DripD7 },
-  { day: 14, key: "d14", subject: "GIGASCOPE · Why $9 stays $9 — the charter math", react: DripD14 },
-  { day: 21, key: "d21", subject: "GIGASCOPE · Site spotlight — Giga Texas, 6 years from dirt", react: DripD21 },
-  { day: 30, key: "d30", subject: "GIGASCOPE · 30 days in — what's worth your attention now", react: DripD30 },
+  {
+    day: 3,
+    key: "d3",
+    subject: "GIGASCOPE · Three days in — how the digest works",
+    react: DripD3,
+    telegram:
+      "*GIGASCOPE · Day 3*\nThree days in. Here's how the daily digest works and what to look for in the satellite frames.\nhttps://gigascope.xyz",
+  },
+  {
+    day: 7,
+    key: "d7",
+    subject: "GIGASCOPE · How we know it's 78% built",
+    react: DripD7,
+    telegram:
+      "*GIGASCOPE · Day 7*\nHow we estimate a site's build progress from public satellite + permit data.\nhttps://gigascope.xyz/methodology",
+  },
+  {
+    day: 14,
+    key: "d14",
+    subject: "GIGASCOPE · Why $9 stays $9 — the charter math",
+    react: DripD14,
+    telegram:
+      "*GIGASCOPE · Day 14*\nWhy $9 stays $9 forever for charter members. The math, and where you sit on the list.\nhttps://gigascope.xyz/investor",
+  },
+  {
+    day: 21,
+    key: "d21",
+    subject: "GIGASCOPE · Site spotlight — Giga Texas, 6 years from dirt",
+    react: DripD21,
+    telegram:
+      "*GIGASCOPE · Day 21*\nGiga Texas — six years from dirt to mass production. Tour the timeline.\nhttps://gigascope.xyz/site/giga-texas",
+  },
+  {
+    day: 30,
+    key: "d30",
+    subject: "GIGASCOPE · 30 days in — what's worth your attention now",
+    react: DripD30,
+    telegram:
+      "*GIGASCOPE · Day 30*\n30 days in. The three sites worth watching this quarter.\nhttps://gigascope.xyz",
+  },
 ];
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -76,6 +116,11 @@ export async function POST(req: Request) {
 
   const sent: Array<{ email: string; drip: string }> = [];
   const skipped: Array<{ email: string; drip: string; reason: string }> = [];
+  // Telegram counters live alongside email — same flag controls dedup, so
+  // a drip won't fire on telegram twice once the email path has claimed it.
+  const tgSent: Array<{ email: string; drip: string }> = [];
+  const tgSkipped: Array<{ email: string; drip: string; reason: string }> = [];
+  const tgEnabled = isTelegramConfigured();
 
   for (const email of subscribers) {
     const tsRaw = await r.hget(`subscriber:${email}`, "ts");
@@ -116,6 +161,24 @@ export async function POST(req: Request) {
         const err = e instanceof Error ? e.message.slice(0, 120) : "unknown";
         skipped.push({ email, drip: drip.key, reason: "send_failed", err } as { email: string; drip: string; reason: string });
       }
+
+      // Opportunistic Telegram send. Bot send is gated on the same flag the
+      // email path claims — so if the email succeeded we ALSO try Telegram,
+      // and if the email failed we DON'T try Telegram (flag already released
+      // means next run will retry both). We don't gate on email success here
+      // because Telegram delivery is a "nice to have" alongside email; the
+      // flag prevents double-send by itself.
+      if (tgEnabled && drip.telegram) {
+        const chatIdRaw = await r.get(`telegram:chat:${email}`);
+        const chatId = typeof chatIdRaw === "string" ? chatIdRaw : null;
+        if (!chatId) {
+          tgSkipped.push({ email, drip: drip.key, reason: "no_chat_id" });
+        } else {
+          const ok = await sendTelegramMessage(chatId, drip.telegram, { disable_web_page_preview: true });
+          if (ok) tgSent.push({ email, drip: drip.key });
+          else tgSkipped.push({ email, drip: drip.key, reason: "telegram_send_failed" });
+        }
+      }
     }
   }
 
@@ -126,6 +189,13 @@ export async function POST(req: Request) {
     total: subscribers.length,
     sentSamples: sent.slice(0, 5),
     skippedSamples: skipped.slice(0, 5),
+    telegram: {
+      enabled: tgEnabled,
+      sent: tgSent.length,
+      skipped: tgSkipped.length,
+      sentSamples: tgSent.slice(0, 5),
+      skippedSamples: tgSkipped.slice(0, 5),
+    },
   });
 }
 

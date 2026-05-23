@@ -110,7 +110,8 @@
         {
           "date": "2020-07",
           "text": "Site clearing began",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=8-K&dateb=&owner=include&count=40"
         },
         {
           "date": "2021-04",
@@ -120,12 +121,14 @@
         {
           "date": "2022-04",
           "text": "First deliveries (Model Y)",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-Q&dateb=20220601&owner=include&count=10"
         },
         {
           "date": "2023-11",
           "text": "Cybertruck production start",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-K&dateb=20240301&owner=include&count=10"
         },
         {
           "date": "2025-06",
@@ -196,7 +199,8 @@
         {
           "date": "2023-01",
           "text": "$3.6B expansion announced",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=8-K&dateb=20230301&owner=include&count=10"
         },
         {
           "date": "2024-12",
@@ -256,7 +260,8 @@
         {
           "date": "2019-12",
           "text": "First deliveries",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-K&dateb=20200301&owner=include&count=10"
         },
         {
           "date": "2021-10",
@@ -326,7 +331,8 @@
         {
           "date": "2022-03",
           "text": "First deliveries",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-Q&dateb=20220601&owner=include&count=10"
         },
         {
           "date": "2023-11",
@@ -473,12 +479,14 @@
         {
           "date": "2017-07",
           "text": "Model 3 production begins",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=8-K&dateb=20170801&owner=include&count=10"
         },
         {
           "date": "2020-01",
           "text": "Model Y production",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-K&dateb=20200301&owner=include&count=10"
         },
         {
           "date": "2024-10",
@@ -602,17 +610,20 @@
         {
           "date": "2023-04",
           "text": "First orbital attempt (IFT-1)",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.faa.gov/space/stakeholder_engagement/spacex_starship"
         },
         {
           "date": "2024-10",
           "text": "Mechazilla booster catch (IFT-5)",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.faa.gov/space/stakeholder_engagement/spacex_starship"
         },
         {
           "date": "2025-06",
           "text": "Starship reuse demonstrated",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.faa.gov/space/stakeholder_engagement/spacex_starship"
         },
         {
           "date": "2026-01",
@@ -668,17 +679,20 @@
         {
           "date": "2008-09",
           "text": "Falcon 1 reaches orbit",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.faa.gov/space"
         },
         {
           "date": "2015-12",
           "text": "First orbital booster landing",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.faa.gov/space"
         },
         {
           "date": "2020-05",
           "text": "First crewed Dragon flight",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.nasa.gov/specials/dm2/"
         },
         {
           "date": "2024-01",
@@ -729,22 +743,26 @@
         {
           "date": "2010-06",
           "text": "Falcon 9 first flight from SLC-40",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.faa.gov/space"
         },
         {
           "date": "2014-04",
           "text": "LC-39A lease signed (NASA)",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.nasa.gov/centers-and-facilities/kennedy/"
         },
         {
           "date": "2017-02",
           "text": "LC-39A operational",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.nasa.gov/centers-and-facilities/kennedy/"
         },
         {
           "date": "2023-12",
           "text": "98 launches in one year",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.faa.gov/space"
         },
         {
           "date": "2025-06",
@@ -754,7 +772,8 @@
         {
           "date": "2026-05-15",
           "text": "Launch: Dragon CRS-2 SpX-34",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.nasa.gov/commercial-resupply/"
         },
         {
           "date": "2026-Q2",
@@ -800,12 +819,14 @@
         {
           "date": "2013-09",
           "text": "First Falcon 9 from Vandenberg",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.faa.gov/space"
         },
         {
           "date": "2018-10",
           "text": "First booster landing at SLC-4",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.faa.gov/space"
         },
         {
           "date": "2023-12",
@@ -820,7 +841,8 @@
         {
           "date": "2026-05-12",
           "text": "Launch: NROL-172",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.faa.gov/space"
         },
         {
           "date": "2026-Q3",
@@ -956,17 +978,20 @@
         {
           "date": "2023-05",
           "text": "FDA human trial approval",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://clinicaltrials.gov/study/NCT06429735"
         },
         {
           "date": "2024-01",
           "text": "First human implant (Noland Arbaugh)",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://clinicaltrials.gov/study/NCT06429735"
         },
         {
           "date": "2025-03",
           "text": "Third patient implanted",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://clinicaltrials.gov/study/NCT06429735"
         },
         {
           "date": "2026-H1",

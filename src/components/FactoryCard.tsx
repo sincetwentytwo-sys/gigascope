@@ -1,6 +1,15 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import type { Factory } from "@/data/types";
 
 const SEGMENTS = 8;
+
+function hasTimelapseThumbnails(slug: string): boolean {
+  return (
+    existsSync(join(process.cwd(), "public", "timelapses", `${slug}-first.jpg`)) &&
+    existsSync(join(process.cwd(), "public", "timelapses", `${slug}-last.jpg`))
+  );
+}
 
 export default function FactoryCard({
   factory,
@@ -16,13 +25,42 @@ export default function FactoryCard({
   const accent = isAnnounced ? "#c4a000" : isAlert ? "#e63946" : color;
 
   const filled = Math.max(1, Math.round((factory.progress / 100) * SEGMENTS));
+  const showThumbs = hasTimelapseThumbnails(factory.slug);
 
   return (
     <a
       href={`/site/${factory.slug}`}
-      className="group relative flex flex-col gap-3 overflow-hidden rounded-md border border-border-custom bg-bg hover:border-text transition-colors p-4"
+      className="group relative flex flex-col overflow-hidden rounded-md border border-border-custom bg-bg hover:border-text transition-colors"
       style={{ borderLeftWidth: 4, borderLeftColor: accent }}
     >
+      {showThumbs && (
+        <div className="grid grid-cols-2 gap-px bg-border-custom border-b border-border-custom">
+          <div className="relative">
+            <img
+              src={`/timelapses/${factory.slug}-first.jpg`}
+              alt={`${factory.name} — earlier satellite view`}
+              loading="lazy"
+              className="w-full aspect-video object-cover"
+            />
+            <span className="absolute top-1 left-1 px-1 py-0.5 text-[9px] font-mono uppercase tracking-wider bg-black/60 text-white/90 rounded">
+              Before
+            </span>
+          </div>
+          <div className="relative">
+            <img
+              src={`/timelapses/${factory.slug}-last.jpg`}
+              alt={`${factory.name} — recent satellite view`}
+              loading="lazy"
+              className="w-full aspect-video object-cover"
+            />
+            <span className="absolute top-1 right-1 px-1 py-0.5 text-[9px] font-mono uppercase tracking-wider bg-black/60 text-white/90 rounded">
+              Now
+            </span>
+          </div>
+        </div>
+      )}
+
+      <div className="flex flex-col gap-3 p-4">
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-2 min-w-0">
           <span className="text-lg leading-none flex-shrink-0">{factory.flag}</span>
@@ -80,6 +118,7 @@ export default function FactoryCard({
           <div className="text-dim uppercase tracking-wider text-[9px]">Invest</div>
           <div className="font-medium truncate">{factory.investment}</div>
         </div>
+      </div>
       </div>
     </a>
   );
