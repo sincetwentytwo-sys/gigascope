@@ -19,9 +19,9 @@ export const cybercab: ProductSpec = {
   cutawayAxis: "x",
   background: "#15171c",
   photoCredit: {
-    author: "Wikimedia Commons contributors",
-    license: "CC BY-SA (see source)",
-    sourceUrl: "https://commons.wikimedia.org/wiki/Category:Tesla_Robotaxi",
+    author: "Dllu (Wikimedia Commons)",
+    license: "CC BY-SA 4.0",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Tesla_Cybercab_at_Santana_Row_oblique_view_dllu.jpg",
   },
   parts: [
     {
@@ -35,7 +35,7 @@ export const cybercab: ProductSpec = {
       color: "#c9b27a",
       metalness: 0.85,
       roughness: 0.25,
-      hotspot: { x: 0.4500, y: 0.5500 },
+      hotspot: { x: 0.40, y: 0.48 },
     },
     {
       id: "hood",
@@ -49,7 +49,7 @@ export const cybercab: ProductSpec = {
       color: "#c9b27a",
       metalness: 0.85,
       roughness: 0.25,
-      hotspot: { x: 0.7800, y: 0.4200 },
+      hotspot: { x: 0.18, y: 0.53 },
     },
     {
       id: "trunk",
@@ -76,7 +76,7 @@ export const cybercab: ProductSpec = {
       color: "#b8a26d",
       metalness: 0.85,
       roughness: 0.25,
-      hotspot: { x: 0.4200, y: 0.4500 },
+      hotspot: { x: 0.50, y: 0.20 },
     },
     {
       id: "door-r",
@@ -104,6 +104,7 @@ export const cybercab: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.5,
       roughness: 0.6,
+      hotspot: { x: 0.22, y: 0.78 },
     },
     {
       id: "wheel-fr",
@@ -117,7 +118,6 @@ export const cybercab: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.5,
       roughness: 0.6,
-      hotspot: { x: 0.7000, y: 0.7000 },
     },
     {
       id: "wheel-rl",
@@ -131,6 +131,7 @@ export const cybercab: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.5,
       roughness: 0.6,
+      hotspot: { x: 0.78, y: 0.68 },
     },
     {
       id: "wheel-rr",
@@ -144,7 +145,6 @@ export const cybercab: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.5,
       roughness: 0.6,
-      hotspot: { x: 0.1800, y: 0.6500 },
     },
     {
       id: "headlight-bar",
@@ -158,7 +158,7 @@ export const cybercab: ProductSpec = {
       emissive: "#a0c8ff",
       metalness: 0.4,
       roughness: 0.2,
-      hotspot: { x: 0.8300, y: 0.4000 },
+      hotspot: { x: 0.15, y: 0.62 },
     },
     // HW5 cameras (front cluster x3)
     {
