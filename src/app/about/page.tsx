@@ -93,13 +93,47 @@ export default function AboutPage() {
       {/* Who runs this */}
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-3">Who runs this</h2>
-        <p className="text-sm text-dim leading-relaxed max-w-prose">
-          One person — Jaebin, Korean, working out of Seoul. No team, no investors, no advertisers. The code is open source on{" "}
-          <a href="https://github.com/sincetwentytwo-sys/gigascope" target="_blank" rel="noopener noreferrer" className="underline">
-            GitHub
-          </a>{" "}
-          — pull requests, issues, and corrections welcome. Reply to any digest email and a human reads it.
+        <p className="text-sm text-dim leading-relaxed max-w-prose mb-4">
+          One person — Jaebin, Korean, working out of Seoul. No team, no investors, no advertisers.
+          Reply to any digest email and a human reads it.
         </p>
+        <ul className="flex flex-col gap-2 text-sm">
+          <li className="flex gap-3">
+            <span className="text-dim w-20 flex-shrink-0">LinkedIn</span>
+            <a
+              href="https://www.linkedin.com/in/jaebin-kim1/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              linkedin.com/in/jaebin-kim1
+            </a>
+          </li>
+          <li className="flex gap-3">
+            <span className="text-dim w-20 flex-shrink-0">YouTube</span>
+            <a
+              href="https://www.youtube.com/@gigascopehq"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              @gigascopehq
+            </a>
+            <span className="text-dim text-xs">— daily site updates &amp; component breakdowns</span>
+          </li>
+          <li className="flex gap-3">
+            <span className="text-dim w-20 flex-shrink-0">GitHub</span>
+            <a
+              href="https://github.com/sincetwentytwo-sys/gigascope"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              sincetwentytwo-sys/gigascope
+            </a>
+            <span className="text-dim text-xs">— PRs, issues, corrections welcome</span>
+          </li>
+        </ul>
       </section>
 
       {/* Disclaimer */}
