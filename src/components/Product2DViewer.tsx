@@ -76,6 +76,15 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
     setSelectedId(null);
   }, [product.slug]);
 
+  // When zoom returns to 100%, auto-reset pan. Otherwise the user has to
+  // click the reset button to recenter — painful UX. At 100% the image
+  // fills the viewport so pan offset has no meaning anyway.
+  useEffect(() => {
+    if (zoom <= MIN_ZOOM) {
+      setPan({ x: 0, y: 0 });
+    }
+  }, [zoom]);
+
   const selected = product.parts.find((p) => p.id === selectedId) ?? null;
   const partsWithHotspots = product.parts.filter(
     (p) => p.hotspot && typeof p.hotspot.x === "number",

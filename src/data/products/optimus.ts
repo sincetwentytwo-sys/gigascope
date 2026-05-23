@@ -123,7 +123,7 @@ export const optimus: ProductSpec = {
       color: "#bfbfc4",
       metalness: 0.7,
       roughness: 0.35,
-      hotspot: { x: 0.3500, y: 0.2200 },
+      hotspot: { x: 0.5500, y: 0.2200 },
     },
     {
       id: "shoulder-r",
@@ -136,7 +136,7 @@ export const optimus: ProductSpec = {
       color: "#bfbfc4",
       metalness: 0.7,
       roughness: 0.35,
-      hotspot: { x: 0.5500, y: 0.2200 },
+      hotspot: { x: 0.3500, y: 0.2200 },
     },
     // Upper arms (slightly forward)
     {
@@ -151,7 +151,7 @@ export const optimus: ProductSpec = {
       color: "#e8e8ec",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.3300, y: 0.2900 },
+      hotspot: { x: 0.5700, y: 0.2900 },
     },
     {
       id: "upper-arm-r",
@@ -165,7 +165,7 @@ export const optimus: ProductSpec = {
       color: "#e8e8ec",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.5700, y: 0.2900 },
+      hotspot: { x: 0.3300, y: 0.2900 },
     },
     // Elbows
     {
@@ -179,7 +179,7 @@ export const optimus: ProductSpec = {
       color: "#a8a8ad",
       metalness: 0.75,
       roughness: 0.3,
-      hotspot: { x: 0.3200, y: 0.3600 },
+      hotspot: { x: 0.5800, y: 0.3600 },
     },
     {
       id: "elbow-r",
@@ -192,7 +192,7 @@ export const optimus: ProductSpec = {
       color: "#a8a8ad",
       metalness: 0.75,
       roughness: 0.3,
-      hotspot: { x: 0.5800, y: 0.3600 },
+      hotspot: { x: 0.3200, y: 0.3600 },
     },
     // Forearms (house hand-tendon actuators)
     {
@@ -207,7 +207,7 @@ export const optimus: ProductSpec = {
       color: "#dcdce0",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.3200, y: 0.4000 },
+      hotspot: { x: 0.5800, y: 0.4000 },
     },
     {
       id: "forearm-r",
@@ -221,7 +221,7 @@ export const optimus: ProductSpec = {
       color: "#dcdce0",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.5800, y: 0.4000 },
+      hotspot: { x: 0.3200, y: 0.4000 },
     },
     // Hands (flat boxes)
     {
@@ -236,7 +236,7 @@ export const optimus: ProductSpec = {
       color: "#1f1f24",
       metalness: 0.4,
       roughness: 0.5,
-      hotspot: { x: 0.3200, y: 0.4600 },
+      hotspot: { x: 0.5800, y: 0.4600 },
     },
     {
       id: "hand-r",
@@ -250,7 +250,7 @@ export const optimus: ProductSpec = {
       color: "#1f1f24",
       metalness: 0.4,
       roughness: 0.5,
-      hotspot: { x: 0.5800, y: 0.4600 },
+      hotspot: { x: 0.3200, y: 0.4600 },
     },
     // Hips
     {
@@ -289,7 +289,7 @@ export const optimus: ProductSpec = {
       color: "#e8e8ec",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.4200, y: 0.4800 },
+      hotspot: { x: 0.4800, y: 0.4800 },
     },
     {
       id: "thigh-r",
@@ -302,7 +302,7 @@ export const optimus: ProductSpec = {
       color: "#e8e8ec",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.4800, y: 0.4800 },
+      hotspot: { x: 0.4200, y: 0.4800 },
     },
     // Knees
     {
@@ -316,7 +316,7 @@ export const optimus: ProductSpec = {
       color: "#a8a8ad",
       metalness: 0.75,
       roughness: 0.3,
-      hotspot: { x: 0.4200, y: 0.5600 },
+      hotspot: { x: 0.4800, y: 0.5600 },
     },
     {
       id: "knee-r",
@@ -329,7 +329,7 @@ export const optimus: ProductSpec = {
       color: "#a8a8ad",
       metalness: 0.75,
       roughness: 0.3,
-      hotspot: { x: 0.4800, y: 0.5600 },
+      hotspot: { x: 0.4200, y: 0.5600 },
     },
     // Shins
     {
@@ -343,7 +343,7 @@ export const optimus: ProductSpec = {
       color: "#dcdce0",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.4200, y: 0.6500 },
+      hotspot: { x: 0.4800, y: 0.6500 },
     },
     {
       id: "shin-r",
@@ -356,7 +356,7 @@ export const optimus: ProductSpec = {
       color: "#dcdce0",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.4800, y: 0.6500 },
+      hotspot: { x: 0.4200, y: 0.6500 },
     },
     // Feet
     {
@@ -370,7 +370,7 @@ export const optimus: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.3,
       roughness: 0.7,
-      hotspot: { x: 0.4200, y: 0.7500 },
+      hotspot: { x: 0.4800, y: 0.7500 },
     },
     {
       id: "foot-r",
@@ -383,7 +383,7 @@ export const optimus: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.3,
       roughness: 0.7,
-      hotspot: { x: 0.4800, y: 0.7500 },
+      hotspot: { x: 0.4200, y: 0.7500 },
     },
   ],
   relatedSites: ["fremont", "giga-texas", "terafab"],
