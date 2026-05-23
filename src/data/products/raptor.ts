@@ -18,7 +18,7 @@ export const raptor: ProductSpec = {
   aka: "SpaceX Raptor v2 / v3",
   category: "engine",
   description:
-    "Raptor is SpaceX's full-flow staged combustion (FFSC) methalox engine that powers Starship and Super Heavy. It's the only FFSC engine ever to fly (the Soviet RD-270 was tested but cancelled). Both propellants enter the main chamber as hot gas, enabling ~330 bar chamber pressure — the highest of any operational engine. v3 targets 280+ tonnes of thrust with radically simplified plumbing.",
+    "Raptor is SpaceX's full-flow staged combustion (FFSC) methalox engine that powers Starship and Super Heavy. It's the only FFSC engine ever to fly (the Soviet RD-270 was tested but cancelled). Both propellants enter the main chamber as hot gas, enabling industry-leading chamber pressure and ~5% more specific impulse than a gas-generator engine at the same expansion ratio. Headline numbers (Raptor 2 baseline per SpaceX briefings; Raptor 3 figures Musk-stated targets): Isp ~330s sea-level / ~380s vacuum (est., vacuum variant); chamber pressure 300 bar (R2) → 350 bar target (R3); O/F mixture ratio ~3.6 (methalox-rich-on-the-LOX-side vs stoichiometric 4.0, run slightly fuel-rich to cap chamber temperature); thrust ~230 tf sea-level (R2) → 280+ tf target (R3); thrust-to-weight ~200:1 (R2) → ~250:1 target (R3, ~1500 kg dry); throttling 40-100% (deep-throttle for Starship landing). Throat diameter ~0.2m. Sources: spacex.com/vehicles/starship, Eric Berger / Ars Technica reporting, NASASpaceflight forum technical analysis.",
   cameraPosition: [5.5, 1.8, 6.5],
   cameraTarget: [0, 0.2, 0],
   background: "#0a0a0c",
@@ -28,7 +28,7 @@ export const raptor: ProductSpec = {
       id: "nozzle",
       name: "Nozzle (regen-cooled bell)",
       description:
-        "Expands exhaust from ~330 bar in the chamber down to near-vacuum, converting pressure to velocity. Inner wall is a single copper-alloy piece with milled regen channels — methane flows through them before injection, cooling the wall and preheating the fuel.",
+        "Expands exhaust from chamber pressure (300 bar on R2, 350 bar target on R3) down to near-vacuum, converting pressure to velocity. Sea-level Raptor runs an expansion ratio ~35:1 (bell sized so exit pressure roughly matches sea-level atmospheric — bigger and it would flow-separate at lift-off); the RVac vacuum variant uses a much larger ~80:1 (est., per NSF analysis) niobium-alloy skirt added below the regen-cooled section. Inner wall is a single copper-alloy piece (SX300 proprietary CuCrZr-class alloy per SpaceX briefings) with milled regen channels — methane flows through them before injection, cooling the wall and preheating the fuel.",
       position: [0, -1.0, 0],
       rotation: [Math.PI, 0, 0],
       geometry: "cone",
@@ -56,7 +56,7 @@ export const raptor: ProductSpec = {
       id: "throat",
       name: "Throat",
       description:
-        "The narrowest cross-section of the engine. Gas accelerates to Mach 1 exactly here; downstream it goes supersonic. Throat diameter sets the engine's mass flow and is the single most thermally-stressed component — heat flux exceeds 100 MW/m².",
+        "The narrowest cross-section of the engine, ~0.2m diameter (est., scaled from published bell dimensions). Gas accelerates to Mach 1 exactly here; downstream it goes supersonic through the diverging bell. Throat area sets the engine's mass flow at a given chamber pressure (m_dot ∝ P_c · A_t / sqrt(T_c)) and is the single most thermally-stressed component — heat flux exceeds 100 MW/m², the highest of any operational engine. Wall survives only because methane in the regen channels is roughly ~1 mm away on the cold side, pulling heat fast enough to keep the SX300 copper alloy well below its softening point.",
       position: [0, 0.05, 0],
       geometry: "cylinder",
       args: [0.42, 0.42, 0.12, 48],
@@ -70,7 +70,7 @@ export const raptor: ProductSpec = {
       id: "chamber",
       name: "Combustion chamber",
       description:
-        "Full-flow staged combustion: both methane and oxygen arrive here already as hot gas (not liquid), enabling ~330 bar pressure and ~5% more Isp than gas-generator engines. Only Raptor and the Soviet RD-270 have ever flown this cycle.",
+        "Full-flow staged combustion: both methane and oxygen arrive here already as hot gas (not liquid), enabling 300 bar pressure on Raptor 2 (350 bar target on Raptor 3) and ~5% more Isp than gas-generator engines like Merlin. Only Raptor and the Soviet RD-270 have ever flown this cycle. Inner liner is SX300 — SpaceX's proprietary copper-chromium-zirconium-class alloy, picked for its high thermal conductivity (pulls heat into the regen channels fast enough that the wall never reaches the methane combustion temp of ~3500 K). Hundreds of axial cooling slots are wire-EDM'd into the liner; cold methane runs through them before injection, soaking up megawatts of wall heat in a single pass — that recovered enthalpy goes right back into the chamber as hotter inlet gas.",
       position: [0, 0.55, 0],
       geometry: "cylinder",
       args: [0.55, 0.45, 0.85, 48],
@@ -83,7 +83,7 @@ export const raptor: ProductSpec = {
       id: "injector",
       name: "Coaxial injector plate",
       description:
-        "Hundreds of coaxial elements meter oxidizer-rich and fuel-rich gas streams into the chamber and shear them together. Because both streams are already gas, mixing is fast and complete — that's what enables FFSC's combustion efficiency.",
+        "Hundreds of coaxial-shear elements (LOX-rich gas down the inner post, methane-rich gas in the surrounding annulus) meter the two preburner exhaust streams into the chamber and shear them together. Because both streams are already gas, mixing is fast and complete — that's what enables FFSC's combustion efficiency and what gives Raptor its ~40-100% throttling range (gas-gas injection stays stable down to ~40% mass flow, where liquid coaxial elements would atomize unevenly). No pintle — pintle injectors are a Merlin / lunar-lander pattern, fine for kerolox but a poor fit for FFSC's twin-gas inlet. Mixture ratio held near O/F ~3.6 by tuning preburner valves on closed-loop telemetry.",
       position: [0, 1.1, 0],
       geometry: "cylinder",
       args: [0.6, 0.6, 0.18, 48],
@@ -124,7 +124,7 @@ export const raptor: ProductSpec = {
       id: "turbopump-ox",
       name: "Oxidizer turbopump",
       description:
-        "Driven by the ox preburner, this turbine spins a pump impeller that boosts LOX pressure from tank ~6 bar to ~600+ bar before injection. Spins at ~20,000 rpm. The shaft seal between hot ox gas and liquid ox is one of the hardest seals in rocketry.",
+        "Driven by the ox preburner, this turbine spins a pump impeller that boosts LOX pressure from tank ~6 bar to ~600+ bar before injection — well above the 300-bar chamber pressure to overcome injector pressure drop and combustion dynamics. Spins at ~20,000 rpm (est., scaled from Merlin published figures); the LOX turbine is on its own shaft, driven only by the ox-rich preburner — this is the 'full' in full-flow staged combustion, distinct from RS-25 / RD-180 cycles that drive both pumps off a single preburner stream. The shaft seal between hot oxygen-rich gas (~700 K) and cryogenic liquid oxygen (~90 K) is one of the hardest seals in rocketry; SpaceX uses Inconel components with proprietary thin-film coatings to survive the ox-rich environment that destroyed early Soviet attempts.",
       position: [1.4, 2.15, 0],
       geometry: "cylinder",
       args: [0.42, 0.42, 0.55, 32],
@@ -137,7 +137,7 @@ export const raptor: ProductSpec = {
       id: "turbopump-fuel",
       name: "Methane turbopump",
       description:
-        "Driven by the fuel preburner. Smaller than the LOX pump because methane is less dense (~420 kg/m³ vs LOX 1140 kg/m³), so less mass to move per unit thrust. Boosts methane from tank pressure to ~550+ bar.",
+        "Driven by the fuel preburner on a fully separate shaft from the LOX pump — the two preburners and two pumps run in parallel, hence 'full-flow staged combustion'. Smaller than the LOX pump because methane is less dense (~420 kg/m³ vs LOX 1140 kg/m³) and the engine runs at O/F ~3.6 (so ~3.6× more LOX mass than CH4 mass per second). Boosts methane from tank pressure to ~550+ bar; the methane is already partially gasified by the time it reaches the pump inlet, having absorbed regen-cooling heat from the nozzle and chamber walls. Pump bearings ride on the propellant itself — no separate lube system.",
       position: [-1.4, 2.15, 0],
       geometry: "cylinder",
       args: [0.36, 0.36, 0.5, 32],

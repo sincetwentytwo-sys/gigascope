@@ -49,13 +49,18 @@ export default function CompareSlider() {
     };
     const onTouch = (e: TouchEvent) => {
       if (!dragging.current) return;
+      // preventDefault() blocks the page from scrolling while the user is
+      // dragging the compare slider. Requires passive: false below.
+      e.preventDefault();
       updateSlider(e.touches[0].clientX);
     };
     const onUp = () => { dragging.current = false; };
 
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onUp);
-    window.addEventListener("touchmove", onTouch, { passive: true });
+    // passive: false so onTouch can call preventDefault() and stop page scroll
+    // from competing with the slider drag gesture on mobile.
+    window.addEventListener("touchmove", onTouch, { passive: false });
     window.addEventListener("touchend", onUp);
     return () => {
       window.removeEventListener("mousemove", onMove);

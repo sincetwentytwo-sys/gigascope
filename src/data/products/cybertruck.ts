@@ -8,7 +8,7 @@ export const cybertruck: ProductSpec = {
   aka: "Stainless-steel exoskeleton pickup",
   category: "vehicle",
   description:
-    "5.68m pickup with a 30X cold-rolled stainless-steel exoskeleton in place of a conventional unibody. Tri-motor AWD (Cyberbeast) makes ~845 hp combined, 0-60 in 2.6s. First production vehicle with 48V low-voltage architecture, steer-by-wire, and rear-axle steering. Built exclusively at Giga Texas.",
+    "5.68m pickup with a 30X cold-rolled stainless-steel exoskeleton in place of a conventional unibody. Headline specs (EPA / Tesla published): Cyberbeast tri-motor ~845 hp, 0-60 in 2.6s, 320 mi range; AWD dual-motor ~600 hp, 0-60 ~4.1s, 340 mi range; RWD single-motor ~315 hp (single rear DU, no front motor), 0-60 ~6.5s, 250 mi range (launches into 2024 long-range RWD trim). Tow rating 11,000 lb (Class 4-equivalent), payload 2,500 lb. Drag coefficient ~0.34 — high for a Tesla (Model S Plaid ~0.208) because the exoskeleton's straight cold-rolled creases can't form low-Cd compound curves, traded against body stiffness and panel cost. First production vehicle with a 48V low-voltage architecture, true steer-by-wire (no mechanical column), and rear-axle steering. Built exclusively at Giga Texas — ramp ran below initial 250k/yr target through 2024-2025 (Tesla acknowledged demand softness and trimmed third shift); 2026 production figures still firming up. Sources: tesla.com/cybertruck spec sheets, EPA fueleconomy.gov filings, Tesla Q3/Q4 2025 production calls.",
   cameraPosition: [5.9, 4.9, 8.7],
   cameraTarget: [0.1, 1.2, 0],
   cameraMinDistance: 3,
@@ -24,7 +24,7 @@ export const cybertruck: ProductSpec = {
       id: "exoskeleton",
       name: "Stainless Steel Exoskeleton",
       description:
-        "30X cold-rolled stainless-steel skin panels, ~1.4mm thick, act as the structural body — no paint, no body-in-white in the traditional sense. Cold rolling work-hardens the steel and dictates the flat-panel geometry: complex curves would un-temper it. Yield strength ~1.5 GPa.",
+        "30X cold-rolled stainless-steel skin panels, ~1.4-1.8mm thick depending on panel location (door skins thinner; structural rails toward the upper end), acting as the structural body — no paint, no traditional body-in-white. Cold rolling work-hardens the steel and dictates the flat-panel geometry: complex compound curves would un-temper it. Yield strength ~1.5 GPa (steelmaker grade designation '30X' is a SpaceX/Tesla-internal callout, originally developed for Starship's hull and shared into Cybertruck). Real-world panel dents have been documented in owner reports — the hardness is exceptional but the panel itself can yield permanently under concentrated point load (a thrown rock, a closing tailgate edge) more visibly than a painted aluminum panel of equivalent gauge, since dents can't be filled and repainted.",
       position: [0, 1.1, 0],
       geometry: "box",
       args: [5.3, 1.2, 2.05],
@@ -65,7 +65,7 @@ export const cybertruck: ProductSpec = {
       id: "bed",
       name: "Bed (Vault)",
       description:
-        "1.83m bed with composite floor over the stainless tub. Tesla calls it the Vault. Powered tonneau cover is structural — closed, it adds torsional stiffness to the rear. Bed has 120V/240V outlets fed from the HV pack via a 9.6 kW inverter (Powershare).",
+        "1.83m bed with composite floor over the stainless tub. Tesla calls it the Vault. Powered tonneau cover is structural — closed, it adds torsional stiffness to the rear. Bed has 120V (2× 20A) and 240V (1× 40A) outlets fed from the HV pack via the integrated Powershare inverter at up to 9.6 kW total — enough to run a job-site compressor, welder, or a few power tools simultaneously. Pairing with a Universal Wall Connector + Gateway upgrades Powershare to V2H (vehicle-to-home) whole-home backup; with Powerwall in the home loop the truck becomes a ~123 kWh rolling battery, multi-day backup at typical residential loads.",
       position: [-1.5, 1.0, 0],
       geometry: "box",
       args: [1.85, 0.7, 1.85],
@@ -78,7 +78,7 @@ export const cybertruck: ProductSpec = {
       id: "tonneau",
       name: "Powered Tonneau Cover",
       description:
-        "Three-segment rolling tonneau, motor-driven. Rated to support an adult standing on it. Closed, it converts the truck into a sealed cargo volume — useful for cold-chain or secure transport. Open, it stows under the rear glass.",
+        "Three-segment rolling tonneau, motor-driven. Rated to support an adult standing on it. Closed, it converts the truck into a sealed cargo volume — useful for cold-chain or secure transport. Open, it stows under the rear glass. A ~1.7 kW solar-tonneau option was promised at the 2019 reveal, with Tesla claiming up to ~15 miles of added daily range; as of 2026-05 it has not shipped as an OEM option on production trucks (TODO: confirm current Tesla configurator status). Third-party aftermarket solar tonneau wraps exist but are not Tesla-supplied.",
       position: [-1.5, 1.45, 0],
       geometry: "box",
       args: [1.8, 0.03, 1.7],
@@ -173,7 +173,7 @@ export const cybertruck: ProductSpec = {
       id: "battery-800v",
       name: "HV Battery Pack",
       description:
-        "~123 kWh pack on a 400V architecture (same nominal pack voltage class as Model S/3/X/Y). For DC fast charging, Tesla multiplexes the pack into two 400V halves in series to negotiate ~800V at Supercharger V4 cabinets, halving cable current at the same power. Powers the bed's Powershare 11.5 kW V2L outlet and home backup integration.",
+        "~123 kWh usable pack on a 400V architecture (same nominal pack voltage class as Model S/3/X/Y — NOT 800V; an early 2023 launch slide implied 800V and the trim mistakenly carries that legacy id). Cells are 4680 structural format (~46mm dia × 80mm tall) bonded directly into a structural casing that doubles as floor stiffener; pack-as-structure pattern shared with the structural 4680 Model Y. Cell count ~1,344 (est., from teardown reports — 14 modules × 96 cells, exact configuration not officially published). Chemistry NMC811-class high-nickel cathode for energy density and cold-weather performance, dry-electrode tab-less design from Tesla's in-house Kato Road and Giga Texas 4680 lines. For DC fast charging, Tesla can multiplex the pack into two 400V halves in series to negotiate ~800V at Supercharger V4 cabinets, halving cable current at the same delivered power. Powers the bed's Powershare 9.6 kW (240V) V2L outlet and home backup integration via the Universal Wall Connector + Gateway.",
       position: [0, 0.5, 0],
       geometry: "box",
       args: [4.0, 0.18, 1.85],
@@ -186,7 +186,7 @@ export const cybertruck: ProductSpec = {
       id: "front-drive-unit",
       name: "Front Drive Unit",
       description:
-        "Single front induction motor, ~262 hp. Disconnect clutch lets the front motor freewheel at highway cruise (RWD-only mode) to cut drag losses. Combined with the rear duo on Cyberbeast trim, total system output is ~845 hp.",
+        "Single front induction motor, ~262 hp (Cyberbeast); on AWD dual-motor trim a similar front unit pairs with a single rear DU for combined ~600 hp. Disconnect clutch lets the front motor freewheel at highway cruise (RWD-only mode) to cut drag and demag losses. Combined on Cyberbeast (262 hp front + 2× ~286 hp rear) total system output is ~834-845 hp (Tesla's published 845 hp combined figure rounds up; ~834 hp peak observed on dyno per third-party teardowns). Inverter is SiC, shared module family with Plaid drive units.",
       position: [1.7, 0.55, 0],
       geometry: "box",
       args: [0.55, 0.4, 0.85],
@@ -199,7 +199,7 @@ export const cybertruck: ProductSpec = {
       id: "rear-drive-l",
       name: "Rear Drive Unit (Left)",
       description:
-        "Left rear PMSM, independent from the right rear unit on Cyberbeast — true torque vectoring without a differential. Each motor commands its own wheel; software arbitrates yaw rate. Enables crab-mode-adjacent maneuvers and tighter slow-speed turns.",
+        "Left rear PMSM (permanent-magnet synchronous), ~286 hp peak, independent from the right rear unit on Cyberbeast — true torque vectoring without a mechanical differential or limited-slip pack. Each motor commands its own wheel; the vehicle-dynamics ECU arbitrates yaw rate at ~1 kHz, blending the per-wheel torque request with the rear-axle steering angle. Enables 'crab-walk' diagonal maneuvering and tighter slow-speed turns (~12.4m curb-to-curb circle). On AWD dual-motor trim this slot holds a single shared rear DU instead of paired motors — that's the main hardware delta between Cyberbeast and AWD.",
       position: [-1.6, 0.55, 0.45],
       geometry: "box",
       args: [0.5, 0.38, 0.45],
@@ -223,7 +223,7 @@ export const cybertruck: ProductSpec = {
       id: "sbw-actuator-l",
       name: "Steer-by-Wire Actuator (Left)",
       description:
-        "Triple-redundant electric actuator at the left front wheel. Yoke inputs flow over the 48V CAN bus to the ECU, which commands the actuator's variable ratio: ~5:1 at parking (~2 turns lock-to-lock total) sliding to ~16:1 at highway speed.",
+        "Electric actuator at the left front wheel. Cybertruck eliminates the mechanical steering column entirely — there is no intermediate shaft, no rack bar spanning the front beam, no fallback hydraulic boost. Yoke inputs flow over the 48V CAN-FD bus to the steering ECU, which commands the actuator's variable ratio: roughly 5:1 at parking lock (~340° hand-wheel total for full lock-to-lock) sliding to ~16:1 at highway speed for fine inputs. Redundancy is electrical, not mechanical: ~2 motor windings, 2 power feeds, 2 ECUs voting on the commanded angle — a loss of any one path still delivers full steering authority.",
       position: [1.7, 0.45, 0.7],
       geometry: "box",
       args: [0.18, 0.15, 0.2],
@@ -260,7 +260,7 @@ export const cybertruck: ProductSpec = {
       id: "48v-bus",
       name: "48V Low-Voltage Architecture",
       description:
-        "First production EV using 48V instead of 12V for low-voltage loads. Wire mass drops ~75%, harness simplifies dramatically. Every accessory (windows, lights, infotainment) had to be redesigned for 48V — Tesla open-sourced the spec to push the industry over.",
+        "First production vehicle to move the entire low-voltage backbone from 12V to 48V. At 4× the voltage, the same delivered power needs ¼ the current — wire copper cross-section drops accordingly, and Tesla cites total harness mass savings on the order of ~90 lb (~40 kg), with a roughly 75% reduction in low-voltage wire mass. ECU count is consolidated relative to a legacy 12V truck (vs the typical ~70-100+ ECUs on a modern pickup) by grouping zonal controllers that talk over a single 48V CAN-FD / Ethernet backbone. Every accessory had to be re-engineered for 48V — exterior lights, the matrix lightbars, infotainment, audio amps, HVAC blowers, window motors, the radar/lidar-style perception sensors, brake-by-wire actuator, steer-by-wire motors. No legacy 12V vacuum pump means brakes have to be electro-hydraulic (see brake-by-wire note). Tesla open-sourced the 48V spec at the 2023 launch to push suppliers to standardize.",
       position: [0, 0.85, 0.9],
       geometry: "box",
       args: [3.2, 0.05, 0.08],

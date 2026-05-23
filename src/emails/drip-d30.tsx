@@ -1,11 +1,11 @@
 import {
   Body,
+  Button,
   Container,
   Head,
   Heading,
   Hr,
   Html,
-  Link,
   Preview,
   Section,
   Text,
@@ -20,7 +20,7 @@ export default function DripD30({ email }: DripProps) {
     <Html>
       <Head />
       <Preview>
-        One month in. Here&apos;s what&apos;s worth your attention now — and what we ignore on purpose.
+        30 days on the list. Charter is open for the first 100. Here&apos;s the decision.
       </Preview>
       <Body style={main}>
         <Container style={container}>
@@ -31,66 +31,65 @@ export default function DripD30({ email }: DripProps) {
 
           <Hr style={hr} />
 
-          <Heading style={h2}>30 days in — what&apos;s worth your attention now.</Heading>
+          <Heading style={h2}>30 days on the list. Here&apos;s what&apos;s worth keeping.</Heading>
 
           <Text style={text}>
-            A month ago you signed up. This is the last of the onboarding drips —
-            from here, it&apos;s just the daily digest. Quick recap of what to track
-            and what to ignore. You&apos;re settling in for the long haul; this is
-            the rhythm.
+            You&apos;ve had a month of digests and five drips. This is the last one
+            from the onboarding series.
           </Text>
 
-          <Heading style={h3}>What we watch closely</Heading>
+          <Heading style={h3}>What the last 30 days delivered</Heading>
           <Section style={list}>
             <Text style={listItem}>
-              → Sentinel-2 weekly captures across the Musk-empire sites (Tesla, SpaceX, xAI, Neuralink, Boring)
+              → Multiple sites moved on satellite. Some by enough to matter.
             </Text>
             <Text style={listItem}>
-              → Construction milestones with primary-source links (SEC EDGAR, FAA, county building permits, IR drops)
+              → A handful of catalysts hit on the calendar window we flagged.
             </Text>
             <Text style={listItem}>
-              → Earnings calls and launch manifests on the catalyst calendar
-            </Text>
-            <Text style={listItem}>
-              → Interactive component breakdowns when new components land (Raptor revs, Optimus iterations, 4680 cell variants)
+              → At least one Sentinel-2 capture caught something the news cycle
+              missed.
             </Text>
           </Section>
 
-          <Heading style={h3}>What we ignore on purpose</Heading>
-          <Section style={list}>
-            <Text style={listItem}>→ Stock price predictions and analyst price targets</Text>
-            <Text style={listItem}>→ &quot;Musk tweeted X&quot; speculation cycles</Text>
-            <Text style={listItem}>→ Aggregator-news churn (Google News RSS, content farms)</Text>
-            <Text style={listItem}>→ Affiliate links, paid placements, sponsored posts</Text>
+          <Text style={text}>
+            If any of that was worth your morning attention, charter is the
+            decision the series points at.
+          </Text>
+
+          <Heading style={h3}>Charter — $9/mo, locked for life</Heading>
+
+          <Text style={text}>
+            Charter pricing is limited to the first 100 members. After that,
+            standard pricing is $19/mo and long-term is $29/mo. Charter members
+            get the lower price for as long as the membership exists. Once the
+            100 spots are gone, this offer doesn&apos;t come back.
+          </Text>
+
+          <Text style={text}>
+            What you get: priority on satellite-drop alerts when a site moves,
+            full catalyst calendar with primary-source links, and the same
+            digest you&apos;ve been reading — uninterrupted as the free tier
+            evolves.
+          </Text>
+
+          <Section style={ctaWrap}>
+            <Button href="https://gigascope.xyz/pro" style={ctaButton}>
+              Lock your charter spot — $9/mo
+            </Button>
           </Section>
 
           <Text style={text}>
-            The rhythm: the daily digest lands at 7am local. Ad-hoc satellite-drop
-            alerts when something material moves. The catalyst calendar for forward
-            planning — earnings dates, launch windows, expected permit pulls.
+            Not for you? Reply <b>unsubscribe</b> — no quiz, no retention
+            sequence. The daily digest keeps coming either way unless you
+            opt out.
           </Text>
-
-          <Text style={text}>
-            On the long game: charter membership opens charter pricing at $9/mo
-            (first 100 subscribers, locked for life). Billing isn&apos;t live yet —
-            when it opens, charter subscribers go first via a separate email.
-            No action needed today.
-          </Text>
-
-          <Text style={text}>
-            Reply to this email with what&apos;s missing, what&apos;s wrong, or what
-            site or company we should cover next. Every reply gets read — this isn&apos;t
-            a no-reply address.
-          </Text>
-
-          <Link href="https://gigascope.xyz" style={cta}>
-            Open gigascope.xyz →
-          </Link>
 
           <Hr style={hr} />
 
           <Text style={footer}>
-            You signed up as {email}. Reply to this email any time.
+            You signed up as {email}. Reply to this email any time — it&apos;s
+            read by a human.
           </Text>
           <Text style={footer}>
             GIGASCOPE — Community project. Not affiliated with Tesla, SpaceX, xAI,
@@ -161,11 +160,20 @@ const listItem = {
   margin: "0",
 };
 
-const cta = {
-  color: "#0a0a0a",
-  fontSize: "16px",
+const ctaWrap = {
+  margin: "28px 0 20px",
+  textAlign: "center" as const,
+};
+
+const ctaButton = {
+  backgroundColor: "#0a0a0a",
+  color: "#ffffff",
+  fontSize: "15px",
   fontWeight: "600",
-  textDecoration: "underline",
+  textDecoration: "none",
+  padding: "14px 22px",
+  borderRadius: "6px",
+  display: "inline-block",
 };
 
 const hr = {

@@ -74,6 +74,14 @@ export default async function Home({
           poster={`/timelapses/${hero.slug}.jpg`}
           className="absolute inset-0 w-full h-full object-cover"
         >
+          {/* Mobile variant — 480p, ~70% smaller. Browsers pick the matching
+              <source> from top to bottom, so this MUST come before the full
+              variant. Cellular users get ~600KB instead of ~2MB. */}
+          <source
+            media="(max-width: 768px)"
+            src={`/timelapses/${hero.slug}-mobile.mp4`}
+            type="video/mp4"
+          />
           <source src={`/timelapses/${hero.slug}.mp4`} type="video/mp4" />
         </video>
 

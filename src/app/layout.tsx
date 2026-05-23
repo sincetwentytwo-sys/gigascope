@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { safeJsonLd } from "@/lib/safeJsonLd";
 import VisitCounter from "@/components/VisitCounter";
@@ -31,6 +31,13 @@ export const metadata: Metadata = {
   },
 };
 
+// Next.js 16 Viewport export (replaces the deprecated viewport meta tag).
+// Note: no maximum-scale / user-scalable — pinch-zoom must stay enabled (WCAG 1.4.4).
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -54,6 +61,29 @@ export default function RootLayout({
                 "@type": "Organization",
                 name: "GIGASCOPE",
               },
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: safeJsonLd({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "GIGASCOPE",
+              url: "https://gigascope.xyz",
+              description:
+                "Satellite construction tracker for Tesla, SpaceX, xAI, Neuralink, Boring Company",
+              founder: {
+                "@type": "Person",
+                name: "Jaebin Kim",
+                sameAs: "https://www.linkedin.com/in/jaebin-kim1/",
+              },
+              sameAs: [
+                "https://github.com/sincetwentytwo-sys/gigascope",
+                "https://www.youtube.com/@gigascopehq",
+                "https://www.linkedin.com/in/jaebin-kim1/",
+              ],
             }),
           }}
         />
@@ -111,7 +141,10 @@ export default function RootLayout({
         </nav>
 
         <GlobalSearchProvider />
-        <main id="main-content" className="flex-1">{children}</main>
+        {/* pb-20 on mobile clears the fixed bottom nav (~64px) so page CTAs
+            (EmailSignup, "See all sites →", etc.) don't get hidden behind it.
+            sm:pb-0 removes the padding once the mobile nav is hidden. */}
+        <main id="main-content" className="flex-1 pb-20 sm:pb-0">{children}</main>
 
         <footer className="py-8 px-6 pb-20 sm:pb-8 text-center text-xs text-dim flex flex-col gap-3 items-center">
           <div>GIGASCOPE — Community project. Not affiliated with Tesla, SpaceX, xAI, Neuralink, or The Boring Company.</div>

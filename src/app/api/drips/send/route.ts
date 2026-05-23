@@ -77,10 +77,10 @@ const DRIPS: DripDef[] = [
   {
     day: 30,
     key: "d30",
-    subject: "GIGASCOPE · 30 days in — what's worth your attention now",
+    subject: "GIGASCOPE · 30 days in — your charter spot is reserved",
     react: DripD30,
     telegram:
-      "*GIGASCOPE · Day 30*\n30 days in. The three sites worth watching this quarter.\nhttps://gigascope.xyz",
+      "*GIGASCOPE · Day 30*\n30 days on the list. Charter is open for the first 100 — $9/mo locked for life.\nhttps://gigascope.xyz/pro",
   },
 ];
 

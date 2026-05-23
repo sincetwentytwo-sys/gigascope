@@ -68,6 +68,9 @@ function renderHtml(data: {
     <table style="width:100%;border-collapse:collapse">${milestones || '<tr><td style="padding:8px;color:#86868b;font-size:13px">No upcoming milestones in window.</td></tr>'}</table>
     <h2 style="font-size:14px;text-transform:uppercase;letter-spacing:0.05em;color:#86868b;margin:24px 0 8px">Last 24h news</h2>
     <ul style="padding-left:18px;margin:0">${news || '<li style="color:#86868b">Quiet news cycle.</li>'}</ul>
+    <div style="margin:20px 0 0;padding:10px 0 0;border-top:1px dashed #e5e5e7;font-size:12px;line-height:1.5;color:#86868b">
+      Charter $9/mo lifetime &mdash; first 100 members. <a href="https://gigascope.xyz/pro" style="color:#0a0a0a;text-decoration:underline">Lock your spot</a>.
+    </div>
     <hr style="margin:24px 0;border:none;border-top:1px solid #e5e5e7" />
     <div style="font-size:11px;color:#86868b">
       You're receiving this because you signed up at gigascope.xyz. Forward freely.
