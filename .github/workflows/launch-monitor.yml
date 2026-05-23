@@ -1,12 +1,14 @@
 name: SpaceX launch monitor
 
-# Runs hourly. Detects upcoming SpaceX launches via Launch Library 2 and
-# generates time-sensitive tweet drafts (T-24h, T-1h, post-launch). All
-# launch alerts auto-post immediately (no rate limit) since they are time
-# sensitive. Skips already-announced launches via state file.
+# DISABLED 2026-05-24 — launch alert auto-posts created the same repetitive
+# "@SpaceX tally just ticked up" template every flight, reading as obvious bot
+# content (owner directive). Cron schedule removed; workflow remains manually
+# triggerable for one-off testing. Owner will post launch reactions manually
+# with hand-crafted copy when billing goes live. To re-enable later, restore
+# the schedule line below.
 on:
-  schedule:
-    - cron: "0 * * * *"
+  # schedule:
+  #   - cron: "0 * * * *"
   workflow_dispatch:
 
 permissions:

@@ -1,12 +1,13 @@
 name: Daily marketing drafts
 
-# Runs every day at 09:00 UTC. Generates tweet drafts based on factories.json
-# changes and weekday-scheduled content, then auto-posts up to N tweets to X
-# (if X_AUTOPOST=1 and credentials are configured). All drafts also go to
-# a GitHub Issue for review.
+# DISABLED 2026-05-24 — automated daily X posts produced repetitive, bot-looking
+# content that violated the Tesla-minimal brand voice (owner directive). Cron
+# schedule removed; workflow remains manually triggerable via workflow_dispatch
+# for one-off testing. Owner will post manually with curated copy when billing
+# goes live. To re-enable later, restore the schedule line below.
 on:
-  schedule:
-    - cron: "0 9 * * *"
+  # schedule:
+  #   - cron: "0 9 * * *"
   workflow_dispatch:
 
 permissions:
