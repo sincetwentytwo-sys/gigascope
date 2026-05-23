@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Redis } from "@upstash/redis";
 import EmailSignup from "@/components/EmailSignup";
 import InvestorCheckout from "@/components/InvestorCheckout";
@@ -8,22 +9,22 @@ import InvestorCheckout from "@/components/InvestorCheckout";
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Investor tier — early-bird $9 — GIGASCOPE",
+  title: "Investor tier — charter $9 — GIGASCOPE",
   description:
-    "GIGASCOPE Investor: real-time milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 early-bird → $19 → $29.",
+    "GIGASCOPE Investor: real-time milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 charter → $29 (Jun 2026) → $49-79 long-term.",
   alternates: { canonical: "https://gigascope.xyz/investor" },
   openGraph: {
-    title: "Investor tier — early-bird $9 — GIGASCOPE",
+    title: "Investor tier — charter $9 — GIGASCOPE",
     description:
-      "GIGASCOPE Investor: real-time milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 early-bird → $19 → $29.",
+      "GIGASCOPE Investor: real-time milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 charter → $29 (Jun 2026) → $49-79 long-term.",
     url: "https://gigascope.xyz/investor",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Investor tier — early-bird $9 — GIGASCOPE",
+    title: "Investor tier — charter $9 — GIGASCOPE",
     description:
-      "GIGASCOPE Investor: real-time milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 early-bird → $19 → $29.",
+      "GIGASCOPE Investor: real-time milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 charter → $29 (Jun 2026) → $49-79 long-term.",
   },
 };
 
@@ -79,15 +80,18 @@ export default async function InvestorPage() {
         <p className="text-[11px] text-dim max-w-md mx-auto">
           ⚠ This is not equity in the project, not a token, not a security. It's a $9/month subscription to a software service. Cancel any time.
         </p>
+        <p className="text-[11px] text-dim max-w-md mx-auto mt-2">
+          <Link href="/charter-terms" className="underline">Charter price-lock terms →</Link>
+        </p>
       </header>
 
       <div className="text-center mb-10">
         <div className="flex items-baseline justify-center gap-2 mb-1">
           <span className="text-5xl font-bold">$9</span>
-          <span className="text-dim">/ month · early bird</span>
+          <span className="text-dim">/ month · charter</span>
         </div>
-        <div className="text-xs text-dim">→ $19 standard launch · $29 long-term target · early-bird price grandfathered for life</div>
-        <div className="text-xs text-dim mt-2">or $99 / year (early bird) · cancel anytime</div>
+        <div className="text-xs text-dim">→ $29 standard launch (Jun 2026) · $49-79 long-term · charter rate locked for life</div>
+        <div className="text-xs text-dim mt-2">or $90 / year (charter · 17% off) · cancel anytime</div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
@@ -127,8 +131,8 @@ export default async function InvestorPage() {
             <dd className="text-dim">No. GIGASCOPE is industrial intelligence — what's being built, where, by whom. We cite primary sources (SEC EDGAR, DART, IR decks, government data) so you can verify everything yourself.</dd>
           </div>
           <div>
-            <dt className="font-bold mb-1">Why early bird at $9?</dt>
-            <dd className="text-dim">Charter members fund the next 50 site pages and the interactive component pipeline. You get lifetime price-lock at $9 even when we raise to $29.</dd>
+            <dt className="font-bold mb-1">Why charter at $9?</dt>
+            <dd className="text-dim">Charter members fund the next 50 company pages, satellite pipeline, and Telegram alert system (on the build roadmap). You get lifetime price-lock at $9 even when public launch hits $29 (June 2026) and long-term reaches $49-79.</dd>
           </div>
           <div>
             <dt className="font-bold mb-1">What happens to my data if I cancel?</dt>

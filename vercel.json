@@ -3,6 +3,7 @@
   "crons": [
     { "path": "/api/digest/send", "schedule": "0 14 * * *" },
     { "path": "/api/drips/send", "schedule": "15 14 * * *" },
-    { "path": "/api/spacex/refresh-starlink", "schedule": "30 14 * * *" }
+    { "path": "/api/spacex/refresh-starlink", "schedule": "30 14 * * *" },
+    { "path": "/api/cron/catalyst-alerts", "schedule": "45 14 * * *" }
   ]
 }

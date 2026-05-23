@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: BASE_URL, lastModified: lastMod, changeFrequency: "daily", priority: 1 },
     { url: `${BASE_URL}/news`, lastModified: lastMod, changeFrequency: "hourly", priority: 0.85 },
     { url: `${BASE_URL}/investor`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${BASE_URL}/spacex-ipo`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/calendar`, lastModified: lastMod, changeFrequency: "daily", priority: 0.7 },
     { url: `${BASE_URL}/downloads`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.6 },
     { url: `${BASE_URL}/compare`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.7 },
@@ -18,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/products`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE_URL}/about`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE_URL}/methodology`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${BASE_URL}/charter-terms`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.5 },
   ];
 
   const factoryPages: MetadataRoute.Sitemap = factories.map((f) => ({

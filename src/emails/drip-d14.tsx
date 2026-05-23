@@ -20,7 +20,7 @@ export default function DripD14({ email }: DripProps) {
     <Html>
       <Head />
       <Preview>
-        Why charter pricing is $9 and stays $9 — even when we move to $19, then $29.
+        Why charter pricing is $9 and stays $9 — even when we move to $29, then $49-79.
       </Preview>
       <Body style={main}>
         <Container style={container}>
@@ -41,13 +41,16 @@ export default function DripD14({ email }: DripProps) {
           <Text style={text}>The math, plain:</Text>
           <Section style={list}>
             <Text style={listItem}>
-              → <strong>$9/month</strong> today — charter rate, first 100 subscribers
+              → <strong>$9/month</strong> today — charter rate, first 100 subscribers, locked for life
             </Text>
             <Text style={listItem}>
-              → <strong>$19/month</strong> at launch, when billing opens
+              → <strong>$29/month</strong> standard launch — from June 2026, subscriber #101 onwards
             </Text>
             <Text style={listItem}>
-              → <strong>$29/month</strong> long-term target
+              → <strong>$49-79/month</strong> long-term target — depends on validation
+            </Text>
+            <Text style={listItem}>
+              → Annual plan: <strong>17% off</strong> (2 months free) — charter annual = $90/yr
             </Text>
             <Text style={listItem}>
               → The $9 charter rate is grandfathered for life — even when public
@@ -56,9 +59,12 @@ export default function DripD14({ email }: DripProps) {
           </Section>
 
           <Text style={text}>
-            What charter funds: the next 50 site pages and the interactive
-            component pipeline. Charter members aren't buying a finished product —
-            they're buying it built faster, with a price locked in.
+            Why the bump: $9 was too cheap for unique data. Bloomberg Terminal is
+            $2K/mo, Visible Alpha is ~$500/mo. GIGASCOPE at $29 is still a steal —
+            and charter members lock in $9 forever. Charter funds the next 50
+            company pages, satellite pipeline, and Telegram alert system (on the
+            build roadmap). You're not buying a finished product — you're buying
+            it built faster, with a price locked in.
           </Text>
 
           <Text style={text}>
