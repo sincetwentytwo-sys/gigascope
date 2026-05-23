@@ -221,10 +221,12 @@ async function scrapeOgImage(articleUrl: string): Promise<string | undefined> {
   try {
     const res = await fetch(articleUrl, {
       headers: {
-        // Pretend to be Facebook's link-preview crawler — news sites whitelist it
-        // because they want their articles to render in social shares. A custom
-        // GIGASCOPE/1.0 UA gets 403'd by Cloudflare on insideevs.com and similar.
-        "User-Agent": "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)",
+        // Discord's link-preview crawler. Tested across the news sources we
+        // use: passes insideevs.com's WAF (which 403s Facebook/Twitter/Slack
+        // UAs) while still being a recognized link-preview agent that sites
+        // generally allow for social sharing. Higher hit rate than the
+        // alternatives in this codebase's specific source list.
+        "User-Agent": "Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com)",
         Accept: "text/html,application/xhtml+xml",
       },
       signal: AbortSignal.timeout(4000),
