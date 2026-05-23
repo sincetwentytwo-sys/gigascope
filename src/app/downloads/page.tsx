@@ -34,7 +34,7 @@ export default function DownloadsPage() {
       <header className="mb-8">
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-3">Downloads</h1>
         <p className="text-dim max-w-2xl">
-          Bulk export the underlying Atlas data. CSV or JSON. Free during the Investor early-bird period. Rate-limited.
+          Bulk export the underlying GIGASCOPE data. CSV or JSON. Free during the Investor early-bird period. Rate-limited.
           Always treat as point-in-time — re-fetch for the latest.
         </p>
       </header>
@@ -71,7 +71,7 @@ export default function DownloadsPage() {
       </ul>
 
       <section className="mt-10 text-xs text-dim">
-        <strong className="text-text">Terms</strong>: Atlas data is editorial. Cite "GIGASCOPE" and the underlying primary sources
+        <strong className="text-text">Terms</strong>: GIGASCOPE data is editorial. Cite "GIGASCOPE" and the underlying primary sources
         (linked on each company page) for re-use. Don't republish full bulk exports verbatim — link back.
       </section>
     </div>

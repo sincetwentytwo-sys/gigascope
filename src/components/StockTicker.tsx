@@ -14,6 +14,7 @@ export default function StockTicker() {
 
   useEffect(() => {
     let cancelled = false;
+    let id: ReturnType<typeof setInterval> | null = null;
 
     const load = async () => {
       try {
@@ -26,11 +27,31 @@ export default function StockTicker() {
       }
     };
 
+    const start = () => {
+      if (id === null) id = setInterval(load, 30_000);
+    };
+    const stop = () => {
+      if (id !== null) {
+        clearInterval(id);
+        id = null;
+      }
+    };
+    const onVis = () => {
+      if (document.visibilityState === "visible") {
+        load();
+        start();
+      } else {
+        stop();
+      }
+    };
+
     load();
-    const id = setInterval(load, 3_000);
+    start();
+    document.addEventListener("visibilitychange", onVis);
     return () => {
       cancelled = true;
-      clearInterval(id);
+      stop();
+      document.removeEventListener("visibilitychange", onVis);
     };
   }, []);
 

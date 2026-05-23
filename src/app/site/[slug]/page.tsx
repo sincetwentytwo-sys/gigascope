@@ -109,6 +109,9 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
 
   const maxTimeline = Math.max(...factory.timeline, 1);
   const latestIdx = factory.timeline.length - 1;
+  const hasYearData = Array.isArray(factory.timeline)
+    && factory.timeline.length > 0
+    && factory.timeline.some((v) => typeof v === "number" && v > 0);
   const lat = factory.lat;
   const lng = factory.lng;
   const latStr = `${Math.abs(lat).toFixed(4)}° ${lat >= 0 ? "N" : "S"}`;
@@ -135,16 +138,16 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
             className="flex items-center gap-3 border-l-2 pl-3 py-1"
             style={{ borderColor: accent }}
           >
-            <span className="text-xs font-mono uppercase tracking-widest" style={{ color: accent }}>
+            <span className="text-xs font-mono" style={{ color: accent }}>
               {company.name}
             </span>
             <span className="font-mono text-[10px] text-dim">
-              / {factory.slug.toUpperCase()}
+              / {factory.slug}
             </span>
           </div>
           <div className="flex-1 min-w-full sm:min-w-[200px] max-w-md">
             <div className="flex justify-between mb-1">
-              <span className="font-mono text-[10px] text-dim uppercase">ID: {factory.id}</span>
+              <span className="font-mono text-[10px] text-dim">ID: {factory.id}</span>
               <span className="font-mono text-[10px]" style={{ color: accent }}>
                 {factory.progress}% complete
               </span>
@@ -156,7 +159,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
               />
             </div>
           </div>
-          <span className="px-2 py-1 border text-[10px] font-mono uppercase tracking-widest" style={{ borderColor: "#5d3f44", color: "var(--dim)" }}>
+          <span className="px-2 py-1 border text-[10px] font-mono" style={{ borderColor: "#5d3f44", color: "var(--dim)" }}>
             {factory.status}
           </span>
         </div>
@@ -170,7 +173,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
             {factory.aka} &middot; {factory.location}
           </p>
           <p className="text-dim text-sm mt-1">{factory.products}</p>
-          <p className="font-mono text-[10px] text-dim mt-2 uppercase tracking-wider">
+          <p className="font-mono text-[10px] text-dim mt-2">
             Updated {factory.lastUpdated}
             {imageryDate && <> &middot; Satellite imagery {imageryDate}</>}
           </p>
@@ -184,7 +187,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
               className="bg-surface  border-l-2 p-3 sm:p-4 hover:bg-surface transition-all"
               style={{ borderColor: c.color }}
             >
-              <span className="font-mono text-[10px] uppercase tracking-widest flex items-center gap-2" style={{ color: c.color }}>
+              <span className="font-mono text-[10px] flex items-center gap-2" style={{ color: c.color }}>
                 <span className="w-1 h-1" style={{ background: c.color }} />
                 {c.label}
               </span>
@@ -198,7 +201,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
               key={label}
               className="bg-surface  border-l-2 border-border-custom p-4 hover:bg-surface transition-all"
             >
-              <span className="font-mono text-[10px] uppercase tracking-widest flex items-center gap-2 text-dim">
+              <span className="font-mono text-[10px] flex items-center gap-2 text-dim">
                 <span className="w-1 h-1 bg-dim" />
                 {label}
               </span>
@@ -219,7 +222,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                 style={{ borderColor: accent }}
               >
                 <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: accent }} />
-                <span className="font-mono text-[10px] font-bold tracking-widest text-text uppercase">
+                <span className="font-mono text-[10px] font-bold text-text">
                   {factory.name}
                 </span>
               </div>
@@ -243,8 +246,8 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
               return (
                 <div className="mt-4">
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-bold text-sm tracking-widest uppercase" style={{ color: accent }}>
-                      Satellite Timelapse
+                    <h3 className="font-semibold text-sm" style={{ color: accent }}>
+                      Satellite timelapse
                     </h3>
                     <span className="font-mono text-[10px] text-dim">
                       {tl.frames} frames · weekly Sentinel-2
@@ -276,14 +279,14 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
               if (related.length === 0) return null;
               return (
                 <div className="mt-4 flex flex-wrap items-center gap-2">
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-dim">
+                  <span className="font-mono text-[10px] text-dim">
                     Related products
                   </span>
                   {related.map((p) => (
                     <a
                       key={p.slug}
                       href={`/products/${p.slug}`}
-                      className="font-mono text-[10px] uppercase tracking-widest px-2 py-1 border border-border-custom hover:border-text text-text hover:text-text transition-colors"
+                      className="font-mono text-[10px] px-2 py-1 border border-border-custom hover:border-text text-text hover:text-text transition-colors"
                     >
                       {p.name} &rarr;
                     </a>
@@ -292,21 +295,17 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
               );
             })()}
 
-            {/* Stat strip below map */}
-            <div className="mt-4 grid grid-cols-3 gap-3">
+            {/* Stat strip below map — milestones omitted here to avoid
+                duplicate "Milestones" headings (the right-column section
+                already shows the same count). */}
+            <div className="mt-4 grid grid-cols-2 gap-3">
               <div className="bg-surface  p-3 border-t border-border-custom">
-                <span className="block font-mono text-[9px] text-dim mb-1 uppercase tracking-wider">Latitude</span>
+                <span className="block font-mono text-[9px] text-dim mb-1">Latitude</span>
                 <span className="font-mono text-base font-bold text-text">{lat.toFixed(4)}</span>
               </div>
               <div className="bg-surface  p-3 border-t border-border-custom">
-                <span className="block font-mono text-[9px] text-dim mb-1 uppercase tracking-wider">Longitude</span>
+                <span className="block font-mono text-[9px] text-dim mb-1">Longitude</span>
                 <span className="font-mono text-base font-bold text-text">{lng.toFixed(4)}</span>
-              </div>
-              <div className="bg-surface  p-3 border-t border-border-custom">
-                <span className="block font-mono text-[9px] text-dim mb-1 uppercase tracking-wider">Milestones</span>
-                <span className="font-mono text-base font-bold text-text">
-                  {doneCount}/{factory.milestones.length}
-                </span>
               </div>
             </div>
           </div>
@@ -316,7 +315,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
             {/* Milestones */}
             <div className="bg-surface  p-4 sm:p-5 border border-border-custom">
               <div className="flex items-center justify-between mb-5">
-                <h3 className="font-bold text-sm tracking-widest uppercase" style={{ color: accent }}>
+                <h3 className="font-semibold text-sm" style={{ color: accent }}>
                   Milestones
                 </h3>
                 <span className="font-mono text-[10px] text-dim">
@@ -340,7 +339,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                       />
                     </div>
                     <span className="font-mono text-[10px] text-dim">{m.date}</span>
-                    <h4 className="font-semibold text-xs text-text uppercase mt-0.5 tracking-wide">
+                    <h4 className="font-semibold text-sm text-text mt-0.5">
                       {m.text}
                     </h4>
                     <p
@@ -354,56 +353,58 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
               </div>
             </div>
 
-            {/* Progress chart */}
-            <div className="bg-surface  p-4 sm:p-5 border border-border-custom">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="font-bold text-sm tracking-widest text-accent-blue uppercase">
-                  Progress by Year
-                </h3>
-                <span className="font-mono text-[10px] text-dim">{TIMELINE_YEARS[0]}–{TIMELINE_YEARS[latestIdx]}</span>
+            {/* Progress chart — hide entirely when no per-year data exists */}
+            {hasYearData && (
+              <div className="bg-surface  p-4 sm:p-5 border border-border-custom">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="font-semibold text-sm text-accent-blue">
+                    Progress by year
+                  </h3>
+                  <span className="font-mono text-[10px] text-dim">{TIMELINE_YEARS[0]}–{TIMELINE_YEARS[latestIdx]}</span>
+                </div>
+                <div className="flex items-end justify-between h-40 gap-2 px-1">
+                  {factory.timeline.map((val, i) => {
+                    const isLatest = i === latestIdx;
+                    const h = val === 0 ? 4 : Math.max(8, (val / maxTimeline) * 100);
+                    return (
+                      <div key={TIMELINE_YEARS[i]} className="flex-1 flex flex-col items-center gap-2 justify-end h-full group">
+                        <span className="font-mono text-[9px] text-dim mb-1">{val}%</span>
+                        <div
+                          className="w-full transition-all group-hover:scale-y-105 origin-bottom"
+                          style={{
+                            height: `${h}%`,
+                            background: isLatest ? accent : "#5d3f44",
+                            boxShadow: isLatest ? `0 0 15px -2px ${accent}80` : undefined,
+                          }}
+                        />
+                        <span
+                          className={`font-mono text-[9px] mt-1 ${isLatest ? "text-text font-bold" : "text-dim"}`}
+                        >
+                          '{String(TIMELINE_YEARS[i]).slice(-2)}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="mt-4 pt-3 border-t border-border-custom flex justify-between">
+                  <span className="font-mono text-[9px] text-dim">Latest: {factory.timeline[latestIdx]}%</span>
+                  <span className="font-mono text-[9px] text-accent-blue">{factory.status}</span>
+                </div>
               </div>
-              <div className="flex items-end justify-between h-40 gap-2 px-1">
-                {factory.timeline.map((val, i) => {
-                  const isLatest = i === latestIdx;
-                  const h = val === 0 ? 4 : Math.max(8, (val / maxTimeline) * 100);
-                  return (
-                    <div key={TIMELINE_YEARS[i]} className="flex-1 flex flex-col items-center gap-2 justify-end h-full group">
-                      <span className="font-mono text-[9px] text-dim mb-1">{val}%</span>
-                      <div
-                        className="w-full transition-all group-hover:scale-y-105 origin-bottom"
-                        style={{
-                          height: `${h}%`,
-                          background: isLatest ? accent : "#5d3f44",
-                          boxShadow: isLatest ? `0 0 15px -2px ${accent}80` : undefined,
-                        }}
-                      />
-                      <span
-                        className={`font-mono text-[9px] mt-1 ${isLatest ? "text-text font-bold" : "text-dim"}`}
-                      >
-                        '{String(TIMELINE_YEARS[i]).slice(-2)}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="mt-4 pt-3 border-t border-border-custom flex justify-between">
-                <span className="font-mono text-[9px] text-dim uppercase">Latest: {factory.timeline[latestIdx]}%</span>
-                <span className="font-mono text-[9px] text-accent-blue uppercase">{factory.status}</span>
-              </div>
-            </div>
+            )}
           </div>
         </div>
 
         {/* News + Community */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <div className="bg-surface  border border-border-custom p-4 sm:p-5">
-            <h3 className="font-bold text-sm tracking-widest uppercase mb-4" style={{ color: accent }}>
-              Latest News
+            <h3 className="font-semibold text-sm mb-4" style={{ color: accent }}>
+              Latest news
             </h3>
             <FactoryNewsFeed keywords={newsKeywords} />
           </div>
           <div className="bg-surface  border border-border-custom p-4 sm:p-5">
-            <h3 className="font-bold text-sm tracking-widest text-accent-blue uppercase mb-4">
+            <h3 className="font-semibold text-sm text-accent-blue mb-4">
               Community
             </h3>
             <CommunityFeed keywords={newsKeywords} factoryName={factory.name} />
@@ -416,14 +417,14 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
         </div>
 
         <div className="flex flex-wrap gap-4 text-sm font-mono">
-          <a href="/compare" className="text-accent-blue hover:text-text transition-colors uppercase tracking-wider text-xs">
+          <a href="/compare" className="text-accent-blue hover:text-text transition-colors text-xs">
             Compare imagery &rarr;
           </a>
           <a
             href={`https://www.google.com/maps/@${factory.lat},${factory.lng},1000m/data=!3m1!1e3`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-dim hover:text-text transition-colors uppercase tracking-wider text-xs"
+            className="text-dim hover:text-text transition-colors text-xs"
           >
             Google Maps ↗
           </a>

@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
+import { Redis } from "@upstash/redis";
 import EmailSignup from "@/components/EmailSignup";
 import InvestorCheckout from "@/components/InvestorCheckout";
+
+// Live charter-counter — keep page fresh enough that the badge isn't stale,
+// but don't hammer Upstash on every request.
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Investor tier — early-bird $9 — GIGASCOPE",
   description:
-    "GIGASCOPE Investor: real-time milestone alerts, AI-curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 early-bird → $19 → $29.",
+    "GIGASCOPE Investor: real-time milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 early-bird → $19 → $29.",
   alternates: { canonical: "https://gigascope.xyz/investor" },
   openGraph: {
     title: "Investor tier — early-bird $9 — GIGASCOPE",
     description:
-      "GIGASCOPE Investor: real-time milestone alerts, AI-curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 early-bird → $19 → $29.",
+      "GIGASCOPE Investor: real-time milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 early-bird → $19 → $29.",
     url: "https://gigascope.xyz/investor",
     type: "website",
   },
@@ -18,25 +23,46 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Investor tier — early-bird $9 — GIGASCOPE",
     description:
-      "GIGASCOPE Investor: real-time milestone alerts, AI-curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 early-bird → $19 → $29.",
+      "GIGASCOPE Investor: real-time milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 early-bird → $19 → $29.",
   },
 };
 
 const FEATURES = [
   { label: "Real-time alerts (email)", note: "Construction progress jumps, fab milestones, regulatory decisions, earnings, launches." },
-  { label: "AI-curated daily digest", note: "One email at 7am local. Cross-company synthesis: what mattered, what's next, with primary-source links." },
+  { label: "Curated daily digest", note: "One email at 7am local. Cross-company synthesis: what mattered, what's next, with primary-source links." },
   { label: "Interactive component breakdowns", note: "Click any component on Raptor, Optimus, Cybertruck, 4680, GB200 — see the part, the spec, the supplier." },
   { label: "Data downloads (CSV, JSON)", note: "Milestones, facility coordinates, supply-chain edges, historical timelines — bulk export for your own analysis." },
   { label: "Comparison tools", note: "Side-by-side: Gigafactories vs Pyeongtaek, MI300X vs B200, Tanbreez vs Mountain Pass." },
   { label: "No ads, no upsells", note: "Single tier. No 'Pro / Premium / Enterprise' nonsense. One identity: Investor." },
 ];
 
-export default function InvestorPage() {
+async function getCharterCount(): Promise<number | null> {
+  const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
+  if (!url || !token) return null;
+  try {
+    const r = new Redis({ url, token });
+    const count = await r.scard("subscribers:emails");
+    return typeof count === "number" ? count : null;
+  } catch {
+    return null;
+  }
+}
+
+export default async function InvestorPage() {
+  const charterCount = await getCharterCount();
+  const cap = 100;
+  const taken = charterCount === null ? null : Math.min(charterCount, cap);
+  const remaining = taken === null ? null : Math.max(cap - taken, 0);
+  const badge =
+    taken === null
+      ? "Charter waitlist · first 100 spots"
+      : `Charter waitlist · ${taken} of ${cap} spots`;
   return (
     <div className="max-w-[900px] mx-auto px-6 py-12">
       <header className="text-center mb-10">
         <div className="inline-block px-3 py-1 rounded-full bg-text text-bg text-[11px] font-bold uppercase tracking-wider mb-4">
-          Early bird · first 100 subscribers only
+          {badge}
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-3">
           Investor tier
@@ -45,6 +71,11 @@ export default function InvestorPage() {
           A <strong className="text-text">paid software subscription</strong> to GIGASCOPE. Unlocks satellite-drop alerts,
           a curated daily digest, interactive component breakdowns, and CSV/JSON data exports.
         </p>
+        {taken !== null && (
+          <p className="text-[11px] text-dim max-w-md mx-auto mb-2">
+            {taken} waitlisted · {remaining} charter spots remain · charter pricing locks when billing opens.
+          </p>
+        )}
         <p className="text-[11px] text-dim max-w-md mx-auto">
           ⚠ This is not equity in the project, not a token, not a security. It's a $9/month subscription to a software service. Cancel any time.
         </p>
@@ -89,7 +120,7 @@ export default function InvestorPage() {
           </div>
           <div>
             <dt className="font-bold mb-1">Is the free tier going away?</dt>
-            <dd className="text-dim">No. The public Atlas — every company page, every facility map, every news feed — stays free. Investor is additive.</dd>
+            <dd className="text-dim">No. The free site — every company page, every facility map, every news feed — stays open. Investor is additive.</dd>
           </div>
           <div>
             <dt className="font-bold mb-1">Is this financial advice?</dt>

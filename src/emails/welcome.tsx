@@ -70,7 +70,7 @@ export default function WelcomeEmail({ email, tier = "free" }: WelcomeEmailProps
 
           <Hr style={hr} />
 
-          <Text style={text}>The public Atlas is fully open. Start here:</Text>
+          <Text style={text}>The free site is fully open. Start here:</Text>
 
           <Link href="https://gigascope.xyz" style={cta}>
             gigascope.xyz →

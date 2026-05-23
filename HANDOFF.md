@@ -63,6 +63,23 @@ Resend 끝. 다음은 Stripe. 같은 패턴 사용 가능:
 
 상세 문서가 따로 있으면 그쪽 참조. 없으면 owner와 통합 지시서 생성부터.
 
+### Stripe Webhook 핸들러 — scaffold 완료 (2026-05-23)
+
+`src/app/api/webhooks/stripe/route.ts` 추가됨. Graceful-degrade 패턴 — 키 없으면 503,
+키 들어오면 자동 활성화. 사업자등록 완료 후 owner 액션:
+
+1. Stripe Dashboard → Developers → API keys → `STRIPE_SECRET_KEY` 복사
+2. Dashboard → Developers → Webhooks → Add endpoint
+   → URL: `https://gigascope.xyz/api/webhooks/stripe`
+3. Subscribe to events: `checkout.session.completed`, `customer.subscription.deleted`,
+   `customer.subscription.updated`
+4. "Signing secret" 복사 → `STRIPE_WEBHOOK_SECRET`
+5. `vercel env add STRIPE_SECRET_KEY production preview development`
+   `vercel env add STRIPE_WEBHOOK_SECRET production preview development`
+6. `vercel --prod --yes` 로 재배포
+7. 검증: `stripe trigger checkout.session.completed` → Stripe CLI에서
+   200 응답 확인. Upstash 에 `subscribers:charter:count` 1로 incr 확인.
+
 ---
 
 ## 📦 Resend 통합 기록 (완료 — 참고용)

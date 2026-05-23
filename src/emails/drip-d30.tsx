@@ -84,7 +84,7 @@ export default function DripD30({ email }: DripProps) {
           </Text>
 
           <Link href="https://gigascope.xyz" style={cta}>
-            Open the Atlas →
+            Open gigascope.xyz →
           </Link>
 
           <Hr style={hr} />

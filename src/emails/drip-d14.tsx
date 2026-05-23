@@ -71,7 +71,7 @@ export default function DripD14({ email }: DripProps) {
               launches
             </Text>
             <Text style={listItem}>
-              → <strong>AI-curated daily digest</strong> at 7am local —
+              → <strong>Curated daily digest</strong> at 7am local —
               cross-company synthesis: what mattered, what's next, with
               primary-source links
             </Text>

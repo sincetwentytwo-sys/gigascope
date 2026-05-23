@@ -35,15 +35,17 @@ export default function DripD7({ email }: DripProps) {
 
           <Text style={text}>
             A reader asked last week how we get to &quot;78% built&quot; for Giga Texas.
-            Short answer: manual polygon trace on the latest cloud-free Sentinel-2
-            frame, cross-checked against three things.
+            Short answer: manual annotation of the built footprint visible on the
+            latest cloud-free Sentinel-2 frame, cross-checked against three things.
           </Text>
 
           <Section style={list}>
             <Text style={listItem}>
-              → Built footprint = hand-traced polygon on the latest cloud-free
-              Sentinel-2 capture (10 m/pixel, 5-day revisit). Roof and finished
-              structures only — active construction zones excluded.
+              → Built footprint = manual annotation of finished structures
+              visible on the latest cloud-free Sentinel-2 capture (10 m/pixel,
+              5-day revisit). Roof and finished shells only — active construction
+              zones excluded. We don&apos;t store machine polygons; the number is a
+              human estimate from the same frame you can pull from ESA Copernicus.
             </Text>
             <Text style={listItem}>
               → Planned footprint = official site plans, FAA filings (for SpaceX),
@@ -59,9 +61,9 @@ export default function DripD7({ email }: DripProps) {
             What the numbers can&apos;t see: indoor work is invisible from orbit, so a
             site can read &quot;100% built&quot; and still be at 0% production capacity.
             &quot;Operational&quot; means the imagery shows finished structures plus visible
-            activity — not that the line is running at nameplate. These are
-            estimates, not audited figures. A human (the project owner) traces the
-            polygons every refresh cycle.
+            activity — not that the line is running at nameplate. These are human
+            estimates, not audited figures, and they get re-checked each refresh
+            cycle.
           </Text>
 
           <Text style={text}>

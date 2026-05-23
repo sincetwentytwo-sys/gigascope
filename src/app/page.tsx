@@ -25,6 +25,7 @@ export default function Home() {
           muted
           loop
           playsInline
+          preload="metadata"
           poster="/timelapses/giga-texas.jpg"
           className="absolute inset-0 w-full h-full object-cover"
         >

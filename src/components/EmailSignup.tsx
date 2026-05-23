@@ -58,6 +58,7 @@ export default function EmailSignup({
         <form onSubmit={submit} className="flex flex-col sm:flex-row gap-2">
           <input
             type="email"
+            aria-label="Email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -83,6 +84,7 @@ export default function EmailSignup({
     <form onSubmit={submit} className="flex flex-col sm:flex-row gap-2 items-stretch">
       <input
         type="email"
+        aria-label="Email address"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required

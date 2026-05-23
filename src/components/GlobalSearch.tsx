@@ -105,6 +105,7 @@ export default function GlobalSearch({ entries }: { entries: Entry[] }) {
       >
         <input
           ref={inputRef}
+          aria-label="Search GIGASCOPE"
           value={q}
           onChange={(e) => { setQ(e.target.value); setIdx(0); }}
           onKeyDown={(e) => {

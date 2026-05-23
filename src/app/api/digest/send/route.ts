@@ -50,7 +50,7 @@ function renderHtml(data: {
     <hr style="margin:24px 0;border:none;border-top:1px solid #e5e5e7" />
     <div style="font-size:11px;color:#86868b">
       You're receiving this because you signed up at gigascope.xyz. Forward freely.
-      <br/><a href="https://gigascope.xyz" style="color:#86868b">Open the Atlas</a> &middot; <a href="https://gigascope.xyz/investor" style="color:#86868b">Investor tier</a>
+      <br/><a href="https://gigascope.xyz" style="color:#86868b">gigascope.xyz</a> &middot; <a href="https://gigascope.xyz/investor" style="color:#86868b">Investor tier</a>
     </div>
   </body></html>`;
 }

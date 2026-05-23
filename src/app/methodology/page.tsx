@@ -157,8 +157,10 @@ export default function MethodologyPage() {
         <h2 className="text-2xl font-bold mb-3">6. Citation policy</h2>
         <p className="text-sm text-dim leading-relaxed mb-3">
           Every milestone in our database links back to a primary source — SEC 10-K filings, DART quarterly reports, IR investor decks,
-          company press releases, government data (USGS, KOSIS, EIA, FAA), or NRC dockets. We don't cite Wikipedia, Reddit, or
-          AI-generated content as a sole source.
+          company press releases, government data (USGS, KOSIS, EIA, FAA), or NRC dockets where they exist.
+          We're moving from Wikipedia-anchored citations to primary sources (county permits, FAA filings, SEC EDGAR, IR pages)
+          across Q2-Q3 2026 — most pre-pivot site records still carry a Wikipedia revision pointer as the entry reference while
+          that migration is in flight. Reddit and AI-generated content are never used as a sole source.
         </p>
         <p className="text-sm text-dim leading-relaxed">
           When sources conflict, both are noted (e.g., "company guidance $20-25B, industry estimate $35-45B"). When something is an estimate, we say "est."
