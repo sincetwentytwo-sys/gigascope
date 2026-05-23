@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Charter terms — Investor tier price-lock — GIGASCOPE",
+  title: "Charter terms — price-lock — GIGASCOPE",
   description:
     "The Charter promise: first 100 paid subscribers get $9/month locked for life of subscription. Standard launches at $29 (June 2026), long-term target $49-79. Plain-English terms, no legalese.",
   alternates: { canonical: "https://gigascope.xyz/charter-terms" },
@@ -14,10 +14,10 @@ export default function CharterTermsPage() {
     <div className="max-w-[760px] mx-auto px-6 py-12">
       <div className="mb-8">
         <Link
-          href="/investor"
+          href="/pro"
           className="text-sm text-dim hover:text-text transition-colors"
         >
-          &larr; Back to Investor tier
+          &larr; Back to Charter membership
         </Link>
       </div>
 
@@ -37,7 +37,7 @@ export default function CharterTermsPage() {
       <section>
         <h2 className="text-2xl font-bold mt-12 mb-3">The charter promise</h2>
         <p className="text-text leading-relaxed mb-4">
-          The first 100 people to start a paid GIGASCOPE Investor subscription are &ldquo;Charter members.&rdquo;
+          The first 100 people to start a paid GIGASCOPE charter subscription are &ldquo;Charter members.&rdquo;
           Charter members pay <strong>$9 USD per month</strong> (or the equivalent annual rate &mdash; see below),
           and that rate remains locked for the entire continuous life of the subscription.
         </p>
@@ -123,8 +123,8 @@ export default function CharterTermsPage() {
       <section>
         <h2 className="text-2xl font-bold mt-12 mb-3">Service definition</h2>
         <p className="text-text leading-relaxed mb-4">
-          A GIGASCOPE Investor subscription gives you access to the Investor-tier features described on the
-          <Link href="/investor" className="underline hover:text-dim"> /investor</Link> page at the time you
+          A GIGASCOPE charter subscription gives you access to the features described on the
+          <Link href="/pro" className="underline hover:text-dim"> /pro</Link> page at the time you
           subscribe. As of the &ldquo;last updated&rdquo; date below, that includes: the curated daily digest,
           satellite-drop and milestone email alerts, interactive component breakdowns, CSV/JSON data exports,
           comparison tools, and an ad-free experience.
@@ -161,36 +161,38 @@ export default function CharterTermsPage() {
       <section>
         <h2 className="text-2xl font-bold mt-12 mb-3">Not a security</h2>
         <p className="text-text leading-relaxed mb-4">
-          A GIGASCOPE Investor subscription is a <strong>software subscription</strong>. It is not equity in any
+          A GIGASCOPE charter subscription is a <strong>software subscription</strong>. It is not equity in any
           company, not a token, not a stake in any business, and not a security under any jurisdiction&rsquo;s
           law. It confers no ownership, voting rights, profit share, or financial interest in GIGASCOPE or its
           operator. You are paying for access to a software service.
         </p>
         <p className="text-text leading-relaxed mb-4">
-          The word &ldquo;Investor&rdquo; in the tier name refers to the audience the product is built for
-          &mdash; people who follow Musk-empire build-out for investing-research purposes &mdash; not to any
-          investment relationship between you and GIGASCOPE.
+          GIGASCOPE is industrial intelligence built for people who follow Musk-empire build-out for
+          investing-research purposes &mdash; the subscription does not create any investment relationship
+          between you and GIGASCOPE.
         </p>
       </section>
 
       <section>
         <h2 className="text-2xl font-bold mt-12 mb-3">Operator and governing law</h2>
         <p className="text-text leading-relaxed mb-4">
-          GIGASCOPE is operated by Jaebin, an individual operator based in Seoul, Republic of Korea. Before
-          billing goes live, the operator will register the business as a Korean sole proprietorship
-          (개인사업자) and update this page with the registered business name and number.
+          GIGASCOPE is operated by Jaebin, based in Seoul, Republic of Korea. Charter membership sign-up is
+          available now. Card billing activates once Korean business registration (개인사업자) completes
+          &mdash; in progress, expected within 1&ndash;2 weeks &mdash; and no charges occur before then. Signing
+          up now locks in the $9/month charter rate for the life of your subscription. This page will be updated
+          with the registered business name and number on the day billing opens.
         </p>
         <p className="text-text leading-relaxed mb-4">
           These terms are governed by the laws of the Republic of Korea. Any dispute arising out of or relating
-          to a GIGASCOPE Investor subscription will be brought in the courts of Seoul, Republic of Korea.
+          to a GIGASCOPE charter subscription will be brought in the courts of Seoul, Republic of Korea.
         </p>
       </section>
 
       <section>
         <h2 className="text-2xl font-bold mt-12 mb-3">Changes to these terms</h2>
         <p className="text-text leading-relaxed mb-4">
-          We may update these terms from time to time &mdash; for example, to clarify language, reflect business
-          registration once complete, or address things we did not anticipate.
+          We may update these terms from time to time &mdash; for example, to clarify language, reflect the
+          registered business name on the day billing opens, or address things we did not anticipate.
         </p>
         <p className="text-text leading-relaxed mb-4">
           <strong>The Charter price-lock cannot be changed adversely for existing Charter members.</strong> That
@@ -211,13 +213,13 @@ export default function CharterTermsPage() {
           >
             sincetwentytwo@gmail.com
           </a>
-          . A dedicated support@gigascope.xyz address will be set up once the business registration is complete;
-          until then the personal Gmail above is the official contact channel.
+          . A dedicated support@gigascope.xyz address comes online the day billing opens; the founder address
+          above remains an official contact channel.
         </p>
       </section>
 
       <footer className="mt-16 pt-6 border-t border-border-custom">
-        <p className="text-sm text-dim">Last updated: 2026-05-23</p>
+        <p className="text-sm text-dim">Last updated: 2026-05-24</p>
       </footer>
     </div>
   );

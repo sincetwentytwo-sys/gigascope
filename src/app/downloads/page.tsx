@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Downloads — CSV/JSON exports — GIGASCOPE",
   description:
-    "Bulk export the GIGASCOPE dataset: factories, tickers, milestones, supply-chain edges, products. CSV or JSON. Free during the Investor early-bird period.",
+    "Bulk export the GIGASCOPE dataset: factories, milestones, products. CSV or JSON. Free during the charter early-bird period.",
   alternates: { canonical: "https://gigascope.xyz/downloads" },
   openGraph: {
     title: "Downloads — CSV/JSON exports — GIGASCOPE",
     description:
-      "Bulk export the GIGASCOPE dataset: factories, tickers, milestones, supply-chain edges, products. CSV or JSON. Free during the Investor early-bird period.",
+      "Bulk export the GIGASCOPE dataset: factories, milestones, products. CSV or JSON. Free during the charter early-bird period.",
     url: "https://gigascope.xyz/downloads",
     type: "website",
   },
@@ -16,16 +16,14 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Downloads — CSV/JSON exports — GIGASCOPE",
     description:
-      "Bulk export the GIGASCOPE dataset: factories, tickers, milestones, supply-chain edges, products. CSV or JSON. Free during the Investor early-bird period.",
+      "Bulk export the GIGASCOPE dataset: factories, milestones, products. CSV or JSON. Free during the charter early-bird period.",
   },
 };
 
 const DATASETS = [
-  { id: "factories",    name: "Factories",       desc: "16 sites with lat/lng, status, area, investment, milestones.", rows: "16" },
-  { id: "tickers",      name: "Companies",       desc: "29 public companies — thesis, market cap, sectors, last-verified date.", rows: "29" },
-  { id: "milestones",   name: "Milestones",      desc: "All site milestones (done + upcoming) with confidence + lastVerified.", rows: "200+" },
-  { id: "supply-chain", name: "Supply chain",    desc: "Directional edges between companies — from/to/flow/criticality.", rows: "33" },
-  { id: "products",     name: "Products",        desc: "13 component-breakdown spec headers (slug, name, category, partCount).", rows: "13" },
+  { id: "factories",  name: "Factories",  desc: "16 sites with lat/lng, status, area, investment, milestones.",                   rows: "16" },
+  { id: "milestones", name: "Milestones", desc: "All site milestones (done + upcoming) with confidence + lastVerified.",          rows: "200+" },
+  { id: "products",   name: "Products",   desc: "13 component-breakdown spec headers (slug, name, category, partCount).",         rows: "13" },
 ];
 
 export default function DownloadsPage() {
@@ -34,7 +32,7 @@ export default function DownloadsPage() {
       <header className="mb-8">
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-3">Downloads</h1>
         <p className="text-dim max-w-2xl">
-          Bulk export the underlying GIGASCOPE data. CSV or JSON. Free during the Investor early-bird period. Rate-limited.
+          Bulk export the underlying GIGASCOPE data. CSV or JSON. Free during the charter early-bird period. Rate-limited.
           Always treat as point-in-time — re-fetch for the latest.
         </p>
       </header>

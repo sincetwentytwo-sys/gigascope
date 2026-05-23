@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "GIGASCOPE — Watch Musk's empire get built, one satellite frame at a time",
   description:
     "Weekly Sentinel-2 satellite timelapses of 16 Musk-empire sites. Tesla Gigafactories from dirt to delivery, SpaceX Starbase orbital launches, xAI Colossus GPU cluster, Neuralink, Boring Co. Methodology + catalyst calendar. Free.",
-  keywords: ["Tesla", "SpaceX", "xAI", "Neuralink", "NVIDIA", "Samsung", "SK Hynix", "RGTI", "IONQ", "CRML", "ASML", "TSMC", "Palantir", "Gigafactory", "Starlink", "satellite imagery", "AI compute", "HBM", "quantum computing", "critical materials"],
+  keywords: ["Tesla", "SpaceX", "xAI", "Neuralink", "Boring Company", "Elon Musk", "Gigafactory", "Starlink", "Cybertruck", "Starship", "Model 3", "Model Y", "Megapack", "Optimus", "Colossus", "satellite imagery", "construction tracking"],
   icons: { icon: "/favicon.svg" },
   manifest: "/manifest.json",
   metadataBase: new URL("https://gigascope.xyz"),
@@ -81,7 +81,7 @@ export default function RootLayout({
               <a href="/methodology" className="hover:text-text transition-colors">Methodology</a>
               <a href="/about" className="hover:text-text transition-colors">About</a>
               <SearchOpener />
-              <a href="/investor" className="text-text font-bold hover:opacity-70 transition-opacity">Investor</a>
+              <a href="/pro" className="text-text font-bold hover:opacity-70 transition-opacity">Subscribe</a>
             </div>
           </div>
         </nav>
@@ -104,9 +104,9 @@ export default function RootLayout({
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 4h13a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/><line x1="8" y1="8" x2="14" y2="8"/><line x1="8" y1="12" x2="14" y2="12"/></svg>
             News
           </a>
-          <a href="/investor" className="flex flex-col items-center gap-0.5 text-[10px] text-text font-bold">
+          <a href="/pro" className="flex flex-col items-center gap-0.5 text-[10px] text-text font-bold">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
-            Investor
+            Subscribe
           </a>
         </nav>
 

@@ -406,27 +406,32 @@
         {
           "date": "2023-03",
           "text": "Location announced",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Gigafactory_Mexico"
         },
         {
           "date": "2024-06",
           "text": "Permits approved",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Gigafactory_Mexico"
         },
         {
           "date": "2025-03",
           "text": "Site prep & grading",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Gigafactory_Mexico"
         },
         {
           "date": "2025-09",
           "text": "Foundation work begins",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Gigafactory_Mexico"
         },
         {
           "date": "2026-01",
           "text": "Structural steel phase",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Gigafactory_Mexico"
         },
         {
           "date": "2027-H1",
@@ -884,11 +889,12 @@
       "employees": "500+",
       "color": "#7b2dbd",
       "extras": {
-        "Grok Version": "Grok-3",
+        "Grok Version": "Grok-4 (training, started 2026-03)",
+        "Active Serving": "Grok-3",
         "GPU Count": "200,000 H100s",
         "Power": "150 MW (Phase 1)"
       },
-      "lastUpdated": "2026-05-20",
+      "lastUpdated": "2026-05-24",
       "confidence": "speculative",
       "lastVerified": "2026-05-20",
       "sources": [
@@ -902,22 +908,26 @@
         {
           "date": "2024-06",
           "text": "Memphis site announced",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Colossus_(supercomputer)"
         },
         {
           "date": "2024-09",
           "text": "Phase 1: 100K H100s online (122 days build)",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Colossus_(supercomputer)"
         },
         {
           "date": "2025-02",
           "text": "Grok-3 trained on Colossus",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Colossus_(supercomputer)"
         },
         {
           "date": "2025-08",
           "text": "Phase 2: 200K GPUs operational",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Colossus_(supercomputer)"
         },
         {
           "date": "2026-03",
@@ -961,9 +971,9 @@
       "color": "#00875a",
       "extras": {
         "Implant": "N1 (1024 electrodes)",
-        "Patients": "3 (as of 2025)"
+        "Patients": "8+ (as of 2026-05, PRIME study NCT06429735)"
       },
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-05-24",
       "milestones": [
         {
           "date": "2017-03",
@@ -990,6 +1000,12 @@
         {
           "date": "2025-03",
           "text": "Third patient implanted",
+          "done": true,
+          "sourceUrl": "https://clinicaltrials.gov/study/NCT06429735"
+        },
+        {
+          "date": "2026-04",
+          "text": "PRIME study expands to 8+ implanted patients",
           "done": true,
           "sourceUrl": "https://clinicaltrials.gov/study/NCT06429735"
         },
@@ -1046,17 +1062,20 @@
         {
           "date": "2025-01",
           "text": "Austin facility announced",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://neuralink.com/"
         },
         {
           "date": "2025-06",
           "text": "Buildout begins",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://neuralink.com/"
         },
         {
           "date": "2026-01",
           "text": "Cleanroom installation",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://neuralink.com/"
         },
         {
           "date": "2026-Q3",
@@ -1109,22 +1128,26 @@
         {
           "date": "2021-06",
           "text": "LVCC Loop opens (1.7mi)",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.boringcompany.com/vegas-loop"
         },
         {
           "date": "2023-06",
           "text": "Resorts World station opens",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Vegas_Loop"
         },
         {
           "date": "2024-11",
           "text": "City-wide expansion approved (68mi)",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Vegas_Loop"
         },
         {
           "date": "2025-09",
           "text": "Strip tunnel boring begins",
-          "done": true
+          "done": true,
+          "sourceUrl": "https://www.boringcompany.com/vegas-loop"
         },
         {
           "date": "2026-Q2",

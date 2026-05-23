@@ -113,6 +113,7 @@ export const cybertruck: ProductSpec = {
       emissive: "#a02020",
       metalness: 0.3,
       roughness: 0.3,
+      hotspot: { x: 0.93, y: 0.40 },
     },
     {
       id: "wheel-fl",
@@ -170,15 +171,16 @@ export const cybertruck: ProductSpec = {
     },
     {
       id: "battery-800v",
-      name: "800V HV Battery Pack",
+      name: "HV Battery Pack",
       description:
-        "~123 kWh pack, ~800V architecture (Tesla's first; Model S/3/X/Y are 400V). Higher voltage halves DC fast-charging current at the same power, shrinking cable gauge and connector mass. Powers the bed's Powershare 11.5 kW V2L outlet and home backup integration.",
+        "~123 kWh pack on a 400V architecture (same nominal pack voltage class as Model S/3/X/Y). For DC fast charging, Tesla multiplexes the pack into two 400V halves in series to negotiate ~800V at Supercharger V4 cabinets, halving cable current at the same power. Powers the bed's Powershare 11.5 kW V2L outlet and home backup integration.",
       position: [0, 0.5, 0],
       geometry: "box",
       args: [4.0, 0.18, 1.85],
       color: "#15171c",
       metalness: 0.45,
       roughness: 0.6,
+      hotspot: { x: 0.60, y: 0.66 },
     },
     {
       id: "front-drive-unit",
@@ -191,6 +193,7 @@ export const cybertruck: ProductSpec = {
       color: "#3a3f47",
       metalness: 0.8,
       roughness: 0.35,
+      hotspot: { x: 0.20, y: 0.60 },
     },
     {
       id: "rear-drive-l",
@@ -208,7 +211,7 @@ export const cybertruck: ProductSpec = {
       id: "rear-drive-r",
       name: "Rear Drive Unit (Right)",
       description:
-        "Right rear PMSM, mirror of the left. Both are 3-phase PMSM with SiC inverters running at 800V bus. Peak combined rear torque ~10,000 N-m at the wheels — enough for the 1.36m vertical bed-loading lift demoed at launch.",
+        "Right rear PMSM, mirror of the left. Both are 3-phase PMSM with SiC inverters running off the 400V HV bus (pack is multiplexed to ~800V only during DC fast charging). Peak combined rear torque ~10,000 N-m at the wheels — enough for the 1.36m vertical bed-loading lift demoed at launch.",
       position: [-1.6, 0.55, -0.45],
       geometry: "box",
       args: [0.5, 0.38, 0.45],
@@ -251,6 +254,7 @@ export const cybertruck: ProductSpec = {
       color: "#52575f",
       metalness: 0.75,
       roughness: 0.4,
+      hotspot: { x: 0.78, y: 0.66 },
     },
     {
       id: "48v-bus",
@@ -264,6 +268,7 @@ export const cybertruck: ProductSpec = {
       emissive: "#3a2a08",
       metalness: 0.7,
       roughness: 0.4,
+      hotspot: { x: 0.50, y: 0.62 },
     },
     {
       id: "cam-front-main",
@@ -276,6 +281,7 @@ export const cybertruck: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
+      hotspot: { x: 0.35, y: 0.24 },
     },
     {
       id: "cam-front-wide",
@@ -312,6 +318,7 @@ export const cybertruck: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
+      hotspot: { x: 0.48, y: 0.38 },
     },
     {
       id: "cam-side-r",

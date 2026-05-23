@@ -36,7 +36,7 @@ export default function WelcomeEmail({ email, tier = "free" }: WelcomeEmailProps
           <Hr style={hr} />
 
           <Heading style={h2}>
-            {isPaid ? "You're a charter Investor." : "You're on the daily digest."}
+            {isPaid ? "You're a charter member." : "You're on the daily digest."}
           </Heading>
 
           {isPaid ? (
@@ -54,7 +54,7 @@ export default function WelcomeEmail({ email, tier = "free" }: WelcomeEmailProps
                 milestones logged. Unsubscribe any time.
               </Text>
               <Text style={text}>
-                The Investor tier ($9/mo charter rate, first 100 subscribers) is still
+                Charter membership ($9/mo charter rate, first 100 subscribers) is still
                 open if you want satellite-drop alerts, interactive component breakdowns,
                 and CSV/JSON data exports. Price grandfathered when it moves to $29 in June 2026, then $49-79 long-term.
               </Text>
@@ -81,8 +81,8 @@ export default function WelcomeEmail({ email, tier = "free" }: WelcomeEmailProps
               <Text style={{ ...text, marginTop: "16px" }}>
                 Want the full alerts + data exports?
               </Text>
-              <Link href="https://gigascope.xyz/investor" style={ctaSecondary}>
-                See the Investor tier →
+              <Link href="https://gigascope.xyz/pro" style={ctaSecondary}>
+                See charter membership →
               </Link>
             </>
           )}

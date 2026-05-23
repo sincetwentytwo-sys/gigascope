@@ -5,12 +5,12 @@ export const runtime = "nodejs";
 
 const PLANS = {
   monthly: {
-    name: "GIGASCOPE Investor — Monthly (Early Bird)",
+    name: "GIGASCOPE Charter — Monthly (Early Bird)",
     priceCents: 900,
     interval: "month" as const,
   },
   annual: {
-    name: "GIGASCOPE Investor — Annual (Early Bird)",
+    name: "GIGASCOPE Charter — Annual (Early Bird)",
     priceCents: 9900,
     interval: "year" as const,
   },
@@ -37,7 +37,7 @@ export async function POST(req: Request) {
   const plan = PLANS[planKey];
 
   const origin = new URL(req.url).origin;
-  const stripe = new Stripe(secret, { apiVersion: "2024-12-18.acacia" as Stripe.LatestApiVersion });
+  const stripe = new Stripe(secret, { apiVersion: "2025-02-24.acacia" as Stripe.LatestApiVersion });
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -54,10 +54,10 @@ export async function POST(req: Request) {
           quantity: 1,
         },
       ],
-      success_url: `${origin}/investor/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/investor`,
+      success_url: `${origin}/pro/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/pro`,
       allow_promotion_codes: true,
-      metadata: { plan: planKey, source: "investor-page" },
+      metadata: { plan: planKey, source: "pro-page" },
     });
 
     return NextResponse.json({ ok: true, url: session.url });

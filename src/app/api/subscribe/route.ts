@@ -26,7 +26,7 @@ async function sendWelcome(email: string, tier: "free" | "pro" | "terminal"): Pr
   const subject =
     tier === "free"
       ? "You're on the GIGASCOPE daily digest"
-      : "You're a charter Investor — $9/mo locked for life";
+      : "You're a charter member — $9/mo locked for life";
   try {
     await resend.emails.send({
       from: `GIGASCOPE <${from}>`,

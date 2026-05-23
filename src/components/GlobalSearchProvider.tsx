@@ -5,7 +5,7 @@ import GlobalSearch from "./GlobalSearch";
 const STATIC_PAGES: Array<{ title: string; href: string; subtitle: string }> = [
   { title: "News", href: "/news", subtitle: "Aggregated headlines across the Musk empire" },
   { title: "Calendar", href: "/calendar", subtitle: "Catalysts + milestones, chronological" },
-  { title: "Investor tier", href: "/investor", subtitle: "Alerts, digest, downloads · $9 early bird" },
+  { title: "Charter membership", href: "/pro", subtitle: "Alerts, digest, downloads · $9 charter" },
   { title: "Timeline", href: "/timeline", subtitle: "Site milestone timeline" },
   { title: "Compare", href: "/compare", subtitle: "Before/after satellite slider" },
   { title: "Products", href: "/products", subtitle: "Component breakdowns" },

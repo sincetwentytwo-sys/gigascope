@@ -4,7 +4,6 @@ import { Redis } from "@upstash/redis";
 import { Resend } from "resend";
 import CatalystAlertEmail, { type CatalystAlertWindow } from "@/emails/catalyst-alert";
 import { unsubHeaders } from "@/lib/unsubscribe";
-import { TICKERS } from "@/data/tickers";
 import { factories } from "@/data/factories";
 import { isTelegramConfigured, sendTelegramMessage } from "@/lib/telegram";
 
@@ -83,16 +82,16 @@ function formatCatalystForTelegram(
   // 4-6 line Markdown message. Emoji is fine in Telegram body — renders
   // natively across mobile/desktop clients.
   return [
-    `Catalyst ${windowTag(window)} — *${escapeMd(catalyst.symbol)}*`,
+    `Milestone ${windowTag(window)} — *${escapeMd(catalyst.symbol)}*`,
     `*${escapeMd(catalyst.label)}*`,
     `${catalyst.date} · ${escapeMd(catalyst.confidence)} confidence`,
     `https://gigascope.xyz/calendar`,
   ].join("\n");
 }
 
-// Stable per-catalyst key: sha256(symbol|date|label) → first 16 hex chars.
-// Same scheme used by unsubscribe tokens; collision risk is negligible for the
-// expected catalyst volume.
+// Stable per-milestone key: sha256(symbol|date|label) → first 16 hex chars.
+// Same scheme used by unsubscribe tokens; collision risk is negligible for
+// the expected milestone volume.
 function catalystKey(symbol: string, date: string, label: string): string {
   return crypto
     .createHash("sha256")
@@ -110,7 +109,7 @@ interface EligibleCatalyst {
   key: string;
 }
 
-// 400 days — well beyond a single catalyst's relevance horizon. Flag holds
+// 400 days — well beyond a single milestone's relevance horizon. Flag holds
 // long enough that a delayed cron, deploy, or re-run never double-sends.
 const FLAG_TTL_SECONDS = 400 * 24 * 60 * 60;
 
@@ -139,30 +138,11 @@ export async function POST(req: Request) {
   const todayMid = todayUtcMidnight(now);
   const DAY_MS = 86400_000;
 
-  // 1) Collect eligible catalysts across both data sources.
-  //    Calendar page (src/app/calendar/page.tsx) renders the union of
-  //    TICKERS.catalysts + factories.milestones — we mirror that here.
-  //    TODO: most TICKERS catalysts are quarterly/yearly ("2026-Q3", "2027");
-  //    only entries with full YYYY-MM-DD dates qualify for T-N alerting.
+  // 1) Collect eligible milestones from factories.json. T-N alerting requires
+  //    day-precision; quarterly/yearly milestones ("2026-Q3", "2027") are
+  //    intentionally skipped — they show up in the /calendar page but never
+  //    trigger an email alert.
   const eligible: EligibleCatalyst[] = [];
-
-  for (const t of TICKERS) {
-    for (const c of t.catalysts ?? []) {
-      const ts = parseIsoDateUtc(c.date);
-      if (ts === null) continue;
-      const daysUntil = Math.round((ts - todayMid) / DAY_MS);
-      const w = windowFor(daysUntil);
-      if (!w) continue;
-      eligible.push({
-        symbol: t.symbol,
-        label: c.label,
-        date: c.date,
-        confidence: c.confidence ?? "unspecified",
-        window: w,
-        key: catalystKey(t.symbol, c.date, c.label),
-      });
-    }
-  }
 
   for (const f of factories) {
     for (const m of f.milestones ?? []) {
@@ -172,8 +152,9 @@ export async function POST(req: Request) {
       const daysUntil = Math.round((ts - todayMid) / DAY_MS);
       const w = windowFor(daysUntil);
       if (!w) continue;
-      // Use the factory slug as the "symbol" surface — it's what the calendar
-      // page shows as the entity tag for milestones.
+      // Use the factory slug (uppercased) as the "symbol" surface — matches
+      // what the calendar page shows as the entity tag for milestones, and
+      // keeps the CatalystAlert email signature unchanged.
       eligible.push({
         symbol: f.slug.toUpperCase(),
         label: `${f.name}: ${m.text}`,

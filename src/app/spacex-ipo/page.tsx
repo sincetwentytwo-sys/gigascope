@@ -171,7 +171,7 @@ export default function SpaceXIPOPage() {
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <Link
-              href="/investor"
+              href="/pro"
               className="px-4 py-2 rounded bg-white text-black text-sm font-bold hover:opacity-85"
             >
               See the charter tier →
@@ -284,7 +284,7 @@ export default function SpaceXIPOPage() {
             </p>
             <div className="flex flex-wrap gap-3 mb-6">
               <Link
-                href="/investor"
+                href="/pro"
                 className="px-4 py-2 rounded bg-text text-bg text-sm font-bold hover:opacity-85"
               >
                 Join charter waitlist →

@@ -62,7 +62,7 @@ export async function POST(req: Request) {
   }
 
   const stripe = new Stripe(stripeKey, {
-    apiVersion: "2024-12-18.acacia" as Stripe.LatestApiVersion,
+    apiVersion: "2025-02-24.acacia" as Stripe.LatestApiVersion,
   });
 
   const sig = req.headers.get("stripe-signature");
@@ -119,7 +119,7 @@ export async function POST(req: Request) {
         });
         await r.zadd("subscribers:timeline", { score: Date.now(), member: email });
         // High-water mark counter — never decremented. Drives the "X of 100
-        // charter spots taken" badge on /investor.
+        // charter spots taken" badge on /pro.
         await r.incr("subscribers:charter:count");
         break;
       }

@@ -71,7 +71,7 @@ export default function DripD30({ email }: DripProps) {
           </Text>
 
           <Text style={text}>
-            On the long game: the Investor tier opens charter pricing at $9/mo
+            On the long game: charter membership opens charter pricing at $9/mo
             (first 100 subscribers, locked for life). Billing isn&apos;t live yet —
             when it opens, charter subscribers go first via a separate email.
             No action needed today.

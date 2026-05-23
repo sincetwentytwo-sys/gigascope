@@ -22,42 +22,63 @@ function authorized(req: Request): boolean {
   return got === `Bearer ${expected}` || got === expected;
 }
 
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function renderHtml(data: {
-  upcomingCatalysts: Array<{ symbol: string; date: string; label: string }>;
-  freshNews: Array<{ symbol: string; title: string; link: string }>;
+  upcomingMilestones: Array<{ siteSlug: string; site: string; company: string; date: string; text: string }>;
+  freshNews: Array<{ source: string; title: string; link: string }>;
 }): string {
-  const cat = data.upcomingCatalysts
+  const milestones = data.upcomingMilestones
     .slice(0, 8)
     .map(
-      (c) =>
-        `<tr><td style="padding:6px 8px;font-family:monospace;font-size:11px;color:#86868b">${c.date}</td><td style="padding:6px 8px;font-size:14px"><b>${c.symbol}</b> &mdash; ${c.label}</td></tr>`,
+      (m) =>
+        `<tr>` +
+          `<td style="padding:6px 8px;font-family:monospace;font-size:11px;color:#86868b;white-space:nowrap;vertical-align:top">${escapeHtml(m.date)}</td>` +
+          `<td style="padding:6px 8px;font-size:14px;vertical-align:top">` +
+            `<a href="https://gigascope.xyz/site/${encodeURIComponent(m.siteSlug)}" style="color:#0a0a0a;text-decoration:none">` +
+              `<b>${escapeHtml(m.site)}</b>` +
+            `</a>` +
+            ` &mdash; ${escapeHtml(m.text)}` +
+          `</td>` +
+        `</tr>`,
     )
     .join("");
   const news = data.freshNews
     .slice(0, 6)
     .map(
       (n) =>
-        `<li style="margin:6px 0;font-size:13px;line-height:1.4"><a href="${n.link}" style="color:#0066cc;text-decoration:none"><b>[${n.symbol}]</b> ${n.title}</a></li>`,
+        `<li style="margin:6px 0;font-size:13px;line-height:1.4">` +
+          `<a href="${encodeURI(n.link)}" style="color:#0066cc;text-decoration:none">` +
+            `<b>[${escapeHtml(n.source)}]</b> ${escapeHtml(n.title)}` +
+          `</a>` +
+        `</li>`,
     )
     .join("");
   return `<!doctype html><html><body style="font-family:-apple-system,system-ui,sans-serif;color:#1d1d1f;max-width:600px;margin:0 auto;padding:24px">
     <h1 style="font-size:22px;margin:0 0 8px">GIGASCOPE digest</h1>
-    <div style="color:#86868b;font-size:13px;margin-bottom:24px">Watch Musk's empire get built, one satellite frame at a time · <a href="https://gigascope.xyz" style="color:#86868b">gigascope.xyz</a></div>
-    <h2 style="font-size:14px;text-transform:uppercase;letter-spacing:0.05em;color:#86868b;margin:24px 0 8px">Catalysts ahead</h2>
-    <table style="width:100%;border-collapse:collapse">${cat || '<tr><td style="padding:8px;color:#86868b;font-size:13px">No upcoming catalysts in window.</td></tr>'}</table>
+    <div style="color:#86868b;font-size:13px;margin-bottom:24px">Watch Musk's empire get built, one satellite frame at a time &middot; <a href="https://gigascope.xyz" style="color:#86868b">gigascope.xyz</a></div>
+    <h2 style="font-size:14px;text-transform:uppercase;letter-spacing:0.05em;color:#86868b;margin:24px 0 8px">Milestones ahead</h2>
+    <table style="width:100%;border-collapse:collapse">${milestones || '<tr><td style="padding:8px;color:#86868b;font-size:13px">No upcoming milestones in window.</td></tr>'}</table>
     <h2 style="font-size:14px;text-transform:uppercase;letter-spacing:0.05em;color:#86868b;margin:24px 0 8px">Last 24h news</h2>
     <ul style="padding-left:18px;margin:0">${news || '<li style="color:#86868b">Quiet news cycle.</li>'}</ul>
     <hr style="margin:24px 0;border:none;border-top:1px solid #e5e5e7" />
     <div style="font-size:11px;color:#86868b">
       You're receiving this because you signed up at gigascope.xyz. Forward freely.
-      <br/><a href="https://gigascope.xyz" style="color:#86868b">gigascope.xyz</a> &middot; <a href="https://gigascope.xyz/investor" style="color:#86868b">Investor tier</a>
+      <br/><a href="https://gigascope.xyz" style="color:#86868b">gigascope.xyz</a> &middot; <a href="https://gigascope.xyz/pro" style="color:#86868b">Charter membership</a>
     </div>
   </body></html>`;
 }
 
 async function fetchDigest(origin: string): Promise<{
-  upcomingCatalysts: Array<{ symbol: string; date: string; label: string }>;
-  freshNews: Array<{ symbol: string; title: string; link: string }>;
+  upcomingMilestones: Array<{ siteSlug: string; site: string; company: string; date: string; text: string }>;
+  freshNews: Array<{ source: string; title: string; link: string }>;
 }> {
   const res = await fetch(`${origin}/api/digest`, { cache: "no-store" });
   return res.json();

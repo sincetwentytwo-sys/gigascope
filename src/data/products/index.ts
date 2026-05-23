@@ -1,23 +1,38 @@
 /**
- * Product 3D breakdown contract.
+ * Product breakdown contract.
  *
- * Each ProductSpec drives a generic <Product3DViewer/> using procedural
- * three.js primitives (cylinder/cone/box/sphere/torus/ring) — NO GLB/FBX.
- * Parts are listed in `parts[]`; each renders as a clickable mesh that
- * surfaces its `name` + `description` (and optional `href`) in a side panel.
+ * Each ProductSpec drives <Product2DViewer/> — a real reference photo with
+ * numbered SVG hotspot dots overlaid at normalized image coords. Clicking a
+ * dot (or the matching numbered legend entry) surfaces that part's
+ * description and optional outbound link.
+ *
+ * The viewer renders the main photo at
+ *   /public/products/photos/<slug>.jpg
+ * Hotspots are drawn at part.hotspot = { x, y } with x,y ∈ [0,1] (top-left
+ * origin). Parts without a hotspot appear in the legend only.
  *
  * Adding a new product:
  *   1. Create `src/data/products/<slug>.ts` exporting a `ProductSpec` whose
  *      `slug` matches the file name and the route `/products/<slug>`.
- *   2. Register it in `KNOWN_PRODUCTS` below (alphabetical-ish, by category).
- *   3. The /products hub and [slug] static params pick it up automatically.
+ *   2. Drop the reference photo at `/public/products/photos/<slug>.jpg`
+ *      (or `.svg` and set `imageType: "svg"` for line-art schematics).
+ *   3. Add CC-BY / press-kit attribution via `photoCredit` or `mainCredit`.
+ *   4. Register the spec in `KNOWN_PRODUCTS` below.
+ *   5. The /products hub and [slug] static params pick it up automatically.
  *
  * Conventions:
- *   - Units are arbitrary scene-units; build engines around ~3-5 units tall
- *     so a single `cameraPosition` like [6, 4, 8] frames them well.
- *   - Part descriptions: 150-300 chars, technical, "why this matters".
- *   - Use `metalness` ~0.7-0.95 for metal, `roughness` ~0.2-0.5.
+ *   - Each part needs `id`, `name`, `description` (150-300 chars,
+ *     technical, "why this matters"), and `color` (legend dot tint).
+ *   - `hotspot` is optional — only add for parts visible in the photo.
+ *     Use normalized coords (0,0 = top-left, 1,1 = bottom-right).
  *   - `relatedSites` are factory slugs from `src/data/factories.ts`.
+ *
+ * Legacy 3D fields (`position`, `rotation`, `geometry`, `args`, `metalness`,
+ * `roughness`, `emissive` on PartSpec; `cameraPosition`, `cameraTarget`,
+ * `cameraMinDistance`, `cameraMaxDistance`, `cutawayAxis`, `background` on
+ * ProductSpec) remain on the types for back-compat with existing product
+ * data files but are NO LONGER READ by the active viewer. New products may
+ * safely omit them.
  */
 
 export type GeometryKind =
@@ -32,16 +47,21 @@ export type PartSpec = {
   id: string;
   name: string;
   description: string;
-  /** Legacy 3D viewer fields — kept optional for back-compat with the
-   *  original procedural-3D dataset. The current 2D photo/SVG viewer only
-   *  uses `name`, `description`, `color`, and `hotspot`. */
+  /** @deprecated 3D viewer field, no longer used. Kept optional for back-compat
+   *  with existing product data files; the active 2D viewer ignores it. */
   position?: [number, number, number];
+  /** @deprecated 3D viewer field, no longer used. */
   rotation?: [number, number, number];
+  /** @deprecated 3D viewer field, no longer used. */
   geometry?: GeometryKind;
+  /** @deprecated 3D viewer field, no longer used. */
   args?: Array<number | boolean>;
   color: string;
+  /** @deprecated 3D viewer field, no longer used. */
   emissive?: string;
+  /** @deprecated 3D viewer field, no longer used. */
   metalness?: number;
+  /** @deprecated 3D viewer field, no longer used. */
   roughness?: number;
   href?: string;
   /** Cutaway hint. If true, render as low-opacity wireframe so internals show through.
@@ -79,15 +99,17 @@ export type ProductSpec = {
   aka?: string;
   category: ProductCategory;
   description: string;
+  /** @deprecated 3D viewer field, no longer used. */
   cameraPosition: [number, number, number];
+  /** @deprecated 3D viewer field, no longer used. */
   cameraTarget?: [number, number, number];
+  /** @deprecated 3D viewer field, no longer used. */
   cameraMinDistance?: number;
+  /** @deprecated 3D viewer field, no longer used. */
   cameraMaxDistance?: number;
-  /** Which axis the cutaway plane is perpendicular to. Default "z" — slices
-   *  the model along its X-Y plane, which is correct for products whose long
-   *  axis runs along X (Cybertruck, Model 3, etc). Set to "x" for products
-   *  whose long axis runs along Z (e.g. Cybercab). */
+  /** @deprecated 3D viewer field, no longer used. */
   cutawayAxis?: "x" | "z";
+  /** @deprecated 3D viewer field, no longer used. */
   background?: string;
   /** Reference image type — "jpg" by default (real photo), "svg" for stylised
    *  schematic diagrams (used when a CC photo isn't available). */

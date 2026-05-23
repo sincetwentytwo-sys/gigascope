@@ -1,14 +1,12 @@
 import { NextResponse } from "next/server";
 import { factories } from "@/data/factories";
-import { TICKERS } from "@/data/tickers";
-import { EDGES } from "@/data/supplyChain";
 import { listProducts } from "@/data/products";
 
 export const revalidate = 3600;
 
-type Dataset = "factories" | "tickers" | "milestones" | "supply-chain" | "products";
+type Dataset = "factories" | "milestones" | "products";
 
-const DATASETS: Dataset[] = ["factories", "tickers", "milestones", "supply-chain", "products"];
+const DATASETS: Dataset[] = ["factories", "milestones", "products"];
 
 function toCsv(rows: Array<Record<string, unknown>>): string {
   if (rows.length === 0) return "";
@@ -46,24 +44,6 @@ function buildPayload(name: Dataset): Array<Record<string, unknown>> {
         employees: f.employees,
         lastUpdated: f.lastUpdated,
       }));
-    case "tickers":
-      return TICKERS.map((t) => ({
-        symbol: t.symbol,
-        yahooSymbol: t.yahooSymbol,
-        name: t.name,
-        shortName: t.shortName,
-        koreanName: t.koreanName,
-        exchange: t.exchange,
-        hq: t.hq,
-        ceo: t.ceo,
-        founded: t.founded,
-        sectors: t.sectors.join("|"),
-        marketCapB: t.marketCapB,
-        marketCapAsOf: t.marketCapAsOf,
-        thesis: t.thesis,
-        featured: !!t.featured,
-        lastVerified: t.lastVerified,
-      }));
     case "milestones":
       return factories.flatMap((f) =>
         (f.milestones ?? []).map((m) => ({
@@ -77,16 +57,6 @@ function buildPayload(name: Dataset): Array<Record<string, unknown>> {
           lastVerified: m.lastVerified,
         })),
       );
-    case "supply-chain":
-      return EDGES.map((e) => ({
-        from: e.from,
-        to: e.to,
-        flow: e.flow,
-        criticality: e.criticality,
-        fromTier: e.fromTier,
-        toTier: e.toTier,
-        sourceUrl: e.source?.url ?? "",
-      }));
     case "products":
       return listProducts().map((p) => ({
         slug: p.slug,

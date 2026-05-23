@@ -8,7 +8,7 @@ export const modelY: ProductSpec = {
   aka: "Juniper (2025+ refresh)",
   category: "vehicle",
   description:
-    "Compact crossover SUV (4.79 x 1.92 x 1.62 m) built on a shared platform with Model 3. World's best-selling EV by volume and the first production car with front + rear megacastings plus a 4680 structural battery pack. Juniper refresh (2025) adds full-width front + rear lightbars, soft-close doors, an 8\" rear screen, and acoustic glass.",
+    "Compact crossover SUV (4.79 x 1.92 x 1.62 m) built on a shared platform with Model 3. World's best-selling EV by volume and the platform for Tesla's mass-market autonomy, with 4M+ units delivered globally since 2020. The first production car with front + rear megacastings plus a 4680 structural battery pack. Juniper refresh (2025) adds a Cybertruck-inspired front fascia, full-width front + rear lightbars, an 8\" rear-passenger touchscreen, soft-close doors, and an acoustic-laminated cabin that drops interior noise ~30%.",
   cameraPosition: [4.9, 4.0, 7.1],
   cameraTarget: [0, 0.73, 0],
   cameraMinDistance: 3,
@@ -140,6 +140,7 @@ export const modelY: ProductSpec = {
       emissive: "#ff2222",
       metalness: 0.4,
       roughness: 0.3,
+      hotspot: { x: 0.05, y: 0.45 },
     },
     {
       id: "front-fascia",
@@ -166,6 +167,7 @@ export const modelY: ProductSpec = {
       color: "#1e2228",
       metalness: 0.6,
       roughness: 0.35,
+      hotspot: { x: 0.08, y: 0.55 },
     },
     {
       id: "structural-battery",
@@ -178,6 +180,7 @@ export const modelY: ProductSpec = {
       color: "#2a2f3a",
       metalness: 0.4,
       roughness: 0.6,
+      hotspot: { x: 0.40, y: 0.85 },
     },
     {
       id: "front-drive-unit",
@@ -191,6 +194,7 @@ export const modelY: ProductSpec = {
       color: "#6a7280",
       metalness: 0.85,
       roughness: 0.3,
+      hotspot: { x: 0.72, y: 0.80 },
     },
     {
       id: "rear-drive-unit",
@@ -204,6 +208,7 @@ export const modelY: ProductSpec = {
       color: "#8a939e",
       metalness: 0.9,
       roughness: 0.25,
+      hotspot: { x: 0.30, y: 0.80 },
     },
     {
       id: "megacast-front",
@@ -216,6 +221,7 @@ export const modelY: ProductSpec = {
       color: "#9aa2ad",
       metalness: 0.8,
       roughness: 0.45,
+      hotspot: { x: 0.85, y: 0.65 },
     },
     {
       id: "megacast-rear",
@@ -228,6 +234,7 @@ export const modelY: ProductSpec = {
       color: "#9aa2ad",
       metalness: 0.8,
       roughness: 0.45,
+      hotspot: { x: 0.18, y: 0.78 },
     },
     {
       id: "bpillar-cam-l",
@@ -240,6 +247,7 @@ export const modelY: ProductSpec = {
       color: "#0a0a0c",
       metalness: 0.2,
       roughness: 0.3,
+      hotspot: { x: 0.55, y: 0.32 },
     },
     {
       id: "bpillar-cam-r",
@@ -264,6 +272,7 @@ export const modelY: ProductSpec = {
       color: "#0a0a0c",
       metalness: 0.2,
       roughness: 0.3,
+      hotspot: { x: 0.70, y: 0.30 },
     },
     {
       id: "front-cam-narrow",

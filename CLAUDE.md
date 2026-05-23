@@ -14,7 +14,7 @@ Tesla, SpaceX, xAI, Neuralink, The Boring Company 5개사의 건설/생산 사�
 ## 기술 스택
 - Next.js 16 (App Router, TypeScript, Turbopack)
 - React 19, Tailwind CSS 4
-- Leaflet + react-leaflet (위성 지도, before/after 슬라이더)
+- Leaflet (위성 지도, before/after 슬라이더)
 - Resend + @react-email/components (트랜잭셔널 이메일)
 - Upstash Redis (구독자 저장, 방문 카운터)
 - Stripe (결제 — 코드만 있고 LIVE 아님)
@@ -30,7 +30,7 @@ Tesla, SpaceX, xAI, Neuralink, The Boring Company 5개사의 건설/생산 사�
 | `/` | 풀블리드 Giga Texas 위성 타임랩스 히어로 + 회사별 사이트 그리드 |
 | `/site/[slug]` | 위성지도 (ESRI/Sentinel-2 전환) + 스펙 + 마일스톤 + 뉴스 |
 | `/factory/[slug]` | `/site/[slug]` 리다이렉트/별칭 |
-| `/products` + `/products/[slug]` | 25개 제품 2D 분해도 (Product2DViewer) |
+| `/products` + `/products/[slug]` | 13개 제품 2D 분해도 (Product2DViewer) |
 | `/compare` | Sentinel-2 2019 baseline ↔ ESRI 최신 드래그 슬라이더 |
 | `/timeline` | 전체 사이트 통합 마일스톤 타임라인 |
 | `/news`, `/calendar`, `/methodology`, `/about`, `/investor`, `/pro`, `/downloads` | 보조 페이지 |
@@ -38,7 +38,7 @@ Tesla, SpaceX, xAI, Neuralink, The Boring Company 5개사의 건설/생산 사�
 ## 핵심 파일
 - `public/data/factories.json` — 16개 사이트 정의 (canonical)
 - `src/data/factories.ts` — JSON 로더 + `getSite/getFactory/getSitesByCompany`
-- `src/data/products/index.ts` — `KNOWN_PRODUCTS` 25개 등록
+- `src/data/products/index.ts` — `KNOWN_PRODUCTS` 13개 등록
 - `src/data/types.ts` — `Factory`, `Company`, `Milestone`, `TileSource`
 - `src/lib/tiles.ts` — 타일 소스 (CartoDB Dark, ESRI, Sentinel-2 EOX)
 - `src/lib/unsubscribe.ts` — 서명된 unsubscribe 토큰
@@ -55,7 +55,7 @@ Tesla, SpaceX, xAI, Neuralink, The Boring Company 5개사의 건설/생산 사�
 
 ## Leaflet/Client Wrapper 주의사항
 - Server Component에서 `ssr: false` 사용 불가 → Client Wrapper 패턴 필수
-- `SatelliteMapWrapper.tsx`, `CompareSliderWrapper.tsx`, `FacilityMapWrapper.tsx`가 그 패턴
+- `SatelliteMapWrapper.tsx`, `CompareSliderWrapper.tsx`가 그 패턴
 
 ## 위성 타일 소스
 - **ESRI World Imagery**: 고해상도, ~3-6개월 갱신, maxZoom 19
@@ -73,7 +73,7 @@ Tesla, SpaceX, xAI, Neuralink, The Boring Company 5개사의 건설/생산 사�
 ## 운영 상태 (2026-05)
 - **Resend**: LIVE — welcome + 5단 드립 (D+3/7/14/21/30) 발송 중
 - **Billing/Stripe**: NOT LIVE — 코드는 있지만 사업자등록 보류 중. 검증 신호 (구독자 수, 응답률) 나오기 전까지 결제 활성화 보류 — 오너 명시 선호도.
-- **가격 계획**: $9/mo charter (선착 100명, 평생 고정), $19 standard, $29 long-term — UI에 표시됨, 결제는 비활성.
+- **가격 계획**: $9/mo charter (first 100, lifetime locked), $29/mo standard, $49-79/mo long-term — UI에 표시됨, 결제는 비활성.
 
 ## 배포
 - `git push origin main` → Vercel 자동 빌드/배포
@@ -84,3 +84,4 @@ Tesla, SpaceX, xAI, Neuralink, The Boring Company 5개사의 건설/생산 사�
 - `G:\jb\gigascope-master-plan-2026-05-22.md` — **canonical** master plan v1.
 - `G:\jb\gigascope-사이트개선-명세서.md` — **SUPERSEDED**. 따르지 말 것.
 - `HANDOFF.md` — 세션간 핸드오프 메모.
+- `src/data/tickers.ts` + `supplyChain.ts` removed 2026-05-24 — Musk-narrow purge. Calendar/digest/catalyst-alerts now read factories.json only.

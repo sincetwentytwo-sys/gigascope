@@ -10,7 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: lastMod, changeFrequency: "daily", priority: 1 },
     { url: `${BASE_URL}/news`, lastModified: lastMod, changeFrequency: "hourly", priority: 0.85 },
-    { url: `${BASE_URL}/investor`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${BASE_URL}/pro`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.85 },
     { url: `${BASE_URL}/spacex-ipo`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/calendar`, lastModified: lastMod, changeFrequency: "daily", priority: 0.7 },
     { url: `${BASE_URL}/downloads`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.6 },

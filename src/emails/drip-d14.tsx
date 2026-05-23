@@ -35,7 +35,7 @@ export default function DripD14({ email }: DripProps) {
 
           <Text style={text}>
             You've been on the GIGASCOPE list for two weeks. Time to lay out
-            what the Investor tier actually is — and why charter pricing exists.
+            charter membership actually is — and why charter pricing exists.
           </Text>
 
           <Text style={text}>The math, plain:</Text>
@@ -110,8 +110,8 @@ export default function DripD14({ email }: DripProps) {
             today.
           </Text>
 
-          <Link href="https://gigascope.xyz/investor" style={cta}>
-            See the Investor tier →
+          <Link href="https://gigascope.xyz/pro" style={cta}>
+            See charter membership →
           </Link>
 
           <Hr style={hr} />

@@ -56,6 +56,7 @@ export const megapack: ProductSpec = {
       color: "#7d8389",
       metalness: 0.7,
       roughness: 0.45,
+      hotspot: { x: 0.60, y: 0.15 },
     },
     {
       id: "door-left",
@@ -68,6 +69,7 @@ export const megapack: ProductSpec = {
       color: "#c8ccd1",
       metalness: 0.65,
       roughness: 0.45,
+      hotspot: { x: 0.15, y: 0.60 },
     },
     {
       id: "door-right",
@@ -80,6 +82,7 @@ export const megapack: ProductSpec = {
       color: "#c8ccd1",
       metalness: 0.65,
       roughness: 0.45,
+      hotspot: { x: 0.70, y: 0.55 },
     },
     {
       id: "module-1",
@@ -92,6 +95,7 @@ export const megapack: ProductSpec = {
       color: "#2c5f8d",
       metalness: 0.3,
       roughness: 0.6,
+      hotspot: { x: 0.25, y: 0.50 },
     },
     {
       id: "module-2",
@@ -104,6 +108,7 @@ export const megapack: ProductSpec = {
       color: "#2c5f8d",
       metalness: 0.3,
       roughness: 0.6,
+      hotspot: { x: 0.40, y: 0.65 },
     },
     {
       id: "module-3",
@@ -116,6 +121,7 @@ export const megapack: ProductSpec = {
       color: "#2c5f8d",
       metalness: 0.3,
       roughness: 0.6,
+      hotspot: { x: 0.60, y: 0.50 },
     },
     {
       id: "module-4",
@@ -128,6 +134,7 @@ export const megapack: ProductSpec = {
       color: "#2c5f8d",
       metalness: 0.3,
       roughness: 0.6,
+      hotspot: { x: 0.80, y: 0.50 },
     },
     {
       id: "pcs-inverter",
@@ -140,6 +147,7 @@ export const megapack: ProductSpec = {
       color: "#3a3a3f",
       metalness: 0.8,
       roughness: 0.3,
+      hotspot: { x: 0.90, y: 0.45 },
     },
     {
       id: "dc-bus",
@@ -152,6 +160,7 @@ export const megapack: ProductSpec = {
       color: "#c97f3a",
       metalness: 0.95,
       roughness: 0.2,
+      hotspot: { x: 0.50, y: 0.40 },
     },
     {
       id: "cooling-manifold",
@@ -165,6 +174,7 @@ export const megapack: ProductSpec = {
       color: "#4a90c2",
       metalness: 0.4,
       roughness: 0.5,
+      hotspot: { x: 0.40, y: 0.18 },
     },
     {
       id: "fire-nozzle-1",
@@ -177,6 +187,7 @@ export const megapack: ProductSpec = {
       color: "#d04040",
       metalness: 0.7,
       roughness: 0.4,
+      hotspot: { x: 0.15, y: 0.20 },
     },
     {
       id: "fire-nozzle-2",
@@ -189,6 +200,7 @@ export const megapack: ProductSpec = {
       color: "#d04040",
       metalness: 0.7,
       roughness: 0.4,
+      hotspot: { x: 0.85, y: 0.20 },
     },
     {
       id: "foundation",
@@ -201,6 +213,7 @@ export const megapack: ProductSpec = {
       color: "#6a6a6a",
       metalness: 0.1,
       roughness: 0.95,
+      hotspot: { x: 0.50, y: 0.92 },
     },
     {
       id: "lift-fl",
@@ -213,6 +226,7 @@ export const megapack: ProductSpec = {
       color: "#3a3a3f",
       metalness: 0.9,
       roughness: 0.3,
+      hotspot: { x: 0.10, y: 0.08 },
     },
     {
       id: "lift-fr",

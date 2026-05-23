@@ -64,7 +64,7 @@ const DRIPS: DripDef[] = [
     subject: "GIGASCOPE · Why $9 stays $9 — the charter math",
     react: DripD14,
     telegram:
-      "*GIGASCOPE · Day 14*\nWhy $9 stays $9 forever for charter members. The math, and where you sit on the list.\nhttps://gigascope.xyz/investor",
+      "*GIGASCOPE · Day 14*\nWhy $9 stays $9 forever for charter members. The math, and where you sit on the list.\nhttps://gigascope.xyz/pro",
   },
   {
     day: 21,
