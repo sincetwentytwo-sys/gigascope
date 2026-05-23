@@ -33,6 +33,9 @@ export default function MethodologyPage() {
     <div className="max-w-[820px] mx-auto px-6 py-10">
       <header className="mb-10">
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-3">Methodology</h1>
+        <p className="text-text leading-relaxed mb-2">
+          Raw Sentinel-2 captures + human-traced polygons.
+        </p>
         <p className="text-dim leading-relaxed">
           Where the numbers come from. The honest version, including the parts that are still aspirational.
           Last methodology refresh: <span className="font-mono">{DATA_LAST_UPDATED}</span>.
@@ -40,8 +43,8 @@ export default function MethodologyPage() {
       </header>
 
       {/* Satellite imagery */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-bold mb-3">1. Satellite imagery sources</h2>
+      <section id="raw-sentinel-2" className="mb-12">
+        <h2 className="text-2xl font-bold mb-3">1. Raw Sentinel-2 + ESRI captures</h2>
         <p className="text-sm text-dim mb-4 max-w-prose">
           Today we run on ESRI World Imagery + Sentinel-2 — both free, both with predictable refresh cadence. Planet Labs and
           Maxar are on the roadmap; we won't claim daily-revisit numbers until they're actually wired.
@@ -71,8 +74,8 @@ export default function MethodologyPage() {
       </section>
 
       {/* Progress calculation */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-bold mb-3">2. How "Progress %" is calculated</h2>
+      <section id="human-traced-polygons" className="mb-12">
+        <h2 className="text-2xl font-bold mb-3">2. Human-traced polygons — how Progress % is calculated</h2>
         <div className="p-4 rounded border border-border-custom bg-surface mb-4">
           <div className="font-mono text-sm">
             Progress % = (Built footprint area) / (Planned footprint area)
