@@ -67,9 +67,19 @@ function extractImage(itemXml: string): string | undefined {
   m = itemXml.match(/<itunes:image[^>]+href=["']([^"']+)["']/i);
   if (m) return m[1];
 
-  // First <img src="..."> inside description / content:encoded (CDATA-wrapped HTML)
-  m = itemXml.match(/<img[^>]+src=["']([^"']+)["']/i);
-  if (m) return m[1];
+  // First non-decorative <img src="..."> inside description / content:encoded.
+  // Skip Wordpress emoji (s.w.org/.../emoji/), Gravatar avatars, and old wp-includes smilies —
+  // those are common false-positives when a publication leads its post with an emoji.
+  const imgMatches = [...itemXml.matchAll(/<img[^>]+src=["']([^"']+)["']/gi)];
+  for (const im of imgMatches) {
+    const url = im[1];
+    if (
+      url.includes("s.w.org/images/core/emoji") ||
+      url.includes("gravatar.com/avatar") ||
+      url.includes("/wp-includes/images/smilies/")
+    ) continue;
+    return url;
+  }
 
   return undefined;
 }
