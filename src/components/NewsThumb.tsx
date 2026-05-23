@@ -17,9 +17,9 @@ export default function NewsThumb({
   src: string | undefined;
   source: string;
 }) {
-  const [failed, setFailed] = useState(false);
+  const [attempts, setAttempts] = useState(0);
 
-  if (!src || failed) {
+  if (!src || attempts >= 2) {
     return (
       <div className="w-full aspect-video bg-gradient-to-br from-surface to-border-custom flex items-center justify-center">
         <span className="text-dim text-xs font-mono uppercase tracking-widest">
@@ -29,13 +29,21 @@ export default function NewsThumb({
     );
   }
 
+  // On the second attempt append a cache-buster so the browser re-issues
+  // the request instead of replaying a stale failure from disk cache.
+  // CDNs that ignore unknown query params (image.cnbcfm.com, wp hosts) just
+  // serve the same image; CDNs that key on query params see it as new.
+  const finalSrc =
+    attempts === 0 ? src : `${src}${src.includes("?") ? "&" : "?"}_r=${attempts}`;
+
   // eslint-disable-next-line @next/next/no-img-element
   return (
     <img
-      src={src}
+      key={attempts}
+      src={finalSrc}
       alt=""
       loading="lazy"
-      onError={() => setFailed(true)}
+      onError={() => setAttempts((a) => a + 1)}
       className="w-full aspect-video object-cover"
     />
   );
