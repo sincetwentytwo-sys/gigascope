@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import NewsZigzag from "@/components/NewsZigzag";
 
-export const revalidate = 1800;
+// Force dynamic rendering so og:image enrichment (Upstash + per-article fetch)
+// runs on every request, not just at build time. Cache hits keep this fast
+// after the first warm; cold visits pay a one-time scrape cost.
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "News — Musk-empire build-out, primary sources — GIGASCOPE",
