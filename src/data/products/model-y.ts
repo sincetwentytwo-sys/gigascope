@@ -72,7 +72,6 @@ export const modelY: ProductSpec = {
       color: "#16181c",
       metalness: 0.5,
       roughness: 0.7,
-      hotspot: { x: 0.6500, y: 0.7000 },
     },
     {
       id: "wheel-fr",
@@ -86,6 +85,7 @@ export const modelY: ProductSpec = {
       color: "#16181c",
       metalness: 0.5,
       roughness: 0.7,
+      hotspot: { x: 0.6500, y: 0.7000 },
     },
     {
       id: "wheel-rl",
@@ -99,7 +99,6 @@ export const modelY: ProductSpec = {
       color: "#16181c",
       metalness: 0.5,
       roughness: 0.7,
-      hotspot: { x: 0.2000, y: 0.6500 },
     },
     {
       id: "wheel-rr",
@@ -113,6 +112,7 @@ export const modelY: ProductSpec = {
       color: "#16181c",
       metalness: 0.5,
       roughness: 0.7,
+      hotspot: { x: 0.2000, y: 0.6500 },
     },
     {
       id: "front-lightbar",
@@ -247,7 +247,6 @@ export const modelY: ProductSpec = {
       color: "#0a0a0c",
       metalness: 0.2,
       roughness: 0.3,
-      hotspot: { x: 0.55, y: 0.32 },
     },
     {
       id: "bpillar-cam-r",
@@ -260,6 +259,7 @@ export const modelY: ProductSpec = {
       color: "#0a0a0c",
       metalness: 0.2,
       roughness: 0.3,
+      hotspot: { x: 0.55, y: 0.32 },
     },
     {
       id: "front-cam-main",
