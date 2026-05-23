@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+import { Redis } from "@upstash/redis";
 import type { NewsItem } from "@/data/types";
 
 // Tesla-dedicated sources (all articles are relevant, no keyword filter needed)
@@ -194,6 +196,121 @@ async function fetchFeed(url: string, source: string): Promise<RichNewsItem[]> {
 }
 
 /**
+ * Lazy Upstash client. Mirrors the pattern used by other API routes
+ * (src/app/api/subscribe/route.ts etc.). If credentials aren't set we
+ * return null and callers skip caching/enrichment.
+ */
+function getRedis(): Redis | null {
+  const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
+  if (!url || !token) return null;
+  return new Redis({ url, token });
+}
+
+/** Short stable cache key per article URL — first 16 hex chars of sha256. */
+function hashUrl(url: string): string {
+  return createHash("sha256").update(url).digest("hex").slice(0, 16);
+}
+
+/**
+ * Fetch the article HTML and pull og:image (then twitter:image as fallback).
+ * 4-second timeout — slow publishers get skipped rather than blocking the feed.
+ * Any error (network, timeout, non-2xx, no match) returns undefined.
+ */
+async function scrapeOgImage(articleUrl: string): Promise<string | undefined> {
+  try {
+    const res = await fetch(articleUrl, {
+      headers: { "User-Agent": "GIGASCOPE/1.0 (+https://gigascope.xyz)" },
+      signal: AbortSignal.timeout(4000),
+    });
+    if (!res.ok) return undefined;
+    const html = await res.text();
+    // og:image — attribute order varies, try both property-first and content-first.
+    let m = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i);
+    if (m) return m[1];
+    m = html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
+    if (m) return m[1];
+    // Fall back to twitter:image
+    m = html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i);
+    if (m) return m[1];
+    m = html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i);
+    if (m) return m[1];
+    return undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * For items where RSS didn't include an image, scrape og:image from the
+ * article page. Results cached in Upstash for 1 day; "none" is cached to
+ * avoid retrying URLs that genuinely have no og:image every render.
+ * Concurrency capped at 6 to avoid hammering publishers + Vercel limits.
+ */
+async function enrichImages(items: RichNewsItem[]): Promise<RichNewsItem[]> {
+  // Skip during the static-prerender build phase. The Upstash REST SDK uses
+  // `fetch` with `cache: 'no-store'` internally, which flips any caller page
+  // from ISR to dynamic at build time even when we catch the error. ISR
+  // revalidation (running in a serverless function, not the build) will
+  // populate the cache, so users see real thumbnails within one revalidate
+  // tick (~30 min) of the first deploy. Without this guard, /, /news, and
+  // /site/[slug] all become dynamic-rendered.
+  if (process.env.NEXT_PHASE === "phase-production-build") return items;
+
+  const r = getRedis();
+  if (!r) return items;
+
+  const missing = items.filter((i) => !i.image);
+  if (missing.length === 0) return items;
+
+  const keys = missing.map((i) => `og:image:${hashUrl(i.link)}`);
+  let cached: Array<string | null> = [];
+  try {
+    cached = (await r.mget<Array<string | null>>(...keys)) ?? [];
+  } catch (e) {
+    console.error("og:image mget failed", e);
+    // Fall through with empty cached array — we'll treat everything as a miss.
+  }
+
+  const queue: Array<{ item: RichNewsItem; key: string }> = [];
+  for (let i = 0; i < missing.length; i++) {
+    const v = cached[i];
+    if (typeof v === "string" && v !== "none") {
+      missing[i].image = v;
+    } else if (v === "none") {
+      // Known no og:image — leave undefined for gradient fallback.
+    } else {
+      queue.push({ item: missing[i], key: keys[i] });
+    }
+  }
+
+  if (queue.length === 0) return items;
+
+  const concurrency = Math.min(6, queue.length);
+  const workers = Array.from({ length: concurrency }, async () => {
+    while (queue.length) {
+      const next = queue.shift();
+      if (!next) break;
+      const { item, key } = next;
+      const img = await scrapeOgImage(item.link);
+      try {
+        if (img) {
+          item.image = img;
+          await r.set(key, img, { ex: 86400 });
+        } else {
+          await r.set(key, "none", { ex: 86400 });
+        }
+      } catch (e) {
+        // Cache write failure is non-fatal — image (if any) is already set on item.
+        console.error("og:image set failed", e);
+      }
+    }
+  });
+  await Promise.all(workers);
+  return items;
+}
+
+/**
  * Fetch all Tesla / Musk-empire RSS feeds, dedupe by title prefix, and
  * return newest first. Used by both NewsFeed (compact list) and
  * NewsZigzag (thumbnail grid) so source list + parsing stay in one place.
@@ -223,7 +340,7 @@ export async function fetchAllNews(): Promise<RichNewsItem[]> {
 
   // Sort by date (newest first) and deduplicate by title prefix
   const seen = new Set<string>();
-  return allItems
+  const merged = allItems
     .sort((a, b) => b.timestamp - a.timestamp)
     .filter((item) => {
       const key = item.title.toLowerCase().slice(0, 40);
@@ -231,6 +348,10 @@ export async function fetchAllNews(): Promise<RichNewsItem[]> {
       seen.add(key);
       return true;
     });
+
+  // Scrape og:image for items the RSS didn't include images for. Cached in
+  // Upstash for 24h. Gracefully no-ops when Upstash isn't configured.
+  return await enrichImages(merged);
 }
 
 /** Pretty-print a relative time. Server-rendered against build time. */
