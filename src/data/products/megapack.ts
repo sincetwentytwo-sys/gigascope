@@ -18,7 +18,19 @@ export const megapack: ProductSpec = {
     license: "CC BY-SA (see source)",
     sourceUrl: "https://commons.wikimedia.org/wiki/Category:Tesla_Megapack",
   },
+  // Side cross-section drawn in-house — left half intact white container,
+  // right half cut away to expose the four LFP modules, glycol cold plate,
+  // DC busbar, PCS inverter, BMS, fire-suppression and roof chiller. CC0.
+  cutawayImage: {
+    src: "/products/photos/megapack/cutaway.svg",
+    credit: {
+      source: "Gigascope original SVG",
+      url: "https://github.com/sincetwentytwo-sys/gigascope/blob/main/public/products/photos/megapack/cutaway.svg",
+      license: "CC0",
+    },
+  },
   parts: [
+    // ─── Exterior-visible parts: keep `hotspot` AND `cutawayHotspot`. ───
     {
       id: "shell",
       name: "Enclosure Shell",
@@ -30,7 +42,10 @@ export const megapack: ProductSpec = {
       color: "#dcdde0",
       metalness: 0.6,
       roughness: 0.5,
-      hotspot: { x: 0.4500, y: 0.5500 },
+      // Exterior: front face of the left Megapack body.
+      hotspot: { x: 0.4000, y: 0.4000 },
+      // Cutaway: intact left half of the container body (above TESLA wordmark).
+      cutawayHotspot: { x: 0.2800, y: 0.4000 },
     },
     {
       id: "top-panel",
@@ -43,7 +58,10 @@ export const megapack: ProductSpec = {
       color: "#9aa0a6",
       metalness: 0.7,
       roughness: 0.4,
-      hotspot: { x: 0.4500, y: 0.3200 },
+      // Exterior: top vent slit row on the left Megapack.
+      hotspot: { x: 0.4000, y: 0.3000 },
+      // Cutaway: left-half slit panel.
+      cutawayHotspot: { x: 0.2800, y: 0.2430 },
     },
     {
       id: "hvac",
@@ -56,7 +74,10 @@ export const megapack: ProductSpec = {
       color: "#7d8389",
       metalness: 0.7,
       roughness: 0.45,
-      hotspot: { x: 0.60, y: 0.15 },
+      // Exterior: row of round chiller-vent caps on top of the left container.
+      hotspot: { x: 0.5500, y: 0.2700 },
+      // Cutaway: cut chiller box on the right half (compressor coil visible).
+      cutawayHotspot: { x: 0.6290, y: 0.1930 },
     },
     {
       id: "door-left",
@@ -69,7 +90,10 @@ export const megapack: ProductSpec = {
       color: "#c8ccd1",
       metalness: 0.65,
       roughness: 0.45,
-      hotspot: { x: 0.15, y: 0.60 },
+      // Exterior: left half of the left Megapack front face.
+      hotspot: { x: 0.3200, y: 0.4900 },
+      // Cutaway: leftmost door panel on the intact half.
+      cutawayHotspot: { x: 0.2200, y: 0.6900 },
     },
     {
       id: "door-right",
@@ -82,8 +106,30 @@ export const megapack: ProductSpec = {
       color: "#c8ccd1",
       metalness: 0.65,
       roughness: 0.45,
-      hotspot: { x: 0.70, y: 0.55 },
+      // Exterior: right Megapack front, on visible door panel.
+      hotspot: { x: 0.7800, y: 0.4900 },
+      // Cutaway: rightmost door panel still on the intact half.
+      cutawayHotspot: { x: 0.4400, y: 0.6900 },
     },
+    {
+      id: "foundation",
+      name: "Foundation Pad",
+      description:
+        "Reinforced concrete pad, ~8 x 2 m, sized to spread the ~38 metric-ton fully loaded Megapack across a soil bearing pressure of <150 kPa. Cast-in J-bolts anchor the container against 2.5g seismic loading and 250 km/h wind shear.",
+      position: [0, -0.05, 0],
+      geometry: "box",
+      args: [8.0, 0.1, 2.0],
+      color: "#6a6a6a",
+      metalness: 0.1,
+      roughness: 0.95,
+      // Exterior: concrete pad under both Megapacks.
+      hotspot: { x: 0.5000, y: 0.7300 },
+      // Cutaway: full-width grey pad below the container.
+      cutawayHotspot: { x: 0.5000, y: 0.9050 },
+    },
+
+    // ─── Internal parts: cutaway only (no exterior hotspot — not visible    ─
+    // ─── from outside the white steel container).                            ─
     {
       id: "module-1",
       name: "LFP Battery Module 1",
@@ -95,7 +141,8 @@ export const megapack: ProductSpec = {
       color: "#2c5f8d",
       metalness: 0.3,
       roughness: 0.6,
-      hotspot: { x: 0.25, y: 0.50 },
+      // Upper half of LFP 1 column on cutaway.
+      cutawayHotspot: { x: 0.6240, y: 0.5000 },
     },
     {
       id: "module-2",
@@ -108,7 +155,8 @@ export const megapack: ProductSpec = {
       color: "#2c5f8d",
       metalness: 0.3,
       roughness: 0.6,
-      hotspot: { x: 0.40, y: 0.65 },
+      // Lower half of LFP 2 column — staggered so adjacent dots clear by y.
+      cutawayHotspot: { x: 0.7010, y: 0.7250 },
     },
     {
       id: "module-3",
@@ -121,7 +169,8 @@ export const megapack: ProductSpec = {
       color: "#2c5f8d",
       metalness: 0.3,
       roughness: 0.6,
-      hotspot: { x: 0.60, y: 0.50 },
+      // Upper half of LFP 3 column.
+      cutawayHotspot: { x: 0.7790, y: 0.5000 },
     },
     {
       id: "module-4",
@@ -134,7 +183,8 @@ export const megapack: ProductSpec = {
       color: "#2c5f8d",
       metalness: 0.3,
       roughness: 0.6,
-      hotspot: { x: 0.80, y: 0.50 },
+      // Lower half of LFP 4 column.
+      cutawayHotspot: { x: 0.8560, y: 0.7250 },
     },
     {
       id: "pcs-inverter",
@@ -147,7 +197,8 @@ export const megapack: ProductSpec = {
       color: "#3a3a3f",
       metalness: 0.8,
       roughness: 0.3,
-      hotspot: { x: 0.90, y: 0.45 },
+      // Dark fin-cooled inverter slab at far right of the cutaway.
+      cutawayHotspot: { x: 0.9190, y: 0.4500 },
     },
     {
       id: "dc-bus",
@@ -160,7 +211,8 @@ export const megapack: ProductSpec = {
       color: "#c97f3a",
       metalness: 0.95,
       roughness: 0.2,
-      hotspot: { x: 0.50, y: 0.40 },
+      // Horizontal copper bar across the top of the cutaway.
+      cutawayHotspot: { x: 0.6500, y: 0.3130 },
     },
     {
       id: "cooling-manifold",
@@ -174,7 +226,8 @@ export const megapack: ProductSpec = {
       color: "#4a90c2",
       metalness: 0.4,
       roughness: 0.5,
-      hotspot: { x: 0.40, y: 0.18 },
+      // Blue glycol cold-plate band below the LFP modules.
+      cutawayHotspot: { x: 0.7400, y: 0.8400 },
     },
     {
       id: "fire-nozzle-1",
@@ -187,7 +240,8 @@ export const megapack: ProductSpec = {
       color: "#d04040",
       metalness: 0.7,
       roughness: 0.4,
-      hotspot: { x: 0.15, y: 0.20 },
+      // Red nozzle disc above module 1 area in the cutaway.
+      cutawayHotspot: { x: 0.7710, y: 0.2500 },
     },
     {
       id: "fire-nozzle-2",
@@ -200,20 +254,8 @@ export const megapack: ProductSpec = {
       color: "#d04040",
       metalness: 0.7,
       roughness: 0.4,
-      hotspot: { x: 0.85, y: 0.20 },
-    },
-    {
-      id: "foundation",
-      name: "Foundation Pad",
-      description:
-        "Reinforced concrete pad, ~8 x 2 m, sized to spread the ~38 metric-ton fully loaded Megapack across a soil bearing pressure of <150 kPa. Cast-in J-bolts anchor the container against 2.5g seismic loading and 250 km/h wind shear.",
-      position: [0, -0.05, 0],
-      geometry: "box",
-      args: [8.0, 0.1, 2.0],
-      color: "#6a6a6a",
-      metalness: 0.1,
-      roughness: 0.95,
-      hotspot: { x: 0.50, y: 0.92 },
+      // Red nozzle disc above modules 3-4.
+      cutawayHotspot: { x: 0.8860, y: 0.2500 },
     },
     {
       id: "lift-fl",
@@ -226,7 +268,9 @@ export const megapack: ProductSpec = {
       color: "#3a3a3f",
       metalness: 0.9,
       roughness: 0.3,
-      hotspot: { x: 0.10, y: 0.08 },
+      // Top corners are obscured by the solar canopy on the exterior photo,
+      // so the dot only lands cleanly on the cutaway corner casting.
+      cutawayHotspot: { x: 0.0560, y: 0.2130 },
     },
     {
       id: "lift-fr",
@@ -239,6 +283,8 @@ export const megapack: ProductSpec = {
       color: "#3a3a3f",
       metalness: 0.9,
       roughness: 0.3,
+      // Top-right corner casting on the cutaway end-wall.
+      cutawayHotspot: { x: 0.9440, y: 0.2130 },
     },
     {
       id: "lift-rl",
@@ -251,6 +297,8 @@ export const megapack: ProductSpec = {
       color: "#3a3a3f",
       metalness: 0.9,
       roughness: 0.3,
+      // Bottom-left corner casting on the cutaway (back-left of real unit).
+      cutawayHotspot: { x: 0.0560, y: 0.8630 },
     },
     {
       id: "lift-rr",
@@ -263,6 +311,8 @@ export const megapack: ProductSpec = {
       color: "#3a3a3f",
       metalness: 0.9,
       roughness: 0.3,
+      // Bottom-right corner casting on the cutaway (back-right of real unit).
+      cutawayHotspot: { x: 0.9440, y: 0.8630 },
     },
   ],
   relatedSites: ["giga-nevada", "giga-shanghai"],

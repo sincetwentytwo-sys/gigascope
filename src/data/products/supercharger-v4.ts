@@ -18,6 +18,21 @@ export const superchargerV4: ProductSpec = {
     license: "CC BY-SA 4.0",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:Tesla_V4_Supercharger_(cropped).jpg",
   },
+  // Side cutaway drawn in-house — left half intact pillar (Tesla T,
+  // LCD, NFC pad, cable + holster, NACS head), right half cut open to
+  // expose retraction spool, HMI MCU + NFC coil board, comms/PLC
+  // board, contactor relay with COIL + DC bus pads, DC bus + coolant
+  // tubes routed to base, mounting flange with M16 anchors, plus a
+  // cable cross-section callout showing the high-current conductor
+  // bundle, coolant supply + return tubes, and sense wires. CC0.
+  cutawayImage: {
+    src: "/products/photos/supercharger-v4/cutaway.svg",
+    credit: {
+      source: "Gigascope original SVG",
+      url: "https://github.com/sincetwentytwo-sys/gigascope/blob/main/public/products/photos/supercharger-v4/cutaway.svg",
+      license: "CC0",
+    },
+  },
   parts: [
     {
       id: "pillar",
@@ -30,7 +45,10 @@ export const superchargerV4: ProductSpec = {
       color: "#1c1c20",
       metalness: 0.55,
       roughness: 0.45,
+      // Exterior: center of the white pillar face in main.jpg.
       hotspot: { x: 0.5000, y: 0.5500 },
+      // Cutaway: shell wall on the far-right edge of cutaway.svg.
+      cutawayHotspot: { x: 0.86, y: 0.50 },
     },
     {
       id: "top-status",
@@ -44,7 +62,7 @@ export const superchargerV4: ProductSpec = {
       emissive: "#3a9ad9",
       metalness: 0.3,
       roughness: 0.3,
-      hotspot: { x: 0.5000, y: 0.1000 },
+      // Front photo doesn't show the top RGB bar — list-only on exterior.
     },
     {
       id: "t-logo",
@@ -57,7 +75,9 @@ export const superchargerV4: ProductSpec = {
       color: "#d8d8dc",
       metalness: 0.9,
       roughness: 0.3,
+      // Exterior: TESLA wordmark plate visible upper center of main.jpg.
       hotspot: { x: 0.5000, y: 0.1700 },
+      // T plate is exterior trim only — no cutaway dot.
     },
     {
       id: "holster",
@@ -71,7 +91,7 @@ export const superchargerV4: ProductSpec = {
       color: "#3a3a3f",
       metalness: 0.7,
       roughness: 0.4,
-      hotspot: { x: 0.5500, y: 0.4300 },
+      // Holster wraps the back of the pillar — not visible in front photo.
     },
     {
       id: "cable",
@@ -85,7 +105,9 @@ export const superchargerV4: ProductSpec = {
       color: "#202024",
       metalness: 0.4,
       roughness: 0.55,
-      hotspot: { x: 0.3000, y: 0.5500 },
+      // Cable not visible in the front photo — list-only on exterior.
+      // Cutaway: cable cross-section callout, conductor bundle center.
+      cutawayHotspot: { x: 0.66, y: 0.14 },
     },
     {
       id: "connector",
@@ -98,7 +120,9 @@ export const superchargerV4: ProductSpec = {
       color: "#2a2a2f",
       metalness: 0.6,
       roughness: 0.4,
-      hotspot: { x: 0.3000, y: 0.6800 },
+      // Connector is on the back of the pillar in the front photo.
+      // Cutaway: copper DC contactor pads where the conductor lands.
+      cutawayHotspot: { x: 0.71, y: 0.50 },
     },
     {
       id: "screen",
@@ -112,7 +136,9 @@ export const superchargerV4: ProductSpec = {
       emissive: "#1a1a1f",
       metalness: 0.3,
       roughness: 0.3,
-      hotspot: { x: 0.5000, y: 0.2200 },
+      // LCD lives on the back face — not visible in front photo.
+      // Cutaway: LCD glass slice on the inner side of the HMI board.
+      cutawayHotspot: { x: 0.49, y: 0.28 },
     },
     {
       id: "rfid",
@@ -125,6 +151,8 @@ export const superchargerV4: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.4,
       roughness: 0.5,
+      // Cutaway: gold-trace NFC antenna coil printed on the HMI board.
+      cutawayHotspot: { x: 0.62, y: 0.34 },
     },
     {
       id: "led-ring",
@@ -139,6 +167,7 @@ export const superchargerV4: ProductSpec = {
       emissive: "#3a9ad9",
       metalness: 0.3,
       roughness: 0.3,
+      // Ring lives on the exterior connector body — no internal feature.
     },
     {
       id: "base",
@@ -151,7 +180,10 @@ export const superchargerV4: ProductSpec = {
       color: "#3a3a3f",
       metalness: 0.7,
       roughness: 0.5,
+      // Exterior: black wrap at the bottom of the pillar on the concrete pad.
       hotspot: { x: 0.5000, y: 0.9200 },
+      // Cutaway: mounting flange + M16 anchors at base.
+      cutawayHotspot: { x: 0.67, y: 0.91 },
     },
     {
       id: "coolant-strand",
@@ -165,6 +197,9 @@ export const superchargerV4: ProductSpec = {
       color: "#4a90c2",
       metalness: 0.5,
       roughness: 0.4,
+      // Cutaway: dedicated blue coolant supply/return tubes routed down
+      // the pillar interior alongside the DC bus.
+      cutawayHotspot: { x: 0.70, y: 0.65 },
     },
   ],
   relatedSites: ["fremont", "giga-buffalo", "giga-texas"],

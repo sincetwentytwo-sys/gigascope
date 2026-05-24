@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SpaceX Starship + Super Heavy — schematic full-stack cutaway.
+  Original work for gigascope.xyz. CC0 / public domain.
+
+  Convention: the full stack at ~121 m is too tall to draw cleanly as a
+  single column, so we use a 300×900 viewBox keeping the stack vertical
+  but with extra horizontal room for callouts. Left half shows the
+  intact stainless silhouette (Super Heavy below, hot-stage ring, ship
+  with flaps + heat tiles + nose cone). Right half is sliced open to
+  expose: 33 Raptors in the octa-style cluster cross-section, booster
+  CH4 + LOX tanks, hot-stage vent ring, ship LOX + CH4 tanks, header
+  tanks (small spheres) in the nose, 3 Rvac + 3 sea-level Raptors at
+  the ship base, and payload bay. Hotspots target this image via
+  cutawayHotspot {x,y} in 0..1 normalized coords.
+
+  viewBox 300x900 (aspect ~0.33) — vertical full-stack proportions.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="900" viewBox="0 0 300 900" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="ssSteel" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#9aa0a6" />
+      <stop offset="50%" stop-color="#dde0e3" />
+      <stop offset="100%" stop-color="#9aa0a6" />
+    </linearGradient>
+    <linearGradient id="ssTile" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#1a1a1f" />
+      <stop offset="100%" stop-color="#2c2c2c" />
+    </linearGradient>
+    <linearGradient id="loxBlue" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#a7c4e0" />
+      <stop offset="100%" stop-color="#4a90c2" />
+    </linearGradient>
+    <linearGradient id="ch4Amber" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#e8c8a0" />
+      <stop offset="100%" stop-color="#c97f3a" />
+    </linearGradient>
+    <pattern id="hexTile" x="0" y="0" width="8" height="9" patternUnits="userSpaceOnUse">
+      <polygon points="4,0 8,2.25 8,6.75 4,9 0,6.75 0,2.25" fill="#1a1a1f" stroke="#3a3a3a" stroke-width="0.3" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="300" height="900" fill="#f5f5f7" />
+
+  <!-- ============================================================ -->
+  <!-- LEFT HALF — INTACT EXTERIOR (full stack silhouette)           -->
+  <!-- ============================================================ -->
+
+  <!-- Nose cone (Starship top) -->
+  <polygon points="80,30 122,30 122,75 80,75" fill="url(#ssSteel)" stroke="#777" stroke-width="0.5" />
+  <polygon points="80,30 122,30 100,5" fill="url(#ssSteel)" stroke="#777" stroke-width="0.5" />
+
+  <!-- Starship body (intact left, stainless) -->
+  <rect x="80" y="75" width="42" height="180" fill="url(#ssSteel)" stroke="#777" stroke-width="0.4" />
+
+  <!-- Heat tiles on windward (left side, dark hex pattern strip) -->
+  <rect x="80" y="100" width="6" height="155" fill="url(#hexTile)" stroke="#444" stroke-width="0.3" />
+
+  <!-- Forward flap (sticking out top of body) -->
+  <polygon points="74,90 80,90 80,108 70,114" fill="#9a9da5" stroke="#555" stroke-width="0.4" />
+
+  <!-- Aft flap (sticking out lower body) -->
+  <polygon points="72,225 80,225 80,250 66,255" fill="#9a9da5" stroke="#555" stroke-width="0.4" />
+
+  <!-- Ship engine skirt (intact base) -->
+  <rect x="80" y="255" width="42" height="22" fill="#3a3c42" stroke="#222" stroke-width="0.4" />
+
+  <!-- Hot-stage ring (vented dark ring) -->
+  <rect x="78" y="277" width="46" height="18" fill="#1a1a1a" stroke="#000" stroke-width="0.5" />
+  <line x1="80" y1="286" x2="122" y2="286" stroke="#5a5d66" stroke-width="0.4" stroke-dasharray="2 2" />
+
+  <!-- Super Heavy booster body (intact left, much taller) -->
+  <rect x="78" y="295" width="46" height="540" fill="url(#ssSteel)" stroke="#777" stroke-width="0.4" />
+
+  <!-- Catch pins (small lumps near top of booster) -->
+  <rect x="74" y="305" width="4" height="6" fill="#7a8086" stroke="#555" stroke-width="0.3" />
+  <rect x="74" y="315" width="4" height="6" fill="#7a8086" stroke="#555" stroke-width="0.3" />
+
+  <!-- Grid fin (booster upper, fixed) -->
+  <rect x="68" y="325" width="10" height="22" fill="#7a8086" stroke="#444" stroke-width="0.4" />
+  <line x1="70" y1="327" x2="76" y2="345" stroke="#444" stroke-width="0.3" />
+  <line x1="73" y1="327" x2="73" y2="345" stroke="#444" stroke-width="0.3" />
+  <line x1="68" y1="334" x2="78" y2="334" stroke="#444" stroke-width="0.3" />
+
+  <!-- Booster engine skirt (sooty base) -->
+  <rect x="78" y="835" width="46" height="30" fill="#0e0e0e" stroke="#000" stroke-width="0.5" />
+  <!-- Engine bell tips visible at very bottom -->
+  <polygon points="82,865 88,875 94,865" fill="#1a1a1a" stroke="#000" stroke-width="0.3" />
+  <polygon points="98,865 104,875 110,865" fill="#1a1a1a" stroke="#000" stroke-width="0.3" />
+  <polygon points="114,865 120,875 124,872 124,865" fill="#1a1a1a" stroke="#000" stroke-width="0.3" />
+
+  <!-- ============================================================ -->
+  <!-- Jagged cut edge (vertical seam between left and right halves) -->
+  <!-- ============================================================ -->
+  <path d="M 124 30 L 128 50 L 124 70 L 128 90 L 124 110 L 128 130 L 124 150 L 128 170 L 124 190 L 128 210 L 124 230 L 128 250 L 124 270 L 128 295 L 124 315 L 128 335 L 124 355 L 128 375 L 124 395 L 128 415 L 124 435 L 128 455 L 124 475 L 128 495 L 124 515 L 128 535 L 124 555 L 128 575 L 124 595 L 128 615 L 124 635 L 128 655 L 124 675 L 128 695 L 124 715 L 128 735 L 124 755 L 128 775 L 124 795 L 128 815 L 124 835 L 128 865 L 124 875"
+        fill="#555" stroke="#333" stroke-width="0.4" />
+
+  <!-- ============================================================ -->
+  <!-- RIGHT HALF — CUTAWAY (internals exposed top to bottom)        -->
+  <!-- ============================================================ -->
+
+  <!-- Nose cone right half cut — payload bay + CH4 header tank inside -->
+  <polygon points="128,30 170,30 150,5" fill="#dde0e3" stroke="#777" stroke-width="0.5" />
+  <rect x="128" y="30" width="42" height="55" fill="#dde0e3" stroke="#777" stroke-width="0.4" />
+  <!-- CH4 header sphere in nose -->
+  <circle cx="149" cy="55" r="11" fill="#c97f3a" stroke="#7a4a20" stroke-width="0.5" />
+  <text x="149" y="58" font-family="ui-sans-serif, system-ui" font-size="4" fill="#fff" text-anchor="middle">CH4</text>
+  <text x="149" y="63" font-family="ui-sans-serif, system-ui" font-size="3.5" fill="#fff" text-anchor="middle">header</text>
+
+  <!-- Payload bay below nose -->
+  <rect x="128" y="85" width="42" height="35" fill="#2a2a2a" stroke="#000" stroke-width="0.4" />
+  <text x="149" y="105" font-family="ui-sans-serif, system-ui" font-size="4.5" fill="#dde0e3" text-anchor="middle">PAYLOAD BAY</text>
+
+  <!-- Ship LOX tank (cut, blue, upper) -->
+  <rect x="128" y="120" width="42" height="70" fill="url(#loxBlue)" stroke="#2a5e88" stroke-width="0.5" />
+  <text x="149" y="155" font-family="ui-sans-serif, system-ui" font-size="5" fill="#fff" text-anchor="middle">LOX</text>
+  <text x="149" y="164" font-family="ui-sans-serif, system-ui" font-size="3.5" fill="#fff" text-anchor="middle">ship</text>
+  <!-- LOX header tank inside main LOX dome (small) -->
+  <circle cx="149" cy="180" r="6" fill="#7a9ec2" stroke="#1a4570" stroke-width="0.4" />
+
+  <!-- Common dome between LOX and CH4 -->
+  <ellipse cx="149" cy="190" rx="21" ry="4" fill="#9a9da5" stroke="#444" stroke-width="0.4" />
+
+  <!-- Ship CH4 tank (cut, amber, lower) -->
+  <rect x="128" y="194" width="42" height="60" fill="url(#ch4Amber)" stroke="#7a4a20" stroke-width="0.5" />
+  <text x="149" y="225" font-family="ui-sans-serif, system-ui" font-size="5" fill="#fff" text-anchor="middle">CH4</text>
+  <text x="149" y="234" font-family="ui-sans-serif, system-ui" font-size="3.5" fill="#fff" text-anchor="middle">ship</text>
+
+  <!-- Bottom dome of ship CH4 -->
+  <ellipse cx="149" cy="254" rx="21" ry="3" fill="#7a8086" stroke="#444" stroke-width="0.3" />
+
+  <!-- Ship engine bay (3 RVac larger bells + 3 SL smaller bells) -->
+  <rect x="128" y="257" width="42" height="22" fill="#1a1a1a" stroke="#000" stroke-width="0.5" />
+  <!-- 3 Rvac (large copper bells outboard) -->
+  <polygon points="130,260 138,260 137,278 131,278" fill="#c97f3a" stroke="#7a4a20" stroke-width="0.4" />
+  <polygon points="161,260 169,260 168,278 162,278" fill="#c97f3a" stroke="#7a4a20" stroke-width="0.4" />
+  <!-- 3 SL Raptors center cluster (smaller dark bells) -->
+  <polygon points="142,264 147,264 146,278 143,278" fill="#3a3c42" stroke="#000" stroke-width="0.3" />
+  <polygon points="148,264 154,264 153,278 149,278" fill="#3a3c42" stroke="#000" stroke-width="0.3" />
+  <polygon points="155,264 160,264 159,278 156,278" fill="#3a3c42" stroke="#000" stroke-width="0.3" />
+
+  <!-- Hot-stage ring cut (vented) -->
+  <rect x="128" y="279" width="46" height="16" fill="#2a2a2a" stroke="#000" stroke-width="0.5" />
+  <!-- vent slot ports -->
+  <rect x="131" y="284" width="4" height="6" fill="#f5f5f7" stroke="#555" stroke-width="0.3" />
+  <rect x="139" y="284" width="4" height="6" fill="#f5f5f7" stroke="#555" stroke-width="0.3" />
+  <rect x="147" y="284" width="4" height="6" fill="#f5f5f7" stroke="#555" stroke-width="0.3" />
+  <rect x="155" y="284" width="4" height="6" fill="#f5f5f7" stroke="#555" stroke-width="0.3" />
+  <rect x="163" y="284" width="4" height="6" fill="#f5f5f7" stroke="#555" stroke-width="0.3" />
+  <text x="149" y="305" font-family="ui-sans-serif, system-ui" font-size="4.5" fill="#444" text-anchor="middle">HOT-STAGE RING</text>
+
+  <!-- Super Heavy upper dome -->
+  <ellipse cx="149" cy="312" rx="22" ry="5" fill="#7a8086" stroke="#444" stroke-width="0.4" />
+
+  <!-- Super Heavy LOX tank (cut, blue, upper - LARGE) -->
+  <rect x="128" y="315" width="46" height="280" fill="url(#loxBlue)" stroke="#2a5e88" stroke-width="0.5" />
+  <text x="151" y="450" font-family="ui-sans-serif, system-ui" font-size="7" fill="#fff" text-anchor="middle">LOX</text>
+  <text x="151" y="462" font-family="ui-sans-serif, system-ui" font-size="5" fill="#fff" text-anchor="middle">~2,400 t</text>
+  <text x="151" y="472" font-family="ui-sans-serif, system-ui" font-size="4" fill="#fff" text-anchor="middle">Super Heavy</text>
+
+  <!-- Common bulkhead between booster LOX and CH4 -->
+  <ellipse cx="151" cy="595" rx="22" ry="5" fill="#9a9da5" stroke="#444" stroke-width="0.5" />
+
+  <!-- Super Heavy CH4 tank (cut, amber, lower - LARGE) -->
+  <rect x="128" y="600" width="46" height="225" fill="url(#ch4Amber)" stroke="#7a4a20" stroke-width="0.5" />
+  <text x="151" y="710" font-family="ui-sans-serif, system-ui" font-size="7" fill="#fff" text-anchor="middle">CH4</text>
+  <text x="151" y="722" font-family="ui-sans-serif, system-ui" font-size="5" fill="#fff" text-anchor="middle">~1,000 t</text>
+  <text x="151" y="732" font-family="ui-sans-serif, system-ui" font-size="4" fill="#fff" text-anchor="middle">Super Heavy</text>
+
+  <!-- Bottom dome of booster -->
+  <ellipse cx="151" cy="825" rx="22" ry="5" fill="#7a8086" stroke="#444" stroke-width="0.4" />
+
+  <!-- Thrust puck section -->
+  <rect x="128" y="828" width="46" height="8" fill="#2a2a2a" stroke="#000" stroke-width="0.4" />
+
+  <!-- 33 Raptors arrangement at base (cross-section view: 3 center + 10 inner + ~10 outer visible in slice) -->
+  <rect x="128" y="836" width="46" height="32" fill="#0e0e0e" stroke="#000" stroke-width="0.5" />
+  <!-- A row of small engine bells -->
+  <g fill="#1a1a1a" stroke="#5a5d66" stroke-width="0.3">
+    <polygon points="130,842 134,842 134,860 131,860" />
+    <polygon points="136,842 140,842 140,860 137,860" />
+    <polygon points="142,842 146,842 146,860 143,860" />
+    <polygon points="148,842 152,842 152,860 149,860" />
+    <polygon points="154,842 158,842 158,860 155,860" />
+    <polygon points="160,842 164,842 164,860 161,860" />
+    <polygon points="166,842 170,842 170,860 167,860" />
+    <polygon points="172,842 174,842 174,860 173,860" />
+  </g>
+  <!-- bell tip flares extending below -->
+  <g fill="#1a1a1a" stroke="#000" stroke-width="0.3">
+    <polygon points="129,860 135,873 132,873" />
+    <polygon points="135,860 141,873 138,873" />
+    <polygon points="141,860 147,873 144,873" />
+    <polygon points="147,860 153,873 150,873" />
+    <polygon points="153,860 159,873 156,873" />
+    <polygon points="159,860 165,873 162,873" />
+    <polygon points="165,860 171,873 168,873" />
+    <polygon points="171,860 174,873 173,873" />
+  </g>
+  <text x="151" y="884" font-family="ui-sans-serif, system-ui" font-size="4.5" fill="#444" text-anchor="middle">33× RAPTOR 2 (slice of cluster)</text>
+
+  <!-- Catch pins / grid fin on right side -->
+  <rect x="174" y="305" width="4" height="6" fill="#7a8086" stroke="#555" stroke-width="0.3" />
+  <rect x="174" y="315" width="4" height="6" fill="#7a8086" stroke="#555" stroke-width="0.3" />
+  <rect x="174" y="325" width="10" height="22" fill="#7a8086" stroke="#444" stroke-width="0.4" />
+
+  <!-- ============================================================ -->
+  <!-- LABEL CALLOUTS                                                -->
+  <!-- ============================================================ -->
+
+  <!-- Right-side labels -->
+  <line x1="195" y1="55" x2="210" y2="55" stroke="#666" stroke-width="0.3" />
+  <text x="212" y="57" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">CH4 header (nose)</text>
+
+  <line x1="195" y1="105" x2="210" y2="105" stroke="#666" stroke-width="0.3" />
+  <text x="212" y="107" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">payload bay</text>
+
+  <line x1="195" y1="155" x2="210" y2="155" stroke="#666" stroke-width="0.3" />
+  <text x="212" y="157" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">ship LOX</text>
+
+  <line x1="195" y1="225" x2="210" y2="225" stroke="#666" stroke-width="0.3" />
+  <text x="212" y="227" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">ship CH4</text>
+
+  <line x1="195" y1="270" x2="210" y2="270" stroke="#666" stroke-width="0.3" />
+  <text x="212" y="272" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">3 Rvac + 3 SL</text>
+
+  <line x1="195" y1="287" x2="210" y2="287" stroke="#666" stroke-width="0.3" />
+  <text x="212" y="289" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">hot-stage ring</text>
+
+  <line x1="195" y1="450" x2="210" y2="450" stroke="#666" stroke-width="0.3" />
+  <text x="212" y="452" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">SH LOX (2400 t)</text>
+
+  <line x1="195" y1="710" x2="210" y2="710" stroke="#666" stroke-width="0.3" />
+  <text x="212" y="712" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">SH CH4 (1000 t)</text>
+
+  <line x1="195" y1="850" x2="210" y2="850" stroke="#666" stroke-width="0.3" />
+  <text x="212" y="852" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">33× Raptor</text>
+
+  <!-- Left-side small labels for grid fins / flaps -->
+  <text x="55" y="100" font-family="ui-sans-serif, system-ui" font-size="4.5" fill="#444" text-anchor="middle">fwd flap</text>
+  <text x="55" y="240" font-family="ui-sans-serif, system-ui" font-size="4.5" fill="#444" text-anchor="middle">aft flap</text>
+  <text x="55" y="335" font-family="ui-sans-serif, system-ui" font-size="4.5" fill="#444" text-anchor="middle">grid fin</text>
+  <text x="55" y="290" font-family="ui-sans-serif, system-ui" font-size="4.5" fill="#444" text-anchor="middle">catch pins</text>
+
+  <!-- ============================================================ -->
+  <!-- ANNOTATIONS                                                   -->
+  <!-- ============================================================ -->
+
+  <text x="80" y="888" font-family="ui-sans-serif, system-ui" font-size="9" font-style="italic" fill="#444" text-anchor="middle">EXTERIOR</text>
+  <text x="150" y="888" font-family="ui-sans-serif, system-ui" font-size="9" font-style="italic" fill="#444" text-anchor="middle">CUTAWAY</text>
+
+  <!-- Dimensions caption -->
+  <text x="295" y="895" font-family="ui-monospace, monospace" font-size="6.5" fill="#555" text-anchor="end">121 m stack × 9 m dia</text>
+</svg>

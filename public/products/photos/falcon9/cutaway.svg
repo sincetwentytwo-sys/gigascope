@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SpaceX Falcon 9 Block 5 — schematic booster cutaway.
+  Original work for gigascope.xyz. CC0 / public domain.
+
+  Convention: tall narrow vertical layout focusing on the FIRST STAGE
+  (booster) since the full stack is too tall to draw legibly. Left side
+  intact (white painted booster, grid fins folded, legs visible at base);
+  right side sliced open to expose LOX tank (upper, blue), common
+  bulkhead, RP-1 tank (lower, amber), helium COPV bottles, thrust
+  structure, and the 9-engine octaweb at the base. Interstage and
+  beginning of stage 2 visible at top. Hotspots target this image via
+  cutawayHotspot {x,y} in 0..1 normalized coords.
+
+  viewBox 250x800 (aspect ~0.31) — vertical rocket proportions.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="250" height="800" viewBox="0 0 250 800" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="boosterWhite" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#c8ccd0" />
+      <stop offset="50%" stop-color="#f2f2f2" />
+      <stop offset="100%" stop-color="#c8ccd0" />
+    </linearGradient>
+    <linearGradient id="loxFill" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#a7c4e0" />
+      <stop offset="100%" stop-color="#5a7da8" />
+    </linearGradient>
+    <linearGradient id="rp1Fill" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#e8c8a0" />
+      <stop offset="100%" stop-color="#c97f3a" />
+    </linearGradient>
+    <linearGradient id="interstage" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#0e0e0e" />
+      <stop offset="50%" stop-color="#2a2a2a" />
+      <stop offset="100%" stop-color="#0e0e0e" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="250" height="800" fill="#f5f5f7" />
+
+  <!-- ============================================================ -->
+  <!-- LEFT HALF — INTACT EXTERIOR (booster silhouette)              -->
+  <!-- ============================================================ -->
+
+  <!-- Stage 2 start (sketched at top) -->
+  <rect x="80" y="20" width="42" height="50" fill="url(#boosterWhite)" stroke="#666" stroke-width="0.5" />
+  <!-- Interstage band (black) -->
+  <rect x="80" y="70" width="42" height="55" fill="#0e0e0e" stroke="#000" stroke-width="0.5" />
+  <!-- Cold-gas thruster nub -->
+  <circle cx="78" cy="100" r="3" fill="#8a8f95" stroke="#555" stroke-width="0.3" />
+
+  <!-- Grid fin folded against booster (left side) -->
+  <rect x="74" y="130" width="8" height="20" fill="#8a8f95" stroke="#444" stroke-width="0.4" />
+  <line x1="76" y1="132" x2="80" y2="148" stroke="#444" stroke-width="0.3" />
+  <line x1="78" y1="132" x2="78" y2="148" stroke="#444" stroke-width="0.3" />
+  <line x1="74" y1="138" x2="82" y2="138" stroke="#444" stroke-width="0.3" />
+  <line x1="74" y1="144" x2="82" y2="144" stroke="#444" stroke-width="0.3" />
+
+  <!-- Main booster body (intact left half, white paint) -->
+  <rect x="80" y="125" width="42" height="540" fill="url(#boosterWhite)" stroke="#777" stroke-width="0.5" />
+
+  <!-- Subtle horizontal weld lines -->
+  <line x1="80" y1="200" x2="122" y2="200" stroke="#bbb" stroke-width="0.3" />
+  <line x1="80" y1="300" x2="122" y2="300" stroke="#bbb" stroke-width="0.3" />
+  <line x1="80" y1="400" x2="122" y2="400" stroke="#bbb" stroke-width="0.3" />
+  <line x1="80" y1="500" x2="122" y2="500" stroke="#bbb" stroke-width="0.3" />
+  <line x1="80" y1="600" x2="122" y2="600" stroke="#bbb" stroke-width="0.3" />
+
+  <!-- Thrust structure section (sooty band near base) -->
+  <rect x="80" y="665" width="42" height="40" fill="#1a1a1a" stroke="#000" stroke-width="0.5" />
+
+  <!-- Octaweb base (intact left half — 4-5 engine bells visible end-on) -->
+  <rect x="80" y="705" width="42" height="40" fill="#0e0e0e" stroke="#000" stroke-width="0.5" />
+  <!-- engine bell tips peeking below -->
+  <polygon points="84,745 90,762 96,745" fill="#222" stroke="#000" stroke-width="0.4" />
+  <polygon points="100,745 106,762 112,745" fill="#222" stroke="#000" stroke-width="0.4" />
+  <polygon points="116,745 121,758 122,758 122,745" fill="#222" stroke="#000" stroke-width="0.4" />
+
+  <!-- Landing leg folded against booster (left side) -->
+  <rect x="75" y="685" width="6" height="65" fill="#dde0e3" stroke="#777" stroke-width="0.4" />
+  <polygon points="71,750 81,750 78,758 74,758" fill="#9a9da5" stroke="#555" stroke-width="0.3" />
+
+  <!-- ============================================================ -->
+  <!-- Jagged cut edge (vertical seam between left and right halves) -->
+  <!-- ============================================================ -->
+  <path d="M 122 70 L 125 90 L 122 110 L 125 130 L 122 150 L 125 170 L 122 190 L 125 210 L 122 230 L 125 250 L 122 270 L 125 290 L 122 310 L 125 330 L 122 350 L 125 370 L 122 390 L 125 410 L 122 430 L 125 450 L 122 470 L 125 490 L 122 510 L 125 530 L 122 550 L 125 570 L 122 590 L 125 610 L 122 630 L 125 650 L 122 670 L 125 690 L 122 710 L 125 730 L 122 745"
+        fill="#555" stroke="#333" stroke-width="0.4" />
+
+  <!-- ============================================================ -->
+  <!-- RIGHT HALF — CUTAWAY (tanks, COPVs, octaweb cut open)         -->
+  <!-- ============================================================ -->
+
+  <!-- Stage 2 tank (cut, simplified) -->
+  <rect x="125" y="20" width="42" height="45" fill="url(#loxFill)" stroke="#2a5e88" stroke-width="0.5" />
+  <text x="146" y="46" font-family="ui-sans-serif, system-ui" font-size="4.5" fill="#fff" text-anchor="middle">S2 TANK</text>
+
+  <!-- Common bulkhead between stages -->
+  <ellipse cx="146" cy="65" rx="21" ry="4" fill="#7a8086" stroke="#444" stroke-width="0.4" />
+
+  <!-- Interstage (carbon composite, dark) — cut to show internal truss -->
+  <rect x="125" y="68" width="42" height="55" fill="url(#interstage)" stroke="#000" stroke-width="0.4" />
+  <!-- Truss lines visible inside -->
+  <line x1="127" y1="70" x2="165" y2="121" stroke="#5a5d66" stroke-width="0.5" />
+  <line x1="165" y1="70" x2="127" y2="121" stroke="#5a5d66" stroke-width="0.5" />
+  <line x1="146" y1="70" x2="146" y2="121" stroke="#5a5d66" stroke-width="0.3" />
+  <text x="146" y="100" font-family="ui-sans-serif, system-ui" font-size="4.5" fill="#dde0e3" text-anchor="middle">INTERSTAGE</text>
+
+  <!-- Top of stage 1: LOX tank ullage dome -->
+  <ellipse cx="146" cy="125" rx="21" ry="6" fill="#8a8f95" stroke="#444" stroke-width="0.4" />
+
+  <!-- LOX tank (upper, blue) -->
+  <rect x="125" y="125" width="42" height="240" fill="url(#loxFill)" stroke="#2a5e88" stroke-width="0.5" />
+  <text x="146" y="220" font-family="ui-sans-serif, system-ui" font-size="6" fill="#fff" text-anchor="middle">LOX</text>
+  <text x="146" y="232" font-family="ui-sans-serif, system-ui" font-size="4.5" fill="#fff" text-anchor="middle">287 t</text>
+
+  <!-- Helium COPV bottles inside LOX tank (small cylinders submerged) -->
+  <rect x="130" y="270" width="6" height="22" fill="#dde0e3" stroke="#777" stroke-width="0.3" rx="2" />
+  <rect x="140" y="270" width="6" height="22" fill="#dde0e3" stroke="#777" stroke-width="0.3" rx="2" />
+  <rect x="150" y="270" width="6" height="22" fill="#dde0e3" stroke="#777" stroke-width="0.3" rx="2" />
+  <rect x="160" y="270" width="6" height="22" fill="#dde0e3" stroke="#777" stroke-width="0.3" rx="2" />
+  <text x="146" y="305" font-family="ui-sans-serif, system-ui" font-size="4" fill="#fff" text-anchor="middle">He COPVs</text>
+
+  <!-- Common bulkhead between LOX and RP-1 -->
+  <ellipse cx="146" cy="365" rx="21" ry="5" fill="#9a9da5" stroke="#444" stroke-width="0.5" />
+  <text x="146" y="368" font-family="ui-sans-serif, system-ui" font-size="3.5" fill="#222" text-anchor="middle">common bulkhead</text>
+
+  <!-- RP-1 tank (lower, amber) -->
+  <rect x="125" y="370" width="42" height="290" fill="url(#rp1Fill)" stroke="#7a4a20" stroke-width="0.5" />
+  <text x="146" y="490" font-family="ui-sans-serif, system-ui" font-size="6" fill="#fff" text-anchor="middle">RP-1</text>
+  <text x="146" y="502" font-family="ui-sans-serif, system-ui" font-size="4.5" fill="#fff" text-anchor="middle">123 t</text>
+
+  <!-- Bottom dome of RP-1 -->
+  <ellipse cx="146" cy="660" rx="21" ry="5" fill="#7a8086" stroke="#444" stroke-width="0.4" />
+
+  <!-- Thrust structure (octagonal aluminum, cross-section) -->
+  <rect x="125" y="665" width="42" height="40" fill="#2a2a2a" stroke="#000" stroke-width="0.5" />
+  <line x1="125" y1="670" x2="167" y2="700" stroke="#5a5d66" stroke-width="0.4" />
+  <line x1="167" y1="670" x2="125" y2="700" stroke="#5a5d66" stroke-width="0.4" />
+  <text x="146" y="690" font-family="ui-sans-serif, system-ui" font-size="4" fill="#dde0e3" text-anchor="middle">THRUST</text>
+
+  <!-- Octaweb — 9 Merlin engines cross-section view -->
+  <rect x="125" y="705" width="42" height="40" fill="#0e0e0e" stroke="#000" stroke-width="0.5" />
+  <!-- Three engine cross-sections visible (center + 2 outer in this slice) -->
+  <circle cx="135" cy="722" r="6" fill="#1a1a1a" stroke="#5a5d66" stroke-width="0.5" />
+  <circle cx="146" cy="722" r="6" fill="#1a1a1a" stroke="#5a5d66" stroke-width="0.5" />
+  <circle cx="157" cy="722" r="6" fill="#1a1a1a" stroke="#5a5d66" stroke-width="0.5" />
+  <!-- engine bell flares below -->
+  <polygon points="129,728 141,728 138,748 132,748" fill="#1a1a1a" stroke="#5a5d66" stroke-width="0.5" />
+  <polygon points="140,728 152,728 149,748 143,748" fill="#1a1a1a" stroke="#5a5d66" stroke-width="0.5" />
+  <polygon points="151,728 163,728 160,748 154,748" fill="#1a1a1a" stroke="#5a5d66" stroke-width="0.5" />
+  <text x="146" y="760" font-family="ui-sans-serif, system-ui" font-size="4.5" fill="#444" text-anchor="middle">9× MERLIN 1D (OCTAWEB)</text>
+
+  <!-- Landing leg folded against booster (right side, inside structure outline) -->
+  <rect x="167" y="685" width="6" height="65" fill="#dde0e3" stroke="#777" stroke-width="0.4" />
+  <polygon points="167,750 177,750 174,758 170,758" fill="#9a9da5" stroke="#555" stroke-width="0.3" />
+
+  <!-- Grid fin folded right side -->
+  <rect x="167" y="130" width="8" height="20" fill="#8a8f95" stroke="#444" stroke-width="0.4" />
+  <line x1="169" y1="132" x2="173" y2="148" stroke="#444" stroke-width="0.3" />
+  <line x1="171" y1="132" x2="171" y2="148" stroke="#444" stroke-width="0.3" />
+  <line x1="167" y1="138" x2="175" y2="138" stroke="#444" stroke-width="0.3" />
+  <line x1="167" y1="144" x2="175" y2="144" stroke="#444" stroke-width="0.3" />
+
+  <!-- ============================================================ -->
+  <!-- LABEL CALLOUTS (small, off to the right where space exists)   -->
+  <!-- ============================================================ -->
+
+  <!-- Stage 2 / fairing reminder at top -->
+  <text x="195" y="40" font-family="ui-sans-serif, system-ui" font-size="5.5" fill="#777" text-anchor="start" font-style="italic">(stage 2 above)</text>
+
+  <!-- LOX/RP-1 callouts on the right margin -->
+  <line x1="178" y1="220" x2="190" y2="220" stroke="#666" stroke-width="0.3" />
+  <text x="192" y="222" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">LOX tank</text>
+
+  <line x1="178" y1="490" x2="190" y2="490" stroke="#666" stroke-width="0.3" />
+  <text x="192" y="492" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">RP-1 tank</text>
+
+  <line x1="178" y1="685" x2="190" y2="685" stroke="#666" stroke-width="0.3" />
+  <text x="192" y="687" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">thrust struct</text>
+
+  <line x1="178" y1="725" x2="190" y2="725" stroke="#666" stroke-width="0.3" />
+  <text x="192" y="727" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">octaweb</text>
+
+  <!-- ============================================================ -->
+  <!-- ANNOTATIONS                                                   -->
+  <!-- ============================================================ -->
+
+  <text x="70" y="775" font-family="ui-sans-serif, system-ui" font-size="8" font-style="italic" fill="#444" text-anchor="middle">EXTERIOR</text>
+  <text x="146" y="775" font-family="ui-sans-serif, system-ui" font-size="8" font-style="italic" fill="#444" text-anchor="middle">CUTAWAY</text>
+
+  <!-- Dimensions caption -->
+  <text x="245" y="795" font-family="ui-monospace, monospace" font-size="6.5" fill="#555" text-anchor="end">42 m booster × 3.7 m dia</text>
+</svg>

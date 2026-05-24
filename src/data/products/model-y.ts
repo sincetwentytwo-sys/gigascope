@@ -19,6 +19,17 @@ export const modelY: ProductSpec = {
     license: "CC BY-SA 4.0",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:2022_Tesla_Model_Y_Long_Range_AWD_Front.jpg",
   },
+  // Top-down cutaway with panoramic glass roof removed: front + rear
+  // megacastings wrapping the drive units, 4680 structural pack, full-width
+  // light bars at nose/tail. Front of car at left. CC0.
+  cutawayImage: {
+    src: "/products/photos/model-y/cutaway.svg",
+    credit: {
+      source: "Gigascope original SVG",
+      url: "https://github.com/sincetwentytwo-sys/gigascope/blob/main/public/products/photos/model-y/cutaway.svg",
+      license: "CC0",
+    },
+  },
   parts: [
     {
       id: "body-shell",
@@ -32,6 +43,8 @@ export const modelY: ProductSpec = {
       metalness: 0.6,
       roughness: 0.35,
       hotspot: { x: 0.5000, y: 0.5000 },
+      // Body silhouette outline on cutaway — sit dot on lower-edge clear zone.
+      cutawayHotspot: { x: 0.50, y: 0.90 },
     },
     {
       id: "hood",
@@ -46,6 +59,8 @@ export const modelY: ProductSpec = {
       metalness: 0.7,
       roughness: 0.3,
       hotspot: { x: 0.8200, y: 0.4200 },
+      // Hood / frunk area at front of car on cutaway.
+      cutawayHotspot: { x: 0.15, y: 0.30 },
     },
     {
       id: "glass-roof",
@@ -59,6 +74,8 @@ export const modelY: ProductSpec = {
       metalness: 0.2,
       roughness: 0.05,
       hotspot: { x: 0.4200, y: 0.1000 },
+      // Glass roof spans cabin on top-down — pick a clear cabin-glass spot.
+      cutawayHotspot: { x: 0.58, y: 0.25 },
     },
     {
       id: "wheel-fl",
@@ -72,6 +89,8 @@ export const modelY: ProductSpec = {
       color: "#16181c",
       metalness: 0.5,
       roughness: 0.7,
+      // FL = upper-left wheel on top-down (car faces left of canvas).
+      cutawayHotspot: { x: 0.250, y: 0.170 },
     },
     {
       id: "wheel-fr",
@@ -86,6 +105,8 @@ export const modelY: ProductSpec = {
       metalness: 0.5,
       roughness: 0.7,
       hotspot: { x: 0.5200, y: 0.7200 },
+      // FR = lower-left wheel.
+      cutawayHotspot: { x: 0.250, y: 0.830 },
     },
     {
       id: "wheel-rl",
@@ -99,6 +120,8 @@ export const modelY: ProductSpec = {
       color: "#16181c",
       metalness: 0.5,
       roughness: 0.7,
+      // RL = upper-right wheel.
+      cutawayHotspot: { x: 0.750, y: 0.170 },
     },
     {
       id: "wheel-rr",
@@ -113,6 +136,8 @@ export const modelY: ProductSpec = {
       metalness: 0.5,
       roughness: 0.7,
       hotspot: { x: 0.2000, y: 0.7100 },
+      // RR = lower-right wheel.
+      cutawayHotspot: { x: 0.750, y: 0.830 },
     },
     {
       id: "front-lightbar",
@@ -127,6 +152,8 @@ export const modelY: ProductSpec = {
       metalness: 0.3,
       roughness: 0.2,
       hotspot: { x: 0.7800, y: 0.5000 },
+      // Blue LED bar across front fascia on cutaway.
+      cutawayHotspot: { x: 0.096, y: 0.50 },
     },
     {
       id: "tail-lightbar",
@@ -141,6 +168,8 @@ export const modelY: ProductSpec = {
       metalness: 0.4,
       roughness: 0.3,
       hotspot: { x: 0.05, y: 0.28 },
+      // Red LED bar across tail on cutaway.
+      cutawayHotspot: { x: 0.906, y: 0.50 },
     },
     {
       id: "front-fascia",
@@ -154,6 +183,8 @@ export const modelY: ProductSpec = {
       metalness: 0.4,
       roughness: 0.55,
       hotspot: { x: 0.9000, y: 0.7000 },
+      // Front fascia just inside front bumper line on cutaway.
+      cutawayHotspot: { x: 0.094, y: 0.80 },
     },
     {
       id: "rear-hatch",
@@ -168,6 +199,8 @@ export const modelY: ProductSpec = {
       metalness: 0.6,
       roughness: 0.35,
       hotspot: { x: 0.08, y: 0.35 },
+      // Rear cargo/hatch area at right of canvas, opposite the front fascia.
+      cutawayHotspot: { x: 0.86, y: 0.20 },
     },
     {
       id: "structural-battery",
@@ -180,6 +213,8 @@ export const modelY: ProductSpec = {
       color: "#2a2f3a",
       metalness: 0.4,
       roughness: 0.6,
+      // 4680 cell-grid rectangle on the cabin floor — top-right corner.
+      cutawayHotspot: { x: 0.68, y: 0.65 },
     },
     {
       id: "front-drive-unit",
@@ -193,6 +228,8 @@ export const modelY: ProductSpec = {
       color: "#6a7280",
       metalness: 0.85,
       roughness: 0.3,
+      // Mid-gray motor box inside front megacast.
+      cutawayHotspot: { x: 0.234, y: 0.55 },
     },
     {
       id: "rear-drive-unit",
@@ -206,6 +243,8 @@ export const modelY: ProductSpec = {
       color: "#8a939e",
       metalness: 0.9,
       roughness: 0.25,
+      // Lighter motor box inside rear megacast.
+      cutawayHotspot: { x: 0.771, y: 0.55 },
     },
     {
       id: "megacast-front",
@@ -218,6 +257,8 @@ export const modelY: ProductSpec = {
       color: "#9aa2ad",
       metalness: 0.8,
       roughness: 0.45,
+      // Light-gray rectangle wrapping front motor/subframe — upper edge.
+      cutawayHotspot: { x: 0.30, y: 0.30 },
     },
     {
       id: "megacast-rear",
@@ -230,6 +271,8 @@ export const modelY: ProductSpec = {
       color: "#9aa2ad",
       metalness: 0.8,
       roughness: 0.45,
+      // Light-gray rectangle wrapping rear motor/subframe — upper edge.
+      cutawayHotspot: { x: 0.70, y: 0.30 },
     },
     {
       id: "bpillar-cam-l",
@@ -242,6 +285,8 @@ export const modelY: ProductSpec = {
       color: "#0a0a0c",
       metalness: 0.2,
       roughness: 0.3,
+      // L = upper edge of cabin (top-down view).
+      cutawayHotspot: { x: 0.475, y: 0.25 },
     },
     {
       id: "bpillar-cam-r",
@@ -255,6 +300,8 @@ export const modelY: ProductSpec = {
       metalness: 0.2,
       roughness: 0.3,
       hotspot: { x: 0.4500, y: 0.3000 },
+      // R = lower edge of cabin (top-down view).
+      cutawayHotspot: { x: 0.475, y: 0.75 },
     },
     {
       id: "front-cam-main",
@@ -268,6 +315,8 @@ export const modelY: ProductSpec = {
       metalness: 0.2,
       roughness: 0.3,
       hotspot: { x: 0.6300, y: 0.2200 },
+      // Trifocal cluster behind windshield — fan three dots horizontally.
+      cutawayHotspot: { x: 0.36, y: 0.10 },
     },
     {
       id: "front-cam-narrow",
@@ -280,6 +329,7 @@ export const modelY: ProductSpec = {
       color: "#0a0a0c",
       metalness: 0.2,
       roughness: 0.3,
+      cutawayHotspot: { x: 0.48, y: 0.10 },
     },
     {
       id: "front-cam-wide",
@@ -292,6 +342,7 @@ export const modelY: ProductSpec = {
       color: "#0a0a0c",
       metalness: 0.2,
       roughness: 0.3,
+      cutawayHotspot: { x: 0.60, y: 0.10 },
     },
     {
       id: "main-touchscreen",
@@ -305,6 +356,8 @@ export const modelY: ProductSpec = {
       emissive: "#1a1f2e",
       metalness: 0.3,
       roughness: 0.2,
+      // 15" landscape screen between front seats on cutaway.
+      cutawayHotspot: { x: 0.435, y: 0.50 },
     },
     {
       id: "rear-screen",
@@ -319,6 +372,8 @@ export const modelY: ProductSpec = {
       emissive: "#1a1f2e",
       metalness: 0.3,
       roughness: 0.2,
+      // 8" rear-facing screen behind center console — push right of main screen.
+      cutawayHotspot: { x: 0.55, y: 0.50 },
     },
   ],
   relatedSites: ["giga-texas", "giga-shanghai", "giga-berlin", "fremont"],

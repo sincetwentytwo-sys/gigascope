@@ -23,6 +23,19 @@ export const cybercab: ProductSpec = {
     license: "CC BY-SA 4.0",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:Tesla_Cybercab_at_Santana_Row_oblique_view_dllu.jpg",
   },
+  // Top-down cutaway with roof removed: 2-up bench seats (no driver seat),
+  // single rear drive unit, structural 4680 pack, central inductive
+  // charging coil, butterfly door L drawn open. Note "no wheel / no
+  // pedals" mark replaces where the steering column would be. Public
+  // dimensions are estimated. Front of car at left. CC0.
+  cutawayImage: {
+    src: "/products/photos/cybercab/cutaway.svg",
+    credit: {
+      source: "Gigascope original SVG",
+      url: "https://github.com/sincetwentytwo-sys/gigascope/blob/main/public/products/photos/cybercab/cutaway.svg",
+      license: "CC0",
+    },
+  },
   parts: [
     {
       id: "body-shell",
@@ -36,6 +49,8 @@ export const cybercab: ProductSpec = {
       metalness: 0.85,
       roughness: 0.25,
       hotspot: { x: 0.42, y: 0.44 },
+      // Body silhouette outline on cutaway — sit dot on lower-edge clear zone.
+      cutawayHotspot: { x: 0.50, y: 0.93 },
     },
     {
       id: "hood",
@@ -50,6 +65,8 @@ export const cybercab: ProductSpec = {
       metalness: 0.85,
       roughness: 0.25,
       hotspot: { x: 0.22, y: 0.41 },
+      // Hood at front of car on cutaway.
+      cutawayHotspot: { x: 0.16, y: 0.65 },
     },
     {
       id: "trunk",
@@ -63,6 +80,8 @@ export const cybercab: ProductSpec = {
       color: "#c9b27a",
       metalness: 0.85,
       roughness: 0.25,
+      // Rear-trunk area at right of canvas.
+      cutawayHotspot: { x: 0.84, y: 0.50 },
     },
     {
       id: "door-l",
@@ -77,6 +96,8 @@ export const cybercab: ProductSpec = {
       metalness: 0.85,
       roughness: 0.25,
       hotspot: { x: 0.62, y: 0.30 },
+      // Door-L drawn open (dashed) above the body on cutaway.
+      cutawayHotspot: { x: 0.50, y: 0.18 },
     },
     {
       id: "door-r",
@@ -90,6 +111,8 @@ export const cybercab: ProductSpec = {
       color: "#b8a26d",
       metalness: 0.85,
       roughness: 0.25,
+      // Door-R closed (label below body) on cutaway.
+      cutawayHotspot: { x: 0.50, y: 0.83 },
     },
     // Wheels (4)
     {
@@ -105,6 +128,8 @@ export const cybercab: ProductSpec = {
       metalness: 0.5,
       roughness: 0.6,
       hotspot: { x: 0.27, y: 0.66 },
+      // FL = upper-left wheel on top-down (car faces left of canvas).
+      cutawayHotspot: { x: 0.279, y: 0.225 },
     },
     {
       id: "wheel-fr",
@@ -118,6 +143,8 @@ export const cybercab: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.5,
       roughness: 0.6,
+      // FR = lower-left wheel.
+      cutawayHotspot: { x: 0.279, y: 0.775 },
     },
     {
       id: "wheel-rl",
@@ -132,6 +159,8 @@ export const cybercab: ProductSpec = {
       metalness: 0.5,
       roughness: 0.6,
       hotspot: { x: 0.73, y: 0.60 },
+      // RL = upper-right wheel.
+      cutawayHotspot: { x: 0.743, y: 0.225 },
     },
     {
       id: "wheel-rr",
@@ -145,6 +174,8 @@ export const cybercab: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.5,
       roughness: 0.6,
+      // RR = lower-right wheel.
+      cutawayHotspot: { x: 0.743, y: 0.775 },
     },
     {
       id: "headlight-bar",
@@ -159,6 +190,8 @@ export const cybercab: ProductSpec = {
       metalness: 0.4,
       roughness: 0.2,
       hotspot: { x: 0.17, y: 0.50 },
+      // Front lightbar at nose tip on cutaway.
+      cutawayHotspot: { x: 0.08, y: 0.50 },
     },
     // HW5 cameras (front cluster x3)
     {
@@ -172,6 +205,8 @@ export const cybercab: ProductSpec = {
       color: "#0a0a10",
       metalness: 0.3,
       roughness: 0.25,
+      // Front stereo trio - center.
+      cutawayHotspot: { x: 0.30, y: 0.07 },
     },
     {
       id: "hw5-cam-l",
@@ -184,6 +219,8 @@ export const cybercab: ProductSpec = {
       color: "#0a0a10",
       metalness: 0.3,
       roughness: 0.25,
+      // Stereo left at upper-left front of canvas.
+      cutawayHotspot: { x: 0.42, y: 0.07 },
     },
     {
       id: "hw5-cam-r",
@@ -196,6 +233,8 @@ export const cybercab: ProductSpec = {
       color: "#0a0a10",
       metalness: 0.3,
       roughness: 0.25,
+      // Stereo right at lower-left front of canvas (on body side).
+      cutawayHotspot: { x: 0.30, y: 0.93 },
     },
     {
       id: "side-cam-l",
@@ -208,6 +247,8 @@ export const cybercab: ProductSpec = {
       color: "#0a0a10",
       metalness: 0.3,
       roughness: 0.25,
+      // L side camera on upper edge of cabin.
+      cutawayHotspot: { x: 0.53, y: 0.28 },
     },
     {
       id: "side-cam-r",
@@ -220,6 +261,8 @@ export const cybercab: ProductSpec = {
       color: "#0a0a10",
       metalness: 0.3,
       roughness: 0.25,
+      // R side camera on lower edge of cabin.
+      cutawayHotspot: { x: 0.53, y: 0.72 },
     },
     {
       id: "induction-coil",
@@ -234,6 +277,8 @@ export const cybercab: ProductSpec = {
       emissive: "#3a2a08",
       metalness: 0.85,
       roughness: 0.3,
+      // Concentric gold rings at center of underfloor on cutaway.
+      cutawayHotspot: { x: 0.59, y: 0.50 },
     },
     {
       id: "battery",
@@ -246,6 +291,8 @@ export const cybercab: ProductSpec = {
       color: "#2a2d33",
       metalness: 0.75,
       roughness: 0.4,
+      // Cell-grid rectangle wrapping the cabin floor — right edge of pack.
+      cutawayHotspot: { x: 0.65, y: 0.65 },
     },
     {
       id: "rear-drive-unit",
@@ -258,6 +305,8 @@ export const cybercab: ProductSpec = {
       color: "#3a3d44",
       metalness: 0.85,
       roughness: 0.35,
+      // Dark-gray motor box between rear wheels on cutaway.
+      cutawayHotspot: { x: 0.74, y: 0.50 },
     },
     {
       id: "seat-l",
@@ -270,6 +319,8 @@ export const cybercab: ProductSpec = {
       color: "#1f1f24",
       metalness: 0.2,
       roughness: 0.8,
+      // Upper seat in 2-up bench.
+      cutawayHotspot: { x: 0.436, y: 0.398 },
     },
     {
       id: "seat-r",
@@ -282,6 +333,8 @@ export const cybercab: ProductSpec = {
       color: "#1f1f24",
       metalness: 0.2,
       roughness: 0.8,
+      // Lower seat in 2-up bench.
+      cutawayHotspot: { x: 0.436, y: 0.603 },
     },
     {
       id: "cabin-screen",
@@ -295,6 +348,8 @@ export const cybercab: ProductSpec = {
       emissive: "#142036",
       metalness: 0.3,
       roughness: 0.2,
+      // Small screen between seats on cutaway — central spine well clear of seats.
+      cutawayHotspot: { x: 0.43, y: 0.50 },
     },
     {
       id: "no-wheel-marker",
@@ -307,6 +362,8 @@ export const cybercab: ProductSpec = {
       color: "#15171c",
       metalness: 0.1,
       roughness: 0.9,
+      // Red X marker ahead of seats on cutaway — further left.
+      cutawayHotspot: { x: 0.30, y: 0.50 },
     },
   ],
   relatedSites: ["giga-texas"],

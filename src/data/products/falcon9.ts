@@ -31,6 +31,11 @@ const octaweb = (): PartSpec[] => {
       color: SOOT,
       metalness: 0.6,
       roughness: 0.5,
+      // Only the center engine gets a cutaway hotspot — drawing 9 dots
+      // on top of each other in the octaweb cross-section would be
+      // unreadable, and the 8 outer engines are visually identical to
+      // each other in this orientation.
+      ...(i === 0 ? { cutawayHotspot: { x: 0.50, y: 0.92 } } : {}),
     });
   });
   return parts;
@@ -49,7 +54,10 @@ const parts: PartSpec[] = [
     color: SOOT,
     metalness: 0.7,
     roughness: 0.4,
-      hotspot: { x: 0.5700, y: 0.4600 },
+    // Engines and thrust structure are hidden by the launch plume on
+    // the main photo — list-only there. Visible on the booster
+    // cutaway as the dark band above the octaweb.
+    cutawayHotspot: { x: 0.66, y: 0.86 },
   },
   {
     id: "stage1-tank",
@@ -62,7 +70,8 @@ const parts: PartSpec[] = [
     color: WHITE,
     metalness: 0.2,
     roughness: 0.6,
-      hotspot: { x: 0.5900, y: 0.3600 },
+    hotspot: { x: 0.5900, y: 0.3600 },
+    cutawayHotspot: { x: 0.58, y: 0.28 },
   },
   {
     id: "grid-fin-1",
@@ -76,6 +85,10 @@ const parts: PartSpec[] = [
     color: STEEL,
     metalness: 0.8,
     roughness: 0.35,
+    // Folded against booster in the cutaway exterior side. Other 3
+    // fins are hidden behind the booster from this viewpoint, so
+    // only fin #1 gets a dot.
+    cutawayHotspot: { x: 0.31, y: 0.18 },
   },
   {
     id: "grid-fin-2",
@@ -137,6 +150,9 @@ const parts: PartSpec[] = [
     color: WHITE,
     metalness: 0.3,
     roughness: 0.6,
+    // Folded against booster at the base on the cutaway exterior
+    // side. Other 3 legs are hidden behind the booster.
+    cutawayHotspot: { x: 0.31, y: 0.92 },
   },
   {
     id: "landing-leg-2",
@@ -188,7 +204,8 @@ const parts: PartSpec[] = [
     color: SOOT,
     metalness: 0.4,
     roughness: 0.5,
-      hotspot: { x: 0.6000, y: 0.2700 },
+    hotspot: { x: 0.6000, y: 0.3300 },
+    cutawayHotspot: { x: 0.66, y: 0.13 },
   },
   {
     id: "stage2-tank",
@@ -201,7 +218,8 @@ const parts: PartSpec[] = [
     color: WHITE,
     metalness: 0.2,
     roughness: 0.6,
-      hotspot: { x: 0.6100, y: 0.2200 },
+    hotspot: { x: 0.6100, y: 0.2700 },
+    cutawayHotspot: { x: 0.50, y: 0.06 },
   },
   {
     id: "mvac",
@@ -227,7 +245,10 @@ const parts: PartSpec[] = [
     color: WHITE,
     metalness: 0.2,
     roughness: 0.55,
-      hotspot: { x: 0.6200, y: 0.1200 },
+    // No exterior hotspot — the main photo is a Crew Dragon launch
+    // (Demo-2) which flies without a fairing; the white capsule at
+    // the top of the stack is the Dragon, not a fairing half. Also
+    // not shown on the booster-focused cutaway.
   },
   {
     id: "fairing-half-2",
@@ -257,6 +278,20 @@ export const falcon9: ProductSpec = {
   cameraTarget: [0, 30, 0],
   background: "#0a0e14",
   parts,
+  // Booster-focused cutaway drawn in-house. The full stack is too tall
+  // to show legibly in a single frame so we crop to the first stage:
+  // intact silhouette on the left, sliced open on the right to expose
+  // the LOX tank (with submerged He COPVs), common bulkhead, RP-1
+  // tank, thrust structure, and the 9-Merlin octaweb cross-section.
+  // CC0.
+  cutawayImage: {
+    src: "/products/photos/falcon9/cutaway.svg",
+    credit: {
+      source: "Gigascope original SVG",
+      url: "https://github.com/sincetwentytwo-sys/gigascope/blob/main/public/products/photos/falcon9/cutaway.svg",
+      license: "CC0",
+    },
+  },
   relatedSites: ["spacex-hawthorne", "cape-canaveral", "vandenberg", "starbase"],
   photoCredit: {
     author: "NASA / Joel Kowsky",

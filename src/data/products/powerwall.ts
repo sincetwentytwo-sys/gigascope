@@ -18,7 +18,21 @@ export const powerwall: ProductSpec = {
     license: "CC BY-SA (see source)",
     sourceUrl: "https://commons.wikimedia.org/wiki/Category:Tesla_Powerwall",
   },
+  // Front cross-section drawn in-house — left half intact white enclosure
+  // with LED bar + TESLA wordmark, right half cut away to expose four LFP
+  // modules, the integrated 11.5 kW PV+battery inverter, AC/DC terminal
+  // bays, the rear thermal plate, side cooling fins and wall-mount bracket
+  // against the building wall. CC0.
+  cutawayImage: {
+    src: "/products/photos/powerwall/cutaway.svg",
+    credit: {
+      source: "Gigascope original SVG",
+      url: "https://github.com/sincetwentytwo-sys/gigascope/blob/main/public/products/photos/powerwall/cutaway.svg",
+      license: "CC0",
+    },
+  },
   parts: [
+    // ─── Exterior-visible parts: keep `hotspot` AND `cutawayHotspot`. ───
     {
       id: "shell",
       name: "Body Shell",
@@ -30,7 +44,10 @@ export const powerwall: ProductSpec = {
       color: "#f0f0f0",
       metalness: 0.4,
       roughness: 0.5,
-      hotspot: { x: 0.5000, y: 0.5000 },
+      // Exterior: upper section of white front face, above the wordmark.
+      hotspot: { x: 0.3400, y: 0.3000 },
+      // Cutaway: intact left half of the white shell, above the wordmark.
+      cutawayHotspot: { x: 0.2880, y: 0.2000 },
     },
     {
       id: "led-bar",
@@ -44,6 +61,10 @@ export const powerwall: ProductSpec = {
       emissive: "#3a9ad9",
       metalness: 0.2,
       roughness: 0.3,
+      // Exterior: the green-tinted LED light pipe along the side panel top.
+      hotspot: { x: 0.6600, y: 0.0800 },
+      // Cutaway: dark LED bar across the top of the left-half intact section.
+      cutawayHotspot: { x: 0.2880, y: 0.0780 },
     },
     {
       id: "tesla-badge",
@@ -56,91 +77,10 @@ export const powerwall: ProductSpec = {
       color: "#222226",
       metalness: 0.6,
       roughness: 0.4,
-      hotspot: { x: 0.5000, y: 0.4000 },
-    },
-    {
-      id: "module-1",
-      name: "LFP Battery Module 1",
-      description:
-        "Lithium iron phosphate cell pack. LFP chemistry: no nickel/cobalt, ~6,000 deep cycles, much safer thermal envelope than NMC (decomposition ~270 C vs ~150 C). Tradeoff is energy density, irrelevant for a wall-mounted home unit.",
-      position: [-0.13, 0.30, 0],
-      geometry: "box",
-      args: [0.25, 0.32, 0.13],
-      color: "#2c5f8d",
-      metalness: 0.3,
-      roughness: 0.6,
-    },
-    {
-      id: "module-2",
-      name: "LFP Battery Module 2",
-      description:
-        "Second of four parallel LFP modules summing to 13.5 kWh usable (96% DoD). Internal contactor isolates the module on cell-level fault while the remaining three keep the home backed up at reduced capacity.",
-      position: [0.13, 0.30, 0],
-      geometry: "box",
-      args: [0.25, 0.32, 0.13],
-      color: "#2c5f8d",
-      metalness: 0.3,
-      roughness: 0.6,
-    },
-    {
-      id: "module-3",
-      name: "LFP Battery Module 3",
-      description:
-        "Third LFP module. BMS monitors per-cell voltage at 4 mV resolution and per-module temperature at 0.5 C. Drift triggers passive balancing during the absorption phase of every charge cycle.",
-      position: [-0.13, 0.62, 0],
-      geometry: "box",
-      args: [0.25, 0.32, 0.13],
-      color: "#2c5f8d",
-      metalness: 0.3,
-      roughness: 0.6,
-    },
-    {
-      id: "module-4",
-      name: "LFP Battery Module 4",
-      description:
-        "Fourth LFP module. 10-year unlimited-cycle warranty at 70% retention. Up to four Powerwall 3s can be paralleled for 54 kWh / 46 kW, and Expansion Packs (battery-only, no inverter) chain to 13.5 kWh each beyond that.",
-      position: [0.13, 0.62, 0],
-      geometry: "box",
-      args: [0.25, 0.32, 0.13],
-      color: "#2c5f8d",
-      metalness: 0.3,
-      roughness: 0.6,
-    },
-    {
-      id: "pv-inverter",
-      name: "Integrated PV Inverter",
-      description:
-        "Built-in 11.5 kW solar inverter — the headline change from Powerwall 2. Accepts up to 6 PV strings (20 kW DC max), 60 A total, 200-600 V MPPT range, ~97.5% efficiency. DC-coupling captures ~3% more annual yield than AC-coupled designs by skipping a DC->AC->DC conversion.",
-      position: [0, 1.0, -0.03],
-      geometry: "box",
-      args: [0.55, 0.15, 0.12],
-      color: "#3a3a3f",
-      metalness: 0.7,
-      roughness: 0.4,
-    },
-    {
-      id: "ac-output",
-      name: "AC Output Panel",
-      description:
-        "Single-phase 240 V split-phase AC output, 48 A continuous (11.5 kW). Whole-home backup possible because the gateway transfers grid loads in <50 ms — fast enough that lights and PCs ride through without rebooting.",
-      position: [-0.18, 0.05, -0.03],
-      geometry: "box",
-      args: [0.18, 0.08, 0.12],
-      color: "#2a2a2f",
-      metalness: 0.6,
-      roughness: 0.5,
-    },
-    {
-      id: "dc-input",
-      name: "DC PV Input Panel",
-      description:
-        "Six DC PV string terminals plus integrated rapid shutdown initiator (NEC 2017 690.12 compliant). Each string fused at 20 A; reverse-polarity and ground-fault detection prevent the most common installer mistakes.",
-      position: [0.18, 0.05, -0.03],
-      geometry: "box",
-      args: [0.18, 0.08, 0.12],
-      color: "#2a2a2f",
-      metalness: 0.6,
-      roughness: 0.5,
+      // Exterior: on the visible TESLA wordmark on the left side of front face.
+      hotspot: { x: 0.3400, y: 0.4600 },
+      // Cutaway: on the TESLA wordmark rendered on the intact left half.
+      cutawayHotspot: { x: 0.2880, y: 0.4750 },
     },
     {
       id: "fin-left",
@@ -153,6 +93,10 @@ export const powerwall: ProductSpec = {
       color: "#bcbcc0",
       metalness: 0.75,
       roughness: 0.4,
+      // Exterior: only the right-edge fin is visible from this 3/4 angle
+      // (left edge faces away), so no exterior hotspot for the LEFT fin.
+      // Cutaway: left-edge fin slab.
+      cutawayHotspot: { x: 0.0900, y: 0.5000 },
     },
     {
       id: "fin-right",
@@ -165,6 +109,107 @@ export const powerwall: ProductSpec = {
       color: "#bcbcc0",
       metalness: 0.75,
       roughness: 0.4,
+      // Exterior: visible as the second dark cooling-fin strip on the side.
+      hotspot: { x: 0.8000, y: 0.5000 },
+      // Cutaway: right-edge fin slab between modules and wall bracket.
+      cutawayHotspot: { x: 0.8850, y: 0.3000 },
+    },
+
+    // ─── Internal parts: cutaway only (not visible from outside the      ─
+    // ─── sealed convection-cooled enclosure).                             ─
+    {
+      id: "module-1",
+      name: "LFP Battery Module 1",
+      description:
+        "Lithium iron phosphate cell pack. LFP chemistry: no nickel/cobalt, ~6,000 deep cycles, much safer thermal envelope than NMC (decomposition ~270 C vs ~150 C). Tradeoff is energy density, irrelevant for a wall-mounted home unit.",
+      position: [-0.13, 0.30, 0],
+      geometry: "box",
+      args: [0.25, 0.32, 0.13],
+      color: "#2c5f8d",
+      metalness: 0.3,
+      roughness: 0.6,
+      cutawayHotspot: { x: 0.6020, y: 0.2170 },
+    },
+    {
+      id: "module-2",
+      name: "LFP Battery Module 2",
+      description:
+        "Second of four parallel LFP modules summing to 13.5 kWh usable (96% DoD). Internal contactor isolates the module on cell-level fault while the remaining three keep the home backed up at reduced capacity.",
+      position: [0.13, 0.30, 0],
+      geometry: "box",
+      args: [0.25, 0.32, 0.13],
+      color: "#2c5f8d",
+      metalness: 0.3,
+      roughness: 0.6,
+      cutawayHotspot: { x: 0.7680, y: 0.2170 },
+    },
+    {
+      id: "module-3",
+      name: "LFP Battery Module 3",
+      description:
+        "Third LFP module. BMS monitors per-cell voltage at 4 mV resolution and per-module temperature at 0.5 C. Drift triggers passive balancing during the absorption phase of every charge cycle.",
+      position: [-0.13, 0.62, 0],
+      geometry: "box",
+      args: [0.25, 0.32, 0.13],
+      color: "#2c5f8d",
+      metalness: 0.3,
+      roughness: 0.6,
+      cutawayHotspot: { x: 0.6020, y: 0.3930 },
+    },
+    {
+      id: "module-4",
+      name: "LFP Battery Module 4",
+      description:
+        "Fourth LFP module. 10-year unlimited-cycle warranty at 70% retention. Up to four Powerwall 3s can be paralleled for 54 kWh / 46 kW, and Expansion Packs (battery-only, no inverter) chain to 13.5 kWh each beyond that.",
+      position: [0.13, 0.62, 0],
+      geometry: "box",
+      args: [0.25, 0.32, 0.13],
+      color: "#2c5f8d",
+      metalness: 0.3,
+      roughness: 0.6,
+      cutawayHotspot: { x: 0.7680, y: 0.3930 },
+    },
+    {
+      id: "pv-inverter",
+      name: "Integrated PV Inverter",
+      description:
+        "Built-in 11.5 kW solar inverter — the headline change from Powerwall 2. Accepts up to 6 PV strings (20 kW DC max), 60 A total, 200-600 V MPPT range, ~97.5% efficiency. DC-coupling captures ~3% more annual yield than AC-coupled designs by skipping a DC->AC->DC conversion.",
+      position: [0, 1.0, -0.03],
+      geometry: "box",
+      args: [0.55, 0.15, 0.12],
+      color: "#3a3a3f",
+      metalness: 0.7,
+      roughness: 0.4,
+      // Large dark block below the modules — the integrated inverter bay.
+      cutawayHotspot: { x: 0.6850, y: 0.6000 },
+    },
+    {
+      id: "ac-output",
+      name: "AC Output Panel",
+      description:
+        "Single-phase 240 V split-phase AC output, 48 A continuous (11.5 kW). Whole-home backup possible because the gateway transfers grid loads in <50 ms — fast enough that lights and PCs ride through without rebooting.",
+      position: [-0.18, 0.05, -0.03],
+      geometry: "box",
+      args: [0.18, 0.08, 0.12],
+      color: "#2a2a2f",
+      metalness: 0.6,
+      roughness: 0.5,
+      // Bottom-left compartment in the cutaway.
+      cutawayHotspot: { x: 0.6000, y: 0.7670 },
+    },
+    {
+      id: "dc-input",
+      name: "DC PV Input Panel",
+      description:
+        "Six DC PV string terminals plus integrated rapid shutdown initiator (NEC 2017 690.12 compliant). Each string fused at 20 A; reverse-polarity and ground-fault detection prevent the most common installer mistakes.",
+      position: [0.18, 0.05, -0.03],
+      geometry: "box",
+      args: [0.18, 0.08, 0.12],
+      color: "#2a2a2f",
+      metalness: 0.6,
+      roughness: 0.5,
+      // Bottom-right compartment in the cutaway.
+      cutawayHotspot: { x: 0.7650, y: 0.7670 },
     },
     {
       id: "wall-mount",
@@ -177,6 +222,8 @@ export const powerwall: ProductSpec = {
       color: "#5a5a5f",
       metalness: 0.85,
       roughness: 0.4,
+      // Dark vertical bracket between the right-side fin and the wall hatching.
+      cutawayHotspot: { x: 0.8580, y: 0.1000 },
     },
     {
       id: "thermal",
@@ -189,6 +236,8 @@ export const powerwall: ProductSpec = {
       color: "#9aa0a6",
       metalness: 0.85,
       roughness: 0.3,
+      // Vertical aluminum slab behind the modules / above the inverter.
+      cutawayHotspot: { x: 0.8800, y: 0.5500 },
     },
   ],
   relatedSites: ["giga-nevada", "giga-buffalo"],

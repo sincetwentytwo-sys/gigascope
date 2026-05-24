@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Tesla Megapack 2 XL — schematic cutaway / side cross-section.
+  Original work for gigascope.xyz. CC0 / public domain.
+
+  Convention: left half shows the intact white steel shipping-container
+  enclosure with its top cooling-slit roof; right half is sliced away on a
+  jagged cut line to expose the four LFP cell-to-pack modules, the cold
+  plate / coolant loop beneath them, the DC laminated busbar above, the
+  bidirectional PCS inverter at the end of the container, the roof-mounted
+  chiller and fire-suppression nozzles, and the BMS controller bay.
+
+  Horizontal aspect 700x400 mirrors the real 7.5 m x 2.9 m footprint without
+  squashing the modules — the foundation pad runs the full width below.
+  cutawayHotspot {x,y} in megapack.ts targets this image in 0..1 normalized
+  coords.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="400" viewBox="0 0 700 400" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="shellSteelMP" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f0f0f2" />
+      <stop offset="60%" stop-color="#dcdde0" />
+      <stop offset="100%" stop-color="#bcbdbf" />
+    </linearGradient>
+    <linearGradient id="moduleGradMP" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#3a7ab0" />
+      <stop offset="50%" stop-color="#2c5f8d" />
+      <stop offset="100%" stop-color="#1c4060" />
+    </linearGradient>
+    <linearGradient id="pcsGrad" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#4a4a4f" />
+      <stop offset="100%" stop-color="#28282d" />
+    </linearGradient>
+    <pattern id="ventSlitsMP" x="0" y="0" width="10" height="6" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="10" height="6" fill="#dcdde0" />
+      <rect x="1" y="1.5" width="8" height="1.2" fill="#3a3a3f" />
+      <rect x="1" y="3.5" width="8" height="1.2" fill="#3a3a3f" />
+    </pattern>
+    <pattern id="cellPack" x="0" y="0" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="9" height="9" fill="#2c5f8d" />
+      <rect x="0.5" y="0.5" width="3.5" height="8" fill="#3a7ab0" />
+      <rect x="5" y="0.5" width="3.5" height="8" fill="#3a7ab0" />
+      <line x1="0" y1="4.5" x2="9" y2="4.5" stroke="#1c4060" stroke-width="0.3" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="400" fill="#f5f5f7" />
+
+  <!-- ============================================================ -->
+  <!-- FOUNDATION PAD (runs full width below the container)         -->
+  <!-- ============================================================ -->
+  <rect x="20" y="350" width="660" height="22" fill="#9a9a9e" stroke="#666" stroke-width="0.6" />
+  <rect x="20" y="372" width="660" height="6" fill="#7a7a7e" />
+  <!-- texture lines -->
+  <line x1="60" y1="361" x2="80" y2="361" stroke="#6a6a6e" stroke-width="0.4" />
+  <line x1="180" y1="361" x2="210" y2="361" stroke="#6a6a6e" stroke-width="0.4" />
+  <line x1="320" y1="361" x2="345" y2="361" stroke="#6a6a6e" stroke-width="0.4" />
+  <line x1="500" y1="361" x2="525" y2="361" stroke="#6a6a6e" stroke-width="0.4" />
+  <line x1="610" y1="361" x2="635" y2="361" stroke="#6a6a6e" stroke-width="0.4" />
+
+  <!-- ============================================================ -->
+  <!-- LEFT HALF — INTACT EXTERIOR                                  -->
+  <!-- ============================================================ -->
+
+  <!-- Lift corner casting top-left -->
+  <rect x="32" y="80" width="14" height="10" fill="#3a3a3f" stroke="#222" stroke-width="0.4" />
+
+  <!-- Roof / cooling slit panel -->
+  <rect x="40" y="90" width="310" height="14" fill="url(#ventSlitsMP)" stroke="#666" stroke-width="0.6" />
+
+  <!-- HVAC chiller box on roof -->
+  <rect x="80" y="62" width="90" height="28" fill="#7d8389" stroke="#444" stroke-width="0.6" rx="1.5" />
+  <line x1="92" y1="70" x2="158" y2="70" stroke="#444" stroke-width="0.4" />
+  <line x1="92" y1="76" x2="158" y2="76" stroke="#444" stroke-width="0.4" />
+  <line x1="92" y1="82" x2="158" y2="82" stroke="#444" stroke-width="0.4" />
+  <text x="125" y="58" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444" text-anchor="middle">CHILLER</text>
+
+  <!-- Fire suppression nozzle on roof (left) -->
+  <circle cx="220" cy="98" r="3.2" fill="#d04040" stroke="#7a2020" stroke-width="0.5" />
+  <line x1="220" y1="92" x2="220" y2="86" stroke="#d04040" stroke-width="1.4" />
+
+  <!-- Container body left half (white steel) -->
+  <rect x="40" y="104" width="310" height="246" fill="url(#shellSteelMP)" stroke="#888" stroke-width="0.8" />
+
+  <!-- TESLA wordmark -->
+  <text x="195" y="180" font-family="ui-sans-serif, system-ui" font-size="20" font-weight="600" fill="#5a5a5e" text-anchor="middle" letter-spacing="3">TESLA</text>
+
+  <!-- Access door panels (front-facing rectangles on the long side) -->
+  <rect x="60" y="220" width="60" height="110" fill="none" stroke="#aaa" stroke-width="0.6" />
+  <rect x="125" y="220" width="60" height="110" fill="none" stroke="#aaa" stroke-width="0.6" />
+  <rect x="190" y="220" width="60" height="110" fill="none" stroke="#aaa" stroke-width="0.6" />
+  <rect x="255" y="220" width="60" height="110" fill="none" stroke="#aaa" stroke-width="0.6" />
+  <!-- Door handles (small black rectangles) -->
+  <rect x="113" y="270" width="3" height="10" fill="#222" />
+  <rect x="178" y="270" width="3" height="10" fill="#222" />
+  <rect x="243" y="270" width="3" height="10" fill="#222" />
+  <rect x="308" y="270" width="3" height="10" fill="#222" />
+
+  <!-- Lift corner casting bottom-left -->
+  <rect x="32" y="338" width="14" height="14" fill="#3a3a3f" stroke="#222" stroke-width="0.4" />
+
+  <!-- ============================================================ -->
+  <!-- JAGGED CUT LINE (vertical between left half and right half)  -->
+  <!-- ============================================================ -->
+  <path d="M 350 60 L 356 75 L 350 90 L 356 105 L 350 120 L 356 135 L 350 150 L 356 165 L 350 180 L 356 195 L 350 210 L 356 225 L 350 240 L 356 255 L 350 270 L 356 285 L 350 300 L 356 315 L 350 330 L 356 345 L 350 350"
+        fill="#555" stroke="#222" stroke-width="0.7" />
+
+  <!-- ============================================================ -->
+  <!-- RIGHT HALF — CUTAWAY (interior exposed)                       -->
+  <!-- ============================================================ -->
+
+  <!-- Lift corner casting top-right -->
+  <rect x="654" y="80" width="14" height="10" fill="#3a3a3f" stroke="#222" stroke-width="0.4" />
+
+  <!-- Top steel skin (right half, cut) -->
+  <rect x="356" y="90" width="312" height="6" fill="#dcdde0" stroke="#888" stroke-width="0.5" />
+  <!-- Cooling slits continuation -->
+  <rect x="356" y="96" width="312" height="10" fill="url(#ventSlitsMP)" stroke="#888" stroke-width="0.4" />
+
+  <!-- Right-half chiller box (cut, showing coolant manifold inside) -->
+  <rect x="380" y="62" width="120" height="28" fill="#7d8389" stroke="#444" stroke-width="0.6" rx="1.5" />
+  <rect x="400" y="70" width="80" height="14" fill="#9aa0a6" stroke="#444" stroke-width="0.4" />
+  <!-- Compressor coil -->
+  <circle cx="440" cy="77" r="5" fill="none" stroke="#4a90c2" stroke-width="1.4" />
+  <text x="440" y="58" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444" text-anchor="middle">CHILLER</text>
+
+  <!-- Fire suppression nozzles (right-half, cut to show pipe inside) -->
+  <circle cx="540" cy="100" r="3.2" fill="#d04040" stroke="#7a2020" stroke-width="0.5" />
+  <line x1="540" y1="100" x2="540" y2="120" stroke="#d04040" stroke-width="1.2" />
+  <circle cx="620" cy="100" r="3.2" fill="#d04040" stroke="#7a2020" stroke-width="0.5" />
+  <line x1="620" y1="100" x2="620" y2="120" stroke="#d04040" stroke-width="1.2" />
+  <!-- Suppression header pipe -->
+  <line x1="510" y1="108" x2="640" y2="108" stroke="#d04040" stroke-width="1" stroke-dasharray="3 1.5" />
+
+  <!-- Steel side wall slice on right edge of container -->
+  <rect x="660" y="106" width="8" height="244" fill="#9aa0a6" stroke="#666" stroke-width="0.5" />
+
+  <!-- DC laminated copper busbar (just below the roof) -->
+  <rect x="362" y="120" width="296" height="10" fill="#c97f3a" stroke="#7a4a20" stroke-width="0.6" />
+  <line x1="362" y1="125" x2="658" y2="125" stroke="#e0a060" stroke-width="0.6" stroke-dasharray="2 1" />
+  <text x="510" y="116" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444" text-anchor="middle">DC BUS  ~1500 V</text>
+
+  <!-- BMS controller bay (small rack-style box) -->
+  <rect x="362" y="136" width="44" height="22" fill="#1a1a1f" stroke="#444" stroke-width="0.4" />
+  <line x1="366" y1="142" x2="402" y2="142" stroke="#3a9ad9" stroke-width="0.4" />
+  <line x1="366" y1="146" x2="402" y2="146" stroke="#3a9ad9" stroke-width="0.4" />
+  <line x1="366" y1="150" x2="402" y2="150" stroke="#3a9ad9" stroke-width="0.4" />
+  <text x="384" y="170" font-family="ui-sans-serif, system-ui" font-size="5.5" fill="#444" text-anchor="middle">BMS</text>
+
+  <!-- LFP cell-to-pack module 1 -->
+  <rect x="412" y="164" width="50" height="158" fill="url(#cellPack)" stroke="#1c4060" stroke-width="0.6" />
+  <rect x="412" y="164" width="50" height="6" fill="#1c4060" />
+  <text x="437" y="246" font-family="ui-sans-serif, system-ui" font-size="6.5" font-weight="600" fill="#dde0e3" text-anchor="middle">LFP 1</text>
+
+  <!-- Module 2 -->
+  <rect x="466" y="164" width="50" height="158" fill="url(#cellPack)" stroke="#1c4060" stroke-width="0.6" />
+  <rect x="466" y="164" width="50" height="6" fill="#1c4060" />
+  <text x="491" y="246" font-family="ui-sans-serif, system-ui" font-size="6.5" font-weight="600" fill="#dde0e3" text-anchor="middle">LFP 2</text>
+
+  <!-- Module 3 -->
+  <rect x="520" y="164" width="50" height="158" fill="url(#cellPack)" stroke="#1c4060" stroke-width="0.6" />
+  <rect x="520" y="164" width="50" height="6" fill="#1c4060" />
+  <text x="545" y="246" font-family="ui-sans-serif, system-ui" font-size="6.5" font-weight="600" fill="#dde0e3" text-anchor="middle">LFP 3</text>
+
+  <!-- Module 4 -->
+  <rect x="574" y="164" width="50" height="158" fill="url(#cellPack)" stroke="#1c4060" stroke-width="0.6" />
+  <rect x="574" y="164" width="50" height="6" fill="#1c4060" />
+  <text x="599" y="246" font-family="ui-sans-serif, system-ui" font-size="6.5" font-weight="600" fill="#dde0e3" text-anchor="middle">LFP 4</text>
+
+  <!-- PCS Bidirectional Inverter (at right end of container) -->
+  <rect x="628" y="136" width="30" height="186" fill="url(#pcsGrad)" stroke="#111" stroke-width="0.6" />
+  <!-- Heat-sink fins -->
+  <line x1="630" y1="140" x2="630" y2="320" stroke="#666" stroke-width="0.4" />
+  <line x1="634" y1="140" x2="634" y2="320" stroke="#666" stroke-width="0.4" />
+  <line x1="638" y1="140" x2="638" y2="320" stroke="#666" stroke-width="0.4" />
+  <line x1="642" y1="140" x2="642" y2="320" stroke="#666" stroke-width="0.4" />
+  <line x1="646" y1="140" x2="646" y2="320" stroke="#666" stroke-width="0.4" />
+  <line x1="650" y1="140" x2="650" y2="320" stroke="#666" stroke-width="0.4" />
+  <text x="643" y="240" font-family="ui-sans-serif, system-ui" font-size="6" fill="#dde0e3" text-anchor="middle" transform="rotate(-90 643 240)">PCS  1.9 MW</text>
+
+  <!-- Cold plate / cooling manifold beneath modules (horizontal blue band) -->
+  <rect x="412" y="324" width="212" height="14" fill="#4a90c2" stroke="#2a5e88" stroke-width="0.6" />
+  <line x1="412" y1="331" x2="624" y2="331" stroke="#dde0e3" stroke-width="0.4" stroke-dasharray="3 1.5" />
+  <text x="518" y="334.5" font-family="ui-sans-serif, system-ui" font-size="5.5" fill="#dde0e3" text-anchor="middle">GLYCOL COLD PLATE</text>
+  <!-- Coolant return loop curves -->
+  <path d="M 412 338 Q 408 343 412 348 L 624 348 Q 628 343 624 338"
+        stroke="#4a90c2" stroke-width="1.4" fill="none" />
+
+  <!-- Lift corner casting bottom-right -->
+  <rect x="654" y="338" width="14" height="14" fill="#3a3a3f" stroke="#222" stroke-width="0.4" />
+
+  <!-- ============================================================ -->
+  <!-- LABELS                                                       -->
+  <!-- ============================================================ -->
+  <text x="195" y="386" font-family="ui-sans-serif, system-ui" font-size="11" font-style="italic" fill="#444" text-anchor="middle">EXTERIOR</text>
+  <text x="510" y="386" font-family="ui-sans-serif, system-ui" font-size="11" font-style="italic" fill="#444" text-anchor="middle">CUTAWAY</text>
+
+  <!-- Scale bar -->
+  <line x1="20" y1="48" x2="60" y2="48" stroke="#555" stroke-width="1" />
+  <text x="40" y="44" font-family="ui-monospace, monospace" font-size="7" fill="#555" text-anchor="middle">~1 m</text>
+
+  <!-- Dimensions caption -->
+  <text x="680" y="395" font-family="ui-monospace, monospace" font-size="7" fill="#555" text-anchor="end">7.5 m × 2.9 m × 1.7 m  ·  3.9 MWh / 1.9 MW</text>
+</svg>

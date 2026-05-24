@@ -73,7 +73,7 @@ export const tesla4680: ProductSpec = {
       metalness: 0.85,
       roughness: 0.4,
       hotspot: { x: 0.50, y: 0.76 },
-      cutawayHotspot: { x: 0.65, y: 0.93 },
+      cutawayHotspot: { x: 0.62, y: 0.91 },
     },
     {
       id: "vent",
@@ -229,7 +229,9 @@ export const tesla4680: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.3,
       roughness: 0.9,
-      cutawayHotspot: { x: 0.45, y: 0.62 },
+      // On the cutaway the mandrel is the thin black vertical strip at the
+      // center of the jellyroll pattern — dot sits right on it.
+      cutawayHotspot: { x: 0.59, y: 0.62 },
     },
     {
       id: "cid",

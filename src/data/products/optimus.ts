@@ -19,6 +19,25 @@ export const optimus: ProductSpec = {
     license: "CC BY-SA 4.0",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:Optimus_bot_at_Tesla_showroom_-_20251118_-_01.jpg",
   },
+  // Front cross-section drawn in-house — left half intact humanoid
+  // silhouette (head/chest/arms/legs); right half cut down the spine to
+  // expose the camera cluster, FSD-derivative compute board, 2.3 kWh
+  // chest battery, coolant reservoir + lines, central serial-bus spine,
+  // 3-DOF shoulder/hip actuator stacks, forearm tendon drum driving the
+  // hand, high-torque knee, ankle actuator, foot load cells, and IMU at
+  // the pelvis. CC0.
+  cutawayImage: {
+    src: "/products/photos/optimus/cutaway.svg",
+    credit: {
+      source: "Gigascope original SVG",
+      url: "https://github.com/sincetwentytwo-sys/gigascope/blob/main/public/products/photos/optimus/cutaway.svg",
+      license: "CC0",
+    },
+  },
+  // Naming convention: -l / -r refer to the ROBOT'S own left / right, so
+  // shoulder-l renders on the viewer's RIGHT side of the photo (and on the
+  // cutaway side of the SVG, which is also rendered on the right). The R
+  // limbs map to the viewer's LEFT (intact half of the SVG).
   parts: [
     {
       id: "head",
@@ -31,7 +50,11 @@ export const optimus: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.75,
       roughness: 0.2,
-      hotspot: { x: 0.5000, y: 0.1300 },
+      // Exterior: glossy black dome of the robot's head (camera angle puts
+      // the visible centerline slightly left of frame center).
+      hotspot: { x: 0.4200, y: 0.1600 },
+      // Cutaway: intact-side head dome.
+      cutawayHotspot: { x: 0.2880, y: 0.0890 },
     },
     {
       id: "face-plate",
@@ -44,7 +67,11 @@ export const optimus: ProductSpec = {
       color: "#0a0a10",
       metalness: 0.9,
       roughness: 0.15,
-      hotspot: { x: 0.5000, y: 0.1700 },
+      // Exterior: visible camera-strip band across the face (deliberately
+      // offset below the head dot so the two don't overlap).
+      hotspot: { x: 0.4200, y: 0.2100 },
+      // Cutaway: camera cluster shown through the cut head dome.
+      cutawayHotspot: { x: 0.7130, y: 0.0890 },
     },
     {
       id: "neck",
@@ -57,7 +84,9 @@ export const optimus: ProductSpec = {
       color: "#3a3d44",
       metalness: 0.8,
       roughness: 0.35,
-      hotspot: { x: 0.5000, y: 0.2200 },
+      // Neck is largely obscured by chest collar in the showroom photo,
+      // so no exterior hotspot. Cutaway shows the sliced actuator drum.
+      cutawayHotspot: { x: 0.7130, y: 0.1560 },
     },
     {
       id: "torso",
@@ -70,7 +99,10 @@ export const optimus: ProductSpec = {
       color: "#e8e8ec",
       metalness: 0.3,
       roughness: 0.4,
-      hotspot: { x: 0.5000, y: 0.3100 },
+      // Exterior: on the visible TESLA wordmark on the white chest.
+      hotspot: { x: 0.4200, y: 0.3000 },
+      // Cutaway: intact-side chest shell (TESLA wordmark area).
+      cutawayHotspot: { x: 0.2880, y: 0.2570 },
     },
     {
       id: "battery-pack",
@@ -84,7 +116,9 @@ export const optimus: ProductSpec = {
       color: "#2a2d33",
       metalness: 0.7,
       roughness: 0.4,
-      hotspot: { x: 0.5000, y: 0.2700 },
+      // Internal — no exterior hotspot. Cutaway: cell-array battery block
+      // at the top of the open chest cavity.
+      cutawayHotspot: { x: 0.7250, y: 0.2050 },
     },
     {
       id: "cooling-vents",
@@ -97,6 +131,9 @@ export const optimus: ProductSpec = {
       color: "#0e0f12",
       metalness: 0.4,
       roughness: 0.6,
+      // Rear-facing only — no exterior hotspot on a front photo. Cutaway:
+      // slotted vent grid in the chest cavity below the compute board.
+      cutawayHotspot: { x: 0.6800, y: 0.3600 },
     },
     {
       id: "pelvis",
@@ -109,7 +146,10 @@ export const optimus: ProductSpec = {
       color: "#d0d0d4",
       metalness: 0.4,
       roughness: 0.45,
-      hotspot: { x: 0.5000, y: 0.4450 },
+      // Exterior: visible gray pelvis block under the black abdomen belt.
+      hotspot: { x: 0.4200, y: 0.4550 },
+      // Cutaway: IMU chip rendered inside the pelvis bay.
+      cutawayHotspot: { x: 0.7250, y: 0.4540 },
     },
     // Shoulders
     {
@@ -123,7 +163,10 @@ export const optimus: ProductSpec = {
       color: "#bfbfc4",
       metalness: 0.7,
       roughness: 0.35,
-      hotspot: { x: 0.6400, y: 0.2700 },
+      // Robot's left = viewer's right side of the photo.
+      hotspot: { x: 0.5100, y: 0.2700 },
+      // Cutaway: actuator stack rendered with nested rings on the cut side.
+      cutawayHotspot: { x: 0.8630, y: 0.1790 },
     },
     {
       id: "shoulder-r",
@@ -136,7 +179,10 @@ export const optimus: ProductSpec = {
       color: "#bfbfc4",
       metalness: 0.7,
       roughness: 0.35,
-      hotspot: { x: 0.3600, y: 0.2700 },
+      // Robot's right = viewer's left.
+      hotspot: { x: 0.3200, y: 0.2700 },
+      // Cutaway: smooth intact-side shoulder sphere.
+      cutawayHotspot: { x: 0.1500, y: 0.1790 },
     },
     // Upper arms (slightly forward)
     {
@@ -151,7 +197,10 @@ export const optimus: ProductSpec = {
       color: "#e8e8ec",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.6600, y: 0.3300 },
+      hotspot: { x: 0.5300, y: 0.3500 },
+      // Cutaway: hollow carbon tube on the cut side (slightly inset x to
+      // avoid stacking with shoulder/elbow dots in the same column).
+      cutawayHotspot: { x: 0.8400, y: 0.2800 },
     },
     {
       id: "upper-arm-r",
@@ -165,7 +214,8 @@ export const optimus: ProductSpec = {
       color: "#e8e8ec",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.3400, y: 0.3300 },
+      hotspot: { x: 0.3000, y: 0.3500 },
+      cutawayHotspot: { x: 0.1650, y: 0.2800 },
     },
     // Elbows
     {
@@ -179,7 +229,9 @@ export const optimus: ProductSpec = {
       color: "#a8a8ad",
       metalness: 0.75,
       roughness: 0.3,
-      hotspot: { x: 0.6600, y: 0.3750 },
+      // Exterior: distinct black elbow pad on the photo.
+      hotspot: { x: 0.5200, y: 0.4200 },
+      cutawayHotspot: { x: 0.8700, y: 0.3450 },
     },
     {
       id: "elbow-r",
@@ -192,7 +244,8 @@ export const optimus: ProductSpec = {
       color: "#a8a8ad",
       metalness: 0.75,
       roughness: 0.3,
-      hotspot: { x: 0.3400, y: 0.3750 },
+      hotspot: { x: 0.3100, y: 0.4200 },
+      cutawayHotspot: { x: 0.1480, y: 0.3450 },
     },
     // Forearms (house hand-tendon actuators)
     {
@@ -207,7 +260,9 @@ export const optimus: ProductSpec = {
       color: "#dcdce0",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.6500, y: 0.4450 },
+      hotspot: { x: 0.5300, y: 0.4900 },
+      // Cutaway: tendon drum is the orange disc visible on this segment.
+      cutawayHotspot: { x: 0.8600, y: 0.4200 },
     },
     {
       id: "forearm-r",
@@ -221,7 +276,8 @@ export const optimus: ProductSpec = {
       color: "#dcdce0",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.3500, y: 0.4450 },
+      hotspot: { x: 0.3100, y: 0.4900 },
+      cutawayHotspot: { x: 0.1650, y: 0.4200 },
     },
     // Hands (flat boxes)
     {
@@ -236,7 +292,9 @@ export const optimus: ProductSpec = {
       color: "#1f1f24",
       metalness: 0.4,
       roughness: 0.5,
-      hotspot: { x: 0.6600, y: 0.5200 },
+      hotspot: { x: 0.5000, y: 0.5700 },
+      // Cutaway: cut hand box showing finger-linkage lines.
+      cutawayHotspot: { x: 0.8680, y: 0.4900 },
     },
     {
       id: "hand-r",
@@ -250,7 +308,8 @@ export const optimus: ProductSpec = {
       color: "#1f1f24",
       metalness: 0.4,
       roughness: 0.5,
-      hotspot: { x: 0.3300, y: 0.5200 },
+      hotspot: { x: 0.3300, y: 0.5700 },
+      cutawayHotspot: { x: 0.1530, y: 0.4860 },
     },
     // Hips
     {
@@ -264,6 +323,10 @@ export const optimus: ProductSpec = {
       color: "#bfbfc4",
       metalness: 0.75,
       roughness: 0.3,
+      // Hip joints are largely concealed by chassis covers in the showroom
+      // photo, so no exterior hotspot — anatomy is the cutaway story.
+      // Cutaway: 3-DOF actuator stack visible in the open pelvis bay.
+      cutawayHotspot: { x: 0.7800, y: 0.5200 },
     },
     {
       id: "hip-r",
@@ -276,6 +339,7 @@ export const optimus: ProductSpec = {
       color: "#bfbfc4",
       metalness: 0.75,
       roughness: 0.3,
+      cutawayHotspot: { x: 0.2550, y: 0.5200 },
     },
     // Thighs
     {
@@ -289,7 +353,9 @@ export const optimus: ProductSpec = {
       color: "#e8e8ec",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.5500, y: 0.5500 },
+      hotspot: { x: 0.4600, y: 0.6100 },
+      // Cutaway: thigh tube with internal coolant line visible.
+      cutawayHotspot: { x: 0.7830, y: 0.5800 },
     },
     {
       id: "thigh-r",
@@ -302,7 +368,8 @@ export const optimus: ProductSpec = {
       color: "#e8e8ec",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.4500, y: 0.5500 },
+      hotspot: { x: 0.3800, y: 0.6100 },
+      cutawayHotspot: { x: 0.2500, y: 0.5800 },
     },
     // Knees
     {
@@ -316,7 +383,8 @@ export const optimus: ProductSpec = {
       color: "#a8a8ad",
       metalness: 0.75,
       roughness: 0.3,
-      hotspot: { x: 0.5400, y: 0.6000 },
+      hotspot: { x: 0.4500, y: 0.6800 },
+      cutawayHotspot: { x: 0.7830, y: 0.6360 },
     },
     {
       id: "knee-r",
@@ -329,7 +397,8 @@ export const optimus: ProductSpec = {
       color: "#a8a8ad",
       metalness: 0.75,
       roughness: 0.3,
-      hotspot: { x: 0.4500, y: 0.6000 },
+      hotspot: { x: 0.3800, y: 0.6800 },
+      cutawayHotspot: { x: 0.2500, y: 0.6360 },
     },
     // Shins
     {
@@ -343,7 +412,8 @@ export const optimus: ProductSpec = {
       color: "#dcdce0",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.5300, y: 0.6600 },
+      hotspot: { x: 0.4500, y: 0.7400 },
+      cutawayHotspot: { x: 0.7830, y: 0.7230 },
     },
     {
       id: "shin-r",
@@ -356,7 +426,8 @@ export const optimus: ProductSpec = {
       color: "#dcdce0",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.4500, y: 0.6600 },
+      hotspot: { x: 0.3800, y: 0.7400 },
+      cutawayHotspot: { x: 0.2500, y: 0.7230 },
     },
     // Feet
     {
@@ -370,7 +441,9 @@ export const optimus: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.3,
       roughness: 0.7,
-      hotspot: { x: 0.5300, y: 0.7250 },
+      hotspot: { x: 0.4500, y: 0.7900 },
+      // Cutaway: foot box with copper load-cell dots visible.
+      cutawayHotspot: { x: 0.7830, y: 0.8270 },
     },
     {
       id: "foot-r",
@@ -383,7 +456,8 @@ export const optimus: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.3,
       roughness: 0.7,
-      hotspot: { x: 0.4600, y: 0.7250 },
+      hotspot: { x: 0.3800, y: 0.7900 },
+      cutawayHotspot: { x: 0.2500, y: 0.8270 },
     },
   ],
   relatedSites: ["fremont", "giga-texas", "terafab"],

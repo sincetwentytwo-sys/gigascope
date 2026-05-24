@@ -17,7 +17,17 @@ const HOT_STAGE_H = 1.8;
 // 33 Raptors: 3 center, 10 inner ring, 20 outer ring
 const raptor33 = (): PartSpec[] => {
   const parts: PartSpec[] = [];
-  const place = (n: number, radius: number, group: string, label: string, desc: string) => {
+  const place = (
+    n: number,
+    radius: number,
+    group: string,
+    label: string,
+    desc: string,
+    /** Optional cutaway hotspot — only the very first engine in the
+     *  first group gets one, so we don't render 33 overlapping dots
+     *  on a single cluster cross-section. */
+    cutawayHotspot?: { x: number; y: number },
+  ) => {
     for (let i = 0; i < n; i++) {
       const a = (i / n) * Math.PI * 2;
       const x = radius === 0 ? (i - 1) * 0.9 : Math.cos(a) * radius;
@@ -32,15 +42,19 @@ const raptor33 = (): PartSpec[] => {
         color: SOOT,
         metalness: 0.6,
         roughness: 0.45,
+        ...(i === 0 && cutawayHotspot ? { cutawayHotspot } : {}),
       });
     }
   };
+  // Only one hotspot for the whole 33-engine cluster — points to the
+  // row of small bell cross-sections at the bottom of the cutaway.
   place(
     3,
     0,
     "raptor-center",
     "Raptor 2 (center, gimbaled)",
     "Raptor 2: full-flow staged-combustion methalox engine, ~230 tf sea-level thrust at ~300 bar chamber pressure, Isp ~327s. Center 3 (with 10 inner) gimbal for thrust vector control. Reusable, deep-throttle to 40%.",
+    { x: 0.50, y: 0.94 },
   );
   place(
     10,
@@ -72,7 +86,8 @@ const parts: PartSpec[] = [
     color: STEEL,
     metalness: 0.85,
     roughness: 0.25,
-      hotspot: { x: 0.5500, y: 0.5800 },
+    hotspot: { x: 0.6000, y: 0.6500 },
+    cutawayHotspot: { x: 0.50, y: 0.50 },
   },
   {
     id: "booster-chines",
@@ -85,6 +100,9 @@ const parts: PartSpec[] = [
     color: STEEL_DARK,
     metalness: 0.9,
     roughness: 0.3,
+    // Catch pins are small forged pins — invisible at this photo's
+    // scale and too tight on the cutaway to give a separate dot
+    // without overlapping the grid-fin / hot-stage cluster.
   },
   {
     id: "grid-fin-b1",
@@ -97,6 +115,10 @@ const parts: PartSpec[] = [
     color: STEEL_DARK,
     metalness: 0.85,
     roughness: 0.3,
+    // Visible on the cutaway exterior side as the small lattice
+    // sticking out from the booster. Other 3 fins are hidden behind
+    // the booster body from this viewpoint.
+    cutawayHotspot: { x: 0.24, y: 0.37 },
   },
   {
     id: "grid-fin-b2",
@@ -145,7 +167,8 @@ const parts: PartSpec[] = [
     color: SOOT,
     metalness: 0.5,
     roughness: 0.5,
-      hotspot: { x: 0.5600, y: 0.4200 },
+    hotspot: { x: 0.6000, y: 0.4800 },
+    cutawayHotspot: { x: 0.55, y: 0.32 },
   },
   // ===== Starship (ship) =====
   {
@@ -159,6 +182,9 @@ const parts: PartSpec[] = [
     color: COPPER,
     metalness: 0.75,
     roughness: 0.35,
+    // One hotspot represents the 3-RVac cluster on the cutaway.
+    // RVac #2 and #3 stay list-only to avoid stacking dots.
+    cutawayHotspot: { x: 0.42, y: 0.30 },
   },
   {
     id: "ship-rvac-2",
@@ -195,6 +221,9 @@ const parts: PartSpec[] = [
     color: SOOT,
     metalness: 0.6,
     roughness: 0.45,
+    // No cutawayHotspot: the SL engines sit right next to the RVacs
+    // and the hot-stage ring on the cutaway — a third dot in that
+    // band would crowd the hit-area. RSL stays list-only there.
   },
   {
     id: "ship-rsl-2",
@@ -231,7 +260,8 @@ const parts: PartSpec[] = [
     color: STEEL,
     metalness: 0.85,
     roughness: 0.25,
-      hotspot: { x: 0.5800, y: 0.2700 },
+    hotspot: { x: 0.6200, y: 0.3200 },
+    cutawayHotspot: { x: 0.50, y: 0.18 },
   },
   {
     id: "ship-tiles",
@@ -245,6 +275,9 @@ const parts: PartSpec[] = [
     color: TILE,
     metalness: 0.2,
     roughness: 0.85,
+    // Tiles are a windward-side strip on the exterior — drawn on the
+    // cutaway as a dark hex band along the left ship body, but kept
+    // list-only here to avoid overlapping the body / flap hotspots.
   },
   {
     id: "ship-fwd-flap-1",
@@ -258,6 +291,8 @@ const parts: PartSpec[] = [
     color: STEEL,
     metalness: 0.85,
     roughness: 0.3,
+    hotspot: { x: 0.6600, y: 0.2100 },
+    cutawayHotspot: { x: 0.25, y: 0.11 },
   },
   {
     id: "ship-fwd-flap-2",
@@ -284,6 +319,7 @@ const parts: PartSpec[] = [
     color: STEEL,
     metalness: 0.85,
     roughness: 0.3,
+    cutawayHotspot: { x: 0.24, y: 0.26 },
   },
   {
     id: "ship-aft-flap-2",
@@ -309,6 +345,10 @@ const parts: PartSpec[] = [
     color: STEEL_DARK,
     metalness: 0.8,
     roughness: 0.35,
+    // Internal tank in the nose — not visible on the exterior photo,
+    // but exposed as the small amber sphere inside the cutaway nose
+    // cone.
+    cutawayHotspot: { x: 0.50, y: 0.06 },
   },
   {
     id: "ship-nosecone",
@@ -321,6 +361,11 @@ const parts: PartSpec[] = [
     color: STEEL,
     metalness: 0.85,
     roughness: 0.25,
+    hotspot: { x: 0.6200, y: 0.1600 },
+    // No cutawayHotspot: the nose-cone outer shape is conceptually
+    // the same view as the exterior photo and the header-tank dot
+    // sits right under it — adding a second dot in the same nose
+    // region would crowd the hit area.
   },
 ];
 
@@ -337,6 +382,21 @@ export const starship: ProductSpec = {
   cameraTarget: [0, 50, 0],
   background: "#08090d",
   parts,
+  // Full-stack cutaway drawn in-house — left half intact stainless
+  // silhouette (Super Heavy below, hot-stage ring, ship with flaps
+  // and nose), right half sliced open to expose payload bay, CH4 +
+  // LOX header tanks in the nose, ship LOX + CH4 (with common dome),
+  // 3 RVac + 3 SL Raptor cluster, vented hot-stage ring, then the
+  // much larger Super Heavy LOX + CH4 tanks with their common
+  // bulkhead, and a slice of the 33-Raptor cluster at the base. CC0.
+  cutawayImage: {
+    src: "/products/photos/starship/cutaway.svg",
+    credit: {
+      source: "Gigascope original SVG",
+      url: "https://github.com/sincetwentytwo-sys/gigascope/blob/main/public/products/photos/starship/cutaway.svg",
+      license: "CC0",
+    },
+  },
   relatedSites: ["starbase", "cape-canaveral"],
   photoCredit: {
     author: "Steve Jurvetson",

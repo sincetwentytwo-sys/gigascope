@@ -19,6 +19,17 @@ export const model3: ProductSpec = {
     license: "CC BY-SA 4.0",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:Tesla_Model_3_(2023)_Autofr%C3%BChling_Ulm_IMG_9282.jpg",
   },
+  // Top-down cutaway with roof removed: cabin seating, drive units, 2170
+  // structural pack, B-pillar cams + trifocal cluster visible. Front of car
+  // at left of canvas. CC0.
+  cutawayImage: {
+    src: "/products/photos/model-3/cutaway.svg",
+    credit: {
+      source: "Gigascope original SVG",
+      url: "https://github.com/sincetwentytwo-sys/gigascope/blob/main/public/products/photos/model-3/cutaway.svg",
+      license: "CC0",
+    },
+  },
   parts: [
     {
       id: "body",
@@ -32,6 +43,8 @@ export const model3: ProductSpec = {
       metalness: 0.7,
       roughness: 0.35,
       hotspot: { x: 0.4500, y: 0.5500 },
+      // Body silhouette outline on cutaway — sit dot on lower mid-cabin edge.
+      cutawayHotspot: { x: 0.50, y: 0.86 },
     },
     {
       id: "hood",
@@ -46,6 +59,8 @@ export const model3: ProductSpec = {
       metalness: 0.7,
       roughness: 0.35,
       hotspot: { x: 0.6800, y: 0.5000 },
+      // Hood/frunk area at front of car (left of canvas) — mid-height.
+      cutawayHotspot: { x: 0.13, y: 0.55 },
     },
     {
       id: "roof-glass",
@@ -59,6 +74,8 @@ export const model3: ProductSpec = {
       metalness: 0.3,
       roughness: 0.1,
       hotspot: { x: 0.3000, y: 0.1600 },
+      // Glass roof spans cabin — dot on rear-glass arc.
+      cutawayHotspot: { x: 0.70, y: 0.25 },
     },
     {
       id: "windshield",
@@ -73,6 +90,8 @@ export const model3: ProductSpec = {
       metalness: 0.3,
       roughness: 0.15,
       hotspot: { x: 0.4800, y: 0.2800 },
+      // Windshield curve drawn between front cabin and frunk on cutaway.
+      cutawayHotspot: { x: 0.30, y: 0.42 },
     },
     {
       id: "wheel-fl",
@@ -86,6 +105,8 @@ export const model3: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.6,
       roughness: 0.5,
+      // FL = upper-left wheel on the top-down (car faces left of canvas).
+      cutawayHotspot: { x: 0.244, y: 0.238 },
     },
     {
       id: "wheel-fr",
@@ -100,6 +121,8 @@ export const model3: ProductSpec = {
       metalness: 0.6,
       roughness: 0.5,
       hotspot: { x: 0.3300, y: 0.6900 },
+      // FR = lower-left wheel.
+      cutawayHotspot: { x: 0.244, y: 0.763 },
     },
     {
       id: "wheel-rl",
@@ -113,6 +136,8 @@ export const model3: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.6,
       roughness: 0.5,
+      // RL = upper-right wheel.
+      cutawayHotspot: { x: 0.769, y: 0.238 },
     },
     {
       id: "wheel-rr",
@@ -127,6 +152,8 @@ export const model3: ProductSpec = {
       metalness: 0.6,
       roughness: 0.5,
       hotspot: { x: 0.0800, y: 0.6500 },
+      // RR = lower-right wheel.
+      cutawayHotspot: { x: 0.769, y: 0.763 },
     },
     {
       id: "front-bumper",
@@ -140,6 +167,8 @@ export const model3: ProductSpec = {
       metalness: 0.65,
       roughness: 0.4,
       hotspot: { x: 0.8500, y: 0.7000 },
+      // Front bumper at very left of canvas — push down to avoid hood/frunk dot.
+      cutawayHotspot: { x: 0.07, y: 0.75 },
     },
     {
       id: "trunk",
@@ -154,6 +183,8 @@ export const model3: ProductSpec = {
       metalness: 0.7,
       roughness: 0.35,
       hotspot: { x: 0.1300, y: 0.2200 },
+      // Trunk at right of canvas.
+      cutawayHotspot: { x: 0.92, y: 0.50 },
     },
     {
       id: "battery-pack",
@@ -166,6 +197,8 @@ export const model3: ProductSpec = {
       color: "#15171c",
       metalness: 0.4,
       roughness: 0.6,
+      // Blue cell-grid rectangle that fills the cabin floor — far-right cell.
+      cutawayHotspot: { x: 0.68, y: 0.50 },
     },
     {
       id: "front-drive-unit",
@@ -178,6 +211,8 @@ export const model3: ProductSpec = {
       color: "#3a3f47",
       metalness: 0.75,
       roughness: 0.4,
+      // Dark-gray motor box between front wheels on cutaway.
+      cutawayHotspot: { x: 0.23, y: 0.55 },
     },
     {
       id: "rear-drive-unit",
@@ -190,6 +225,8 @@ export const model3: ProductSpec = {
       color: "#3a3f47",
       metalness: 0.8,
       roughness: 0.35,
+      // Dark-gray motor box between rear wheels on cutaway.
+      cutawayHotspot: { x: 0.78, y: 0.50 },
     },
     {
       id: "cam-front-main",
@@ -202,6 +239,8 @@ export const model3: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
+      // Trifocal cluster behind windshield — three dots fanned horizontally.
+      cutawayHotspot: { x: 0.36, y: 0.10 },
     },
     {
       id: "cam-front-wide",
@@ -214,6 +253,7 @@ export const model3: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
+      cutawayHotspot: { x: 0.50, y: 0.10 },
     },
     {
       id: "cam-front-narrow",
@@ -226,6 +266,7 @@ export const model3: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
+      cutawayHotspot: { x: 0.62, y: 0.10 },
     },
     {
       id: "cam-bpillar-l",
@@ -238,6 +279,8 @@ export const model3: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
+      // L = upper edge of cabin (top-down view).
+      cutawayHotspot: { x: 0.475, y: 0.30 },
     },
     {
       id: "cam-bpillar-r",
@@ -250,6 +293,8 @@ export const model3: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
+      // R = lower edge of cabin (top-down view).
+      cutawayHotspot: { x: 0.475, y: 0.70 },
     },
     {
       id: "touchscreen",
@@ -264,6 +309,8 @@ export const model3: ProductSpec = {
       emissive: "#3a4a6a",
       metalness: 0.3,
       roughness: 0.2,
+      // Between front seats on cutaway, just below center pack.
+      cutawayHotspot: { x: 0.434, y: 0.50 },
     },
     {
       id: "hepa-filter",
@@ -276,6 +323,8 @@ export const model3: ProductSpec = {
       color: "#3d3a32",
       metalness: 0.2,
       roughness: 0.85,
+      // Brown rectangle near pass-side dash.
+      cutawayHotspot: { x: 0.36, y: 0.62 },
     },
   ],
   relatedSites: ["fremont", "giga-shanghai", "giga-berlin", "giga-texas"],

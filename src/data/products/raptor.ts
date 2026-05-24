@@ -22,6 +22,17 @@ export const raptor: ProductSpec = {
   cameraPosition: [5.5, 1.8, 6.5],
   cameraTarget: [0, 0.2, 0],
   background: "#0a0a0c",
+  // Side cross-section drawn in-house — left half intact engine silhouette,
+  // right half cut open to expose powerhead (preburners, turbopumps,
+  // injector), chamber, throat, and regen-cooled bell internals. CC0.
+  cutawayImage: {
+    src: "/products/photos/raptor/cutaway.svg",
+    credit: {
+      source: "Gigascope original SVG",
+      url: "https://github.com/sincetwentytwo-sys/gigascope/blob/main/public/products/photos/raptor/cutaway.svg",
+      license: "CC0",
+    },
+  },
   relatedSites: ["starbase", "spacex-hawthorne"],
   parts: [
     {
@@ -37,6 +48,7 @@ export const raptor: ProductSpec = {
       metalness: 0.92,
       roughness: 0.28,
       hotspot: { x: 0.4500, y: 0.7800 },
+      cutawayHotspot: { x: 0.75, y: 0.85 },
     },
     {
       id: "regen-channels",
@@ -50,7 +62,10 @@ export const raptor: ProductSpec = {
       emissive: "#3a1500",
       metalness: 0.85,
       roughness: 0.4,
-      hotspot: { x: 0.4500, y: 0.6600 },
+      // Channels are inside the bell wall — not separately visible on
+      // the exterior photo, so no `hotspot`. Visible as copper veins on
+      // the right-half cutaway.
+      cutawayHotspot: { x: 0.48, y: 0.72 },
     },
     {
       id: "throat",
@@ -65,6 +80,7 @@ export const raptor: ProductSpec = {
       metalness: 0.8,
       roughness: 0.35,
       hotspot: { x: 0.5000, y: 0.5500 },
+      cutawayHotspot: { x: 0.65, y: 0.52 },
     },
     {
       id: "chamber",
@@ -78,6 +94,7 @@ export const raptor: ProductSpec = {
       metalness: 0.9,
       roughness: 0.3,
       hotspot: { x: 0.5000, y: 0.4500 },
+      cutawayHotspot: { x: 0.55, y: 0.45 },
     },
     {
       id: "injector",
@@ -90,7 +107,11 @@ export const raptor: ProductSpec = {
       color: "#3d3f45",
       metalness: 0.75,
       roughness: 0.45,
-      hotspot: { x: 0.5000, y: 0.4000 },
+      // Injector plate sits inside the powerhead between preburners and
+      // chamber — not externally visible. No cutaway hotspot either:
+      // the plate is a thin band sandwiched between the manifold and
+      // chamber, so adding a third dot to that strip crowds the hit
+      // area. Plate is labelled "COAXIAL INJECTOR PLATE" in the SVG.
     },
     {
       id: "preburner-ox",
@@ -105,6 +126,7 @@ export const raptor: ProductSpec = {
       metalness: 0.85,
       roughness: 0.35,
       hotspot: { x: 0.6200, y: 0.2800 },
+      cutawayHotspot: { x: 0.79, y: 0.28 },
     },
     {
       id: "preburner-fuel",
@@ -119,6 +141,7 @@ export const raptor: ProductSpec = {
       metalness: 0.85,
       roughness: 0.35,
       hotspot: { x: 0.3800, y: 0.2800 },
+      cutawayHotspot: { x: 0.52, y: 0.28 },
     },
     {
       id: "turbopump-ox",
@@ -132,6 +155,7 @@ export const raptor: ProductSpec = {
       metalness: 0.9,
       roughness: 0.25,
       hotspot: { x: 0.6000, y: 0.1800 },
+      cutawayHotspot: { x: 0.79, y: 0.18 },
     },
     {
       id: "turbopump-fuel",
@@ -145,6 +169,7 @@ export const raptor: ProductSpec = {
       metalness: 0.9,
       roughness: 0.25,
       hotspot: { x: 0.4000, y: 0.1800 },
+      cutawayHotspot: { x: 0.52, y: 0.18 },
     },
     {
       id: "manifold",
@@ -157,7 +182,9 @@ export const raptor: ProductSpec = {
       color: "#46484e",
       metalness: 0.85,
       roughness: 0.4,
-      hotspot: { x: 0.5000, y: 0.2000 },
+      // Manifold is internal — buried inside the powerhead between PBs
+      // and injector. Drop exterior hotspot, keep cutaway only.
+      cutawayHotspot: { x: 0.65, y: 0.34 },
     },
     {
       id: "sensors",
@@ -172,6 +199,9 @@ export const raptor: ProductSpec = {
       metalness: 0.6,
       roughness: 0.5,
       hotspot: { x: 0.5000, y: 0.1300 },
+      // No cutawayHotspot: sensors are tiny external boxes — drawn on
+      // the cutaway but too small for a dot without overlapping the
+      // preburner / turbopump hotspots.
     },
     {
       id: "ignition",
@@ -198,6 +228,7 @@ export const raptor: ProductSpec = {
       metalness: 0.9,
       roughness: 0.3,
       hotspot: { x: 0.5000, y: 0.1000 },
+      cutawayHotspot: { x: 0.50, y: 0.078 },
     },
     {
       id: "mount",
@@ -211,6 +242,7 @@ export const raptor: ProductSpec = {
       metalness: 0.85,
       roughness: 0.45,
       hotspot: { x: 0.5000, y: 0.0800 },
+      cutawayHotspot: { x: 0.80, y: 0.078 },
     },
   ],
   photoCredit: {
