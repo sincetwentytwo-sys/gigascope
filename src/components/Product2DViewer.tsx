@@ -249,16 +249,24 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
       <div className="relative bg-surface min-h-[55vh] overflow-hidden p-4 text-center">
         <div
           ref={viewportRef}
-          // `inline-block + max-w-full` used to size to the SVG's natural
-          // width — so a 700x400 cutaway only ever got 700px wide even on
-          // a 1200px column, looking cramped. `block + w-full + max-h-78vh`
-          // lets each image grow to the column width; modern browsers honor
-          // aspect-ratio + max-height together and shrink width when the
-          // height clamp fires, so tall portrait images don't overflow.
-          className="relative block w-full max-w-full mx-auto align-top"
+          // Sizing rules:
+          //   width:100%      → try to take the full column width
+          //   max-width: 78vh × aspect → but never exceed what the height cap allows
+          //   max-height: 78vh         → height cap
+          //   aspect-ratio: w/h        → derive the other dimension
+          //
+          // The previous attempt (width:100% + max-height only) didn't keep
+          // aspect ratio when the height clamp activated — width stayed at
+          // 100% while height shrank to 78vh, leaving the SVG distorted
+          // (800×700 instead of 250×800) and stretching every hotspot dot
+          // into a sideways ellipse via preserveAspectRatio="none".
+          // Adding the max-width calc constrains width to whatever height
+          // the cap allows, so dots stay perfectly circular.
+          className="relative block w-full mx-auto align-top"
           style={{
             aspectRatio: `${naturalSize.w} / ${naturalSize.h}`,
             maxHeight: "78vh",
+            maxWidth: `calc(78vh * ${naturalSize.w} / ${naturalSize.h})`,
             cursor: zoom > 1 ? (isDragging ? "grabbing" : "grab") : "default",
             touchAction: zoom > 1 ? "none" : "pinch-zoom",
           }}
