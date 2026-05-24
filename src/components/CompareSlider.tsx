@@ -23,6 +23,12 @@ export default function CompareSlider() {
   const rightMapRef = useRef<HTMLDivElement>(null);
   const leftMap = useRef<L.Map | null>(null);
   const rightMap = useRef<L.Map | null>(null);
+  // Pulsing cyan markers anchored to the selected site's exact lat/lng.
+  // Without these the user can't tell which building in the photo is the
+  // actual Tesla/SpaceX site (esp. for greenfield sites like Giga Mexico
+  // where the surrounding area looks identical to the building plot).
+  const leftMarker = useRef<L.Marker | null>(null);
+  const rightMarker = useRef<L.Marker | null>(null);
   const dragging = useRef(false);
   const syncing = useRef(false);
   const selectedRef = useRef<Factory>(factories[0]);
@@ -90,7 +96,12 @@ export default function CompareSlider() {
         zoomControl: false,
         attributionControl: false,
       });
-      L.tileLayer(SENTINEL_URL, { maxZoom: 15, maxNativeZoom: 15 }).addTo(lMap);
+      // Sentinel-2 native tiles cap at zoom 15. Previously we capped maxZoom
+      // at 15 too, which left the left feed BLANK whenever the user zoomed
+      // past 15 to see ESRI detail. Now Leaflet up-scales the zoom-15 tile
+      // for zoom 16-19 (gets pixelated, but at least the imagery is visible
+      // and the before/after comparison stays meaningful).
+      L.tileLayer(SENTINEL_URL, { maxZoom: 19, maxNativeZoom: 15 }).addTo(lMap);
 
       const rMap = L.map(rightMapRef.current, {
         center,
@@ -99,6 +110,25 @@ export default function CompareSlider() {
         attributionControl: false,
       });
       L.tileLayer(ESRI_URL, { maxZoom: 19 }).addTo(rMap);
+
+      // Pulsing cyan marker at site's exact coordinates. Same icon on both
+      // maps so the dot lines up across the slider divider — visually
+      // confirms "the building under this ping is the site." Uses the
+      // pulse-ring keyframe defined in globals.css.
+      const pingIcon = L.divIcon({
+        className: "",
+        html: `
+          <div style="position:relative;width:36px;height:36px;pointer-events:none;">
+            <div style="position:absolute;inset:0;border:2px solid #00d4ff;border-radius:50%;animation:pulse-ring 2s infinite;"></div>
+            <div style="position:absolute;inset:10px;background:#00d4ff;border-radius:50%;opacity:0.65;box-shadow:0 0 12px rgba(0,212,255,0.9);"></div>
+            <div style="position:absolute;inset:15px;background:#ffffff;border:1.5px solid #00d4ff;border-radius:50%;box-shadow:0 0 8px rgba(0,212,255,1);"></div>
+          </div>
+        `,
+        iconSize: [36, 36],
+        iconAnchor: [18, 18],
+      });
+      leftMarker.current = L.marker(center, { icon: pingIcon, interactive: false }).addTo(lMap);
+      rightMarker.current = L.marker(center, { icon: pingIcon, interactive: false }).addTo(rMap);
 
       lMap.on("move", () => syncMaps(lMap, rMap));
       rMap.on("move", () => syncMaps(rMap, lMap));
@@ -114,6 +144,10 @@ export default function CompareSlider() {
     selectedRef.current = f;
     setSelectedId(f.id);
     const center: [number, number] = [f.lat, f.lng];
+    // Move the ping markers to the new site BEFORE flyTo so they're in
+    // position when the user lands. setLatLng is instant (no animation).
+    leftMarker.current?.setLatLng(center);
+    rightMarker.current?.setLatLng(center);
     leftMap.current?.flyTo(center, 14, { duration: 1 });
     rightMap.current?.flyTo(center, 14, { duration: 1 });
   };
