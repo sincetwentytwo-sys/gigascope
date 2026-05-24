@@ -37,33 +37,54 @@ const FEATURES = [
   { label: "No ads, no upsells", note: "Single tier. No 'Pro / Premium / Enterprise' nonsense. One price. Everything on." },
 ];
 
-async function getCharterCount(): Promise<number | null> {
+// IMPORTANT: paid charter count and free digest count are different keys.
+//   `subscribers:charter:count` — INCR'd only by the Stripe webhook on a
+//     successful checkout. Stays at 0 until billing goes live AND someone pays.
+//   `subscribers:emails` — every email that hit the signup form (free digest).
+// Earlier this used SCARD subscribers:emails for the "charter" counter,
+// which inflated paid traction with free signups → phantom scarcity. Now we
+// surface them separately and honestly.
+async function getCounts(): Promise<{ paidCharter: number | null; freeDigest: number | null }> {
   const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
   const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
-  if (!url || !token) return null;
+  if (!url || !token) return { paidCharter: null, freeDigest: null };
   try {
     const r = new Redis({ url, token });
-    const count = await r.scard("subscribers:emails");
-    return typeof count === "number" ? count : null;
+    const [paidRaw, freeRaw] = await Promise.all([
+      r.get<number | string>("subscribers:charter:count"),
+      r.scard("subscribers:emails"),
+    ]);
+    const paid =
+      typeof paidRaw === "number"
+        ? paidRaw
+        : typeof paidRaw === "string"
+        ? parseInt(paidRaw, 10) || 0
+        : 0;
+    const free = typeof freeRaw === "number" ? freeRaw : null;
+    return { paidCharter: paid, freeDigest: free };
   } catch {
-    return null;
+    return { paidCharter: null, freeDigest: null };
   }
 }
 
 export default async function ProPage() {
-  const charterCount = await getCharterCount();
+  const { paidCharter, freeDigest } = await getCounts();
   const cap = 100;
-  const taken = charterCount === null ? null : Math.min(charterCount, cap);
+  const taken = paidCharter === null ? null : Math.min(paidCharter, cap);
   const remaining = taken === null ? null : Math.max(cap - taken, 0);
 
-  // Gate the counter: only surface a literal count once it's high enough to
-  // function as social proof. Below the threshold, lean on the "Founding 100"
-  // framing instead.
-  const SOCIAL_PROOF_THRESHOLD = 10;
-  const showCount = taken !== null && taken >= SOCIAL_PROOF_THRESHOLD;
+  // Gate the paid-charter counter: only surface a literal count once at
+  // least one person has actually paid. Below 1, lean on "Founding 100"
+  // framing without claiming traction we don't have.
+  const showCount = taken !== null && taken >= 1;
   const badge = showCount
     ? `${taken} of ${cap} charter spots claimed`
-    : "Founding 100 · charter pricing locked at $9/mo forever";
+    : "Founding 100 · first 100 paid charters lock $9/mo forever";
+
+  // Separate free-digest count gates its own "join N readers" line. We
+  // require ≥10 before exposing the number so we don't show "join 2 readers".
+  const FREE_PROOF_THRESHOLD = 10;
+  const showFreeCount = freeDigest !== null && freeDigest >= FREE_PROOF_THRESHOLD;
 
   // Server-side gate: hide Stripe POST entirely until billing is wired.
   // Server-only env, can't be probed from the client — exactly the point.
@@ -104,6 +125,11 @@ export default async function ProPage() {
         <p className="text-[11px] text-dim max-w-md mx-auto">
           ⚠ This is not equity in the project, not a token, not a security. It's a $9/month subscription to a software service. Cancel any time.
         </p>
+        {showFreeCount && (
+          <p className="text-[11px] text-dim max-w-md mx-auto mt-2">
+            Already <strong className="text-text">{freeDigest}</strong> reading the free daily digest.
+          </p>
+        )}
         <p className="text-[11px] text-dim max-w-md mx-auto mt-2">
           <Link href="/charter-terms" className="underline">Charter price-lock terms →</Link>
         </p>
