@@ -7,22 +7,22 @@ import type { Factory, Milestone } from "@/data/types";
 export const revalidate = 1800;
 
 export const metadata: Metadata = {
-  title: "SpaceX IPO — Track the 4 ground sites from orbit — GIGASCOPE",
+  title: "SpaceX Financial Tracker — capex, sites, catalysts | Gigascope",
   description:
-    "S-1 excerpts, P/S valuation comp, Starbase + Hawthorne + Cape Canaveral + Vandenberg progress — Sentinel-2 + ESRI captures refreshed as imagery drops, primary-source citations.",
+    "Capex, segment revenue, 4 ground sites, peer P/S comparison, and catalyst dates — sourced from S-1 filings and primary citations, not rumors.",
   alternates: { canonical: "https://gigascope.xyz/spacex-ipo" },
   openGraph: {
-    title: "SpaceX IPO — Track the 4 ground sites from orbit",
+    title: "SpaceX Financial Tracker — capex, sites, catalysts",
     description:
-      "S-1 excerpts, P/S valuation comp, 4 ground sites, primary-source citations. Pre-IPO physical-footprint visibility.",
+      "S-1 excerpts, peer P/S comparison, 4 ground sites, catalyst calendar — sourced from filings and primary citations.",
     url: "https://gigascope.xyz/spacex-ipo",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SpaceX IPO — Track the 4 ground sites from orbit",
+    title: "SpaceX Financial Tracker — capex, sites, catalysts",
     description:
-      "S-1 excerpts, P/S valuation comp, 4 ground sites, primary-source citations.",
+      "S-1 excerpts, peer P/S comparison, 4 ground sites, catalyst calendar — sourced from filings.",
   },
 };
 
@@ -369,14 +369,14 @@ export default function SpaceXIPOPage() {
             S-1 filed 2026-05-20 · Starbase · Boca Chica, TX · Sentinel-2
           </div>
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-3 max-w-3xl leading-[1.05]">
-            SpaceX filed S-1.
+            SpaceX Financial Tracker.
             <br />
-            <span className="text-white/85">We track its 4 ground sites from orbit.</span>
+            <span className="text-white/85">Capex, sites, S-1 footprint, catalyst dates.</span>
           </h1>
           <p className="text-sm sm:text-base text-white/80 max-w-xl mb-6">
             Starbase · Hawthorne · Cape Canaveral · Vandenberg.
             <br className="hidden sm:block" />
-            S-1 excerpts, P/S valuation comp, Sentinel-2 + ESRI captures, primary-source citations.
+            Sourced from filings and primary citations — not rumors.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <a
@@ -389,7 +389,7 @@ export default function SpaceXIPOPage() {
               href="#valuation"
               className="px-4 py-2 rounded border border-white/30 text-white text-sm hover:border-white"
             >
-              P/S comparison
+              Peer P/S comparison
             </a>
             <a
               href="#sites"
@@ -700,23 +700,22 @@ export default function SpaceXIPOPage() {
         <div className="max-w-[900px] mx-auto px-6 py-14">
           <div className="rounded-lg border border-border-custom bg-surface p-6 sm:p-8">
             <div className="text-[11px] uppercase tracking-widest text-dim mb-3 font-mono">
-              Charter waitlist · first 100
+              Charter · first 100 members
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold mb-3 leading-tight">
-              Track SpaceX IPO from orbit — $9/mo charter, lifetime locked.
+              Follow the SpaceX financial picture as the filings move — $9/mo or $90/yr, charter rate locked.
             </h2>
             <p className="text-sm text-dim mb-5 max-w-xl">
-              We update this page every time SpaceX files an S-1 amendment, every time one of the four ground sites moves,
-              and every time a launch lands a new primary-source citation. Charter members get the email digest the moment
-              we ship. Standard launch $29 (Jun 2026); long-term target $49–79. Charter rate locks for the life of the
-              subscription.
+              We update this page when SpaceX files an S-1 amendment, when one of the four ground sites moves, and when
+              a launch lands a new primary-source citation. Charter members get the email digest the same day. Standard
+              launch $29/mo (Jun 2026); long-term target $49–79/mo. Charter rate locks for the life of the subscription.
             </p>
             <div className="flex flex-wrap gap-3 mb-6">
               <Link
                 href="/pro"
                 className="px-4 py-2 rounded bg-text text-bg text-sm font-bold hover:opacity-85"
               >
-                Join charter waitlist →
+                Subscribe — $9/mo charter →
               </Link>
               <Link
                 href="/charter-terms"
@@ -733,7 +732,7 @@ export default function SpaceXIPOPage() {
             </div>
 
             <div className="border-t border-border-custom pt-5">
-              <div className="text-xs text-dim mb-3">Or subscribe to the free daily digest:</div>
+              <div className="text-xs text-dim mb-3">Or get the free daily digest:</div>
               <EmailSignup tier="free" source="spacex-ipo" variant="inline" />
             </div>
           </div>
