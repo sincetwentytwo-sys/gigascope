@@ -7,11 +7,18 @@ import { tileSources } from "@/lib/tiles";
 import type { Company, Factory } from "@/data/types";
 
 const ESRI_URL = tileSources[1].url;
-// Left feed locks to 2019 EOX cloudless mosaic so before/after is dramatic
-// for the post-2019 buildouts (Giga Texas, Berlin, Starbase, Memphis, Boring LV).
-// Don't read from tileSources — SatelliteMap cycles through that and wants latest.
+// Left feed: 2019-05-15 ESRI Wayback snapshot. Used to be EOX Sentinel-2
+// cloudless mosaic, but EOX's cloudless aggregation returns ~1-12 KB grey
+// placeholder tiles for desert / arid regions (Nevada, Boca Chica mudflats,
+// Memphis fringe) — exactly the sites where before/after matters most.
+// ESRI Wayback uses the same Maxar/Vexcel commercial constellation as the
+// right feed (ESRI current World Imagery) but locked to a historic snapshot,
+// so coverage and quality are matched between left and right.
+// Release 9598 = 2019-05-15. Wayback config:
+//   https://s3-us-west-2.amazonaws.com/config.maptiles.arcgis.com/waybackconfig.json
+// URL path order: /tile/{release}/{z}/{y}/{x} — note y BEFORE x (ESRI convention).
 const SENTINEL_URL =
-  "https://tiles.maps.eox.at/wmts?layer=s2cloudless-2019_3857&style=default&tilematrixset=GoogleMapsCompatible&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/jpeg&TileMatrix={z}&TileCol={x}&TileRow={y}";
+  "https://wayback.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/WMTS/1.0.0/default028mm/MapServer/tile/9598/{z}/{y}/{x}";
 
 const COMPANY_ORDER: Company[] = ["joint", "tesla", "spacex", "xai", "neuralink", "boring"];
 
@@ -96,12 +103,10 @@ export default function CompareSlider() {
         zoomControl: false,
         attributionControl: false,
       });
-      // Sentinel-2 native tiles cap at zoom 15. Previously we capped maxZoom
-      // at 15 too, which left the left feed BLANK whenever the user zoomed
-      // past 15 to see ESRI detail. Now Leaflet up-scales the zoom-15 tile
-      // for zoom 16-19 (gets pixelated, but at least the imagery is visible
-      // and the before/after comparison stays meaningful).
-      L.tileLayer(SENTINEL_URL, { maxZoom: 19, maxNativeZoom: 15 }).addTo(lMap);
+      // ESRI Wayback is native at zoom 19 (same as the right feed), so no
+      // maxNativeZoom upscaling needed — left and right stay pixel-matched
+      // at every zoom level.
+      L.tileLayer(SENTINEL_URL, { maxZoom: 19 }).addTo(lMap);
 
       const rMap = L.map(rightMapRef.current, {
         center,
@@ -264,8 +269,8 @@ export default function CompareSlider() {
         {/* Left label */}
         <div className="absolute top-2 left-2 sm:top-4 sm:left-4 z-[1000]">
           <div className="bg-surface border-l-2 border-text px-2 py-1 sm:px-3 sm:py-2 ">
-            <h3 className="font-mono text-[9px] sm:text-[11px] text-text font-bold uppercase tracking-wider"><span className="sm:hidden">2019 BASELINE</span><span className="hidden sm:inline">SENTINEL-2 — 2019 BASELINE</span></h3>
-            <p className="hidden sm:block font-mono text-[9px] text-text/40 mt-0.5 uppercase tracking-tighter">SOURCE: ESA / EOX CLOUDLESS MOSAIC</p>
+            <h3 className="font-mono text-[9px] sm:text-[11px] text-text font-bold uppercase tracking-wider"><span className="sm:hidden">2019 BASELINE</span><span className="hidden sm:inline">2019-05 BASELINE</span></h3>
+            <p className="hidden sm:block font-mono text-[9px] text-text/40 mt-0.5 uppercase tracking-tighter">SOURCE: ESRI WAYBACK · MAXAR / VEXCEL</p>
           </div>
         </div>
 
@@ -335,7 +340,7 @@ export default function CompareSlider() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-[11px]">
         <div className="border border-border-custom bg-surface p-3">
           <div className="text-dim uppercase text-[9px] tracking-[0.2em] mb-1">LEFT FEED · BASELINE</div>
-          <div className="text-text/80">SENTINEL-2 — 2019 cloudless mosaic (10m). Pre-buildout reference for Giga Texas, Berlin, Starbase, Memphis, Boring LV.</div>
+          <div className="text-text/80">ESRI Wayback — 2019-05-15 snapshot (sub-meter Maxar/Vexcel). Pre-buildout reference for Giga Texas, Berlin, Starbase, Memphis, Boring LV.</div>
         </div>
         <div className="border border-border-custom bg-surface p-3">
           <div className="text-dim uppercase text-[9px] tracking-[0.2em] mb-1">RIGHT FEED</div>
