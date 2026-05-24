@@ -43,8 +43,8 @@ export const model3: ProductSpec = {
       metalness: 0.7,
       roughness: 0.35,
       hotspot: { x: 0.4500, y: 0.5500 },
-      // Body silhouette outline on cutaway — sit dot on lower mid-cabin edge.
-      cutawayHotspot: { x: 0.50, y: 0.86 },
+      // Body silhouette outline — bottom-rear panel between wheels.
+      cutawayHotspot: { x: 0.65, y: 0.92 },
     },
     {
       id: "hood",
@@ -59,8 +59,8 @@ export const model3: ProductSpec = {
       metalness: 0.7,
       roughness: 0.35,
       hotspot: { x: 0.6800, y: 0.5000 },
-      // Hood/frunk area at front of car (left of canvas) — mid-height.
-      cutawayHotspot: { x: 0.13, y: 0.55 },
+      // Hood/frunk area at front of car (left of canvas) — upper-mid frunk.
+      cutawayHotspot: { x: 0.13, y: 0.30 },
     },
     {
       id: "roof-glass",
@@ -74,8 +74,8 @@ export const model3: ProductSpec = {
       metalness: 0.3,
       roughness: 0.1,
       hotspot: { x: 0.3000, y: 0.1600 },
-      // Glass roof spans cabin — dot on rear-glass arc.
-      cutawayHotspot: { x: 0.70, y: 0.25 },
+      // Glass roof spans cabin — dot on cabin glass band, mid-rear.
+      cutawayHotspot: { x: 0.60, y: 0.20 },
     },
     {
       id: "windshield",
@@ -90,8 +90,8 @@ export const model3: ProductSpec = {
       metalness: 0.3,
       roughness: 0.15,
       hotspot: { x: 0.4800, y: 0.2800 },
-      // Windshield curve drawn between front cabin and frunk on cutaway.
-      cutawayHotspot: { x: 0.30, y: 0.42 },
+      // Windshield curve at front of cabin — placed on top of the arc.
+      cutawayHotspot: { x: 0.30, y: 0.20 },
     },
     {
       id: "wheel-fl",
@@ -106,7 +106,7 @@ export const model3: ProductSpec = {
       metalness: 0.6,
       roughness: 0.5,
       // FL = lower-left wheel in driver-perspective (bottom of canvas = driver-LEFT in LHD).
-      cutawayHotspot: { x: 0.244, y: 0.763 },
+      cutawayHotspot: { x: 0.244, y: 0.937 },
     },
     {
       id: "wheel-fr",
@@ -122,7 +122,7 @@ export const model3: ProductSpec = {
       roughness: 0.5,
       hotspot: { x: 0.3300, y: 0.6900 },
       // FR = upper-left wheel in driver-perspective (top of canvas = driver-RIGHT in LHD).
-      cutawayHotspot: { x: 0.244, y: 0.238 },
+      cutawayHotspot: { x: 0.244, y: 0.063 },
     },
     {
       id: "wheel-rl",
@@ -137,7 +137,7 @@ export const model3: ProductSpec = {
       metalness: 0.6,
       roughness: 0.5,
       // RL = lower-right wheel in driver-perspective.
-      cutawayHotspot: { x: 0.769, y: 0.763 },
+      cutawayHotspot: { x: 0.769, y: 0.937 },
     },
     {
       id: "wheel-rr",
@@ -153,7 +153,7 @@ export const model3: ProductSpec = {
       roughness: 0.5,
       hotspot: { x: 0.0800, y: 0.6500 },
       // RR = upper-right wheel in driver-perspective.
-      cutawayHotspot: { x: 0.769, y: 0.238 },
+      cutawayHotspot: { x: 0.769, y: 0.063 },
     },
     {
       id: "front-bumper",
@@ -167,8 +167,8 @@ export const model3: ProductSpec = {
       metalness: 0.65,
       roughness: 0.4,
       hotspot: { x: 0.8500, y: 0.7000 },
-      // Front bumper at very left of canvas — push down to avoid hood/frunk dot.
-      cutawayHotspot: { x: 0.07, y: 0.75 },
+      // Front bumper near left bumper dashed line.
+      cutawayHotspot: { x: 0.10, y: 0.50 },
     },
     {
       id: "trunk",
@@ -183,7 +183,7 @@ export const model3: ProductSpec = {
       metalness: 0.7,
       roughness: 0.35,
       hotspot: { x: 0.1300, y: 0.2200 },
-      // Trunk at right of canvas.
+      // Trunk at right of canvas — on the rear body panel.
       cutawayHotspot: { x: 0.92, y: 0.50 },
     },
     {
@@ -197,8 +197,8 @@ export const model3: ProductSpec = {
       color: "#15171c",
       metalness: 0.4,
       roughness: 0.6,
-      // Blue cell-grid rectangle that fills the cabin floor — far-right cell.
-      cutawayHotspot: { x: 0.68, y: 0.50 },
+      // Blue cell-grid rectangle on cabin floor — clear cell, bottom-right.
+      cutawayHotspot: { x: 0.55, y: 0.72 },
     },
     {
       id: "front-drive-unit",
@@ -212,7 +212,7 @@ export const model3: ProductSpec = {
       metalness: 0.75,
       roughness: 0.4,
       // Dark-gray motor box between front wheels on cutaway.
-      cutawayHotspot: { x: 0.23, y: 0.55 },
+      cutawayHotspot: { x: 0.229, y: 0.50 },
     },
     {
       id: "rear-drive-unit",
@@ -226,7 +226,7 @@ export const model3: ProductSpec = {
       metalness: 0.8,
       roughness: 0.35,
       // Dark-gray motor box between rear wheels on cutaway.
-      cutawayHotspot: { x: 0.78, y: 0.50 },
+      cutawayHotspot: { x: 0.779, y: 0.50 },
     },
     {
       id: "cam-front-main",
@@ -239,8 +239,8 @@ export const model3: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
-      // Trifocal cluster behind windshield — three dots fanned horizontally.
-      cutawayHotspot: { x: 0.36, y: 0.10 },
+      // Trifocal cluster — three dots stacked at trifocal artwork.
+      cutawayHotspot: { x: 0.36, y: 0.40 },
     },
     {
       id: "cam-front-wide",
@@ -253,7 +253,7 @@ export const model3: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
-      cutawayHotspot: { x: 0.50, y: 0.10 },
+      cutawayHotspot: { x: 0.36, y: 0.50 },
     },
     {
       id: "cam-front-narrow",
@@ -266,7 +266,7 @@ export const model3: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
-      cutawayHotspot: { x: 0.62, y: 0.10 },
+      cutawayHotspot: { x: 0.36, y: 0.60 },
     },
     {
       id: "cam-bpillar-l",
@@ -279,8 +279,8 @@ export const model3: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
-      // L = lower edge of cabin in driver-perspective (bottom of canvas = driver-LEFT).
-      cutawayHotspot: { x: 0.475, y: 0.70 },
+      // L = lower edge of cabin in driver-perspective (bottom = driver-LEFT in LHD).
+      cutawayHotspot: { x: 0.475, y: 0.86 },
     },
     {
       id: "cam-bpillar-r",
@@ -293,8 +293,8 @@ export const model3: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
-      // R = upper edge of cabin in driver-perspective (top of canvas = driver-RIGHT).
-      cutawayHotspot: { x: 0.475, y: 0.30 },
+      // R = upper edge of cabin in driver-perspective (top = driver-RIGHT in LHD).
+      cutawayHotspot: { x: 0.475, y: 0.14 },
     },
     {
       id: "touchscreen",
@@ -309,8 +309,8 @@ export const model3: ProductSpec = {
       emissive: "#3a4a6a",
       metalness: 0.3,
       roughness: 0.2,
-      // Between front seats on cutaway, just below center pack.
-      cutawayHotspot: { x: 0.434, y: 0.50 },
+      // 15" landscape touchscreen between front seats on cutaway.
+      cutawayHotspot: { x: 0.46, y: 0.50 },
     },
     {
       id: "hepa-filter",
@@ -323,8 +323,8 @@ export const model3: ProductSpec = {
       color: "#3d3a32",
       metalness: 0.2,
       roughness: 0.85,
-      // Brown rectangle near pass-side dash.
-      cutawayHotspot: { x: 0.36, y: 0.62 },
+      // Brown HEPA rectangle below trifocal — driver-side dash region.
+      cutawayHotspot: { x: 0.34, y: 0.70 },
     },
   ],
   relatedSites: ["fremont", "giga-shanghai", "giga-berlin", "giga-texas"],

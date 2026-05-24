@@ -10,10 +10,11 @@
   model-3.ts target this image via cutawayHotspot {x,y} in 0..1
   normalized coords.
 
-  viewBox 800x400 chosen so a 4694mm L x 1850mm W sedan fits with
-  comfortable margins.
+  viewBox 800x315 matches the real 4694mm L x 1850mm W sedan aspect ratio
+  (~2.54). The silhouette fills ~90% of the canvas height so that all
+  hotspot dots sit on visible vehicle parts, not in empty bands.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="315" viewBox="0 0 800 315" preserveAspectRatio="xMidYMid meet">
   <defs>
     <linearGradient id="m3body" x1="0" x2="0" y1="0" y2="1">
       <stop offset="0%" stop-color="#dde0e3" />
@@ -31,143 +32,135 @@
   </defs>
 
   <!-- Background -->
-  <rect width="800" height="400" fill="#f5f5f7" />
+  <rect width="800" height="315" fill="#f5f5f7" />
 
   <!-- ============================================================ -->
   <!-- BODY OUTLINE (top-down silhouette, sedan profile)             -->
   <!-- ============================================================ -->
   <!-- Sedan plan: tapered nose at left, rounded tail at right.     -->
-  <path d="M 60 200
-           C 75 130, 130 100, 200 95
-           L 600 95
-           C 660 95, 720 115, 740 145
-           L 745 200
-           L 740 255
-           C 720 285, 660 305, 600 305
-           L 200 305
-           C 130 300, 75 270, 60 200 Z"
+  <path d="M 60 157
+           C 75 60, 130 25, 200 20
+           L 600 20
+           C 660 20, 720 40, 740 75
+           L 745 157
+           L 740 240
+           C 720 275, 660 295, 600 295
+           L 200 295
+           C 130 290, 75 255, 60 157 Z"
         fill="url(#m3body)" stroke="#555" stroke-width="1.2" />
 
   <!-- Hood / frunk area (front fascia line) -->
-  <line x1="180" y1="105" x2="180" y2="295" stroke="#888" stroke-width="0.8" stroke-dasharray="3 2" />
-  <text x="120" y="200" font-family="ui-sans-serif, system-ui" font-size="9" fill="#666" text-anchor="middle">FRUNK</text>
+  <line x1="180" y1="30" x2="180" y2="285" stroke="#888" stroke-width="0.8" stroke-dasharray="3 2" />
+  <text x="120" y="180" font-family="ui-sans-serif, system-ui" font-size="9" fill="#666" text-anchor="middle">FRUNK</text>
 
   <!-- Windshield arc (from cowl to roof) -->
-  <path d="M 220 115 Q 245 200 220 285" stroke="url(#m3glass)" stroke-width="14" fill="none" opacity="0.75" />
+  <path d="M 220 45 Q 245 157 220 270" stroke="url(#m3glass)" stroke-width="14" fill="none" opacity="0.75" />
 
   <!-- Glass roof panel (cabin opening) -->
-  <rect x="245" y="125" width="285" height="150" fill="url(#m3glass)" opacity="0.45" stroke="#7a98b8" stroke-width="0.6" stroke-dasharray="2 2" />
+  <rect x="245" y="55" width="285" height="205" fill="url(#m3glass)" opacity="0.45" stroke="#7a98b8" stroke-width="0.6" stroke-dasharray="2 2" />
 
   <!-- Rear glass / hatch line -->
-  <path d="M 540 125 Q 565 200 540 275" stroke="url(#m3glass)" stroke-width="12" fill="none" opacity="0.7" />
+  <path d="M 540 55 Q 565 157 540 260" stroke="url(#m3glass)" stroke-width="12" fill="none" opacity="0.7" />
 
   <!-- Trunk lid area -->
-  <line x1="605" y1="115" x2="605" y2="285" stroke="#888" stroke-width="0.8" stroke-dasharray="3 2" />
-  <text x="665" y="200" font-family="ui-sans-serif, system-ui" font-size="9" fill="#666" text-anchor="middle">TRUNK</text>
+  <line x1="605" y1="40" x2="605" y2="280" stroke="#888" stroke-width="0.8" stroke-dasharray="3 2" />
+  <text x="665" y="180" font-family="ui-sans-serif, system-ui" font-size="9" fill="#666" text-anchor="middle">TRUNK</text>
 
   <!-- Front bumper / nose line -->
-  <line x1="78" y1="160" x2="78" y2="240" stroke="#888" stroke-width="0.8" stroke-dasharray="2 2" />
+  <line x1="78" y1="110" x2="78" y2="200" stroke="#888" stroke-width="0.8" stroke-dasharray="2 2" />
 
   <!-- ============================================================ -->
   <!-- WHEELS (4) — dark tire ovals at corners                       -->
   <!-- ============================================================ -->
-  <!-- Front-left = upper-left, Front-right = lower-left, etc.       -->
-  <!-- (top-down with car facing left means left side = upper half)  -->
-  <ellipse cx="195" cy="95" rx="34" ry="14" fill="#2a2a2a" stroke="#111" stroke-width="0.8" />
-  <ellipse cx="195" cy="305" rx="34" ry="14" fill="#2a2a2a" stroke="#111" stroke-width="0.8" />
-  <ellipse cx="615" cy="95" rx="34" ry="14" fill="#2a2a2a" stroke="#111" stroke-width="0.8" />
-  <ellipse cx="615" cy="305" rx="34" ry="14" fill="#2a2a2a" stroke="#111" stroke-width="0.8" />
+  <ellipse cx="195" cy="20" rx="34" ry="16" fill="#2a2a2a" stroke="#111" stroke-width="0.8" />
+  <ellipse cx="195" cy="295" rx="34" ry="16" fill="#2a2a2a" stroke="#111" stroke-width="0.8" />
+  <ellipse cx="615" cy="20" rx="34" ry="16" fill="#2a2a2a" stroke="#111" stroke-width="0.8" />
+  <ellipse cx="615" cy="295" rx="34" ry="16" fill="#2a2a2a" stroke="#111" stroke-width="0.8" />
   <!-- Wheel rim accent -->
-  <ellipse cx="195" cy="95" rx="20" ry="8" fill="none" stroke="#888" stroke-width="0.6" />
-  <ellipse cx="195" cy="305" rx="20" ry="8" fill="none" stroke="#888" stroke-width="0.6" />
-  <ellipse cx="615" cy="95" rx="20" ry="8" fill="none" stroke="#888" stroke-width="0.6" />
-  <ellipse cx="615" cy="305" rx="20" ry="8" fill="none" stroke="#888" stroke-width="0.6" />
+  <ellipse cx="195" cy="20" rx="20" ry="10" fill="none" stroke="#888" stroke-width="0.6" />
+  <ellipse cx="195" cy="295" rx="20" ry="10" fill="none" stroke="#888" stroke-width="0.6" />
+  <ellipse cx="615" cy="20" rx="20" ry="10" fill="none" stroke="#888" stroke-width="0.6" />
+  <ellipse cx="615" cy="295" rx="20" ry="10" fill="none" stroke="#888" stroke-width="0.6" />
 
   <!-- ============================================================ -->
   <!-- DRIVE UNITS (front induction + rear PMSM)                    -->
   <!-- ============================================================ -->
-  <rect x="155" y="170" width="55" height="60" fill="#3a3f47" stroke="#222" stroke-width="0.8" rx="3" />
-  <text x="183" y="204" font-family="ui-sans-serif, system-ui" font-size="7" fill="#dde0e3" text-anchor="middle">FRONT</text>
-  <text x="183" y="214" font-family="ui-sans-serif, system-ui" font-size="7" fill="#dde0e3" text-anchor="middle">INDUCT.</text>
+  <rect x="155" y="120" width="55" height="70" fill="#3a3f47" stroke="#222" stroke-width="0.8" rx="3" />
+  <text x="183" y="148" font-family="ui-sans-serif, system-ui" font-size="7" fill="#dde0e3" text-anchor="middle">FRONT</text>
+  <text x="183" y="172" font-family="ui-sans-serif, system-ui" font-size="7" fill="#dde0e3" text-anchor="middle">INDUCT.</text>
 
-  <rect x="595" y="170" width="55" height="60" fill="#3a3f47" stroke="#222" stroke-width="0.8" rx="3" />
-  <text x="623" y="204" font-family="ui-sans-serif, system-ui" font-size="7" fill="#dde0e3" text-anchor="middle">REAR</text>
-  <text x="623" y="214" font-family="ui-sans-serif, system-ui" font-size="7" fill="#dde0e3" text-anchor="middle">PMSM</text>
+  <rect x="595" y="120" width="55" height="70" fill="#3a3f47" stroke="#222" stroke-width="0.8" rx="3" />
+  <text x="623" y="148" font-family="ui-sans-serif, system-ui" font-size="7" fill="#dde0e3" text-anchor="middle">REAR</text>
+  <text x="623" y="172" font-family="ui-sans-serif, system-ui" font-size="7" fill="#dde0e3" text-anchor="middle">PMSM</text>
 
   <!-- ============================================================ -->
   <!-- STRUCTURAL BATTERY PACK (2170 cells, between axles)          -->
   <!-- ============================================================ -->
-  <rect x="220" y="135" width="370" height="130" fill="url(#m3pack)" stroke="#1a3050" stroke-width="1" opacity="0.55" rx="4" />
+  <rect x="220" y="60" width="370" height="195" fill="url(#m3pack)" stroke="#1a3050" stroke-width="1" opacity="0.55" rx="4" />
   <!-- Cell-grid texture -->
   <g stroke="#1a3050" stroke-width="0.4" opacity="0.4">
-    <line x1="220" y1="160" x2="590" y2="160" />
-    <line x1="220" y1="185" x2="590" y2="185" />
-    <line x1="220" y1="210" x2="590" y2="210" />
-    <line x1="220" y1="235" x2="590" y2="235" />
-    <line x1="260" y1="135" x2="260" y2="265" />
-    <line x1="300" y1="135" x2="300" y2="265" />
-    <line x1="340" y1="135" x2="340" y2="265" />
-    <line x1="380" y1="135" x2="380" y2="265" />
-    <line x1="420" y1="135" x2="420" y2="265" />
-    <line x1="460" y1="135" x2="460" y2="265" />
-    <line x1="500" y1="135" x2="500" y2="265" />
-    <line x1="540" y1="135" x2="540" y2="265" />
+    <line x1="220" y1="100" x2="590" y2="100" />
+    <line x1="220" y1="140" x2="590" y2="140" />
+    <line x1="220" y1="180" x2="590" y2="180" />
+    <line x1="220" y1="215" x2="590" y2="215" />
+    <line x1="260" y1="60" x2="260" y2="255" />
+    <line x1="300" y1="60" x2="300" y2="255" />
+    <line x1="340" y1="60" x2="340" y2="255" />
+    <line x1="380" y1="60" x2="380" y2="255" />
+    <line x1="420" y1="60" x2="420" y2="255" />
+    <line x1="460" y1="60" x2="460" y2="255" />
+    <line x1="500" y1="60" x2="500" y2="255" />
+    <line x1="540" y1="60" x2="540" y2="255" />
   </g>
-  <text x="405" y="204" font-family="ui-sans-serif, system-ui" font-size="9" fill="#0a2240" text-anchor="middle" font-weight="600">2170 PACK · 75 kWh</text>
+  <text x="405" y="160" font-family="ui-sans-serif, system-ui" font-size="9" fill="#0a2240" text-anchor="middle" font-weight="600">2170 PACK · 75 kWh</text>
 
   <!-- ============================================================ -->
   <!-- CABIN: front-row seats (driver/passenger) + rear bench        -->
   <!-- ============================================================ -->
-  <!-- Front-row seats (above the pack outline) -->
-  <rect x="280" y="142" width="42" height="50" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
-  <rect x="280" y="208" width="42" height="50" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
-  <text x="301" y="172" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">PASS</text>
-  <text x="301" y="238" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">DRIVER</text>
+  <!-- Top half = pass-side (driver-RIGHT in LHD); bottom = driver -->
+  <rect x="280" y="70" width="42" height="62" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
+  <rect x="280" y="183" width="42" height="62" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
+  <text x="301" y="105" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">PASS</text>
+  <text x="301" y="218" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">DRIVER</text>
 
   <!-- Center 15" touchscreen (between front seats, landscape) -->
-  <rect x="332" y="188" width="30" height="22" fill="#0a0a12" stroke="#444" stroke-width="0.5" rx="2" />
-  <rect x="335" y="191" width="24" height="16" fill="#2a3a5a" opacity="0.7" />
-  <text x="347" y="220" font-family="ui-sans-serif, system-ui" font-size="6" fill="#666" text-anchor="middle">15"</text>
+  <rect x="332" y="146" width="30" height="22" fill="#0a0a12" stroke="#444" stroke-width="0.5" rx="2" />
+  <rect x="335" y="149" width="24" height="16" fill="#2a3a5a" opacity="0.7" />
+  <text x="347" y="139" font-family="ui-sans-serif, system-ui" font-size="6" fill="#666" text-anchor="middle">15"</text>
 
   <!-- Rear bench seat (3-up) -->
-  <rect x="430" y="138" width="135" height="62" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
-  <rect x="430" y="200" width="135" height="62" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
-  <text x="497" y="174" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">REAR BENCH</text>
+  <rect x="430" y="65" width="135" height="80" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
+  <rect x="430" y="170" width="135" height="80" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
+  <text x="497" y="110" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">REAR BENCH</text>
 
   <!-- ============================================================ -->
   <!-- CAMERAS / SENSORS                                             -->
   <!-- ============================================================ -->
-  <!-- Front trifocal cluster (windshield-top, behind mirror) -->
-  <circle cx="233" cy="195" r="3.5" fill="#0a0a0a" stroke="#666" stroke-width="0.4" />
-  <circle cx="233" cy="205" r="3.5" fill="#0a0a0a" stroke="#666" stroke-width="0.4" />
-  <circle cx="233" cy="215" r="3.5" fill="#0a0a0a" stroke="#666" stroke-width="0.4" />
-  <text x="245" y="208" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444">trifocal</text>
+  <!-- Front trifocal cluster (windshield-top, behind mirror) - drawn at arc -->
+  <circle cx="240" cy="120" r="3.5" fill="#0a0a0a" stroke="#666" stroke-width="0.4" />
+  <circle cx="240" cy="157" r="3.5" fill="#0a0a0a" stroke="#666" stroke-width="0.4" />
+  <circle cx="240" cy="194" r="3.5" fill="#0a0a0a" stroke="#666" stroke-width="0.4" />
+  <text x="252" y="160" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444">trifocal</text>
 
-  <!-- B-pillar cameras (left + right) -->
-  <circle cx="380" cy="120" r="3.5" fill="#0a0a0a" stroke="#666" stroke-width="0.4" />
-  <circle cx="380" cy="280" r="3.5" fill="#0a0a0a" stroke="#666" stroke-width="0.4" />
-  <text x="385" y="116" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444">B-pillar R</text>
-  <text x="385" y="293" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444">B-pillar L</text>
+  <!-- B-pillar cameras (top = R, bottom = L for driver perspective) -->
+  <circle cx="380" cy="40" r="4" fill="#0a0a0a" stroke="#666" stroke-width="0.4" />
+  <circle cx="380" cy="275" r="4" fill="#0a0a0a" stroke="#666" stroke-width="0.4" />
+  <text x="388" y="38" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444">B-pillar R</text>
+  <text x="388" y="287" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444">B-pillar L</text>
 
-  <!-- HEPA cabin filter (under glovebox, pass-side) -->
-  <rect x="248" y="222" width="22" height="14" fill="#3d3a32" stroke="#222" stroke-width="0.5" rx="1" />
-  <text x="259" y="247" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444" text-anchor="middle">HEPA</text>
+  <!-- HEPA cabin filter (relocated below trifocal, on driver-side dash) -->
+  <rect x="262" y="213" width="22" height="14" fill="#3d3a32" stroke="#222" stroke-width="0.5" rx="1" />
+  <text x="273" y="208" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444" text-anchor="middle">HEPA</text>
 
   <!-- ============================================================ -->
   <!-- ANNOTATIONS                                                   -->
   <!-- ============================================================ -->
+  <text x="400" y="11" font-family="ui-sans-serif, system-ui" font-size="9" font-style="italic" fill="#444" text-anchor="middle">TOP-DOWN · INTERIOR LAYOUT  ·  FRONT ← / → REAR</text>
 
-  <text x="120" y="55" font-family="ui-sans-serif, system-ui" font-size="9" font-style="italic" fill="#444">FRONT</text>
-  <text x="680" y="55" font-family="ui-sans-serif, system-ui" font-size="9" font-style="italic" fill="#444">REAR</text>
-  <text x="400" y="55" font-family="ui-sans-serif, system-ui" font-size="10" font-style="italic" fill="#444" text-anchor="middle">TOP-DOWN · INTERIOR LAYOUT</text>
-
-  <!-- Direction arrow -->
-  <path d="M 60 55 L 90 55 L 85 50 M 90 55 L 85 60" stroke="#444" stroke-width="0.8" fill="none" />
-
-  <!-- Scale bar -->
-  <line x1="60" y1="380" x2="160" y2="380" stroke="#555" stroke-width="1" />
-  <text x="110" y="392" font-family="ui-monospace, monospace" font-size="7" fill="#555" text-anchor="middle">~1 m (to scale)</text>
+  <!-- Scale bar at bottom -->
+  <line x1="60" y1="312" x2="160" y2="312" stroke="#555" stroke-width="0.7" />
+  <text x="110" y="309" font-family="ui-monospace, monospace" font-size="6" fill="#555" text-anchor="middle">~1 m (to scale)</text>
 
   <!-- Dimensions caption -->
-  <text x="740" y="392" font-family="ui-monospace, monospace" font-size="7" fill="#555" text-anchor="end">4694 mm L × 1850 mm W</text>
+  <text x="740" y="312" font-family="ui-monospace, monospace" font-size="6" fill="#555" text-anchor="end">4694 mm L × 1850 mm W</text>
 </svg>

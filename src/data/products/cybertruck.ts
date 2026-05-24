@@ -44,8 +44,8 @@ export const cybertruck: ProductSpec = {
       metalness: 0.9,
       roughness: 0.25,
       hotspot: { x: 0.5500, y: 0.4600 },
-      // Exoskeleton outline on cutaway — sit dot on lower-edge clear zone.
-      cutawayHotspot: { x: 0.50, y: 0.88 },
+      // Exoskeleton outline — sit dot on lower body panel between wheels.
+      cutawayHotspot: { x: 0.42, y: 0.94 },
     },
     {
       id: "front-wedge",
@@ -60,8 +60,8 @@ export const cybertruck: ProductSpec = {
       metalness: 0.9,
       roughness: 0.25,
       hotspot: { x: 0.1800, y: 0.3600 },
-      // Frunk wedge area at front of truck — push up to avoid lightbar.
-      cutawayHotspot: { x: 0.14, y: 0.32 },
+      // Frunk wedge area at front of truck — on wedge body, mid-front.
+      cutawayHotspot: { x: 0.13, y: 0.30 },
     },
     {
       id: "windshield",
@@ -76,8 +76,8 @@ export const cybertruck: ProductSpec = {
       metalness: 0.3,
       roughness: 0.15,
       hotspot: { x: 0.4300, y: 0.2500 },
-      // Single-piece windshield arc on cutaway — cabin-glass spot below 48V bus.
-      cutawayHotspot: { x: 0.40, y: 0.40 },
+      // Windshield arc on cutaway — upper region behind the trifocal stack.
+      cutawayHotspot: { x: 0.30, y: 0.20 },
     },
     {
       id: "bed",
@@ -91,8 +91,8 @@ export const cybertruck: ProductSpec = {
       metalness: 0.85,
       roughness: 0.35,
       hotspot: { x: 0.7800, y: 0.4400 },
-      // Bed/vault rectangle behind cabin on cutaway — far-right of vault floor.
-      cutawayHotspot: { x: 0.72, y: 0.85 },
+      // Bed/vault rectangle behind cabin on cutaway — lower bed floor area.
+      cutawayHotspot: { x: 0.70, y: 0.85 },
     },
     {
       id: "tonneau",
@@ -107,7 +107,7 @@ export const cybertruck: ProductSpec = {
       roughness: 0.5,
       hotspot: { x: 0.7800, y: 0.3100 },
       // Three-segment dark cover over bed on cutaway.
-      cutawayHotspot: { x: 0.66, y: 0.50 },
+      cutawayHotspot: { x: 0.60, y: 0.50 },
     },
     {
       id: "lightbar-front",
@@ -123,7 +123,7 @@ export const cybertruck: ProductSpec = {
       roughness: 0.3,
       hotspot: { x: 0.1300, y: 0.4900 },
       // Front lightbar at nose tip on cutaway.
-      cutawayHotspot: { x: 0.09, y: 0.50 },
+      cutawayHotspot: { x: 0.08, y: 0.50 },
     },
     {
       id: "lightbar-rear",
@@ -139,7 +139,7 @@ export const cybertruck: ProductSpec = {
       roughness: 0.3,
       hotspot: { x: 0.93, y: 0.40 },
       // Rear lightbar at tail tip on cutaway.
-      cutawayHotspot: { x: 0.94, y: 0.50 },
+      cutawayHotspot: { x: 0.92, y: 0.50 },
     },
     {
       id: "wheel-fl",
@@ -155,7 +155,7 @@ export const cybertruck: ProductSpec = {
       roughness: 0.55,
       hotspot: { x: 0.3000, y: 0.7400 },
       // FL = lower-left wheel in driver-perspective (bottom = driver-LEFT in LHD).
-      cutawayHotspot: { x: 0.281, y: 0.725 },
+      cutawayHotspot: { x: 0.281, y: 0.942 },
     },
     {
       id: "wheel-fr",
@@ -170,7 +170,7 @@ export const cybertruck: ProductSpec = {
       metalness: 0.6,
       roughness: 0.55,
       // FR = upper-left wheel in driver-perspective (top = driver-RIGHT in LHD).
-      cutawayHotspot: { x: 0.281, y: 0.275 },
+      cutawayHotspot: { x: 0.281, y: 0.058 },
     },
     {
       id: "wheel-rl",
@@ -186,7 +186,7 @@ export const cybertruck: ProductSpec = {
       roughness: 0.55,
       hotspot: { x: 0.8000, y: 0.7400 },
       // RL = lower-right wheel in driver-perspective.
-      cutawayHotspot: { x: 0.806, y: 0.725 },
+      cutawayHotspot: { x: 0.806, y: 0.942 },
     },
     {
       id: "wheel-rr",
@@ -201,7 +201,7 @@ export const cybertruck: ProductSpec = {
       metalness: 0.6,
       roughness: 0.55,
       // RR = upper-right wheel in driver-perspective.
-      cutawayHotspot: { x: 0.806, y: 0.275 },
+      cutawayHotspot: { x: 0.806, y: 0.058 },
     },
     {
       id: "battery-800v",
@@ -214,8 +214,8 @@ export const cybertruck: ProductSpec = {
       color: "#15171c",
       metalness: 0.45,
       roughness: 0.6,
-      // 4680 pack rectangle spanning the wheelbase — upper-mid grid cell.
-      cutawayHotspot: { x: 0.42, y: 0.62 },
+      // 4680 pack rectangle spanning the wheelbase — bottom grid cell.
+      cutawayHotspot: { x: 0.42, y: 0.78 },
     },
     {
       id: "front-drive-unit",
@@ -243,7 +243,7 @@ export const cybertruck: ProductSpec = {
       metalness: 0.8,
       roughness: 0.35,
       // Rear DU Left in driver-perspective = lower-right of rear-motor pair (bottom = driver-LEFT).
-      cutawayHotspot: { x: 0.806, y: 0.570 },
+      cutawayHotspot: { x: 0.806, y: 0.62 },
     },
     {
       id: "rear-drive-r",
@@ -257,7 +257,7 @@ export const cybertruck: ProductSpec = {
       metalness: 0.8,
       roughness: 0.35,
       // Rear DU Right in driver-perspective = upper-right of rear-motor pair (top = driver-RIGHT).
-      cutawayHotspot: { x: 0.806, y: 0.430 },
+      cutawayHotspot: { x: 0.806, y: 0.38 },
     },
     {
       id: "sbw-actuator-l",
@@ -298,8 +298,8 @@ export const cybertruck: ProductSpec = {
       color: "#52575f",
       metalness: 0.75,
       roughness: 0.4,
-      // Behind the rear DUs, against tailgate on cutaway.
-      cutawayHotspot: { x: 0.93, y: 0.35 },
+      // Behind rear DUs near tailgate corner on cutaway.
+      cutawayHotspot: { x: 0.87, y: 0.20 },
     },
     {
       id: "48v-bus",
@@ -313,8 +313,8 @@ export const cybertruck: ProductSpec = {
       emissive: "#3a2a08",
       metalness: 0.7,
       roughness: 0.4,
-      // Yellow ribbon along upper edge of chassis on cutaway.
-      cutawayHotspot: { x: 0.40, y: 0.26 },
+      // Yellow ribbon along chassis spine on cutaway — central spot.
+      cutawayHotspot: { x: 0.50, y: 0.50 },
     },
     {
       id: "cam-front-main",
@@ -328,8 +328,8 @@ export const cybertruck: ProductSpec = {
       metalness: 0.2,
       roughness: 0.3,
       hotspot: { x: 0.42, y: 0.18 },
-      // Trifocal cluster behind windshield — fan three dots horizontally.
-      cutawayHotspot: { x: 0.36, y: 0.10 },
+      // Trifocal cluster behind windshield — three dots stacked at A-pillar.
+      cutawayHotspot: { x: 0.36, y: 0.30 },
     },
     {
       id: "cam-front-wide",
@@ -342,7 +342,7 @@ export const cybertruck: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
-      cutawayHotspot: { x: 0.46, y: 0.10 },
+      cutawayHotspot: { x: 0.36, y: 0.40 },
     },
     {
       id: "cam-front-narrow",
@@ -355,7 +355,7 @@ export const cybertruck: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
-      cutawayHotspot: { x: 0.56, y: 0.10 },
+      cutawayHotspot: { x: 0.36, y: 0.60 },
     },
     {
       id: "cam-side-l",
@@ -370,7 +370,7 @@ export const cybertruck: ProductSpec = {
       roughness: 0.3,
       hotspot: { x: 0.49, y: 0.28 },
       // L = lower edge of cabin in driver-perspective (bottom = driver-LEFT in LHD).
-      cutawayHotspot: { x: 0.55, y: 0.705 },
+      cutawayHotspot: { x: 0.55, y: 0.88 },
     },
     {
       id: "cam-side-r",
@@ -384,7 +384,7 @@ export const cybertruck: ProductSpec = {
       metalness: 0.2,
       roughness: 0.3,
       // R = upper edge of cabin in driver-perspective (top = driver-RIGHT in LHD).
-      cutawayHotspot: { x: 0.55, y: 0.295 },
+      cutawayHotspot: { x: 0.55, y: 0.12 },
     },
     {
       id: "cam-rear",
@@ -397,8 +397,8 @@ export const cybertruck: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
-      // Tailgate camera at rear, just above rear-steer.
-      cutawayHotspot: { x: 0.87, y: 0.85 },
+      // Tailgate camera at rear, mirror of rear-steer below tailgate seam.
+      cutawayHotspot: { x: 0.87, y: 0.80 },
     },
   ],
   relatedSites: ["giga-texas", "fremont"],

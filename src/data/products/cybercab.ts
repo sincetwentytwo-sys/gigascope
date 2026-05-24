@@ -49,8 +49,8 @@ export const cybercab: ProductSpec = {
       metalness: 0.85,
       roughness: 0.25,
       hotspot: { x: 0.42, y: 0.44 },
-      // Body silhouette outline on cutaway — sit dot on lower-edge clear zone.
-      cutawayHotspot: { x: 0.50, y: 0.93 },
+      // Body silhouette outline — bottom-mid body panel between wheels.
+      cutawayHotspot: { x: 0.55, y: 0.93 },
     },
     {
       id: "hood",
@@ -66,7 +66,7 @@ export const cybercab: ProductSpec = {
       roughness: 0.25,
       hotspot: { x: 0.22, y: 0.41 },
       // Hood at front of car on cutaway.
-      cutawayHotspot: { x: 0.16, y: 0.65 },
+      cutawayHotspot: { x: 0.17, y: 0.65 },
     },
     {
       id: "trunk",
@@ -81,7 +81,7 @@ export const cybercab: ProductSpec = {
       metalness: 0.85,
       roughness: 0.25,
       // Rear-trunk area at right of canvas.
-      cutawayHotspot: { x: 0.84, y: 0.50 },
+      cutawayHotspot: { x: 0.86, y: 0.50 },
     },
     {
       id: "door-l",
@@ -96,8 +96,8 @@ export const cybercab: ProductSpec = {
       metalness: 0.85,
       roughness: 0.25,
       hotspot: { x: 0.62, y: 0.30 },
-      // Door-L (driver-LEFT in LHD) = bottom of canvas — labeled "door L (closed)" in SVG.
-      cutawayHotspot: { x: 0.50, y: 0.83 },
+      // Door-L (driver-LEFT in LHD) = bottom of canvas — labeled "door L" in SVG.
+      cutawayHotspot: { x: 0.40, y: 0.93 },
     },
     {
       id: "door-r",
@@ -111,8 +111,8 @@ export const cybercab: ProductSpec = {
       color: "#b8a26d",
       metalness: 0.85,
       roughness: 0.25,
-      // Door-R (driver-RIGHT in LHD) = top of canvas — labeled "door R (open ~80°)" in SVG.
-      cutawayHotspot: { x: 0.50, y: 0.18 },
+      // Door-R (driver-RIGHT in LHD) = top of canvas — labeled "door R" in SVG.
+      cutawayHotspot: { x: 0.40, y: 0.07 },
     },
     // Wheels (4)
     {
@@ -129,7 +129,7 @@ export const cybercab: ProductSpec = {
       roughness: 0.6,
       hotspot: { x: 0.27, y: 0.66 },
       // FL = lower-left wheel in driver-perspective (bottom = driver-LEFT in LHD).
-      cutawayHotspot: { x: 0.279, y: 0.775 },
+      cutawayHotspot: { x: 0.279, y: 0.931 },
     },
     {
       id: "wheel-fr",
@@ -144,7 +144,7 @@ export const cybercab: ProductSpec = {
       metalness: 0.5,
       roughness: 0.6,
       // FR = upper-left wheel in driver-perspective (top = driver-RIGHT in LHD).
-      cutawayHotspot: { x: 0.279, y: 0.225 },
+      cutawayHotspot: { x: 0.279, y: 0.069 },
     },
     {
       id: "wheel-rl",
@@ -160,7 +160,7 @@ export const cybercab: ProductSpec = {
       roughness: 0.6,
       hotspot: { x: 0.73, y: 0.60 },
       // RL = lower-right wheel in driver-perspective.
-      cutawayHotspot: { x: 0.743, y: 0.775 },
+      cutawayHotspot: { x: 0.743, y: 0.931 },
     },
     {
       id: "wheel-rr",
@@ -175,7 +175,7 @@ export const cybercab: ProductSpec = {
       metalness: 0.5,
       roughness: 0.6,
       // RR = upper-right wheel in driver-perspective.
-      cutawayHotspot: { x: 0.743, y: 0.225 },
+      cutawayHotspot: { x: 0.743, y: 0.069 },
     },
     {
       id: "headlight-bar",
@@ -191,7 +191,7 @@ export const cybercab: ProductSpec = {
       roughness: 0.2,
       hotspot: { x: 0.17, y: 0.50 },
       // Front lightbar at nose tip on cutaway.
-      cutawayHotspot: { x: 0.08, y: 0.50 },
+      cutawayHotspot: { x: 0.07, y: 0.50 },
     },
     // HW5 cameras (front cluster x3)
     {
@@ -205,8 +205,8 @@ export const cybercab: ProductSpec = {
       color: "#0a0a10",
       metalness: 0.3,
       roughness: 0.25,
-      // Front stereo trio - center.
-      cutawayHotspot: { x: 0.30, y: 0.07 },
+      // Front stereo trio - center, stacked on windshield arc.
+      cutawayHotspot: { x: 0.30, y: 0.30 },
     },
     {
       id: "hw5-cam-l",
@@ -219,8 +219,8 @@ export const cybercab: ProductSpec = {
       color: "#0a0a10",
       metalness: 0.3,
       roughness: 0.25,
-      // HW5 Left in driver-perspective = lower-left front (bottom = driver-LEFT in LHD).
-      cutawayHotspot: { x: 0.42, y: 0.93 },
+      // HW5 Left in driver-perspective = lower stereo (bottom = driver-LEFT in LHD).
+      cutawayHotspot: { x: 0.30, y: 0.70 },
     },
     {
       id: "hw5-cam-r",
@@ -233,8 +233,8 @@ export const cybercab: ProductSpec = {
       color: "#0a0a10",
       metalness: 0.3,
       roughness: 0.25,
-      // HW5 Right in driver-perspective = upper-left front (top = driver-RIGHT in LHD).
-      cutawayHotspot: { x: 0.30, y: 0.07 },
+      // HW5 Right in driver-perspective = middle stereo (top = driver-RIGHT in LHD).
+      cutawayHotspot: { x: 0.30, y: 0.50 },
     },
     {
       id: "side-cam-l",
@@ -248,7 +248,7 @@ export const cybercab: ProductSpec = {
       metalness: 0.3,
       roughness: 0.25,
       // L side camera = lower edge of cabin in driver-perspective (bottom = driver-LEFT in LHD).
-      cutawayHotspot: { x: 0.53, y: 0.72 },
+      cutawayHotspot: { x: 0.543, y: 0.80 },
     },
     {
       id: "side-cam-r",
@@ -262,7 +262,7 @@ export const cybercab: ProductSpec = {
       metalness: 0.3,
       roughness: 0.25,
       // R side camera = upper edge of cabin in driver-perspective (top = driver-RIGHT in LHD).
-      cutawayHotspot: { x: 0.53, y: 0.28 },
+      cutawayHotspot: { x: 0.543, y: 0.20 },
     },
     {
       id: "induction-coil",
@@ -277,8 +277,8 @@ export const cybercab: ProductSpec = {
       emissive: "#3a2a08",
       metalness: 0.85,
       roughness: 0.3,
-      // Concentric gold rings at center of underfloor on cutaway.
-      cutawayHotspot: { x: 0.59, y: 0.50 },
+      // Concentric gold rings under floor — upper portion of coil.
+      cutawayHotspot: { x: 0.50, y: 0.40 },
     },
     {
       id: "battery",
@@ -291,8 +291,8 @@ export const cybercab: ProductSpec = {
       color: "#2a2d33",
       metalness: 0.75,
       roughness: 0.4,
-      // Cell-grid rectangle wrapping the cabin floor — right edge of pack.
-      cutawayHotspot: { x: 0.65, y: 0.65 },
+      // Cell-grid rectangle wrapping the cabin floor — bottom-right of pack.
+      cutawayHotspot: { x: 0.65, y: 0.78 },
     },
     {
       id: "rear-drive-unit",
@@ -306,7 +306,7 @@ export const cybercab: ProductSpec = {
       metalness: 0.85,
       roughness: 0.35,
       // Dark-gray motor box between rear wheels on cutaway.
-      cutawayHotspot: { x: 0.74, y: 0.50 },
+      cutawayHotspot: { x: 0.738, y: 0.50 },
     },
     {
       id: "seat-l",
@@ -320,7 +320,7 @@ export const cybercab: ProductSpec = {
       metalness: 0.2,
       roughness: 0.8,
       // Seat-L in driver-perspective = lower seat in 2-up bench (bottom = driver-LEFT in LHD).
-      cutawayHotspot: { x: 0.436, y: 0.603 },
+      cutawayHotspot: { x: 0.44, y: 0.70 },
     },
     {
       id: "seat-r",
@@ -334,7 +334,7 @@ export const cybercab: ProductSpec = {
       metalness: 0.2,
       roughness: 0.8,
       // Seat-R in driver-perspective = upper seat in 2-up bench (top = driver-RIGHT in LHD).
-      cutawayHotspot: { x: 0.436, y: 0.398 },
+      cutawayHotspot: { x: 0.44, y: 0.30 },
     },
     {
       id: "cabin-screen",
@@ -348,8 +348,8 @@ export const cybercab: ProductSpec = {
       emissive: "#142036",
       metalness: 0.3,
       roughness: 0.2,
-      // Small screen between seats on cutaway — central spine well clear of seats.
-      cutawayHotspot: { x: 0.43, y: 0.50 },
+      // Center screen between seats on cutaway — central spine.
+      cutawayHotspot: { x: 0.50, y: 0.50 },
     },
     {
       id: "no-wheel-marker",
@@ -362,8 +362,8 @@ export const cybercab: ProductSpec = {
       color: "#15171c",
       metalness: 0.1,
       roughness: 0.9,
-      // Red X marker ahead of seats on cutaway — further left.
-      cutawayHotspot: { x: 0.30, y: 0.50 },
+      // Red X marker ahead of seats on cutaway — center-cabin region.
+      cutawayHotspot: { x: 0.40, y: 0.50 },
     },
   ],
   relatedSites: ["giga-texas"],

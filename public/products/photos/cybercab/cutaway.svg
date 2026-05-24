@@ -13,10 +13,11 @@
   full specs); ~3.9m L × 2.0m W × 1.4m H per reveal-stage info. Layout
   reflects the unboxed-process chassis pattern.
 
-  viewBox 700x400 — slightly narrower than the trucks/SUVs to reflect the
-  smaller 2-seat coupe footprint.
+  viewBox 700x360 matches the ~3.9m L × ~2.0m W coupe aspect (~1.94).
+  The silhouette fills ~90% of canvas height so all cutaway hotspot
+  dots sit on visible vehicle parts, not in empty bands.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" width="700" height="400" viewBox="0 0 700 400" preserveAspectRatio="xMidYMid meet">
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="360" viewBox="0 0 700 360" preserveAspectRatio="xMidYMid meet">
   <defs>
     <linearGradient id="ccbody" x1="0" x2="0" y1="0" y2="1">
       <stop offset="0%" stop-color="#dccfa6" />
@@ -39,140 +40,137 @@
   </defs>
 
   <!-- Background -->
-  <rect width="700" height="400" fill="#f5f5f7" />
+  <rect width="700" height="360" fill="#f5f5f7" />
 
   <!-- ============================================================ -->
   <!-- BODY OUTLINE — 2-box coupe silhouette, low + wide              -->
   <!-- ============================================================ -->
-  <path d="M 50 200
-           C 60 120, 130 95, 200 90
-           L 520 90
-           C 590 95, 640 130, 650 200
-           C 640 270, 590 305, 520 310
-           L 200 310
-           C 130 305, 60 280, 50 200 Z"
+  <path d="M 50 180
+           C 60 60, 130 30, 200 25
+           L 520 25
+           C 590 30, 640 70, 650 180
+           C 640 290, 590 330, 520 335
+           L 200 335
+           C 130 330, 60 300, 50 180 Z"
         fill="url(#ccbody)" stroke="#5a5030" stroke-width="1.2" />
 
   <!-- Hood -->
-  <line x1="170" y1="93" x2="170" y2="307" stroke="#7a6a40" stroke-width="0.8" stroke-dasharray="3 2" />
+  <line x1="170" y1="35" x2="170" y2="325" stroke="#7a6a40" stroke-width="0.8" stroke-dasharray="3 2" />
   <text x="115" y="200" font-family="ui-sans-serif, system-ui" font-size="9" fill="#5a4a20" text-anchor="middle">HOOD</text>
 
   <!-- Windshield -->
-  <path d="M 210 105 Q 235 200 210 295" stroke="url(#ccglass)" stroke-width="14" fill="none" opacity="0.75" />
+  <path d="M 210 50 Q 235 180 210 310" stroke="url(#ccglass)" stroke-width="14" fill="none" opacity="0.75" />
 
   <!-- Cabin glass area (greenhouse) -->
-  <rect x="240" y="115" width="220" height="170" fill="url(#ccglass)" opacity="0.40" stroke="#7a98b8" stroke-width="0.6" stroke-dasharray="2 2" />
+  <rect x="240" y="55" width="220" height="250" fill="url(#ccglass)" opacity="0.40" stroke="#7a98b8" stroke-width="0.6" stroke-dasharray="2 2" />
 
   <!-- Rear deck / trunk -->
-  <line x1="475" y1="93" x2="475" y2="307" stroke="#7a6a40" stroke-width="0.8" stroke-dasharray="3 2" />
+  <line x1="475" y1="35" x2="475" y2="325" stroke="#7a6a40" stroke-width="0.8" stroke-dasharray="3 2" />
   <text x="575" y="200" font-family="ui-sans-serif, system-ui" font-size="9" fill="#5a4a20" text-anchor="middle">TRUNK</text>
 
   <!-- ============================================================ -->
-  <!-- BUTTERFLY DOORS (drawn open, dashed)                          -->
+  <!-- BUTTERFLY DOORS (drawn closed/dashed at body edges)            -->
   <!-- ============================================================ -->
-  <!-- Left door open up (camera-facing), drawn as dashed extension -->
-  <g opacity="0.55" stroke="#5a5030" stroke-width="0.8" stroke-dasharray="3 2" fill="#b8a26d" fill-opacity="0.4">
-    <path d="M 245 90 L 460 90 L 470 60 L 235 60 Z" />
-  </g>
-  <text x="350" y="76" font-family="ui-sans-serif, system-ui" font-size="6" fill="#5a4a20" text-anchor="middle" font-style="italic">door R (open ~80°)</text>
+  <!-- Top edge = door R (driver-RIGHT in LHD = passenger door) -->
+  <line x1="245" y1="25" x2="460" y2="25" stroke="#5a5030" stroke-width="1.2" />
+  <text x="350" y="14" font-family="ui-sans-serif, system-ui" font-size="6" fill="#5a4a20" text-anchor="middle" font-style="italic">door R</text>
 
-  <!-- Right door (closed, normal outline) -->
-  <line x1="245" y1="310" x2="460" y2="310" stroke="#5a5030" stroke-width="1.2" />
-  <text x="350" y="332" font-family="ui-sans-serif, system-ui" font-size="6" fill="#5a4a20" text-anchor="middle" font-style="italic">door L (closed)</text>
+  <!-- Bottom edge = door L (driver-LEFT in LHD = driver door) -->
+  <line x1="245" y1="335" x2="460" y2="335" stroke="#5a5030" stroke-width="1.2" />
+  <text x="350" y="350" font-family="ui-sans-serif, system-ui" font-size="6" fill="#5a4a20" text-anchor="middle" font-style="italic">door L</text>
 
   <!-- ============================================================ -->
   <!-- WHEELS (4) — aero-cover wheels at corners                      -->
   <!-- ============================================================ -->
-  <ellipse cx="195" cy="90" rx="34" ry="15" fill="#1a1a1f" stroke="#000" stroke-width="0.8" />
-  <ellipse cx="195" cy="310" rx="34" ry="15" fill="#1a1a1f" stroke="#000" stroke-width="0.8" />
-  <ellipse cx="520" cy="90" rx="34" ry="15" fill="#1a1a1f" stroke="#000" stroke-width="0.8" />
-  <ellipse cx="520" cy="310" rx="34" ry="15" fill="#1a1a1f" stroke="#000" stroke-width="0.8" />
+  <ellipse cx="195" cy="25" rx="34" ry="18" fill="#1a1a1f" stroke="#000" stroke-width="0.8" />
+  <ellipse cx="195" cy="335" rx="34" ry="18" fill="#1a1a1f" stroke="#000" stroke-width="0.8" />
+  <ellipse cx="520" cy="25" rx="34" ry="18" fill="#1a1a1f" stroke="#000" stroke-width="0.8" />
+  <ellipse cx="520" cy="335" rx="34" ry="18" fill="#1a1a1f" stroke="#000" stroke-width="0.8" />
   <!-- Aero covers (flush face) -->
-  <ellipse cx="195" cy="90" rx="24" ry="10" fill="#dccfa6" stroke="#7a6a40" stroke-width="0.5" opacity="0.6" />
-  <ellipse cx="195" cy="310" rx="24" ry="10" fill="#dccfa6" stroke="#7a6a40" stroke-width="0.5" opacity="0.6" />
-  <ellipse cx="520" cy="90" rx="24" ry="10" fill="#dccfa6" stroke="#7a6a40" stroke-width="0.5" opacity="0.6" />
-  <ellipse cx="520" cy="310" rx="24" ry="10" fill="#dccfa6" stroke="#7a6a40" stroke-width="0.5" opacity="0.6" />
+  <ellipse cx="195" cy="25" rx="24" ry="11" fill="#dccfa6" stroke="#7a6a40" stroke-width="0.5" opacity="0.6" />
+  <ellipse cx="195" cy="335" rx="24" ry="11" fill="#dccfa6" stroke="#7a6a40" stroke-width="0.5" opacity="0.6" />
+  <ellipse cx="520" cy="25" rx="24" ry="11" fill="#dccfa6" stroke="#7a6a40" stroke-width="0.5" opacity="0.6" />
+  <ellipse cx="520" cy="335" rx="24" ry="11" fill="#dccfa6" stroke="#7a6a40" stroke-width="0.5" opacity="0.6" />
 
   <!-- ============================================================ -->
   <!-- INDUCTIVE CHARGING COIL (under floor, central)                -->
   <!-- ============================================================ -->
-  <ellipse cx="355" cy="200" rx="55" ry="55" fill="url(#ccinduct)" stroke="#7a5a08" stroke-width="0.8" />
-  <ellipse cx="355" cy="200" rx="40" ry="40" fill="none" stroke="#a07820" stroke-width="0.4" stroke-dasharray="2 1.5" />
-  <ellipse cx="355" cy="200" rx="25" ry="25" fill="none" stroke="#a07820" stroke-width="0.4" stroke-dasharray="2 1.5" />
+  <ellipse cx="355" cy="180" rx="60" ry="60" fill="url(#ccinduct)" stroke="#7a5a08" stroke-width="0.8" />
+  <ellipse cx="355" cy="180" rx="42" ry="42" fill="none" stroke="#a07820" stroke-width="0.4" stroke-dasharray="2 1.5" />
+  <ellipse cx="355" cy="180" rx="25" ry="25" fill="none" stroke="#a07820" stroke-width="0.4" stroke-dasharray="2 1.5" />
 
   <!-- ============================================================ -->
   <!-- STRUCTURAL BATTERY PACK (small ~50 kWh — fleet duty cycle)    -->
   <!-- ============================================================ -->
-  <rect x="230" y="135" width="245" height="130" fill="url(#ccpack)" stroke="#1a3050" stroke-width="1" opacity="0.50" rx="4" />
+  <rect x="230" y="70" width="245" height="220" fill="url(#ccpack)" stroke="#1a3050" stroke-width="1" opacity="0.50" rx="4" />
   <g stroke="#1a3050" stroke-width="0.4" opacity="0.4">
-    <line x1="230" y1="165" x2="475" y2="165" />
-    <line x1="230" y1="200" x2="475" y2="200" />
-    <line x1="230" y1="235" x2="475" y2="235" />
-    <line x1="270" y1="135" x2="270" y2="265" />
-    <line x1="310" y1="135" x2="310" y2="265" />
-    <line x1="350" y1="135" x2="350" y2="265" />
-    <line x1="390" y1="135" x2="390" y2="265" />
-    <line x1="430" y1="135" x2="430" y2="265" />
+    <line x1="230" y1="110" x2="475" y2="110" />
+    <line x1="230" y1="150" x2="475" y2="150" />
+    <line x1="230" y1="220" x2="475" y2="220" />
+    <line x1="230" y1="260" x2="475" y2="260" />
+    <line x1="270" y1="70" x2="270" y2="290" />
+    <line x1="310" y1="70" x2="310" y2="290" />
+    <line x1="350" y1="70" x2="350" y2="290" />
+    <line x1="390" y1="70" x2="390" y2="290" />
+    <line x1="430" y1="70" x2="430" y2="290" />
   </g>
-  <text x="355" y="280" font-family="ui-sans-serif, system-ui" font-size="8" fill="#0a2240" text-anchor="middle" font-weight="600">4680 STRUCTURAL · ~50 kWh</text>
+  <text x="355" y="288" font-family="ui-sans-serif, system-ui" font-size="8" fill="#0a2240" text-anchor="middle" font-weight="600">4680 STRUCTURAL · ~50 kWh</text>
 
   <!-- ============================================================ -->
   <!-- SINGLE REAR DRIVE UNIT (no front motor)                       -->
   <!-- ============================================================ -->
-  <rect x="490" y="175" width="55" height="50" fill="#3a3d44" stroke="#222" stroke-width="0.8" rx="3" />
-  <text x="518" y="198" font-family="ui-sans-serif, system-ui" font-size="6" fill="#dde0e3" text-anchor="middle">REAR PMSM</text>
-  <text x="518" y="208" font-family="ui-sans-serif, system-ui" font-size="6" fill="#dde0e3" text-anchor="middle">~150 kW</text>
+  <rect x="490" y="150" width="55" height="60" fill="#3a3d44" stroke="#222" stroke-width="0.8" rx="3" />
+  <text x="518" y="178" font-family="ui-sans-serif, system-ui" font-size="6" fill="#dde0e3" text-anchor="middle">REAR PMSM</text>
+  <text x="518" y="190" font-family="ui-sans-serif, system-ui" font-size="6" fill="#dde0e3" text-anchor="middle">~150 kW</text>
 
   <!-- ============================================================ -->
   <!-- CABIN: 2-up bench seating (no driver seat, no wheel)          -->
   <!-- ============================================================ -->
-  <rect x="280" y="130" width="50" height="58" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
-  <rect x="280" y="212" width="50" height="58" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
-  <text x="305" y="163" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">SEAT R</text>
+  <!-- Top half = SEAT R (driver-RIGHT in LHD) -->
+  <rect x="280" y="80" width="50" height="80" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
+  <!-- Bottom half = SEAT L (driver-LEFT in LHD) -->
+  <rect x="280" y="200" width="50" height="80" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
+  <text x="305" y="125" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">SEAT R</text>
   <text x="305" y="245" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">SEAT L</text>
 
   <!-- Center shared touchscreen between seats -->
-  <rect x="340" y="188" width="30" height="24" fill="#0a0a10" stroke="#444" stroke-width="0.5" rx="2" />
-  <rect x="343" y="191" width="24" height="18" fill="#142036" />
-  <text x="355" y="222" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444" text-anchor="middle">center screen</text>
+  <rect x="340" y="168" width="30" height="24" fill="#0a0a10" stroke="#444" stroke-width="0.5" rx="2" />
+  <rect x="343" y="171" width="24" height="18" fill="#142036" />
+  <text x="355" y="203" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444" text-anchor="middle">center screen</text>
 
   <!-- "No steering wheel / no pedals" mark — empty circle ahead of seats -->
-  <circle cx="260" cy="200" r="14" fill="none" stroke="#a02020" stroke-width="0.8" stroke-dasharray="2 1.5" />
-  <line x1="247" y1="187" x2="273" y2="213" stroke="#a02020" stroke-width="0.8" />
-  <line x1="247" y1="213" x2="273" y2="187" stroke="#a02020" stroke-width="0.8" />
-  <text x="260" y="230" font-family="ui-sans-serif, system-ui" font-size="5" fill="#a02020" text-anchor="middle" font-style="italic">no wheel / no pedals</text>
+  <circle cx="282" cy="180" r="14" fill="none" stroke="#a02020" stroke-width="0.8" stroke-dasharray="2 1.5" />
+  <line x1="269" y1="167" x2="295" y2="193" stroke="#a02020" stroke-width="0.8" />
+  <line x1="269" y1="193" x2="295" y2="167" stroke="#a02020" stroke-width="0.8" />
+  <text x="282" y="210" font-family="ui-sans-serif, system-ui" font-size="5" fill="#a02020" text-anchor="middle" font-style="italic">no wheel / no pedals</text>
 
   <!-- ============================================================ -->
   <!-- HW5 CAMERAS                                                   -->
   <!-- ============================================================ -->
-  <!-- Front stereo trio (C / L / R) -->
-  <circle cx="225" cy="200" r="3" fill="#0a0a10" stroke="#666" stroke-width="0.4" />
-  <text x="220" y="190" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444" text-anchor="end">C</text>
-  <circle cx="195" cy="115" r="3" fill="#0a0a10" stroke="#666" stroke-width="0.4" />
-  <text x="200" y="113" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">HW5 R</text>
-  <circle cx="195" cy="285" r="3" fill="#0a0a10" stroke="#666" stroke-width="0.4" />
-  <text x="200" y="296" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">HW5 L</text>
+  <!-- Front stereo trio (C / L / R) - stacked vertically on windshield -->
+  <circle cx="210" cy="108" r="3" fill="#0a0a10" stroke="#666" stroke-width="0.4" />
+  <text x="220" y="111" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">HW5 C</text>
+  <circle cx="210" cy="180" r="3" fill="#0a0a10" stroke="#666" stroke-width="0.4" />
+  <text x="220" y="183" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">HW5 R</text>
+  <circle cx="210" cy="252" r="3" fill="#0a0a10" stroke="#666" stroke-width="0.4" />
+  <text x="220" y="255" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">HW5 L</text>
 
   <!-- Side cameras (B-pillar replacing mirrors) -->
-  <circle cx="370" cy="115" r="3" fill="#0a0a10" stroke="#666" stroke-width="0.4" />
-  <circle cx="370" cy="285" r="3" fill="#0a0a10" stroke="#666" stroke-width="0.4" />
-  <text x="378" y="113" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">side R</text>
-  <text x="378" y="294" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">side L</text>
+  <circle cx="380" cy="72" r="3.5" fill="#0a0a10" stroke="#666" stroke-width="0.4" />
+  <circle cx="380" cy="288" r="3.5" fill="#0a0a10" stroke="#666" stroke-width="0.4" />
+  <text x="388" y="70" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">side R</text>
+  <text x="388" y="298" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">side L</text>
 
   <!-- Headlight bar (front lightbar across nose, HMI for AV signaling) -->
-  <rect x="55" y="160" width="6" height="80" fill="#f4f4f8" stroke="#a0c8ff" stroke-width="0.6" rx="2" />
+  <rect x="55" y="140" width="6" height="80" fill="#f4f4f8" stroke="#a0c8ff" stroke-width="0.6" rx="2" />
 
   <!-- ============================================================ -->
   <!-- ANNOTATIONS                                                   -->
   <!-- ============================================================ -->
-  <text x="110" y="55" font-family="ui-sans-serif, system-ui" font-size="9" font-style="italic" fill="#444">FRONT</text>
-  <text x="600" y="55" font-family="ui-sans-serif, system-ui" font-size="9" font-style="italic" fill="#444">REAR</text>
-  <text x="355" y="55" font-family="ui-sans-serif, system-ui" font-size="10" font-style="italic" fill="#444" text-anchor="middle">TOP-DOWN · 2-SEAT ROBOTAXI</text>
+  <text x="355" y="11" font-family="ui-sans-serif, system-ui" font-size="9" font-style="italic" fill="#444" text-anchor="middle">TOP-DOWN · 2-SEAT ROBOTAXI  ·  FRONT ← / → REAR</text>
 
-  <path d="M 50 55 L 80 55 L 75 50 M 80 55 L 75 60" stroke="#444" stroke-width="0.8" fill="none" />
+  <line x1="50" y1="356" x2="150" y2="356" stroke="#555" stroke-width="0.7" />
+  <text x="100" y="353" font-family="ui-monospace, monospace" font-size="6" fill="#555" text-anchor="middle">~1 m (to scale)</text>
 
-  <line x1="50" y1="380" x2="150" y2="380" stroke="#555" stroke-width="1" />
-  <text x="100" y="392" font-family="ui-monospace, monospace" font-size="7" fill="#555" text-anchor="middle">~1 m (to scale)</text>
-
-  <text x="650" y="392" font-family="ui-monospace, monospace" font-size="7" fill="#555" text-anchor="end">~3900 mm L × 2000 mm W (estimated)</text>
+  <text x="650" y="353" font-family="ui-monospace, monospace" font-size="6" fill="#555" text-anchor="end">~3900 mm L × 2000 mm W (estimated)</text>
 </svg>
