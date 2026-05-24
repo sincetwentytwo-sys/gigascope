@@ -5,6 +5,6 @@
     { "path": "/api/drips/send", "schedule": "15 14 * * *" },
     { "path": "/api/spacex/refresh-starlink", "schedule": "30 14 * * *" },
     { "path": "/api/cron/catalyst-alerts", "schedule": "45 14 * * *" },
-    { "path": "/api/cron/permit-check", "schedule": "2 */4 * * *" }
+    { "path": "/api/cron/permit-check", "schedule": "0 15 * * *" }
   ]
 }
