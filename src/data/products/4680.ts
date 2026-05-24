@@ -30,6 +30,8 @@ export const tesla4680: ProductSpec = {
       color: "#9aa0a6",
       metalness: 0.85,
       roughness: 0.35,
+      // Visible: left flank of the metal shell.
+      hotspot: { x: 0.27, y: 0.55 },
     },
     {
       id: "top-cap",
@@ -42,6 +44,8 @@ export const tesla4680: ProductSpec = {
       color: "#c8ccd1",
       metalness: 0.9,
       roughness: 0.3,
+      // Visible: the dome on top of the cell.
+      hotspot: { x: 0.49, y: 0.16 },
     },
     {
       id: "bottom-cap",
@@ -54,6 +58,8 @@ export const tesla4680: ProductSpec = {
       color: "#7d8389",
       metalness: 0.85,
       roughness: 0.4,
+      // Visible edge at the base of the cell.
+      hotspot: { x: 0.55, y: 0.95 },
     },
     {
       id: "jellyroll",
@@ -66,6 +72,8 @@ export const tesla4680: ProductSpec = {
       color: "#2a2f3a",
       metalness: 0.4,
       roughness: 0.7,
+      // Internal — placed over the cell body center.
+      hotspot: { x: 0.58, y: 0.55 },
     },
     {
       id: "cathode",
@@ -79,6 +87,8 @@ export const tesla4680: ProductSpec = {
       color: "#d97757",
       metalness: 0.6,
       roughness: 0.5,
+      // Internal — right side of the rolled stack.
+      hotspot: { x: 0.68, y: 0.42 },
     },
     {
       id: "anode",
@@ -92,6 +102,8 @@ export const tesla4680: ProductSpec = {
       color: "#3a3a3a",
       metalness: 0.7,
       roughness: 0.4,
+      // Internal — left side of the rolled stack.
+      hotspot: { x: 0.34, y: 0.42 },
     },
     {
       id: "separator",
@@ -105,6 +117,8 @@ export const tesla4680: ProductSpec = {
       color: "#e8e8ee",
       metalness: 0.1,
       roughness: 0.85,
+      // Internal — between cathode and anode points, upper portion.
+      hotspot: { x: 0.66, y: 0.32 },
     },
     {
       id: "tabless-top",
@@ -118,6 +132,8 @@ export const tesla4680: ProductSpec = {
       color: "#e2e6ea",
       metalness: 0.95,
       roughness: 0.2,
+      // Just under the top crimp.
+      hotspot: { x: 0.36, y: 0.27 },
     },
     {
       id: "tabless-bottom",
@@ -131,6 +147,8 @@ export const tesla4680: ProductSpec = {
       color: "#c97f3a",
       metalness: 0.9,
       roughness: 0.25,
+      // Just above the bottom edge.
+      hotspot: { x: 0.36, y: 0.88 },
     },
     {
       id: "electrolyte",
@@ -143,6 +161,8 @@ export const tesla4680: ProductSpec = {
       color: "#5a7da8",
       metalness: 0.1,
       roughness: 0.2,
+      // Internal — lower-left of the cell body.
+      hotspot: { x: 0.34, y: 0.70 },
     },
     {
       id: "mandrel",
@@ -155,6 +175,8 @@ export const tesla4680: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.3,
       roughness: 0.9,
+      // Internal — dead center of the cell.
+      hotspot: { x: 0.49, y: 0.70 },
     },
     {
       id: "cid",
@@ -167,6 +189,8 @@ export const tesla4680: ProductSpec = {
       color: "#b0b6bc",
       metalness: 0.8,
       roughness: 0.35,
+      // Inside the top cap — placed off-center so it doesn't overlap the cap dot.
+      hotspot: { x: 0.42, y: 0.20 },
     },
     {
       id: "vent",
@@ -180,6 +204,8 @@ export const tesla4680: ProductSpec = {
       color: "#8a8f95",
       metalness: 0.85,
       roughness: 0.4,
+      // Ring around the top — placed on the right side of the cap.
+      hotspot: { x: 0.58, y: 0.21 },
     },
     {
       id: "cooling-channel",
@@ -192,6 +218,8 @@ export const tesla4680: ProductSpec = {
       color: "#4a90c2",
       metalness: 0.4,
       roughness: 0.5,
+      // Outside the cell to the right — pack-level neighbor.
+      hotspot: { x: 0.88, y: 0.55 },
     },
     {
       id: "charge-coil-marker",
@@ -205,6 +233,8 @@ export const tesla4680: ProductSpec = {
       color: "#d4d4d8",
       metalness: 0.9,
       roughness: 0.3,
+      // Outside, top-right of the cap.
+      hotspot: { x: 0.74, y: 0.12 },
     },
   ],
   relatedSites: ["giga-texas", "giga-nevada", "giga-berlin"],
