@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Tesla 4680 cell — schematic cutaway / side cross-section.
+  Original work for gigascope.xyz. CC0 / public domain.
+
+  Convention: the full cell silhouette is drawn intact, then the right half
+  is shown as if the can were cut away to expose the jellyroll, mandrel,
+  current collectors, and top/bottom plates. Hotspots in 4680.ts target
+  this image via cutawayHotspot {x,y} in 0..1 normalized coords.
+
+  viewBox 400x600 (aspect ~ 0.67) chosen to match a 46mm x 80mm cell
+  rendered at scale: 400 units wide / 600 tall keeps the cap+lugs visible
+  above the can without distorting the cylindrical proportions.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="canSteel" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#7a8086" />
+      <stop offset="30%" stop-color="#c5c9cd" />
+      <stop offset="70%" stop-color="#c5c9cd" />
+      <stop offset="100%" stop-color="#7a8086" />
+    </linearGradient>
+    <linearGradient id="topCapGrad" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#9aa0a6" />
+      <stop offset="50%" stop-color="#dde0e3" />
+      <stop offset="100%" stop-color="#9aa0a6" />
+    </linearGradient>
+    <linearGradient id="electrolyte" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#a7c4e0" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#5a7da8" stop-opacity="0.5" />
+    </linearGradient>
+    <pattern id="jellyroll" x="0" y="0" width="14" height="40" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="14" height="40" fill="#2a2f3a" />
+      <rect x="0" y="0" width="3" height="40" fill="#d97757" />
+      <rect x="3" y="0" width="2" height="40" fill="#e8e8ee" />
+      <rect x="5" y="0" width="4" height="40" fill="#3a3a3a" />
+      <rect x="9" y="0" width="2" height="40" fill="#e8e8ee" />
+      <rect x="11" y="0" width="3" height="40" fill="#d97757" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="600" fill="#f5f5f7" />
+
+  <!-- ============================================================ -->
+  <!-- LEFT HALF — INTACT EXTERIOR (mirror reference for orientation) -->
+  <!-- ============================================================ -->
+
+  <!-- Top cap dome (positive terminal) -->
+  <ellipse cx="115" cy="55" rx="55" ry="10" fill="url(#topCapGrad)" stroke="#666" stroke-width="0.8" />
+  <rect x="60" y="55" width="110" height="14" fill="#c8ccd1" stroke="#666" stroke-width="0.8" />
+  <!-- Crimp ring -->
+  <rect x="58" y="68" width="114" height="6" fill="#7a8086" stroke="#555" stroke-width="0.5" />
+
+  <!-- Can left half (steel) -->
+  <rect x="60" y="74" width="115" height="468" fill="url(#canSteel)" stroke="#555" stroke-width="0.8" />
+
+  <!-- Bottom plate (intact side) -->
+  <rect x="60" y="540" width="115" height="14" fill="#7d8389" stroke="#555" stroke-width="0.8" />
+  <ellipse cx="115" cy="554" rx="55" ry="6" fill="#5d6369" />
+
+  <!-- ============================================================ -->
+  <!-- RIGHT HALF — CUTAWAY (cell wall sliced open, internals visible) -->
+  <!-- ============================================================ -->
+
+  <!-- Jagged cut edge running vertically between left half and right half -->
+  <path d="M 175 74 L 180 90 L 175 105 L 180 120 L 175 135 L 180 150 L 175 165 L 180 180 L 175 195 L 180 210 L 175 225 L 180 240 L 175 255 L 180 270 L 175 285 L 180 300 L 175 315 L 180 330 L 175 345 L 180 360 L 175 375 L 180 390 L 175 405 L 180 420 L 175 435 L 180 450 L 175 465 L 180 480 L 175 495 L 180 510 L 175 525 L 180 540 L 175 540"
+        fill="#555" stroke="#333" stroke-width="0.6" />
+
+  <!-- Top cap dome RIGHT HALF (cut) -->
+  <rect x="180" y="50" width="120" height="6" fill="#dde0e3" stroke="#666" stroke-width="0.6" />
+  <rect x="180" y="56" width="120" height="13" fill="#c8ccd1" stroke="#666" stroke-width="0.6" />
+  <!-- CID disc inside top cap -->
+  <rect x="185" y="63" width="110" height="3" fill="#b0b6bc" stroke="#7a8086" stroke-width="0.3" />
+  <text x="240" y="60" font-family="ui-sans-serif, system-ui" font-size="6" fill="#555" text-anchor="middle">CID</text>
+  <!-- Vent ring (scored aluminum) -->
+  <line x1="185" y1="54" x2="295" y2="54" stroke="#8a8f95" stroke-width="0.6" stroke-dasharray="2 1.2" />
+  <!-- Crimp ring continuation -->
+  <rect x="180" y="68" width="122" height="6" fill="#7a8086" stroke="#555" stroke-width="0.5" />
+
+  <!-- Steel can wall thickness (right side) -->
+  <rect x="293" y="74" width="9" height="466" fill="#9aa0a6" stroke="#555" stroke-width="0.6" />
+
+  <!-- Tabless top current collector (cathode side, aluminum disc) -->
+  <rect x="185" y="76" width="108" height="5" fill="#e2e6ea" stroke="#999" stroke-width="0.4" />
+  <line x1="185" y1="78.5" x2="293" y2="78.5" stroke="#aaa" stroke-width="0.3" stroke-dasharray="1 1" />
+
+  <!-- Electrolyte fill (subtle blue tint over jellyroll area) -->
+  <rect x="185" y="82" width="108" height="450" fill="url(#electrolyte)" />
+
+  <!-- Jellyroll (vertical layered pattern) -->
+  <rect x="190" y="86" width="100" height="442" fill="url(#jellyroll)" opacity="0.92" />
+
+  <!-- Mandrel core (central hollow, runs full height) -->
+  <rect x="235" y="76" width="6" height="458" fill="#1a1a1f" stroke="#000" stroke-width="0.4" />
+
+  <!-- Tabless bottom current collector (anode side, copper disc) -->
+  <rect x="185" y="528" width="108" height="5" fill="#c97f3a" stroke="#7a4a20" stroke-width="0.4" />
+  <line x1="185" y1="530.5" x2="293" y2="530.5" stroke="#7a4a20" stroke-width="0.3" stroke-dasharray="1 1" />
+
+  <!-- Bottom plate RIGHT HALF (cut) -->
+  <rect x="180" y="533" width="122" height="14" fill="#7d8389" stroke="#555" stroke-width="0.6" />
+  <rect x="180" y="547" width="122" height="6" fill="#5d6369" stroke="#444" stroke-width="0.5" />
+
+  <!-- ============================================================ -->
+  <!-- EXTERNAL PACK-LEVEL NEIGHBORS (right of the cell)            -->
+  <!-- ============================================================ -->
+
+  <!-- Inter-cell cooling strip (blue ribbon to the right of the can) -->
+  <rect x="320" y="100" width="22" height="410" fill="#4a90c2" stroke="#2a5e88" stroke-width="1" rx="2" />
+  <!-- subtle serpentine flow lines -->
+  <path d="M 326 130 Q 336 150 326 170 Q 316 190 326 210 Q 336 230 326 250 Q 316 270 326 290 Q 336 310 326 330 Q 316 350 326 370 Q 336 390 326 410 Q 316 430 326 450 Q 336 470 326 490"
+        stroke="#fff" stroke-width="0.8" fill="none" opacity="0.5" />
+
+  <!-- Pack-side sense lead (wire from top cap to BMS connector) -->
+  <line x1="240" y1="50" x2="280" y2="32" stroke="#d4d4d8" stroke-width="1.8" />
+  <line x1="280" y1="32" x2="335" y2="32" stroke="#d4d4d8" stroke-width="1.8" />
+  <rect x="332" y="28" width="14" height="8" fill="#888" stroke="#555" stroke-width="0.5" rx="1" />
+
+  <!-- ============================================================ -->
+  <!-- THIN ANNOTATIONS                                              -->
+  <!-- ============================================================ -->
+
+  <text x="115" y="285" font-family="ui-sans-serif, system-ui" font-size="9" font-style="italic" fill="#444" text-anchor="middle">EXTERIOR</text>
+  <text x="240" y="285" font-family="ui-sans-serif, system-ui" font-size="9" font-style="italic" fill="#444" text-anchor="middle">CUTAWAY</text>
+
+  <!-- Scale bar -->
+  <line x1="20" y1="585" x2="50" y2="585" stroke="#555" stroke-width="1" />
+  <text x="35" y="595" font-family="ui-monospace, monospace" font-size="7" fill="#555" text-anchor="middle">~12mm</text>
+
+  <!-- Dimensions caption -->
+  <text x="380" y="595" font-family="ui-monospace, monospace" font-size="7" fill="#555" text-anchor="end">46 mm dia × 80 mm tall</text>
+</svg>

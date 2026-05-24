@@ -73,6 +73,13 @@ export type PartSpec = {
    *  point rather than a polygon because SAM-derived polygons are easy to
    *  trace wrong but a centroid is hard to misplace. */
   hotspot?: { x: number; y: number };
+  /** Optional hotspot on the *cutaway* / cross-section image (the internal-
+   *  anatomy view shown when the viewer is in "cutaway" mode). Same 0..1
+   *  normalized coord system as `hotspot`, but targets a different image —
+   *  so internal parts (jellyroll, mandrel, etc.) that aren't visible on
+   *  the exterior photo can still get a dot here. Parts without this stay
+   *  list-only in cutaway mode. */
+  cutawayHotspot?: { x: number; y: number };
 };
 
 export type ProductCategory =
@@ -136,6 +143,27 @@ export type ProductSpec = {
     url: string;
     /** License identifier ("CC BY-SA 4.0", "Public domain", "Press kit (editorial use)", etc). */
     license: string;
+  };
+  /** Optional cutaway / cross-section image — switches the viewer into
+   *  "internal anatomy" mode via the EXTERIOR/CUTAWAY tab. The exterior
+   *  view (`main.svg` or `main.jpg`) is always shown by default; if
+   *  `cutawayImage` is present, the tab toggle appears. PartSpec entries
+   *  with `cutawayHotspot` then render as dots on this image.
+   *
+   *  Convention: keep the cutaway under
+   *    /public/products/photos/<slug>/cutaway.{svg,jpg}
+   *  Always carry attribution — even our own SVGs get `license: "CC0"`
+   *  for transparency. */
+  cutawayImage?: {
+    /** Path relative to /public, e.g. "/products/photos/4680/cutaway.svg" */
+    src: string;
+    /** Same shape as `mainCredit`. CC0 / public-domain works still get an
+     *  entry so the source is documented. */
+    credit: {
+      source: string;
+      url: string;
+      license: string;
+    };
   };
   /** Additional photos shown as a thumbnail strip — front/side/rear/3-4
    *  views, etc. The main photo (`/photos/<slug>.jpg`) is always shown

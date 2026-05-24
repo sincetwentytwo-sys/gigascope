@@ -25,11 +25,20 @@ const MIN_ZOOM = 1;
 const MAX_ZOOM = 4;
 const ZOOM_STEP = 0.25;
 
+type ViewMode = "exterior" | "cutaway";
+
 export default function Product2DViewer({ product }: { product: ProductSpec }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  // EXTERIOR shows the real-world reference photo + `hotspot` dots; CUTAWAY
+  // swaps in the cross-section diagram + `cutawayHotspot` dots so users can
+  // see internal anatomy (jellyroll, mandrel, etc.) that the surface photo
+  // hides. Products without `cutawayImage` skip the tab UI entirely.
+  const hasCutaway = !!product.cutawayImage;
+  const [mode, setMode] = useState<ViewMode>("exterior");
   // Natural dimensions of the photo — used to size the SVG viewBox AND the
-  // wrapper aspect-ratio so dots and image are pixel-aligned.
+  // wrapper aspect-ratio so dots and image are pixel-aligned. Reset on mode
+  // switch because exterior and cutaway images can have different aspects.
   const [naturalSize, setNaturalSize] = useState<{ w: number; h: number }>({
     w: 1000,
     h: 1000,
@@ -69,12 +78,22 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
   }, [product.slug]);
 
   // Reset zoom / pan / selection when product changes (e.g., user navigates
-  // /products/raptor → /products/starship)
+  // /products/raptor → /products/starship). Also reset mode so each product
+  // opens to its exterior shot rather than inheriting the previous tab.
   useEffect(() => {
     setZoom(1);
     setPan({ x: 0, y: 0 });
     setSelectedId(null);
+    setMode("exterior");
   }, [product.slug]);
+
+  // Mode toggle also resets the transform — exterior and cutaway can have
+  // different aspect ratios, so any pan from the previous view would be
+  // off-target on the new image.
+  useEffect(() => {
+    setZoom(1);
+    setPan({ x: 0, y: 0 });
+  }, [mode]);
 
   // When zoom returns to 100%, auto-reset pan. Otherwise the user has to
   // click the reset button to recenter — painful UX. At 100% the image
@@ -86,9 +105,12 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
   }, [zoom]);
 
   const selected = product.parts.find((p) => p.id === selectedId) ?? null;
-  const partsWithHotspots = product.parts.filter(
-    (p) => p.hotspot && typeof p.hotspot.x === "number",
-  );
+  // In CUTAWAY mode we read `cutawayHotspot` so internal parts get dots; in
+  // EXTERIOR mode we read `hotspot` so only externally-visible parts show.
+  const partsWithHotspots = product.parts.filter((p) => {
+    const h = mode === "cutaway" ? p.cutawayHotspot : p.hotspot;
+    return h && typeof h.x === "number";
+  });
   // Map part id -> its dot number (1, 2, ...). List rows show this badge too
   // so the eye can jump between photo and list without hunting.
   const dotNumber = new Map<string, number>();
@@ -211,7 +233,13 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
   // Products marked imageType: "svg" (or the legacy 4680) use a schematic
   // diagram; everything else points to a JPG reference photo.
   const ext = product.imageType === "svg" || product.slug === "4680" ? "svg" : "jpg";
-  const src = `/products/photos/${product.slug}/main.${ext}`;
+  const exteriorSrc = `/products/photos/${product.slug}/main.${ext}`;
+  // In cutaway mode swap in the cross-section image; fall back to exterior
+  // if `cutawayImage` isn't set (mode toggle is hidden in that case anyway).
+  const src =
+    mode === "cutaway" && product.cutawayImage
+      ? product.cutawayImage.src
+      : exteriorSrc;
   const credit = product.photoCredit;
   const hasPanOrZoom = zoom > 1 || pan.x !== 0 || pan.y !== 0;
 
@@ -277,8 +305,11 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
                 {partsWithHotspots.map((p) => {
                   const active = selectedId === p.id;
                   const hovered = hoveredId === p.id;
-                  const cx = p.hotspot!.x * naturalSize.w;
-                  const cy = p.hotspot!.y * naturalSize.h;
+                  // Pick the correct hotspot for the active mode — filter
+                  // above already guarantees the chosen field exists.
+                  const h = (mode === "cutaway" ? p.cutawayHotspot : p.hotspot)!;
+                  const cx = h.x * naturalSize.w;
+                  const cy = h.y * naturalSize.h;
                   const baseR = Math.max(
                     14,
                     Math.min(naturalSize.w, naturalSize.h) * 0.018,
@@ -387,13 +418,65 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
           )}
         </div>
 
-        <div className="absolute top-3 left-3 bg-bg/90  px-3 py-1.5 border border-border-custom font-mono text-[10px] text-dim uppercase tracking-widest">
+        {/* EXTERIOR / CUTAWAY tab toggle — only shown for products that
+            ship a cross-section image. Anchored top-left above the dot
+            count so the two read as a header. */}
+        {hasCutaway && (
+          <div className="absolute top-3 left-3 flex bg-bg/95 border border-border-custom font-mono text-[10px] uppercase tracking-widest select-none">
+            <button
+              type="button"
+              onClick={() => setMode("exterior")}
+              className={`px-3 h-7 transition-colors ${
+                mode === "exterior"
+                  ? "bg-text text-bg"
+                  : "text-dim hover:text-text"
+              }`}
+              aria-pressed={mode === "exterior"}
+            >
+              Exterior
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode("cutaway")}
+              className={`px-3 h-7 border-l border-border-custom transition-colors ${
+                mode === "cutaway"
+                  ? "bg-text text-bg"
+                  : "text-dim hover:text-text"
+              }`}
+              aria-pressed={mode === "cutaway"}
+            >
+              Cutaway
+            </button>
+          </div>
+        )}
+
+        <div
+          className={`absolute left-3 bg-bg/90 px-3 py-1.5 border border-border-custom font-mono text-[10px] text-dim uppercase tracking-widest ${
+            hasCutaway ? "top-12" : "top-3"
+          }`}
+        >
           {partsWithHotspots.length > 0
-            ? `${partsWithHotspots.length} of ${product.parts.length} parts pinned on the photo  ·  click any dot`
+            ? `${partsWithHotspots.length} of ${product.parts.length} parts pinned${mode === "cutaway" ? " on cutaway" : " on the photo"}  ·  click any dot`
             : `${product.parts.length} components on the right`}
         </div>
 
-        {credit && (
+        {/* In cutaway mode show the cutaway-image credit instead of the
+            exterior photo credit. Both are tiny and live in the same slot. */}
+        {mode === "cutaway" && product.cutawayImage && (
+          <div className="absolute bottom-2 right-2 bg-bg/85  px-2 py-1 font-mono text-[9px] text-dim">
+            Cutaway:{" "}
+            <a
+              href={product.cutawayImage.credit.url}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-dim hover:underline"
+            >
+              {product.cutawayImage.credit.source}
+            </a>{" "}
+            · {product.cutawayImage.credit.license}
+          </div>
+        )}
+        {mode === "exterior" && credit && (
           <div className="absolute bottom-2 right-2 bg-bg/85  px-2 py-1 font-mono text-[9px] text-dim">
             Photo:{" "}
             <a
@@ -406,7 +489,7 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
             </a>
           </div>
         )}
-        {!credit && product.mainCredit && (
+        {mode === "exterior" && !credit && product.mainCredit && (
           <div className="absolute bottom-2 right-2 bg-bg/85  px-2 py-1 font-mono text-[9px] text-dim">
             Image:{" "}
             <a

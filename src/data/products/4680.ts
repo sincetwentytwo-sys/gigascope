@@ -18,7 +18,19 @@ export const tesla4680: ProductSpec = {
     license: "CC BY-SA 4.0",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:Tesla_4680_battery.svg",
   },
+  // Side cross-section drawn in-house — left half intact, right half cut
+  // away to expose the jellyroll, mandrel, current collectors and caps.
+  // CC0 so anyone can reuse.
+  cutawayImage: {
+    src: "/products/photos/4680/cutaway.svg",
+    credit: {
+      source: "Gigascope original SVG",
+      url: "https://github.com/sincetwentytwo-sys/gigascope/blob/main/public/products/photos/4680/cutaway.svg",
+      license: "CC0",
+    },
+  },
   parts: [
+    // ─── Exterior-visible parts: keep `hotspot` AND `cutawayHotspot`. ───
     {
       id: "can",
       name: "Nickel-plated Steel Can",
@@ -30,8 +42,10 @@ export const tesla4680: ProductSpec = {
       color: "#9aa0a6",
       metalness: 0.85,
       roughness: 0.35,
-      // Visible: left flank of the metal shell.
-      hotspot: { x: 0.27, y: 0.55 },
+      // Exterior: left flank of the cylinder body in main.svg.
+      hotspot: { x: 0.32, y: 0.50 },
+      // Cutaway: same flank in the intact-left-half of cutaway.svg.
+      cutawayHotspot: { x: 0.30, y: 0.50 },
     },
     {
       id: "top-cap",
@@ -44,8 +58,8 @@ export const tesla4680: ProductSpec = {
       color: "#c8ccd1",
       metalness: 0.9,
       roughness: 0.3,
-      // Visible: the dome on top of the cell.
-      hotspot: { x: 0.49, y: 0.16 },
+      hotspot: { x: 0.49, y: 0.18 },
+      cutawayHotspot: { x: 0.50, y: 0.085 },
     },
     {
       id: "bottom-cap",
@@ -58,139 +72,8 @@ export const tesla4680: ProductSpec = {
       color: "#7d8389",
       metalness: 0.85,
       roughness: 0.4,
-      // Visible edge at the base of the cell.
-      hotspot: { x: 0.55, y: 0.95 },
-    },
-    {
-      id: "jellyroll",
-      name: "Jellyroll Electrode Stack",
-      description:
-        "Wound stack of cathode foil, separator, anode foil, separator. In a 4680 the roll is ~80m of layered foil at sub-20 micron thickness. The roll height matches the can; tabless edges replace the welded tab found in 18650/2170 cells.",
-      position: [0, 0, 0],
-      geometry: "cylinder",
-      args: [2.05, 2.05, 7.6, 64, 1],
-      color: "#2a2f3a",
-      metalness: 0.4,
-      roughness: 0.7,
-      // Internal — placed over the cell body center.
-      hotspot: { x: 0.58, y: 0.55 },
-    },
-    {
-      id: "cathode",
-      name: "Cathode Layer (NMC 811 or LFP)",
-      description:
-        "Aluminum foil coated with nickel-rich NMC 811 (~230 Wh/kg cell-level) for performance variants, or LFP for standard-range. Dry-electrode coating skips the NMP solvent bake, shrinking factory footprint ~10x for the electrode line.",
-      position: [0, 0, 0],
-      geometry: "torus",
-      args: [1.7, 0.05, 8, 64],
-      rotation: [Math.PI / 2, 0, 0],
-      color: "#d97757",
-      metalness: 0.6,
-      roughness: 0.5,
-      // Internal — right side of the rolled stack.
-      hotspot: { x: 0.68, y: 0.42 },
-    },
-    {
-      id: "anode",
-      name: "Anode Layer (Graphite + Silicon)",
-      description:
-        "Copper foil coated with graphite blended with ~5-10% silicon oxide. Silicon stores ~10x the lithium per gram of graphite but swells ~300% on charge; the blend balances capacity gain against cycle life of ~1500 cycles to 80%.",
-      position: [0, 0, 0],
-      geometry: "torus",
-      args: [1.55, 0.05, 8, 64],
-      rotation: [Math.PI / 2, 0, 0],
-      color: "#3a3a3a",
-      metalness: 0.7,
-      roughness: 0.4,
-      // Internal — left side of the rolled stack.
-      hotspot: { x: 0.34, y: 0.42 },
-    },
-    {
-      id: "separator",
-      name: "Polyolefin Separator",
-      description:
-        "~12 micron ceramic-coated polyethylene film that lets Li+ ions pass while blocking electron flow. Ceramic coating raises shutdown temperature; a thermal runaway in one cell stays local rather than chaining through the pack.",
-      position: [0, 0, 0],
-      geometry: "torus",
-      args: [1.62, 0.02, 6, 64],
-      rotation: [Math.PI / 2, 0, 0],
-      color: "#e8e8ee",
-      metalness: 0.1,
-      roughness: 0.85,
-      // Internal — between cathode and anode points, upper portion.
-      hotspot: { x: 0.66, y: 0.32 },
-    },
-    {
-      id: "tabless-top",
-      name: "Tabless Current Collector (Top)",
-      description:
-        "Top edge of the cathode foil is folded and laser-welded into a continuous shingle disc. Eliminates the single welded tab in 2170 cells: electron path drops from ~250mm to ~50mm, halving internal resistance and enabling 6x peak power.",
-      position: [0, 3.85, 0],
-      geometry: "ring",
-      args: [0.3, 2.0, 64],
-      rotation: [Math.PI / 2, 0, 0],
-      color: "#e2e6ea",
-      metalness: 0.95,
-      roughness: 0.2,
-      // Just under the top crimp.
-      hotspot: { x: 0.36, y: 0.27 },
-    },
-    {
-      id: "tabless-bottom",
-      name: "Tabless Current Collector (Bottom)",
-      description:
-        "Bottom edge of the anode copper foil folded and welded into a continuous disc against the can floor. Removes the dominant ohmic loss in cylindrical cells, lets the can act as a heat fin, and supports 4C peak charging without lithium plating.",
-      position: [0, -3.85, 0],
-      geometry: "ring",
-      args: [0.3, 2.0, 64],
-      rotation: [Math.PI / 2, 0, 0],
-      color: "#c97f3a",
-      metalness: 0.9,
-      roughness: 0.25,
-      // Just above the bottom edge.
-      hotspot: { x: 0.36, y: 0.88 },
-    },
-    {
-      id: "electrolyte",
-      name: "Liquid Electrolyte Volume",
-      description:
-        "LiPF6 salt in carbonate solvents (EC/DMC/EMC) with fluoroethylene carbonate additives. Wicks through the separator and electrode pores. The tabless design improves wetting uniformity, a chronic yield killer in large-format cells.",
-      position: [0, 0, 0],
-      geometry: "cylinder",
-      args: [0.95, 0.95, 7.5, 32, 1],
-      color: "#5a7da8",
-      metalness: 0.1,
-      roughness: 0.2,
-      // Internal — lower-left of the cell body.
-      hotspot: { x: 0.34, y: 0.70 },
-    },
-    {
-      id: "mandrel",
-      name: "Mandrel Core",
-      description:
-        "Central winding shaft that the jellyroll is wound around. In the finished cell it remains as a hollow channel that lets electrolyte equilibrate during fill and provides a vent path for gases during the formation cycle.",
-      position: [0, 0, 0],
-      geometry: "cylinder",
-      args: [0.2, 0.2, 8.0, 24, 1],
-      color: "#1a1a1f",
-      metalness: 0.3,
-      roughness: 0.9,
-      // Internal — dead center of the cell.
-      hotspot: { x: 0.49, y: 0.70 },
-    },
-    {
-      id: "cid",
-      name: "Current Interrupt Device",
-      description:
-        "Pressure-sensitive disc in the top cap. If internal pressure exceeds ~10 bar from thermal runaway gases, the disc deforms and severs the connection between jellyroll and positive terminal before the vent opens, killing the short.",
-      position: [0, 4.2, 0],
-      geometry: "cylinder",
-      args: [1.4, 1.4, 0.1, 32],
-      color: "#b0b6bc",
-      metalness: 0.8,
-      roughness: 0.35,
-      // Inside the top cap — placed off-center so it doesn't overlap the cap dot.
-      hotspot: { x: 0.42, y: 0.20 },
+      hotspot: { x: 0.50, y: 0.76 },
+      cutawayHotspot: { x: 0.50, y: 0.92 },
     },
     {
       id: "vent",
@@ -204,8 +87,8 @@ export const tesla4680: ProductSpec = {
       color: "#8a8f95",
       metalness: 0.85,
       roughness: 0.4,
-      // Ring around the top — placed on the right side of the cap.
-      hotspot: { x: 0.58, y: 0.21 },
+      hotspot: { x: 0.58, y: 0.20 },
+      cutawayHotspot: { x: 0.66, y: 0.09 },
     },
     {
       id: "cooling-channel",
@@ -218,8 +101,8 @@ export const tesla4680: ProductSpec = {
       color: "#4a90c2",
       metalness: 0.4,
       roughness: 0.5,
-      // Outside the cell to the right — pack-level neighbor.
-      hotspot: { x: 0.88, y: 0.55 },
+      hotspot: { x: 0.85, y: 0.50 },
+      cutawayHotspot: { x: 0.83, y: 0.51 },
     },
     {
       id: "charge-coil-marker",
@@ -233,8 +116,133 @@ export const tesla4680: ProductSpec = {
       color: "#d4d4d8",
       metalness: 0.9,
       roughness: 0.3,
-      // Outside, top-right of the cap.
-      hotspot: { x: 0.74, y: 0.12 },
+      hotspot: { x: 0.66, y: 0.18 },
+      cutawayHotspot: { x: 0.86, y: 0.055 },
+    },
+
+    // ─── Internal parts: cutaway only (omit `hotspot` so they're list- ───
+    // ─── only on the exterior photo where they aren't actually visible). ─
+    {
+      id: "jellyroll",
+      name: "Jellyroll Electrode Stack",
+      description:
+        "Wound stack of cathode foil, separator, anode foil, separator. In a 4680 the roll is ~80m of layered foil at sub-20 micron thickness. The roll height matches the can; tabless edges replace the welded tab found in 18650/2170 cells.",
+      position: [0, 0, 0],
+      geometry: "cylinder",
+      args: [2.05, 2.05, 7.6, 64, 1],
+      color: "#2a2f3a",
+      metalness: 0.4,
+      roughness: 0.7,
+      cutawayHotspot: { x: 0.55, y: 0.55 },
+    },
+    {
+      id: "cathode",
+      name: "Cathode Layer (NMC 811 or LFP)",
+      description:
+        "Aluminum foil coated with nickel-rich NMC 811 (~230 Wh/kg cell-level) for performance variants, or LFP for standard-range. Dry-electrode coating skips the NMP solvent bake, shrinking factory footprint ~10x for the electrode line.",
+      position: [0, 0, 0],
+      geometry: "torus",
+      args: [1.7, 0.05, 8, 64],
+      rotation: [Math.PI / 2, 0, 0],
+      color: "#d97757",
+      metalness: 0.6,
+      roughness: 0.5,
+      cutawayHotspot: { x: 0.48, y: 0.30 },
+    },
+    {
+      id: "anode",
+      name: "Anode Layer (Graphite + Silicon)",
+      description:
+        "Copper foil coated with graphite blended with ~5-10% silicon oxide. Silicon stores ~10x the lithium per gram of graphite but swells ~300% on charge; the blend balances capacity gain against cycle life of ~1500 cycles to 80%.",
+      position: [0, 0, 0],
+      geometry: "torus",
+      args: [1.55, 0.05, 8, 64],
+      rotation: [Math.PI / 2, 0, 0],
+      color: "#3a3a3a",
+      metalness: 0.7,
+      roughness: 0.4,
+      cutawayHotspot: { x: 0.70, y: 0.40 },
+    },
+    {
+      id: "separator",
+      name: "Polyolefin Separator",
+      description:
+        "~12 micron ceramic-coated polyethylene film that lets Li+ ions pass while blocking electron flow. Ceramic coating raises shutdown temperature; a thermal runaway in one cell stays local rather than chaining through the pack.",
+      position: [0, 0, 0],
+      geometry: "torus",
+      args: [1.62, 0.02, 6, 64],
+      rotation: [Math.PI / 2, 0, 0],
+      color: "#e8e8ee",
+      metalness: 0.1,
+      roughness: 0.85,
+      cutawayHotspot: { x: 0.55, y: 0.22 },
+    },
+    {
+      id: "tabless-top",
+      name: "Tabless Current Collector (Top)",
+      description:
+        "Top edge of the cathode foil is folded and laser-welded into a continuous shingle disc. Eliminates the single welded tab in 2170 cells: electron path drops from ~250mm to ~50mm, halving internal resistance and enabling 6x peak power.",
+      position: [0, 3.85, 0],
+      geometry: "ring",
+      args: [0.3, 2.0, 64],
+      rotation: [Math.PI / 2, 0, 0],
+      color: "#e2e6ea",
+      metalness: 0.95,
+      roughness: 0.2,
+      cutawayHotspot: { x: 0.60, y: 0.13 },
+    },
+    {
+      id: "tabless-bottom",
+      name: "Tabless Current Collector (Bottom)",
+      description:
+        "Bottom edge of the anode copper foil folded and welded into a continuous disc against the can floor. Removes the dominant ohmic loss in cylindrical cells, lets the can act as a heat fin, and supports 4C peak charging without lithium plating.",
+      position: [0, -3.85, 0],
+      geometry: "ring",
+      args: [0.3, 2.0, 64],
+      rotation: [Math.PI / 2, 0, 0],
+      color: "#c97f3a",
+      metalness: 0.9,
+      roughness: 0.25,
+      cutawayHotspot: { x: 0.60, y: 0.885 },
+    },
+    {
+      id: "electrolyte",
+      name: "Liquid Electrolyte Volume",
+      description:
+        "LiPF6 salt in carbonate solvents (EC/DMC/EMC) with fluoroethylene carbonate additives. Wicks through the separator and electrode pores. The tabless design improves wetting uniformity, a chronic yield killer in large-format cells.",
+      position: [0, 0, 0],
+      geometry: "cylinder",
+      args: [0.95, 0.95, 7.5, 32, 1],
+      color: "#5a7da8",
+      metalness: 0.1,
+      roughness: 0.2,
+      cutawayHotspot: { x: 0.72, y: 0.72 },
+    },
+    {
+      id: "mandrel",
+      name: "Mandrel Core",
+      description:
+        "Central winding shaft that the jellyroll is wound around. In the finished cell it remains as a hollow channel that lets electrolyte equilibrate during fill and provides a vent path for gases during the formation cycle.",
+      position: [0, 0, 0],
+      geometry: "cylinder",
+      args: [0.2, 0.2, 8.0, 24, 1],
+      color: "#1a1a1f",
+      metalness: 0.3,
+      roughness: 0.9,
+      cutawayHotspot: { x: 0.59, y: 0.65 },
+    },
+    {
+      id: "cid",
+      name: "Current Interrupt Device",
+      description:
+        "Pressure-sensitive disc in the top cap. If internal pressure exceeds ~10 bar from thermal runaway gases, the disc deforms and severs the connection between jellyroll and positive terminal before the vent opens, killing the short.",
+      position: [0, 4.2, 0],
+      geometry: "cylinder",
+      args: [1.4, 1.4, 0.1, 32],
+      color: "#b0b6bc",
+      metalness: 0.8,
+      roughness: 0.35,
+      cutawayHotspot: { x: 0.55, y: 0.108 },
     },
   ],
   relatedSites: ["giga-texas", "giga-nevada", "giga-berlin"],
