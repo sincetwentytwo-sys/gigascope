@@ -246,7 +246,7 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] border border-border-custom bg-bg">
       {/* Photo */}
-      <div className="relative bg-surface min-h-[55vh] overflow-hidden p-4 text-center">
+      <div className="relative bg-surface min-h-[55vh] overflow-hidden p-4 flex items-center justify-center">
         <div
           ref={viewportRef}
           // Sizing rules:
@@ -262,7 +262,13 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
           // into a sideways ellipse via preserveAspectRatio="none".
           // Adding the max-width calc constrains width to whatever height
           // the cap allows, so dots stay perfectly circular.
-          className="relative block w-full mx-auto align-top"
+          //
+          // Centering: parent is `flex items-center justify-center` so the
+          // wrapper sits in the visual center of the surface tile both
+          // horizontally AND vertically — short landscape cutaways
+          // (cybertruck 800×310) no longer pin to the top of the 55vh
+          // min-height tile.
+          className="relative block w-full align-top"
           style={{
             aspectRatio: `${naturalSize.w} / ${naturalSize.h}`,
             maxHeight: "78vh",
