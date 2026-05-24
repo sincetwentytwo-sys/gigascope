@@ -249,7 +249,13 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
       <div className="relative bg-surface min-h-[55vh] overflow-hidden p-4 text-center">
         <div
           ref={viewportRef}
-          className="relative inline-block align-top max-w-full"
+          // `inline-block + max-w-full` used to size to the SVG's natural
+          // width — so a 700x400 cutaway only ever got 700px wide even on
+          // a 1200px column, looking cramped. `block + w-full + max-h-78vh`
+          // lets each image grow to the column width; modern browsers honor
+          // aspect-ratio + max-height together and shrink width when the
+          // height clamp fires, so tall portrait images don't overflow.
+          className="relative block w-full max-w-full mx-auto align-top"
           style={{
             aspectRatio: `${naturalSize.w} / ${naturalSize.h}`,
             maxHeight: "78vh",
