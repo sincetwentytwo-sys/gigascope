@@ -1,19 +1,12 @@
 import type { NewsItem } from "@/data/types";
 import { fetchAllNews } from "@/lib/rss";
 
-const SOURCE_COLORS: Record<string, string> = {
-  "Electrek": "bg-green-100 text-green-700",
-  "Teslarati": "bg-blue-100 text-blue-700",
-  "InsideEVs": "bg-orange-100 text-orange-700",
-  "CleanTechnica": "bg-emerald-100 text-emerald-700",
-  "TorqueNews": "bg-red-100 text-red-700",
-  "CNBC": "bg-sky-100 text-sky-700",
-  "Reuters": "bg-amber-100 text-amber-700",
-  "Bloomberg": "bg-yellow-100 text-yellow-700",
-  "WSJ": "bg-stone-100 text-stone-700",
-  "FT": "bg-pink-100 text-pink-700",
-  "Google News": "bg-indigo-100 text-indigo-700",
-};
+// Neutral source badge — one style for every publication. Used to be 11
+// different color pills (green / blue / orange / emerald / red / sky /
+// amber / yellow / stone / pink / indigo) which read as "sticker book"
+// rather than newsroom. Source label stays; only the chrome goes neutral.
+const SOURCE_BADGE_CLASS =
+  "bg-surface text-dim border border-border-custom text-[9px] font-semibold px-1.5 py-0.5 rounded shrink-0";
 
 function NewsItems({ items }: { items: NewsItem[] }) {
   return (
@@ -27,7 +20,7 @@ function NewsItems({ items }: { items: NewsItem[] }) {
           className="flex items-center gap-3 py-2.5 border-b border-border-custom last:border-0 hover:bg-surface -mx-2 px-2 rounded"
         >
           <span className="font-mono text-[10px] text-dim shrink-0 w-12">{item.date}</span>
-          <span className={`text-[9px] font-semibold px-1.5 py-0.5 rounded shrink-0 ${SOURCE_COLORS[item.source] ?? "bg-gray-100 text-gray-600"}`}>
+          <span className={SOURCE_BADGE_CLASS}>
             {item.source}
           </span>
           <span className="text-sm text-dim hover:text-text transition-colors leading-snug flex-1">{item.title}</span>

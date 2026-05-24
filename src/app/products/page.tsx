@@ -6,7 +6,7 @@ import { listProducts, type ProductCategory } from "@/data/products";
 
 // Hub thumbnails now reuse the per-product main reference photo (real photo,
 // matches the detail page). Fall back to the legacy procedural screenshot
-// only if the photo is missing (shouldn't happen — 13 / 13 ship with photos).
+// only if the photo is missing (shouldn't happen — 6 / 6 ship with photos).
 const PRODUCT_THUMB = new Map<string, string>(
   listProducts().map((p) => {
     const ext = p.slug === "4680" ? "svg" : "jpg";
@@ -25,12 +25,12 @@ const PRODUCT_THUMB = new Map<string, string>(
 export const metadata: Metadata = {
   title: "Component Breakdowns — GIGASCOPE",
   description:
-    "Click-to-explore breakdowns of Musk-empire hardware — Raptor engine, Starship, Falcon 9, Cybertruck, Optimus, 4680 cell, Megapack, and more. Each component links to a tech blurb you can actually read.",
+    "Click-to-explore breakdowns of Musk-empire hardware — Raptor engine, Starship, Cybertruck, Cybercab, Optimus, and the 4680 cell. Each component links to a tech blurb you can actually read.",
   alternates: { canonical: "https://gigascope.xyz/products" },
   openGraph: {
     title: "Component Breakdowns — GIGASCOPE",
     description:
-      "Real reference photos with clickable parts. 13 flagship products across Tesla, SpaceX, xAI, Neuralink, and Boring.",
+      "Real reference photos with clickable parts. 6 flagship products across Tesla and SpaceX.",
     url: "https://gigascope.xyz/products",
     type: "website",
   },
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Component Breakdowns — GIGASCOPE",
     description:
-      "Real reference photos with clickable parts. 13 flagship products across Tesla, SpaceX, xAI, Neuralink, and Boring.",
+      "Real reference photos with clickable parts. 6 flagship products across Tesla and SpaceX.",
   },
 };
 

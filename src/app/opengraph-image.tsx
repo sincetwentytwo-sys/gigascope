@@ -73,7 +73,7 @@ export default function OGImage() {
         {/* Footer */}
         <div style={{ display: "flex", justifyContent: "space-between", marginTop: 16 }}>
           <div style={{ fontSize: 13, color: "#86868b" }}>
-            {`${factories.length} sites · weekly Sentinel-2 timelapses · gigascope.xyz`}
+            {`${factories.length} sites · Sentinel-2 + ESRI timelapses · gigascope.xyz`}
           </div>
           <div style={{ fontSize: 13, color: "#86868b" }}>
             Open source · Not affiliated with Tesla, SpaceX, xAI, Neuralink or Boring Co.

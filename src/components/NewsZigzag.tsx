@@ -20,7 +20,7 @@ function NewsCard({ item }: { item: RichNewsItem }) {
         rel="noopener noreferrer"
         className="block"
       >
-        <NewsThumb src={item.image} source={item.source} />
+        <NewsThumb src={item.image} source={item.source} title={item.title} />
         <div className="p-4 bg-bg">
           <div className="text-[11px] mb-2 flex items-center gap-2">
             <span

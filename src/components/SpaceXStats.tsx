@@ -73,19 +73,21 @@ export default function SpaceXStats() {
           Last: {data.latestLaunch} ({data.launchDate})
         </span>
       )}
+      {/* Cadence label — the underlying SpaceX feed is an Upstash-cached daily
+          cron, not a live socket, so don't dress it up with a green pulse +
+          "live". Show the actual fetch timestamp when we have one. */}
       <span
-        className="inline-flex items-center gap-1 text-[11px] text-dim"
-        title={
-          fetchedAt
-            ? `Auto-refresh every 5 minutes · last fetched ${fetchedAt.toLocaleTimeString()}`
-            : "Auto-refresh every 5 minutes"
-        }
+        className="text-[11px] text-dim"
+        title="SpaceX feed is Upstash-cached and refreshes every 5 minutes from a daily cron — no live socket."
       >
-        <span
-          aria-hidden
-          className="inline-block w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"
-        />
-        live
+        {fetchedAt
+          ? `updated ${fetchedAt.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+              timeZone: "UTC",
+            })} UTC`
+          : "auto-refresh every 5 min"}
       </span>
     </div>
   );

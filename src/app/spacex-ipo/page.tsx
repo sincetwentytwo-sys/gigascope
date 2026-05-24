@@ -9,7 +9,7 @@ export const revalidate = 1800;
 export const metadata: Metadata = {
   title: "SpaceX IPO — Track the 4 ground sites from orbit — GIGASCOPE",
   description:
-    "S-1 excerpts, P/S valuation comp, Starbase + Hawthorne + Cape Canaveral + Vandenberg progress — weekly Sentinel-2 captures, primary-source citations.",
+    "S-1 excerpts, P/S valuation comp, Starbase + Hawthorne + Cape Canaveral + Vandenberg progress — Sentinel-2 + ESRI captures refreshed as imagery drops, primary-source citations.",
   alternates: { canonical: "https://gigascope.xyz/spacex-ipo" },
   openGraph: {
     title: "SpaceX IPO — Track the 4 ground sites from orbit",
@@ -376,7 +376,7 @@ export default function SpaceXIPOPage() {
           <p className="text-sm sm:text-base text-white/80 max-w-xl mb-6">
             Starbase · Hawthorne · Cape Canaveral · Vandenberg.
             <br className="hidden sm:block" />
-            S-1 excerpts, P/S valuation comp, weekly Sentinel-2 captures, primary-source citations.
+            S-1 excerpts, P/S valuation comp, Sentinel-2 + ESRI captures, primary-source citations.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <a
@@ -587,7 +587,7 @@ export default function SpaceXIPOPage() {
             <div>
               <h2 className="text-2xl font-bold">SpaceX ground footprint</h2>
               <p className="text-xs text-dim mt-1">
-                4 sites · weekly satellite captures · footprint data updated {DATA_LAST_UPDATED} ·{" "}
+                4 sites · monthly to quarterly satellite captures · footprint data updated {DATA_LAST_UPDATED} ·{" "}
                 <Link href="/methodology" className="underline">methodology →</Link>
               </p>
             </div>

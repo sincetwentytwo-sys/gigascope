@@ -100,7 +100,7 @@ export default async function Home({
           <p className="text-sm sm:text-base text-white/80 max-w-xl mb-6">
             The only place tracking Tesla, SpaceX & xAI from orbit.
             <br className="hidden sm:block" />
-            {factories.length} Musk-empire sites, captured weekly.
+            {factories.length} Musk-empire sites, refreshed as new imagery drops.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <a
@@ -119,7 +119,7 @@ export default async function Home({
         </div>
       </section>
 
-      {/* Live secondary stats — kept small, no atlas extension */}
+      {/* Secondary stats — kept small, no atlas extension */}
       <section className="border-b border-border-custom">
         <div className="max-w-[1200px] mx-auto px-6 py-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[13px] text-dim">
           <StockTicker />
@@ -136,7 +136,7 @@ export default async function Home({
           <div>
             <h2 className="text-2xl font-bold">Musk Empire</h2>
             <p className="text-xs text-dim mt-1">
-              {factories.length} sites · weekly satellite captures · <a href="/methodology" className="underline">methodology →</a>
+              {factories.length} sites · monthly to quarterly satellite captures · <a href="/methodology" className="underline">methodology →</a>
             </p>
           </div>
           <div className="flex gap-4 text-[13px] text-dim">

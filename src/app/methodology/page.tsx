@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 const IMAGERY = [
   { name: "ESRI World Imagery", res: "~30 cm/pixel (urban) / ~1 m elsewhere", refresh: "every 3–6 months", cost: "free, in use today", url: "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9" },
-  { name: "Copernicus Sentinel-2 (EOX cloudless)", res: "10 m/pixel", refresh: "annual cloudless composite", cost: "free, in use today", url: "https://s2maps.eu/" },
+  { name: "Copernicus Sentinel-2 (EOX cloudless)", res: "10 m/pixel", refresh: "annual cloudless composite (currently 2024)", cost: "free, in use today", url: "https://s2maps.eu/" },
   { name: "Planet Labs PlanetScope (aspirational)", res: "3 m/pixel", refresh: "daily revisit", cost: "paid, not yet wired", url: "https://www.planet.com/products/planet-imagery/" },
   { name: "Maxar (aspirational)", res: "30 cm/pixel", refresh: "on demand", cost: "paid, not yet wired", url: "https://www.maxar.com/products/satellite-imagery" },
 ];
@@ -102,11 +102,11 @@ export default function MethodologyPage() {
             </tr>
             <tr className="border-b border-border-custom">
               <td className="py-2.5 font-medium" style={{ color: "#0066cc" }}>Expanding sites</td>
-              <td className="py-2.5 text-dim">Bi-weekly when ESRI has a fresh capture; otherwise as Sentinel-2 refreshes.</td>
+              <td className="py-2.5 text-dim">Whenever ESRI drops a fresh capture (typically every 3-6 months); otherwise as Sentinel-2 refreshes.</td>
             </tr>
             <tr className="border-b border-border-custom">
               <td className="py-2.5 font-medium" style={{ color: "#bf5600" }}>Construction sites</td>
-              <td className="py-2.5 text-dim">Weekly target; depends on imagery availability.</td>
+              <td className="py-2.5 text-dim">Whenever fresh imagery is available — in practice every 2-3 months per site.</td>
             </tr>
             <tr className="border-b border-border-custom">
               <td className="py-2.5 font-medium" style={{ color: "#c4a000" }}>Announced sites</td>

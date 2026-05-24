@@ -183,18 +183,11 @@ export type ProductSpec = {
 };
 
 import { raptor } from "./raptor";
-import { falcon9 } from "./falcon9";
 import { starship } from "./starship";
 import { tesla4680 } from "./4680";
-import { neuralinkN1 } from "./neuralink-n1";
-import { model3 } from "./model-3";
-import { modelY } from "./model-y";
 import { cybertruck } from "./cybertruck";
 import { optimus } from "./optimus";
 import { cybercab } from "./cybercab";
-import { megapack } from "./megapack";
-import { powerwall } from "./powerwall";
-import { superchargerV4 } from "./supercharger-v4";
 
 // Musk-empire only per master plan v1. The previously-bundled supply-chain
 // products (NVIDIA Blackwell, HBM3E, ASML EUV, TSMC CoWoS, Hyundai IONIQ 5,
@@ -202,10 +195,17 @@ import { superchargerV4 } from "./supercharger-v4";
 // IonQ Tempo, Oklo Aurora) were removed 2026-05-23 — the catalog stays
 // narrow on Tesla / SpaceX / Neuralink hardware. Their data files and
 // photo dirs were deleted in the same commit.
+//
+// Round 3 narrow (2026-05-24): trimmed 13 → 6. Removed Model 3, Model Y,
+// Megapack, Powerwall, Neuralink N1, Supercharger V4, Falcon 9 — these are
+// well-covered by Wikipedia / manufacturer spec sheets and the Neuralink N1
+// photo was actually the R1 surgical robot (wrong subject). Kept the
+// differentiated hardware story: battery (4680), robot (Optimus), the two
+// unique current Tesla vehicles (Cybertruck, Cybercab), and SpaceX's
+// flagship engine + flagship vehicle (Raptor, Starship). Their data files,
+// photo dirs, and 308 redirects from old URLs are in next.config.ts.
 export const KNOWN_PRODUCTS: ProductSpec[] = [
-  raptor, falcon9, starship, tesla4680, neuralinkN1,
-  model3, modelY, cybertruck, optimus, cybercab,
-  megapack, powerwall, superchargerV4,
+  raptor, starship, tesla4680, cybertruck, optimus, cybercab,
 ];
 
 export function getProduct(slug: string): ProductSpec | undefined {

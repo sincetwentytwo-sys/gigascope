@@ -1,5 +1,6 @@
 "use client";
 
+import "leaflet/dist/leaflet.css";
 import { useEffect, useRef, useState } from "react";
 import { tileSources } from "@/lib/tiles";
 
@@ -28,12 +29,14 @@ export default function SatelliteMap({
     import("leaflet").then((L) => {
       if (!mapRef.current) return;
 
-      // Fix default icon paths
+      // Fix default icon paths — point at locally-bundled markers under
+      // /public/leaflet/ instead of unpkg CDN (avoids supply-chain risk
+      // and removes a third-party hard dependency at render time).
       delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
       L.Icon.Default.mergeOptions({
-        iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-        iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-        shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+        iconRetinaUrl: "/leaflet/marker-icon-2x.png",
+        iconUrl: "/leaflet/marker-icon.png",
+        shadowUrl: "/leaflet/marker-shadow.png",
       });
 
       const map = L.map(mapRef.current, {
@@ -89,10 +92,6 @@ export default function SatelliteMap({
 
   return (
     <div className="relative w-full h-full rounded-xl overflow-hidden border border-border-custom">
-      <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      />
       <div ref={mapRef} className="w-full h-full" />
       {tileError && (
         <div className="absolute inset-0 z-[999] flex items-center justify-center bg-bg/60 pointer-events-none">

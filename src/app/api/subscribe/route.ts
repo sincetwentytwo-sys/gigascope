@@ -44,6 +44,32 @@ async function sendWelcome(email: string, tier: "free" | "pro" | "terminal"): Pr
 
 const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Rate limit: max 5 calls/hour per IP. Each accepted subscribe call costs
+// Resend quota + can land us on spam blocklists, so a scanner that floods
+// /api/subscribe is real $$$ + reputational damage. Upstash `INCR` is
+// atomic so the count is race-safe across concurrent requests.
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW_SEC = 3600;
+
+async function checkRateLimit(r: Redis, ip: string): Promise<boolean> {
+  const key = `ratelimit:subscribe:${ip}`;
+  try {
+    const count = await r.incr(key);
+    // Set TTL only on the first call in the window — subsequent INCRs leave
+    // the TTL alone, so the window slides forward exactly 1 hour from the
+    // first request, not from the most recent one.
+    if (count === 1) {
+      await r.expire(key, RATE_LIMIT_WINDOW_SEC);
+    }
+    return count <= RATE_LIMIT_MAX;
+  } catch {
+    // Fail open on Redis errors — don't block legit signups if Upstash
+    // hiccups. The store-side `sadd` will fail too if Redis is truly down,
+    // so we won't double-process.
+    return true;
+  }
+}
+
 export async function POST(req: Request) {
   let body: { email?: unknown; tier?: unknown; source?: unknown };
   try {
@@ -64,6 +90,16 @@ export async function POST(req: Request) {
 
   const r = getRedis();
   const typedTier = tier as "free" | "pro" | "terminal";
+
+  // IP-keyed rate limiting. Vercel populates `x-forwarded-for` with the
+  // client IP first, then any proxies — split on comma and take the first.
+  if (r) {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const allowed = await checkRateLimit(r, ip);
+    if (!allowed) {
+      return NextResponse.json({ error: "rate_limited" }, { status: 429 });
+    }
+  }
 
   if (!r) {
     // Without Redis, still accept (useful for local dev). The user can plumb

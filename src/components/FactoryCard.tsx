@@ -36,10 +36,16 @@ export default function FactoryCard({
       {showThumbs && (
         <div className="grid grid-cols-2 gap-px bg-border-custom border-b border-border-custom">
           <div className="relative">
+            {/* width/height attrs reserve aspect-correct space before the
+                pixels arrive — prevents the card from CLS-shifting once
+                the timelapse thumb loads. CSS still constrains actual
+                rendered size via aspect-video + object-cover. */}
             <img
               src={`/timelapses/${factory.slug}-first.jpg`}
               alt={`${factory.name} — earlier satellite view`}
               loading="lazy"
+              width={1600}
+              height={900}
               className="w-full aspect-video object-cover"
             />
             <span className="absolute top-1 left-1 px-1 py-0.5 text-[9px] font-mono uppercase tracking-wider bg-black/60 text-white/90 rounded">
@@ -51,6 +57,8 @@ export default function FactoryCard({
               src={`/timelapses/${factory.slug}-last.jpg`}
               alt={`${factory.name} — recent satellite view`}
               loading="lazy"
+              width={1600}
+              height={900}
               className="w-full aspect-video object-cover"
             />
             <span className="absolute top-1 right-1 px-1 py-0.5 text-[9px] font-mono uppercase tracking-wider bg-black/60 text-white/90 rounded">

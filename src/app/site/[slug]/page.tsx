@@ -192,10 +192,14 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
           <div className="mb-6 border border-border-custom overflow-hidden">
             <div className="grid grid-cols-2 gap-px bg-border-custom">
               <div className="relative">
+                {/* width/height reserve aspect-correct space — kills CLS
+                    when the timelapse thumb hydrates after page paint. */}
                 <img
                   src={`/timelapses/${factory.slug}-first.jpg`}
                   alt={`${factory.name} — earlier satellite view`}
                   loading="lazy"
+                  width={1600}
+                  height={900}
                   className="w-full aspect-video object-cover"
                 />
                 <span className="absolute top-2 left-2 px-2 py-1 text-[10px] font-mono uppercase tracking-wider bg-black/65 text-white/90 rounded">
@@ -207,6 +211,8 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                   src={`/timelapses/${factory.slug}-last.jpg`}
                   alt={`${factory.name} — recent satellite view`}
                   loading="lazy"
+                  width={1600}
+                  height={900}
                   className="w-full aspect-video object-cover"
                 />
                 <span className="absolute top-2 right-2 px-2 py-1 text-[10px] font-mono uppercase tracking-wider bg-black/65 text-white/90 rounded">
@@ -291,7 +297,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                       Satellite timelapse
                     </h3>
                     <span className="font-mono text-[10px] text-dim">
-                      {tl.frames} frames · weekly Sentinel-2
+                      {tl.frames} frames · Sentinel-2 + ESRI
                     </span>
                   </div>
                   <div className="aspect-square sm:aspect-video w-full bg-surface relative overflow-hidden border border-border-custom">

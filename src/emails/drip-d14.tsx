@@ -50,7 +50,7 @@ export default function DripD14({ email }: DripProps) {
               → <strong>$49-79/month</strong> long-term target — depends on validation
             </Text>
             <Text style={listItem}>
-              → Annual plan: <strong>17% off</strong> (2 months free) — charter annual = $90/yr
+              → Annual plan: <strong>$90/yr</strong> — 17% off 12×$9, charter rate locked on renewal
             </Text>
             <Text style={listItem}>
               → The $9 charter rate is grandfathered for life — even when public
@@ -72,9 +72,9 @@ export default function DripD14({ email }: DripProps) {
           </Text>
           <Section style={list}>
             <Text style={listItem}>
-              → <strong>Real-time alerts (email)</strong> — construction
-              progress jumps, fab milestones, regulatory decisions, earnings,
-              launches
+              → <strong>Daily alerts (email)</strong> — one digest at 14:00 UTC
+              covering construction progress jumps, fab milestones, regulatory
+              decisions, earnings, launches
             </Text>
             <Text style={listItem}>
               → <strong>Curated daily digest</strong> at 7am local —

@@ -11,12 +11,12 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: "Charter membership — $9/mo for life — GIGASCOPE",
   description:
-    "GIGASCOPE charter: real-time milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 charter → $29 (Jun 2026) → $49-79 long-term.",
+    "GIGASCOPE charter: daily milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 charter → $29 (Jun 2026) → $49-79 long-term.",
   alternates: { canonical: "https://gigascope.xyz/pro" },
   openGraph: {
     title: "Charter membership — $9/mo for life — GIGASCOPE",
     description:
-      "GIGASCOPE charter: real-time milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 charter → $29 (Jun 2026) → $49-79 long-term.",
+      "GIGASCOPE charter: daily milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 charter → $29 (Jun 2026) → $49-79 long-term.",
     url: "https://gigascope.xyz/pro",
     type: "website",
   },
@@ -24,12 +24,12 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Charter membership — $9/mo for life — GIGASCOPE",
     description:
-      "GIGASCOPE charter: real-time milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 charter → $29 (Jun 2026) → $49-79 long-term.",
+      "GIGASCOPE charter: daily milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 charter → $29 (Jun 2026) → $49-79 long-term.",
   },
 };
 
 const FEATURES = [
-  { label: "Real-time alerts (email)", note: "Construction progress jumps, fab milestones, regulatory decisions, earnings, launches." },
+  { label: "Daily alerts (email)", note: "One digest at 14:00 UTC: construction progress jumps, fab milestones, regulatory decisions, earnings, launches." },
   { label: "Curated daily digest", note: "One email at 7am local. Cross-company synthesis: what mattered, what's next, with primary-source links." },
   { label: "Interactive component breakdowns", note: "Click any component on Raptor, Optimus, Cybertruck, 4680, GB200 — see the part, the spec, the supplier." },
   { label: "Data downloads (CSV, JSON)", note: "Milestones, facility coordinates, supply-chain edges, historical timelines — bulk export for your own analysis." },
@@ -64,6 +64,10 @@ export default async function ProPage() {
   const badge = showCount
     ? `${taken} of ${cap} charter spots claimed`
     : "Founding 100 · charter pricing locked at $9/mo forever";
+
+  // Server-side gate: hide Stripe POST entirely until billing is wired.
+  // Server-only env, can't be probed from the client — exactly the point.
+  const stripeLive = !!process.env.STRIPE_SECRET_KEY;
 
   return (
     <div className="max-w-[900px] mx-auto px-6 py-12">
@@ -127,7 +131,7 @@ export default async function ProPage() {
       </div>
 
       <section className="max-w-md mx-auto mb-12">
-        <InvestorCheckout />
+        <InvestorCheckout stripeLive={stripeLive} />
       </section>
 
       <section className="max-w-md mx-auto mb-16">

@@ -60,10 +60,11 @@ export default function DripD30({ email }: DripProps) {
           <Heading style={h3}>Charter — $9/mo, locked for life</Heading>
 
           <Text style={text}>
-            Charter pricing is limited to the first 100 members. After that,
-            standard pricing is $19/mo and long-term is $29/mo. Charter members
-            get the lower price for as long as the membership exists. Once the
-            100 spots are gone, this offer doesn&apos;t come back.
+            Charter is locked at $9/mo (or $90/yr &mdash; 17% off) for the
+            first 100 members, for life. Once those spots are gone, standard
+            pricing is $29/mo, and the long-term tier sits at $49&ndash;79/mo
+            as the product matures. Charter members keep the $9 rate as long
+            as the subscription stays continuous.
           </Text>
 
           <Text style={text}>

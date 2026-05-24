@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Downloads — CSV/JSON exports — GIGASCOPE",
   description:
-    "Bulk export the GIGASCOPE dataset: factories, milestones, products. CSV or JSON. Free during the charter early-bird period.",
+    "Bulk export the GIGASCOPE dataset: factories, milestones, products. CSV or JSON. Free during the charter period.",
   alternates: { canonical: "https://gigascope.xyz/downloads" },
   openGraph: {
     title: "Downloads — CSV/JSON exports — GIGASCOPE",
     description:
-      "Bulk export the GIGASCOPE dataset: factories, milestones, products. CSV or JSON. Free during the charter early-bird period.",
+      "Bulk export the GIGASCOPE dataset: factories, milestones, products. CSV or JSON. Free during the charter period.",
     url: "https://gigascope.xyz/downloads",
     type: "website",
   },
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Downloads — CSV/JSON exports — GIGASCOPE",
     description:
-      "Bulk export the GIGASCOPE dataset: factories, milestones, products. CSV or JSON. Free during the charter early-bird period.",
+      "Bulk export the GIGASCOPE dataset: factories, milestones, products. CSV or JSON. Free during the charter period.",
   },
 };
 
@@ -32,7 +32,7 @@ export default function DownloadsPage() {
       <header className="mb-8">
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-3">Downloads</h1>
         <p className="text-dim max-w-2xl">
-          Bulk export the underlying GIGASCOPE data. CSV or JSON. Free during the charter early-bird period. Rate-limited.
+          Bulk export the underlying GIGASCOPE data. CSV or JSON. Free during the charter period. Rate-limited.
           Always treat as point-in-time — re-fetch for the latest.
         </p>
       </header>

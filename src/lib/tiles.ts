@@ -18,9 +18,11 @@ export const tileSources: TileSource[] = [
   {
     name: "SENTINEL-2",
     label: "Switch to Dark Map",
-    source: "Sentinel-2 Cloudless Mosaic by EOX (annual)",
-    url: "https://tiles.maps.eox.at/wmts?layer=s2cloudless-2023_3857&style=default&tilematrixset=GoogleMapsCompatible&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/jpeg&TileMatrix={z}&TileCol={x}&TileRow={y}",
+    // EOX_SENTINEL2_YEAR: bump this string + the methodology page (refresh row)
+    // once a year when EOX publishes the next cloudless mosaic.
+    source: "Sentinel-2 Cloudless Mosaic by EOX (annual, currently 2024)",
+    url: "https://tiles.maps.eox.at/wmts?layer=s2cloudless-2024_3857&style=default&tilematrixset=GoogleMapsCompatible&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/jpeg&TileMatrix={z}&TileCol={x}&TileRow={y}",
     maxZoom: 15,
-    attribution: "Sentinel-2 cloudless by EOX",
+    attribution: "Sentinel-2 cloudless 2024 by EOX",
   },
 ];

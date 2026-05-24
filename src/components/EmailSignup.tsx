@@ -70,7 +70,7 @@ export default function EmailSignup({
             disabled={status === "loading"}
             className="px-4 py-2 rounded bg-text text-bg text-sm font-bold hover:opacity-80 disabled:opacity-50"
           >
-            {status === "loading" ? "..." : "Subscribe"}
+            {status === "loading" ? "..." : "Get the daily digest"}
           </button>
         </form>
         {msg && (
@@ -96,7 +96,7 @@ export default function EmailSignup({
         disabled={status === "loading"}
         className="px-4 py-2 rounded bg-text text-bg text-sm font-bold hover:opacity-80 disabled:opacity-50 whitespace-nowrap"
       >
-        {status === "loading" ? "..." : "Subscribe"}
+        {status === "loading" ? "..." : "Get the daily digest"}
       </button>
       {msg && (
         <span className={`text-xs self-center ${status === "ok" ? "text-green-600" : "text-red-500"}`}>{msg}</span>

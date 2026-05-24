@@ -64,7 +64,7 @@ export default function StockTicker() {
         className="inline-flex items-center gap-2 text-sm text-dim hover:text-text transition-colors"
       >
         <span className="font-bold">TSLA</span>
-        <span>live price ↗</span>
+        <span>price ↗</span>
       </a>
     );
   }

@@ -5,13 +5,13 @@ export const runtime = "nodejs";
 
 const PLANS = {
   monthly: {
-    name: "GIGASCOPE Charter — Monthly (Early Bird)",
+    name: "GIGASCOPE Charter — Monthly",
     priceCents: 900,
     interval: "month" as const,
   },
   annual: {
-    name: "GIGASCOPE Charter — Annual (Early Bird)",
-    priceCents: 9900,
+    name: "GIGASCOPE Charter — Annual",
+    priceCents: 9000,
     interval: "year" as const,
   },
 };
@@ -47,7 +47,7 @@ export async function POST(req: Request) {
         {
           price_data: {
             currency: "usd",
-            product_data: { name: plan.name, description: "Charter pricing — early-bird locked for life. Cancel anytime." },
+            product_data: { name: plan.name, description: "Charter pricing — locked for life. Cancel anytime." },
             unit_amount: plan.priceCents,
             recurring: { interval: plan.interval },
           },

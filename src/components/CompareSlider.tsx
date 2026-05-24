@@ -1,5 +1,6 @@
 "use client";
 
+import "leaflet/dist/leaflet.css";
 import { useEffect, useRef, useState } from "react";
 import { factories, getSitesByCompany } from "@/data/factories";
 import { getCompanyMeta } from "@/data/companies";
@@ -223,8 +224,6 @@ export default function CompareSlider() {
         className="relative overflow-hidden border border-border-custom bg-surface select-none "
         style={{ height: "clamp(420px, calc(100vh - 280px), 720px)" }}
       >
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
         {/* Scanline overlay */}
         <div
           className="absolute inset-x-0 top-0 z-[20] pointer-events-none h-24"

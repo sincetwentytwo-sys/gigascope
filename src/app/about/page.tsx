@@ -4,7 +4,7 @@ import { factories } from "@/data/factories";
 export const metadata: Metadata = {
   title: "About — GIGASCOPE",
   description:
-    "GIGASCOPE tracks Musk-empire build-out from orbit: Tesla, SpaceX, xAI, Neuralink, Boring Company — 16 sites, weekly satellite captures, primary sources.",
+    "GIGASCOPE tracks Musk-empire build-out from orbit: Tesla, SpaceX, xAI, Neuralink, Boring Company — 16 sites refreshed as new Sentinel-2 / ESRI imagery drops (typically every 2-3 months), primary sources.",
 };
 
 const TRACKED = [
@@ -38,7 +38,7 @@ export default function AboutPage() {
         <h2 className="text-2xl font-bold mb-3">Why this site exists</h2>
         <p className="text-sm leading-relaxed text-dim max-w-prose">
           Five companies inside one founder's orbit are reshaping cars, launch, AI compute, neural interfaces, and tunnels — at the same time, in public, on dirt you can see from space.
-          Nobody is tracking the physical build-out of all five together on a weekly cadence. Bloomberg covers the earnings. Visible Alpha models the revenue. Aggregators churn the headlines.
+          Nobody is tracking the physical build-out of all five together on a continuous cadence. Bloomberg covers the earnings. Visible Alpha models the revenue. Aggregators churn the headlines.
           GIGASCOPE watches the construction sites — Sentinel-2 captures, manually traced polygons, milestones logged against permits and FAA filings. That's the entire job.
         </p>
       </section>
@@ -47,7 +47,7 @@ export default function AboutPage() {
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-3">What we track</h2>
         <p className="text-sm text-dim mb-4">
-          {factories.length} sites across the five companies, refreshed against Copernicus Sentinel-2 imagery (10 m/pixel, weekly cadence where cloud-free captures exist).
+          {factories.length} sites across the five companies, refreshed against Copernicus Sentinel-2 (10 m/pixel, annual cloudless composite via EOX) and ESRI World Imagery (~3–6 month refresh) — in practice, each site picks up a fresh capture every 2-3 months on average.
         </p>
         <ul className="flex flex-col gap-2.5 mb-4">
           {TRACKED.map((t) => (

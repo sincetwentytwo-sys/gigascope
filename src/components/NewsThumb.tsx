@@ -13,9 +13,11 @@ import { useState } from "react";
 export default function NewsThumb({
   src,
   source,
+  title,
 }: {
   src: string | undefined;
   source: string;
+  title: string;
 }) {
   const [attempts, setAttempts] = useState(0);
 
@@ -44,12 +46,15 @@ export default function NewsThumb({
   // Referer at all bypasses the hotlink check (their server treats it
   // the same as a direct-paste image-in-new-tab request, which they
   // serve). No effect on publications that don't have hotlink defense.
+  // The thumbnail IS the article's headline photo — it's editorial, not
+  // decorative — so screen readers should hear the article title rather
+  // than skip the image entirely.
   // eslint-disable-next-line @next/next/no-img-element
   return (
     <img
       key={attempts}
       src={finalSrc}
-      alt=""
+      alt={title}
       loading="lazy"
       referrerPolicy="no-referrer"
       onError={() => setAttempts((a) => a + 1)}

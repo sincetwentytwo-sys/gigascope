@@ -35,8 +35,7 @@ export default function NewsPage() {
           What counts as news on GIGASCOPE: Musk-empire build-out — Tesla, SpaceX, xAI, Neuralink, Boring Company —
           factory milestones, launches, hardware ships, regulatory turns. Pulled directly from primary publications
           (Electrek, Teslarati, InsideEVs, CleanTechnica, TorqueNews, CNBC); general feeds are keyword-filtered to
-          stay on-empire. No Yahoo Finance aggregation, no Canopy Growth, no off-thesis tickers. Latest on top —
-          click any headline for the full story at the source.
+          stay on-empire. Latest on top — click any headline for the full story at the source.
         </p>
       </header>
 

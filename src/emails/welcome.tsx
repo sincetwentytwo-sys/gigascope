@@ -62,7 +62,7 @@ export default function WelcomeEmail({ email, tier = "free" }: WelcomeEmailProps
           )}
 
           <Section style={list}>
-            <Text style={listItem}>→ Weekly Sentinel-2 satellite captures across Musk-empire sites</Text>
+            <Text style={listItem}>→ Sentinel-2 + ESRI satellite captures across Musk-empire sites — refreshed as new imagery drops (typically every 2-3 months per site)</Text>
             <Text style={listItem}>→ Milestone log: groundbreakings, FAA notices, permit pulls, IR drops</Text>
             <Text style={listItem}>→ Primary-source links only — SEC EDGAR, DART, county records</Text>
             <Text style={listItem}>→ No paid placements, no affiliate links, open source on GitHub</Text>

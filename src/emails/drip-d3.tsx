@@ -41,10 +41,11 @@ export default function DripD3({ email }: DripProps) {
           </Text>
 
           <Text style={text}>
-            Satellite cadence: Sentinel-2 has a 5-day revisit at 10m resolution. So roughly
-            once a week each Musk-empire site gets a fresh, mostly-cloudless frame. You&apos;ll
-            see the new captures land in the weekly summary — pad expansions, new
-            substations, parking lots filling in, that kind of detail.
+            Satellite cadence: Sentinel-2 has a 5-day revisit at 10m resolution, but cloud
+            cover, sun angle and the annual EOX cloudless-mosaic build mean usable frames
+            land closer to every 2-3 months per site in practice. ESRI World Imagery
+            refreshes every 3-6 months on top of that. You&apos;ll see the new captures land
+            as they drop — pad expansions, new substations, parking lots filling in.
           </Text>
 
           <Text style={text}>

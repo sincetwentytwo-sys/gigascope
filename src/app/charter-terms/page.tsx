@@ -87,9 +87,9 @@ export default function CharterTermsPage() {
         </div>
         <h3 className="text-base font-bold mt-6 mb-2">Annual option</h3>
         <p className="text-text leading-relaxed mb-4">
-          Charter members may also choose an annual plan with a 17% discount (effectively two months free). The
-          annual plan preserves Charter pricing on renewal &mdash; you renew at the same locked annual rate as
-          long as the subscription stays continuously active.
+          Charter members may also choose an annual plan at <strong>$90/year</strong> &mdash; a 17% discount on
+          12&times;$9. The annual plan preserves Charter pricing on renewal: you renew at the same locked annual
+          rate as long as the subscription stays continuously active.
         </p>
       </section>
 

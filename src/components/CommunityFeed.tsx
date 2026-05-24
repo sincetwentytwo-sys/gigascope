@@ -2,7 +2,10 @@ import { fetchCommunityPosts, type SocialPost } from "@/lib/social";
 
 interface CommunityFeedProps {
   keywords?: string[];
-  factoryName: string;
+  // factoryName is accepted (for backwards compatibility with existing call
+  // sites) but no longer rendered — the compressed footer strip is generic
+  // across all sites.
+  factoryName?: string;
 }
 
 const SOURCE_BADGE: Record<SocialPost["source"], string> = {
@@ -10,11 +13,7 @@ const SOURCE_BADGE: Record<SocialPost["source"], string> = {
   hn: "bg-orange-100 text-orange-700",
 };
 
-const OFFICIAL_ACCOUNTS = [
-  { handle: "Tesla", name: "Tesla", description: "Official Tesla updates" },
-  { handle: "elonmusk", name: "Elon Musk", description: "CEO announcements" },
-  { handle: "SpaceX", name: "SpaceX", description: "Rocket launches & Starlink" },
-];
+const OFFICIAL_ACCOUNTS = ["Tesla", "elonmusk", "SpaceX"];
 
 function timeAgo(ts: number): string {
   const seconds = Math.floor((Date.now() - ts) / 1000);
@@ -62,29 +61,38 @@ function PostCard({ post }: { post: SocialPost }) {
   );
 }
 
-function AccountCard({ handle, name, description }: { handle: string; name: string; description: string }) {
+function OfficialStrip() {
+  // Single inline strip: tiny X glyph + "Live community is on X: @links".
+  // Used to be three full-width follow cards but they screamed "I have no
+  // real community of my own." Compressed so they don't dominate the panel
+  // when we have actual Reddit/HN posts, and stay quiet but visible when
+  // the community feed is empty.
   return (
-    <a
-      href={`https://x.com/${handle}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center gap-3 border border-border-custom rounded-lg p-2.5 hover:bg-surface transition-colors"
-    >
-      <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center shrink-0">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+    <div className="mt-3 pt-3 border-t border-border-custom">
+      <p className="text-[11px] text-dim flex items-center gap-1.5 flex-wrap">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" className="shrink-0 opacity-70">
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
         </svg>
-      </div>
-      <div className="flex-1 min-w-0">
-        <div className="text-xs font-semibold">{name}</div>
-        <div className="text-[10px] text-dim">@{handle} &middot; {description}</div>
-      </div>
-      <span className="text-[10px] text-dim shrink-0">Follow &rarr;</span>
-    </a>
+        <span>Live community is on X:</span>
+        {OFFICIAL_ACCOUNTS.map((handle, i) => (
+          <span key={handle} className="inline-flex items-center">
+            <a
+              href={`https://x.com/${handle}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-text hover:underline"
+            >
+              @{handle}
+            </a>
+            {i < OFFICIAL_ACCOUNTS.length - 1 && <span className="text-dim">,&nbsp;</span>}
+          </span>
+        ))}
+      </p>
+    </div>
   );
 }
 
-export default async function CommunityFeed({ keywords = [], factoryName }: CommunityFeedProps) {
+export default async function CommunityFeed({ keywords = [] }: CommunityFeedProps) {
   const posts = await fetchCommunityPosts(keywords);
   const top = posts.slice(0, 8);
 
@@ -96,15 +104,10 @@ export default async function CommunityFeed({ keywords = [], factoryName }: Comm
         <p className="text-sm text-dim py-2">No recent community posts.</p>
       )}
 
-      {/* X official accounts always shown below — never miss official posts */}
-      <div className="mt-3 pt-3 border-t border-border-custom">
-        <p className="text-[10px] text-dim mb-2 uppercase tracking-wider">Official on X</p>
-        <div className="flex flex-col gap-1.5">
-          {OFFICIAL_ACCOUNTS.map((acc) => (
-            <AccountCard key={acc.handle} {...acc} />
-          ))}
-        </div>
-      </div>
+      {/* When we have real Reddit/HN posts the X strip is filler — hide it.
+          When there's nothing else, surface the compressed inline strip so
+          the user has at least one path to follow live updates. */}
+      {top.length === 0 && <OfficialStrip />}
     </div>
   );
 }

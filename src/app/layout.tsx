@@ -9,21 +9,21 @@ import SearchOpener from "@/components/SearchOpener";
 export const metadata: Metadata = {
   title: "GIGASCOPE — Watch Musk's empire get built, one satellite frame at a time",
   description:
-    "Weekly Sentinel-2 satellite timelapses of 16 Musk-empire sites. Tesla Gigafactories from dirt to delivery, SpaceX Starbase orbital launches, xAI Colossus GPU cluster, Neuralink, Boring Co. Methodology + catalyst calendar. Free.",
+    "Sentinel-2 + ESRI satellite timelapses of 16 Musk-empire sites, refreshed as new imagery drops (typically every 2-3 months per site). Tesla Gigafactories from dirt to delivery, SpaceX Starbase orbital launches, xAI Colossus GPU cluster, Neuralink, Boring Co. Methodology + catalyst calendar. Free.",
   keywords: ["Tesla", "SpaceX", "xAI", "Neuralink", "Boring Company", "Elon Musk", "Gigafactory", "Starlink", "Cybertruck", "Starship", "Model 3", "Model Y", "Megapack", "Optimus", "Colossus", "satellite imagery", "construction tracking"],
   icons: { icon: "/favicon.svg" },
   manifest: "/manifest.json",
   metadataBase: new URL("https://gigascope.xyz"),
   openGraph: {
     title: "Watch Musk's empire get built, one satellite frame at a time",
-    description: "16 sites · weekly Sentinel-2 satellite timelapses · methodology cited. Tesla, SpaceX, xAI, Neuralink, Boring Co.",
+    description: "16 sites · Sentinel-2 + ESRI satellite timelapses · methodology cited. Tesla, SpaceX, xAI, Neuralink, Boring Co.",
     type: "website",
     siteName: "GIGASCOPE",
   },
   twitter: {
     card: "summary_large_image",
     title: "GIGASCOPE — Musk Empire from orbit",
-    description: "Weekly Sentinel-2 timelapses of every Gigafactory, every launch pad, Colossus GPU cluster. Methodology cited.",
+    description: "Sentinel-2 + ESRI timelapses of every Gigafactory, every launch pad, Colossus GPU cluster. Refreshed as new imagery drops. Methodology cited.",
   },
   robots: {
     index: true,
@@ -53,7 +53,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebApplication",
               name: "GIGASCOPE",
-              description: "Musk Empire site tracker — Tesla, SpaceX, xAI, Neuralink, Boring Company with satellite imagery, milestones, and live updates.",
+              description: "Musk Empire site tracker — Tesla, SpaceX, xAI, Neuralink, Boring Company with satellite imagery, milestones, and timelapses refreshed as new captures land.",
               url: "https://gigascope.xyz",
               applicationCategory: "ReferenceApplication",
               operatingSystem: "All",
@@ -111,7 +111,7 @@ export default function RootLayout({
               <a href="/methodology" className="hover:text-text transition-colors">Methodology</a>
               <a href="/about" className="hover:text-text transition-colors">About</a>
               <SearchOpener />
-              <a href="/pro" className="text-text font-bold hover:opacity-70 transition-opacity">Subscribe</a>
+              <a href="/pro" className="text-text font-bold hover:opacity-70 transition-opacity">Get the daily digest</a>
             </div>
           </div>
         </nav>
@@ -136,7 +136,7 @@ export default function RootLayout({
           </a>
           <a href="/pro" className="flex flex-col items-center gap-0.5 text-[10px] text-text font-bold">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
-            Subscribe
+            Digest
           </a>
         </nav>
 

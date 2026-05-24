@@ -294,11 +294,19 @@ export default function Product2DViewer({ product }: { product: ProductSpec }) {
               willChange: "transform",
             }}
           >
+            {/* width/height attrs use the most-recently-known natural
+                dimensions so the layout reserves the right aspect-ratio
+                box before the new product photo arrives — prevents the
+                photo from jump-resizing when the user picks a different
+                product. Falls back to the initial 1000×1000 default
+                while the first onLoad is still pending. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               ref={imgRef}
               src={src}
               alt={`${product.name} reference ${ext === "svg" ? "diagram" : "photo"}`}
+              width={naturalSize.w}
+              height={naturalSize.h}
               className="block w-full h-full object-contain select-none pointer-events-none"
               decoding="sync"
               loading="eager"

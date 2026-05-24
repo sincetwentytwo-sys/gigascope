@@ -67,9 +67,10 @@ export default function DripD7({ email }: DripProps) {
           </Text>
 
           <Text style={text}>
-            Refresh cadence: operational sites monthly, expanding sites bi-weekly
-            when ESRI has a fresh capture, announced sites monthly while we watch
-            for groundbreaking.
+            Refresh cadence: operational sites monthly, expanding sites whenever
+            ESRI drops a fresh capture (typically every 3-6 months), announced
+            sites monthly while we watch for groundbreaking. Sentinel-2 cloudless
+            mosaic refreshes annually.
           </Text>
 
           <Text style={text}>

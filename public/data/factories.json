@@ -99,7 +99,7 @@
       "company": "tesla",
       "status": "expanding",
       "progress": 78,
-      "area": "12M sqft",
+      "area": "10M sqft",
       "capacity": "500K+",
       "products": "Model Y, Cybertruck, Cybercab",
       "investment": "$10B+",
@@ -532,7 +532,7 @@
       "progress": 90,
       "area": "1.2M sqft",
       "capacity": "10K Solar Roof/yr",
-      "products": "Solar Roof, Supercharger, Megapack",
+      "products": "Solar Roof, Supercharger, Solar Panels (TSP-420)",
       "investment": "$959M",
       "employees": "1,500+",
       "color": "#e31937",
@@ -550,8 +550,9 @@
         },
         {
           "date": "2023-05",
-          "text": "Megapack components",
-          "done": true
+          "text": "Supercharger production scaled (started 2020)",
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Gigafactory_New_York"
         },
         {
           "date": "2025-03",
@@ -765,9 +766,9 @@
         },
         {
           "date": "2023-12",
-          "text": "98 launches in one year",
+          "text": "SpaceX hits 96 Falcon launches in 2023 (all pads)",
           "done": true,
-          "sourceUrl": "https://www.faa.gov/space"
+          "sourceUrl": "https://en.wikipedia.org/wiki/List_of_Falcon_9_and_Falcon_Heavy_launches"
         },
         {
           "date": "2025-06",
@@ -1120,8 +1121,9 @@
       "employees": "200+",
       "color": "#bf5600",
       "extras": {
-        "Stations": "93 planned (5 open)",
-        "Tunnel Miles": "3.2 mi open"
+        "Stations": "55 planned (9 open)",
+        "Tunnel Miles": "2.2 mi open",
+        "sourceUrl": "https://en.wikipedia.org/wiki/Vegas_Loop"
       },
       "lastUpdated": "2026-05-20",
       "milestones": [

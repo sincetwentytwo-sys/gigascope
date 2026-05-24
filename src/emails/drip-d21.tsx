@@ -56,7 +56,7 @@ export default function DripD21({ email }: DripProps) {
             Texas pasture along the Colorado River — nothing else. In 2026 the
             same coordinates show the second-largest building on Earth by
             footprint, with phase 2 and phase 3 expansion shells visible in
-            every weekly capture.
+            every fresh capture.
           </Text>
 
           <Text style={text}>
