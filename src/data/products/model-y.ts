@@ -15,9 +15,9 @@ export const modelY: ProductSpec = {
   cameraMaxDistance: 27,
   background: "#0a0a0f",
   photoCredit: {
-    author: "Vauxford",
+    author: "Ethan Llamas",
     license: "CC BY-SA 4.0",
-    sourceUrl: "https://commons.wikimedia.org/wiki/File:2022_Tesla_Model_Y_Long_Range_AWD_Front.jpg",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_01.jpg",
   },
   // Top-down cutaway with panoramic glass roof removed: front + rear
   // megacastings wrapping the drive units, 4680 structural pack, full-width
@@ -42,7 +42,8 @@ export const modelY: ProductSpec = {
       color: "#1e2228",
       metalness: 0.6,
       roughness: 0.35,
-      hotspot: { x: 0.5000, y: 0.5000 },
+      // Center mass of the body in the Juniper 3/4 front-left photo.
+      hotspot: { x: 0.50, y: 0.42 },
       // Body silhouette outline — bottom-rear panel between wheels.
       cutawayHotspot: { x: 0.65, y: 0.93 },
     },
@@ -58,7 +59,8 @@ export const modelY: ProductSpec = {
       color: "#22272f",
       metalness: 0.7,
       roughness: 0.3,
-      hotspot: { x: 0.8200, y: 0.4200 },
+      // Sloped hood between the lightbar and windshield.
+      hotspot: { x: 0.36, y: 0.46 },
       // Hood / frunk area at front of car on cutaway.
       cutawayHotspot: { x: 0.13, y: 0.30 },
     },
@@ -73,7 +75,8 @@ export const modelY: ProductSpec = {
       color: "#0a0d12",
       metalness: 0.2,
       roughness: 0.05,
-      hotspot: { x: 0.4200, y: 0.1000 },
+      // Glass roof visible over the cabin behind the windshield.
+      hotspot: { x: 0.62, y: 0.10 },
       // Glass roof spans cabin on top-down — pick a clear cabin-glass spot.
       cutawayHotspot: { x: 0.60, y: 0.20 },
     },
@@ -104,7 +107,8 @@ export const modelY: ProductSpec = {
       color: "#16181c",
       metalness: 0.5,
       roughness: 0.7,
-      hotspot: { x: 0.5200, y: 0.7200 },
+      // Front-right (passenger-side) wheel sits prominently at lower-right of the photo.
+      hotspot: { x: 0.91, y: 0.78 },
       // FR = upper-left wheel in driver-perspective (top of canvas = driver-RIGHT in LHD).
       cutawayHotspot: { x: 0.250, y: 0.056 },
     },
@@ -135,8 +139,8 @@ export const modelY: ProductSpec = {
       color: "#16181c",
       metalness: 0.5,
       roughness: 0.7,
-      hotspot: { x: 0.2000, y: 0.7100 },
-      // RR = upper-right wheel in driver-perspective.
+      // Rear-right wheel is occluded by the FR wheel in this 3/4 front view —
+      // visible on the cutaway only.
       cutawayHotspot: { x: 0.750, y: 0.056 },
     },
     {
@@ -151,7 +155,8 @@ export const modelY: ProductSpec = {
       emissive: "#88aaff",
       metalness: 0.3,
       roughness: 0.2,
-      hotspot: { x: 0.7800, y: 0.5000 },
+      // Center of the continuous front lightbar across the Juniper fascia.
+      hotspot: { x: 0.32, y: 0.54 },
       // Blue LED bar across front fascia on cutaway.
       cutawayHotspot: { x: 0.10, y: 0.50 },
     },
@@ -167,8 +172,7 @@ export const modelY: ProductSpec = {
       emissive: "#ff2222",
       metalness: 0.4,
       roughness: 0.3,
-      hotspot: { x: 0.05, y: 0.28 },
-      // Red LED bar across tail on cutaway.
+      // Rear tail bar isn't visible from this front 3/4 shot — cutaway only.
       cutawayHotspot: { x: 0.90, y: 0.50 },
     },
     {
@@ -182,7 +186,8 @@ export const modelY: ProductSpec = {
       color: "#1a1d22",
       metalness: 0.4,
       roughness: 0.55,
-      hotspot: { x: 0.9000, y: 0.7000 },
+      // Lower bumper below the license plate.
+      hotspot: { x: 0.30, y: 0.80 },
       // Front fascia just inside front bumper line on cutaway.
       cutawayHotspot: { x: 0.10, y: 0.80 },
     },
@@ -198,8 +203,7 @@ export const modelY: ProductSpec = {
       color: "#1e2228",
       metalness: 0.6,
       roughness: 0.35,
-      hotspot: { x: 0.08, y: 0.35 },
-      // Rear cargo/hatch area at right of canvas, opposite the front fascia.
+      // Tailgate isn't visible from this front 3/4 shot — cutaway only.
       cutawayHotspot: { x: 0.86, y: 0.80 },
     },
     {
@@ -299,7 +303,8 @@ export const modelY: ProductSpec = {
       color: "#0a0a0c",
       metalness: 0.2,
       roughness: 0.3,
-      hotspot: { x: 0.4500, y: 0.3000 },
+      // Right B-pillar where the front and rear door cutlines meet, near the mirror base.
+      hotspot: { x: 0.74, y: 0.22 },
       // R = upper edge of cabin in driver-perspective (top = driver-RIGHT in LHD).
       cutawayHotspot: { x: 0.475, y: 0.118 },
     },
@@ -314,7 +319,8 @@ export const modelY: ProductSpec = {
       color: "#0a0a0c",
       metalness: 0.2,
       roughness: 0.3,
-      hotspot: { x: 0.6300, y: 0.2200 },
+      // Trifocal cluster behind the upper windshield, just below the glass-roof line.
+      hotspot: { x: 0.50, y: 0.27 },
       // Trifocal cluster behind windshield — three dots stacked at A-pillar.
       cutawayHotspot: { x: 0.36, y: 0.40 },
     },
