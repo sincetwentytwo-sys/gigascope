@@ -19,6 +19,11 @@ type Hero = {
   headlineTail: string;
 };
 
+// Colossus removed from rotation 2026-05-24 — the dramatic change is
+// indoor (200K GPU rack install, fan-out, chiller plumbing), invisible
+// from orbit. External delta over 12 months is too subtle for a hero
+// timelapse. giga-texas (6yr dirt→megafactory+5 ancillary) and starbase
+// (sand→OLM tower) carry the visual weight.
 const HEROES: Hero[] = [
   {
     slug: "giga-texas",
@@ -31,12 +36,6 @@ const HEROES: Hero[] = [
     kicker: "SpaceX Starbase · Sentinel-2 · 2019 → 2026",
     headlineLead: "Starbase —",
     headlineTail: "from sand to Starship pad in five years.",
-  },
-  {
-    slug: "colossus",
-    kicker: "xAI Colossus · Memphis · 2024 → 2026",
-    headlineLead: "Memphis Colossus —",
-    headlineTail: "200,000 GPUs online in 12 months.",
   },
 ];
 
@@ -62,7 +61,7 @@ export default async function Home({
 
   return (
     <>
-      {/* Full-bleed satellite-timelapse hero — rotates daily across Giga Texas / Starbase / Colossus */}
+      {/* Full-bleed satellite-timelapse hero — rotates daily across Giga Texas / Starbase */}
       <section className="relative w-full overflow-hidden bg-black" style={{ aspectRatio: "16 / 9", maxHeight: "78vh" }}>
         <video
           key={hero.slug}
