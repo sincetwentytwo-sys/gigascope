@@ -121,8 +121,8 @@
   <!-- Front-row seats (above the pack outline) -->
   <rect x="280" y="142" width="42" height="50" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
   <rect x="280" y="208" width="42" height="50" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
-  <text x="301" y="172" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">DRIVER</text>
-  <text x="301" y="238" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">PASS</text>
+  <text x="301" y="172" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">PASS</text>
+  <text x="301" y="238" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">DRIVER</text>
 
   <!-- Center 15" touchscreen (between front seats, landscape) -->
   <rect x="332" y="188" width="30" height="22" fill="#0a0a12" stroke="#444" stroke-width="0.5" rx="2" />
@@ -146,8 +146,8 @@
   <!-- B-pillar cameras (left + right) -->
   <circle cx="380" cy="120" r="3.5" fill="#0a0a0a" stroke="#666" stroke-width="0.4" />
   <circle cx="380" cy="280" r="3.5" fill="#0a0a0a" stroke="#666" stroke-width="0.4" />
-  <text x="385" y="116" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444">B-pillar L</text>
-  <text x="385" y="293" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444">B-pillar R</text>
+  <text x="385" y="116" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444">B-pillar R</text>
+  <text x="385" y="293" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444">B-pillar L</text>
 
   <!-- HEPA cabin filter (under glovebox, pass-side) -->
   <rect x="248" y="222" width="22" height="14" fill="#3d3a32" stroke="#222" stroke-width="0.5" rx="1" />

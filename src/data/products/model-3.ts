@@ -105,8 +105,8 @@ export const model3: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.6,
       roughness: 0.5,
-      // FL = upper-left wheel on the top-down (car faces left of canvas).
-      cutawayHotspot: { x: 0.244, y: 0.238 },
+      // FL = lower-left wheel in driver-perspective (bottom of canvas = driver-LEFT in LHD).
+      cutawayHotspot: { x: 0.244, y: 0.763 },
     },
     {
       id: "wheel-fr",
@@ -121,8 +121,8 @@ export const model3: ProductSpec = {
       metalness: 0.6,
       roughness: 0.5,
       hotspot: { x: 0.3300, y: 0.6900 },
-      // FR = lower-left wheel.
-      cutawayHotspot: { x: 0.244, y: 0.763 },
+      // FR = upper-left wheel in driver-perspective (top of canvas = driver-RIGHT in LHD).
+      cutawayHotspot: { x: 0.244, y: 0.238 },
     },
     {
       id: "wheel-rl",
@@ -136,8 +136,8 @@ export const model3: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.6,
       roughness: 0.5,
-      // RL = upper-right wheel.
-      cutawayHotspot: { x: 0.769, y: 0.238 },
+      // RL = lower-right wheel in driver-perspective.
+      cutawayHotspot: { x: 0.769, y: 0.763 },
     },
     {
       id: "wheel-rr",
@@ -152,8 +152,8 @@ export const model3: ProductSpec = {
       metalness: 0.6,
       roughness: 0.5,
       hotspot: { x: 0.0800, y: 0.6500 },
-      // RR = lower-right wheel.
-      cutawayHotspot: { x: 0.769, y: 0.763 },
+      // RR = upper-right wheel in driver-perspective.
+      cutawayHotspot: { x: 0.769, y: 0.238 },
     },
     {
       id: "front-bumper",
@@ -279,8 +279,8 @@ export const model3: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
-      // L = upper edge of cabin (top-down view).
-      cutawayHotspot: { x: 0.475, y: 0.30 },
+      // L = lower edge of cabin in driver-perspective (bottom of canvas = driver-LEFT).
+      cutawayHotspot: { x: 0.475, y: 0.70 },
     },
     {
       id: "cam-bpillar-r",
@@ -293,8 +293,8 @@ export const model3: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
-      // R = lower edge of cabin (top-down view).
-      cutawayHotspot: { x: 0.475, y: 0.70 },
+      // R = upper edge of cabin in driver-perspective (top of canvas = driver-RIGHT).
+      cutawayHotspot: { x: 0.475, y: 0.30 },
     },
     {
       id: "touchscreen",

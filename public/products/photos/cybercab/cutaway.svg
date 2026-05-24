@@ -74,11 +74,11 @@
   <g opacity="0.55" stroke="#5a5030" stroke-width="0.8" stroke-dasharray="3 2" fill="#b8a26d" fill-opacity="0.4">
     <path d="M 245 90 L 460 90 L 470 60 L 235 60 Z" />
   </g>
-  <text x="350" y="76" font-family="ui-sans-serif, system-ui" font-size="6" fill="#5a4a20" text-anchor="middle" font-style="italic">door L (open ~80°)</text>
+  <text x="350" y="76" font-family="ui-sans-serif, system-ui" font-size="6" fill="#5a4a20" text-anchor="middle" font-style="italic">door R (open ~80°)</text>
 
   <!-- Right door (closed, normal outline) -->
   <line x1="245" y1="310" x2="460" y2="310" stroke="#5a5030" stroke-width="1.2" />
-  <text x="350" y="332" font-family="ui-sans-serif, system-ui" font-size="6" fill="#5a4a20" text-anchor="middle" font-style="italic">door R (closed)</text>
+  <text x="350" y="332" font-family="ui-sans-serif, system-ui" font-size="6" fill="#5a4a20" text-anchor="middle" font-style="italic">door L (closed)</text>
 
   <!-- ============================================================ -->
   <!-- WHEELS (4) — aero-cover wheels at corners                      -->
@@ -128,8 +128,8 @@
   <!-- ============================================================ -->
   <rect x="280" y="130" width="50" height="58" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
   <rect x="280" y="212" width="50" height="58" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
-  <text x="305" y="163" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">SEAT L</text>
-  <text x="305" y="245" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">SEAT R</text>
+  <text x="305" y="163" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">SEAT R</text>
+  <text x="305" y="245" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">SEAT L</text>
 
   <!-- Center shared touchscreen between seats -->
   <rect x="340" y="188" width="30" height="24" fill="#0a0a10" stroke="#444" stroke-width="0.5" rx="2" />
@@ -149,15 +149,15 @@
   <circle cx="225" cy="200" r="3" fill="#0a0a10" stroke="#666" stroke-width="0.4" />
   <text x="220" y="190" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444" text-anchor="end">C</text>
   <circle cx="195" cy="115" r="3" fill="#0a0a10" stroke="#666" stroke-width="0.4" />
-  <text x="200" y="113" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">HW5 L</text>
+  <text x="200" y="113" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">HW5 R</text>
   <circle cx="195" cy="285" r="3" fill="#0a0a10" stroke="#666" stroke-width="0.4" />
-  <text x="200" y="296" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">HW5 R</text>
+  <text x="200" y="296" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">HW5 L</text>
 
   <!-- Side cameras (B-pillar replacing mirrors) -->
   <circle cx="370" cy="115" r="3" fill="#0a0a10" stroke="#666" stroke-width="0.4" />
   <circle cx="370" cy="285" r="3" fill="#0a0a10" stroke="#666" stroke-width="0.4" />
-  <text x="378" y="113" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">side L</text>
-  <text x="378" y="294" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">side R</text>
+  <text x="378" y="113" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">side R</text>
+  <text x="378" y="294" font-family="ui-sans-serif, system-ui" font-size="5" fill="#444">side L</text>
 
   <!-- Headlight bar (front lightbar across nose, HMI for AV signaling) -->
   <rect x="55" y="160" width="6" height="80" fill="#f4f4f8" stroke="#a0c8ff" stroke-width="0.6" rx="2" />

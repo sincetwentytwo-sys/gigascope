@@ -126,8 +126,8 @@
   <!-- Front row -->
   <rect x="280" y="120" width="42" height="55" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
   <rect x="280" y="225" width="42" height="55" fill="#1f1f24" stroke="#444" stroke-width="0.5" rx="6" />
-  <text x="301" y="152" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">DRIVER</text>
-  <text x="301" y="257" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">PASS</text>
+  <text x="301" y="152" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">PASS</text>
+  <text x="301" y="257" font-family="ui-sans-serif, system-ui" font-size="6" fill="#aaa" text-anchor="middle">DRIVER</text>
 
   <!-- 15" center touchscreen -->
   <rect x="332" y="188" width="32" height="24" fill="#0a0a0e" stroke="#444" stroke-width="0.5" rx="2" />
@@ -155,8 +155,8 @@
   <!-- B-pillar cameras (left + right) -->
   <circle cx="380" cy="100" r="3.5" fill="#0a0a0c" stroke="#666" stroke-width="0.4" />
   <circle cx="380" cy="300" r="3.5" fill="#0a0a0c" stroke="#666" stroke-width="0.4" />
-  <text x="385" y="96" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444">B-pillar L</text>
-  <text x="385" y="313" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444">B-pillar R</text>
+  <text x="385" y="96" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444">B-pillar R</text>
+  <text x="385" y="313" font-family="ui-sans-serif, system-ui" font-size="6" fill="#444">B-pillar L</text>
 
   <!-- ============================================================ -->
   <!-- ANNOTATIONS                                                   -->

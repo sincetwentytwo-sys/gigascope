@@ -154,8 +154,8 @@ export const cybertruck: ProductSpec = {
       metalness: 0.6,
       roughness: 0.55,
       hotspot: { x: 0.3000, y: 0.7400 },
-      // FL = upper-left wheel on top-down (truck faces left of canvas).
-      cutawayHotspot: { x: 0.281, y: 0.275 },
+      // FL = lower-left wheel in driver-perspective (bottom = driver-LEFT in LHD).
+      cutawayHotspot: { x: 0.281, y: 0.725 },
     },
     {
       id: "wheel-fr",
@@ -169,8 +169,8 @@ export const cybertruck: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.6,
       roughness: 0.55,
-      // FR = lower-left wheel.
-      cutawayHotspot: { x: 0.281, y: 0.725 },
+      // FR = upper-left wheel in driver-perspective (top = driver-RIGHT in LHD).
+      cutawayHotspot: { x: 0.281, y: 0.275 },
     },
     {
       id: "wheel-rl",
@@ -185,8 +185,8 @@ export const cybertruck: ProductSpec = {
       metalness: 0.6,
       roughness: 0.55,
       hotspot: { x: 0.8000, y: 0.7400 },
-      // RL = upper-right wheel.
-      cutawayHotspot: { x: 0.806, y: 0.275 },
+      // RL = lower-right wheel in driver-perspective.
+      cutawayHotspot: { x: 0.806, y: 0.725 },
     },
     {
       id: "wheel-rr",
@@ -200,8 +200,8 @@ export const cybertruck: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.6,
       roughness: 0.55,
-      // RR = lower-right wheel.
-      cutawayHotspot: { x: 0.806, y: 0.725 },
+      // RR = upper-right wheel in driver-perspective.
+      cutawayHotspot: { x: 0.806, y: 0.275 },
     },
     {
       id: "battery-800v",
@@ -242,8 +242,8 @@ export const cybertruck: ProductSpec = {
       color: "#3a3f47",
       metalness: 0.8,
       roughness: 0.35,
-      // Upper-right of the rear-motor pair on cutaway.
-      cutawayHotspot: { x: 0.806, y: 0.430 },
+      // Rear DU Left in driver-perspective = lower-right of rear-motor pair (bottom = driver-LEFT).
+      cutawayHotspot: { x: 0.806, y: 0.570 },
     },
     {
       id: "rear-drive-r",
@@ -256,8 +256,8 @@ export const cybertruck: ProductSpec = {
       color: "#3a3f47",
       metalness: 0.8,
       roughness: 0.35,
-      // Lower-right of the rear-motor pair on cutaway.
-      cutawayHotspot: { x: 0.806, y: 0.570 },
+      // Rear DU Right in driver-perspective = upper-right of rear-motor pair (top = driver-RIGHT).
+      cutawayHotspot: { x: 0.806, y: 0.430 },
     },
     {
       id: "sbw-actuator-l",
@@ -270,8 +270,8 @@ export const cybertruck: ProductSpec = {
       color: "#52575f",
       metalness: 0.75,
       roughness: 0.4,
-      // Small actuator at FL wheel on cutaway (upper-left of front DU).
-      cutawayHotspot: { x: 0.18, y: 0.18 },
+      // SbW Left in driver-perspective = lower-left of front DU on canvas (bottom = driver-LEFT).
+      cutawayHotspot: { x: 0.18, y: 0.82 },
     },
     {
       id: "sbw-actuator-r",
@@ -284,8 +284,8 @@ export const cybertruck: ProductSpec = {
       color: "#52575f",
       metalness: 0.75,
       roughness: 0.4,
-      // Small actuator at FR wheel on cutaway (lower-left of front DU).
-      cutawayHotspot: { x: 0.18, y: 0.82 },
+      // SbW Right in driver-perspective = upper-left of front DU on canvas (top = driver-RIGHT).
+      cutawayHotspot: { x: 0.18, y: 0.18 },
     },
     {
       id: "rear-steer-motor",
@@ -369,8 +369,8 @@ export const cybertruck: ProductSpec = {
       metalness: 0.2,
       roughness: 0.3,
       hotspot: { x: 0.49, y: 0.28 },
-      // L = upper edge of cabin (top-down view).
-      cutawayHotspot: { x: 0.55, y: 0.295 },
+      // L = lower edge of cabin in driver-perspective (bottom = driver-LEFT in LHD).
+      cutawayHotspot: { x: 0.55, y: 0.705 },
     },
     {
       id: "cam-side-r",
@@ -383,8 +383,8 @@ export const cybertruck: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
-      // R = lower edge of cabin (top-down view).
-      cutawayHotspot: { x: 0.55, y: 0.705 },
+      // R = upper edge of cabin in driver-perspective (top = driver-RIGHT in LHD).
+      cutawayHotspot: { x: 0.55, y: 0.295 },
     },
     {
       id: "cam-rear",
