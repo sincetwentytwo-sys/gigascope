@@ -45,7 +45,7 @@ export const modelY: ProductSpec = {
       color: "#22272f",
       metalness: 0.7,
       roughness: 0.3,
-      hotspot: { x: 0.7800, y: 0.4200 },
+      hotspot: { x: 0.8200, y: 0.4200 },
     },
     {
       id: "glass-roof",
@@ -58,7 +58,7 @@ export const modelY: ProductSpec = {
       color: "#0a0d12",
       metalness: 0.2,
       roughness: 0.05,
-      hotspot: { x: 0.4500, y: 0.1600 },
+      hotspot: { x: 0.4200, y: 0.1000 },
     },
     {
       id: "wheel-fl",
@@ -85,7 +85,7 @@ export const modelY: ProductSpec = {
       color: "#16181c",
       metalness: 0.5,
       roughness: 0.7,
-      hotspot: { x: 0.6500, y: 0.7000 },
+      hotspot: { x: 0.5200, y: 0.7200 },
     },
     {
       id: "wheel-rl",
@@ -112,7 +112,7 @@ export const modelY: ProductSpec = {
       color: "#16181c",
       metalness: 0.5,
       roughness: 0.7,
-      hotspot: { x: 0.2000, y: 0.6500 },
+      hotspot: { x: 0.2000, y: 0.7100 },
     },
     {
       id: "front-lightbar",
@@ -126,7 +126,7 @@ export const modelY: ProductSpec = {
       emissive: "#88aaff",
       metalness: 0.3,
       roughness: 0.2,
-      hotspot: { x: 0.8300, y: 0.4000 },
+      hotspot: { x: 0.7800, y: 0.5000 },
     },
     {
       id: "tail-lightbar",
@@ -140,7 +140,7 @@ export const modelY: ProductSpec = {
       emissive: "#ff2222",
       metalness: 0.4,
       roughness: 0.3,
-      hotspot: { x: 0.05, y: 0.45 },
+      hotspot: { x: 0.05, y: 0.28 },
     },
     {
       id: "front-fascia",
@@ -153,7 +153,7 @@ export const modelY: ProductSpec = {
       color: "#1a1d22",
       metalness: 0.4,
       roughness: 0.55,
-      hotspot: { x: 0.9200, y: 0.5800 },
+      hotspot: { x: 0.9000, y: 0.7000 },
     },
     {
       id: "rear-hatch",
@@ -167,7 +167,7 @@ export const modelY: ProductSpec = {
       color: "#1e2228",
       metalness: 0.6,
       roughness: 0.35,
-      hotspot: { x: 0.08, y: 0.55 },
+      hotspot: { x: 0.08, y: 0.35 },
     },
     {
       id: "structural-battery",
@@ -180,7 +180,6 @@ export const modelY: ProductSpec = {
       color: "#2a2f3a",
       metalness: 0.4,
       roughness: 0.6,
-      hotspot: { x: 0.40, y: 0.85 },
     },
     {
       id: "front-drive-unit",
@@ -194,7 +193,6 @@ export const modelY: ProductSpec = {
       color: "#6a7280",
       metalness: 0.85,
       roughness: 0.3,
-      hotspot: { x: 0.72, y: 0.80 },
     },
     {
       id: "rear-drive-unit",
@@ -208,7 +206,6 @@ export const modelY: ProductSpec = {
       color: "#8a939e",
       metalness: 0.9,
       roughness: 0.25,
-      hotspot: { x: 0.30, y: 0.80 },
     },
     {
       id: "megacast-front",
@@ -221,7 +218,6 @@ export const modelY: ProductSpec = {
       color: "#9aa2ad",
       metalness: 0.8,
       roughness: 0.45,
-      hotspot: { x: 0.85, y: 0.65 },
     },
     {
       id: "megacast-rear",
@@ -234,7 +230,6 @@ export const modelY: ProductSpec = {
       color: "#9aa2ad",
       metalness: 0.8,
       roughness: 0.45,
-      hotspot: { x: 0.18, y: 0.78 },
     },
     {
       id: "bpillar-cam-l",
@@ -259,7 +254,7 @@ export const modelY: ProductSpec = {
       color: "#0a0a0c",
       metalness: 0.2,
       roughness: 0.3,
-      hotspot: { x: 0.55, y: 0.32 },
+      hotspot: { x: 0.4500, y: 0.3000 },
     },
     {
       id: "front-cam-main",
@@ -272,7 +267,7 @@ export const modelY: ProductSpec = {
       color: "#0a0a0c",
       metalness: 0.2,
       roughness: 0.3,
-      hotspot: { x: 0.70, y: 0.30 },
+      hotspot: { x: 0.6300, y: 0.2200 },
     },
     {
       id: "front-cam-narrow",

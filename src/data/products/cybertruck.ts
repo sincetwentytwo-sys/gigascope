@@ -59,7 +59,7 @@ export const cybertruck: ProductSpec = {
       color: "#1f2228",
       metalness: 0.3,
       roughness: 0.15,
-      hotspot: { x: 0.4300, y: 0.3000 },
+      hotspot: { x: 0.4300, y: 0.2500 },
     },
     {
       id: "bed",
@@ -72,7 +72,7 @@ export const cybertruck: ProductSpec = {
       color: "#9ea4ab",
       metalness: 0.85,
       roughness: 0.35,
-      hotspot: { x: 0.8500, y: 0.4500 },
+      hotspot: { x: 0.7800, y: 0.4400 },
     },
     {
       id: "tonneau",
@@ -85,7 +85,7 @@ export const cybertruck: ProductSpec = {
       color: "#2a2d33",
       metalness: 0.5,
       roughness: 0.5,
-      hotspot: { x: 0.8300, y: 0.3200 },
+      hotspot: { x: 0.7800, y: 0.3100 },
     },
     {
       id: "lightbar-front",
@@ -180,7 +180,6 @@ export const cybertruck: ProductSpec = {
       color: "#15171c",
       metalness: 0.45,
       roughness: 0.6,
-      hotspot: { x: 0.60, y: 0.66 },
     },
     {
       id: "front-drive-unit",
@@ -193,7 +192,6 @@ export const cybertruck: ProductSpec = {
       color: "#3a3f47",
       metalness: 0.8,
       roughness: 0.35,
-      hotspot: { x: 0.20, y: 0.60 },
     },
     {
       id: "rear-drive-l",
@@ -254,7 +252,6 @@ export const cybertruck: ProductSpec = {
       color: "#52575f",
       metalness: 0.75,
       roughness: 0.4,
-      hotspot: { x: 0.78, y: 0.66 },
     },
     {
       id: "48v-bus",
@@ -268,7 +265,6 @@ export const cybertruck: ProductSpec = {
       emissive: "#3a2a08",
       metalness: 0.7,
       roughness: 0.4,
-      hotspot: { x: 0.50, y: 0.62 },
     },
     {
       id: "cam-front-main",
@@ -281,7 +277,7 @@ export const cybertruck: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
-      hotspot: { x: 0.35, y: 0.24 },
+      hotspot: { x: 0.42, y: 0.18 },
     },
     {
       id: "cam-front-wide",
@@ -318,7 +314,7 @@ export const cybertruck: ProductSpec = {
       color: "#0a0a0a",
       metalness: 0.2,
       roughness: 0.3,
-      hotspot: { x: 0.48, y: 0.38 },
+      hotspot: { x: 0.49, y: 0.28 },
     },
     {
       id: "cam-side-r",

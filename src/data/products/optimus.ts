@@ -31,7 +31,7 @@ export const optimus: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.75,
       roughness: 0.2,
-      hotspot: { x: 0.4500, y: 0.1300 },
+      hotspot: { x: 0.5000, y: 0.1300 },
     },
     {
       id: "face-plate",
@@ -44,7 +44,7 @@ export const optimus: ProductSpec = {
       color: "#0a0a10",
       metalness: 0.9,
       roughness: 0.15,
-      hotspot: { x: 0.4500, y: 0.1400 },
+      hotspot: { x: 0.5000, y: 0.1700 },
     },
     {
       id: "neck",
@@ -57,7 +57,7 @@ export const optimus: ProductSpec = {
       color: "#3a3d44",
       metalness: 0.8,
       roughness: 0.35,
-      hotspot: { x: 0.4500, y: 0.1800 },
+      hotspot: { x: 0.5000, y: 0.2200 },
     },
     {
       id: "torso",
@@ -70,7 +70,7 @@ export const optimus: ProductSpec = {
       color: "#e8e8ec",
       metalness: 0.3,
       roughness: 0.4,
-      hotspot: { x: 0.4500, y: 0.2700 },
+      hotspot: { x: 0.5000, y: 0.3100 },
     },
     {
       id: "battery-pack",
@@ -84,7 +84,7 @@ export const optimus: ProductSpec = {
       color: "#2a2d33",
       metalness: 0.7,
       roughness: 0.4,
-      hotspot: { x: 0.4500, y: 0.3000 },
+      hotspot: { x: 0.5000, y: 0.2700 },
     },
     {
       id: "cooling-vents",
@@ -109,7 +109,7 @@ export const optimus: ProductSpec = {
       color: "#d0d0d4",
       metalness: 0.4,
       roughness: 0.45,
-      hotspot: { x: 0.4500, y: 0.3500 },
+      hotspot: { x: 0.5000, y: 0.4450 },
     },
     // Shoulders
     {
@@ -123,7 +123,7 @@ export const optimus: ProductSpec = {
       color: "#bfbfc4",
       metalness: 0.7,
       roughness: 0.35,
-      hotspot: { x: 0.5500, y: 0.2200 },
+      hotspot: { x: 0.6400, y: 0.2700 },
     },
     {
       id: "shoulder-r",
@@ -136,7 +136,7 @@ export const optimus: ProductSpec = {
       color: "#bfbfc4",
       metalness: 0.7,
       roughness: 0.35,
-      hotspot: { x: 0.3500, y: 0.2200 },
+      hotspot: { x: 0.3600, y: 0.2700 },
     },
     // Upper arms (slightly forward)
     {
@@ -151,7 +151,7 @@ export const optimus: ProductSpec = {
       color: "#e8e8ec",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.5700, y: 0.2900 },
+      hotspot: { x: 0.6600, y: 0.3300 },
     },
     {
       id: "upper-arm-r",
@@ -165,7 +165,7 @@ export const optimus: ProductSpec = {
       color: "#e8e8ec",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.3300, y: 0.2900 },
+      hotspot: { x: 0.3400, y: 0.3300 },
     },
     // Elbows
     {
@@ -179,7 +179,7 @@ export const optimus: ProductSpec = {
       color: "#a8a8ad",
       metalness: 0.75,
       roughness: 0.3,
-      hotspot: { x: 0.5800, y: 0.3600 },
+      hotspot: { x: 0.6600, y: 0.3750 },
     },
     {
       id: "elbow-r",
@@ -192,7 +192,7 @@ export const optimus: ProductSpec = {
       color: "#a8a8ad",
       metalness: 0.75,
       roughness: 0.3,
-      hotspot: { x: 0.3200, y: 0.3600 },
+      hotspot: { x: 0.3400, y: 0.3750 },
     },
     // Forearms (house hand-tendon actuators)
     {
@@ -207,7 +207,7 @@ export const optimus: ProductSpec = {
       color: "#dcdce0",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.5800, y: 0.4000 },
+      hotspot: { x: 0.6500, y: 0.4450 },
     },
     {
       id: "forearm-r",
@@ -221,7 +221,7 @@ export const optimus: ProductSpec = {
       color: "#dcdce0",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.3200, y: 0.4000 },
+      hotspot: { x: 0.3500, y: 0.4450 },
     },
     // Hands (flat boxes)
     {
@@ -236,7 +236,7 @@ export const optimus: ProductSpec = {
       color: "#1f1f24",
       metalness: 0.4,
       roughness: 0.5,
-      hotspot: { x: 0.5800, y: 0.4600 },
+      hotspot: { x: 0.6600, y: 0.5200 },
     },
     {
       id: "hand-r",
@@ -250,7 +250,7 @@ export const optimus: ProductSpec = {
       color: "#1f1f24",
       metalness: 0.4,
       roughness: 0.5,
-      hotspot: { x: 0.3200, y: 0.4600 },
+      hotspot: { x: 0.3300, y: 0.5200 },
     },
     // Hips
     {
@@ -289,7 +289,7 @@ export const optimus: ProductSpec = {
       color: "#e8e8ec",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.4800, y: 0.4800 },
+      hotspot: { x: 0.5500, y: 0.5500 },
     },
     {
       id: "thigh-r",
@@ -302,7 +302,7 @@ export const optimus: ProductSpec = {
       color: "#e8e8ec",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.4200, y: 0.4800 },
+      hotspot: { x: 0.4500, y: 0.5500 },
     },
     // Knees
     {
@@ -316,7 +316,7 @@ export const optimus: ProductSpec = {
       color: "#a8a8ad",
       metalness: 0.75,
       roughness: 0.3,
-      hotspot: { x: 0.4800, y: 0.5600 },
+      hotspot: { x: 0.5400, y: 0.6000 },
     },
     {
       id: "knee-r",
@@ -329,7 +329,7 @@ export const optimus: ProductSpec = {
       color: "#a8a8ad",
       metalness: 0.75,
       roughness: 0.3,
-      hotspot: { x: 0.4200, y: 0.5600 },
+      hotspot: { x: 0.4500, y: 0.6000 },
     },
     // Shins
     {
@@ -343,7 +343,7 @@ export const optimus: ProductSpec = {
       color: "#dcdce0",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.4800, y: 0.6500 },
+      hotspot: { x: 0.5300, y: 0.6600 },
     },
     {
       id: "shin-r",
@@ -356,7 +356,7 @@ export const optimus: ProductSpec = {
       color: "#dcdce0",
       metalness: 0.5,
       roughness: 0.4,
-      hotspot: { x: 0.4200, y: 0.6500 },
+      hotspot: { x: 0.4500, y: 0.6600 },
     },
     // Feet
     {
@@ -370,7 +370,7 @@ export const optimus: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.3,
       roughness: 0.7,
-      hotspot: { x: 0.4800, y: 0.7500 },
+      hotspot: { x: 0.5300, y: 0.7250 },
     },
     {
       id: "foot-r",
@@ -383,7 +383,7 @@ export const optimus: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.3,
       roughness: 0.7,
-      hotspot: { x: 0.4200, y: 0.7500 },
+      hotspot: { x: 0.4600, y: 0.7250 },
     },
   ],
   relatedSites: ["fremont", "giga-texas", "terafab"],

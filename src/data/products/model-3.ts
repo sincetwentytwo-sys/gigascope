@@ -45,7 +45,7 @@ export const model3: ProductSpec = {
       color: "#dadde2",
       metalness: 0.7,
       roughness: 0.35,
-      hotspot: { x: 0.7800, y: 0.5000 },
+      hotspot: { x: 0.6800, y: 0.5000 },
     },
     {
       id: "roof-glass",
@@ -58,7 +58,7 @@ export const model3: ProductSpec = {
       color: "#1a1d22",
       metalness: 0.3,
       roughness: 0.1,
-      hotspot: { x: 0.4200, y: 0.1700 },
+      hotspot: { x: 0.3000, y: 0.1600 },
     },
     {
       id: "windshield",
@@ -72,7 +72,7 @@ export const model3: ProductSpec = {
       color: "#2a2d35",
       metalness: 0.3,
       roughness: 0.15,
-      hotspot: { x: 0.5500, y: 0.3000 },
+      hotspot: { x: 0.4800, y: 0.2800 },
     },
     {
       id: "wheel-fl",
@@ -99,7 +99,7 @@ export const model3: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.6,
       roughness: 0.5,
-      hotspot: { x: 0.6500, y: 0.7500 },
+      hotspot: { x: 0.3300, y: 0.6900 },
     },
     {
       id: "wheel-rl",
@@ -126,7 +126,7 @@ export const model3: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.6,
       roughness: 0.5,
-      hotspot: { x: 0.1000, y: 0.5800 },
+      hotspot: { x: 0.0800, y: 0.6500 },
     },
     {
       id: "front-bumper",
@@ -139,7 +139,7 @@ export const model3: ProductSpec = {
       color: "#dadde2",
       metalness: 0.65,
       roughness: 0.4,
-      hotspot: { x: 0.9200, y: 0.5500 },
+      hotspot: { x: 0.8500, y: 0.7000 },
     },
     {
       id: "trunk",
