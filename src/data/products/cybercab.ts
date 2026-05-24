@@ -76,7 +76,7 @@ export const cybercab: ProductSpec = {
       color: "#b8a26d",
       metalness: 0.85,
       roughness: 0.25,
-      hotspot: { x: 0.40, y: 0.28 },
+      hotspot: { x: 0.62, y: 0.30 },
     },
     {
       id: "door-r",
