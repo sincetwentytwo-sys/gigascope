@@ -126,7 +126,7 @@ export const model3: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.6,
       roughness: 0.5,
-      hotspot: { x: 0.1800, y: 0.7500 },
+      hotspot: { x: 0.1000, y: 0.5800 },
     },
     {
       id: "front-bumper",
@@ -153,7 +153,7 @@ export const model3: ProductSpec = {
       color: "#dadde2",
       metalness: 0.7,
       roughness: 0.35,
-      hotspot: { x: 0.0800, y: 0.4200 },
+      hotspot: { x: 0.1300, y: 0.2200 },
     },
     {
       id: "battery-pack",
