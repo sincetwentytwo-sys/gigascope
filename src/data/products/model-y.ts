@@ -94,6 +94,10 @@ export const modelY: ProductSpec = {
       roughness: 0.7,
       // FL = lower-left wheel in driver-perspective (bottom of canvas = driver-LEFT in LHD).
       cutawayHotspot: { x: 0.250, y: 0.944 },
+      // Front-left (driver-side, LHD) wheel — the photo is shot from the
+      // car's front-right corner so the driver-side face is what's toward
+      // the viewer; the prominent wheel on the photo's right is FL.
+      hotspot: { x: 0.73, y: 0.69 },
     },
     {
       id: "wheel-fr",
@@ -107,8 +111,8 @@ export const modelY: ProductSpec = {
       color: "#16181c",
       metalness: 0.5,
       roughness: 0.7,
-      // Front-right (passenger-side) wheel sits prominently at lower-right of the photo.
-      hotspot: { x: 0.91, y: 0.78 },
+      // Passenger-side wheel is occluded in this front 3/4 driver-side view —
+      // cutaway only.
       // FR = upper-left wheel in driver-perspective (top of canvas = driver-RIGHT in LHD).
       cutawayHotspot: { x: 0.250, y: 0.056 },
     },
@@ -289,6 +293,9 @@ export const modelY: ProductSpec = {
       color: "#0a0a0c",
       metalness: 0.2,
       roughness: 0.3,
+      // Driver-side (LEFT) B-pillar is the one facing the viewer in this
+      // front 3/4 shot — pillar is at the back edge of the visible door.
+      hotspot: { x: 0.83, y: 0.28 },
       // L = lower edge of cabin in driver-perspective (bottom = driver-LEFT in LHD).
       cutawayHotspot: { x: 0.475, y: 0.88 },
     },
@@ -303,8 +310,8 @@ export const modelY: ProductSpec = {
       color: "#0a0a0c",
       metalness: 0.2,
       roughness: 0.3,
-      // Right B-pillar where the front and rear door cutlines meet, near the mirror base.
-      hotspot: { x: 0.74, y: 0.22 },
+      // Passenger-side B-pillar is on the far side of the car, not visible
+      // in this driver-side 3/4 shot — cutaway only.
       // R = upper edge of cabin in driver-perspective (top = driver-RIGHT in LHD).
       cutawayHotspot: { x: 0.475, y: 0.118 },
     },
