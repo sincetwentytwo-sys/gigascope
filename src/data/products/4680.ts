@@ -45,7 +45,7 @@ export const tesla4680: ProductSpec = {
       // Exterior: left flank of the cylinder body in main.svg.
       hotspot: { x: 0.32, y: 0.50 },
       // Cutaway: same flank in the intact-left-half of cutaway.svg.
-      cutawayHotspot: { x: 0.30, y: 0.50 },
+      cutawayHotspot: { x: 0.27, y: 0.50 },
     },
     {
       id: "top-cap",
@@ -59,7 +59,7 @@ export const tesla4680: ProductSpec = {
       metalness: 0.9,
       roughness: 0.3,
       hotspot: { x: 0.49, y: 0.18 },
-      cutawayHotspot: { x: 0.50, y: 0.085 },
+      cutawayHotspot: { x: 0.40, y: 0.078 },
     },
     {
       id: "bottom-cap",
@@ -73,7 +73,7 @@ export const tesla4680: ProductSpec = {
       metalness: 0.85,
       roughness: 0.4,
       hotspot: { x: 0.50, y: 0.76 },
-      cutawayHotspot: { x: 0.50, y: 0.92 },
+      cutawayHotspot: { x: 0.65, y: 0.93 },
     },
     {
       id: "vent",
@@ -88,7 +88,7 @@ export const tesla4680: ProductSpec = {
       metalness: 0.85,
       roughness: 0.4,
       hotspot: { x: 0.58, y: 0.20 },
-      cutawayHotspot: { x: 0.66, y: 0.09 },
+      cutawayHotspot: { x: 0.70, y: 0.075 },
     },
     {
       id: "cooling-channel",
@@ -102,7 +102,7 @@ export const tesla4680: ProductSpec = {
       metalness: 0.4,
       roughness: 0.5,
       hotspot: { x: 0.85, y: 0.50 },
-      cutawayHotspot: { x: 0.83, y: 0.51 },
+      cutawayHotspot: { x: 0.83, y: 0.50 },
     },
     {
       id: "charge-coil-marker",
@@ -117,7 +117,7 @@ export const tesla4680: ProductSpec = {
       metalness: 0.9,
       roughness: 0.3,
       hotspot: { x: 0.66, y: 0.18 },
-      cutawayHotspot: { x: 0.86, y: 0.055 },
+      cutawayHotspot: { x: 0.88, y: 0.045 },
     },
 
     // ─── Internal parts: cutaway only (omit `hotspot` so they're list- ───
@@ -133,7 +133,7 @@ export const tesla4680: ProductSpec = {
       color: "#2a2f3a",
       metalness: 0.4,
       roughness: 0.7,
-      cutawayHotspot: { x: 0.55, y: 0.55 },
+      cutawayHotspot: { x: 0.62, y: 0.50 },
     },
     {
       id: "cathode",
@@ -147,7 +147,7 @@ export const tesla4680: ProductSpec = {
       color: "#d97757",
       metalness: 0.6,
       roughness: 0.5,
-      cutawayHotspot: { x: 0.48, y: 0.30 },
+      cutawayHotspot: { x: 0.62, y: 0.28 },
     },
     {
       id: "anode",
@@ -161,7 +161,7 @@ export const tesla4680: ProductSpec = {
       color: "#3a3a3a",
       metalness: 0.7,
       roughness: 0.4,
-      cutawayHotspot: { x: 0.70, y: 0.40 },
+      cutawayHotspot: { x: 0.45, y: 0.40 },
     },
     {
       id: "separator",
@@ -175,7 +175,7 @@ export const tesla4680: ProductSpec = {
       color: "#e8e8ee",
       metalness: 0.1,
       roughness: 0.85,
-      cutawayHotspot: { x: 0.55, y: 0.22 },
+      cutawayHotspot: { x: 0.45, y: 0.20 },
     },
     {
       id: "tabless-top",
@@ -189,7 +189,7 @@ export const tesla4680: ProductSpec = {
       color: "#e2e6ea",
       metalness: 0.95,
       roughness: 0.2,
-      cutawayHotspot: { x: 0.60, y: 0.13 },
+      cutawayHotspot: { x: 0.55, y: 0.16 },
     },
     {
       id: "tabless-bottom",
@@ -203,7 +203,7 @@ export const tesla4680: ProductSpec = {
       color: "#c97f3a",
       metalness: 0.9,
       roughness: 0.25,
-      cutawayHotspot: { x: 0.60, y: 0.885 },
+      cutawayHotspot: { x: 0.45, y: 0.885 },
     },
     {
       id: "electrolyte",
@@ -216,7 +216,7 @@ export const tesla4680: ProductSpec = {
       color: "#5a7da8",
       metalness: 0.1,
       roughness: 0.2,
-      cutawayHotspot: { x: 0.72, y: 0.72 },
+      cutawayHotspot: { x: 0.62, y: 0.75 },
     },
     {
       id: "mandrel",
@@ -229,7 +229,7 @@ export const tesla4680: ProductSpec = {
       color: "#1a1a1f",
       metalness: 0.3,
       roughness: 0.9,
-      cutawayHotspot: { x: 0.59, y: 0.65 },
+      cutawayHotspot: { x: 0.45, y: 0.62 },
     },
     {
       id: "cid",
@@ -242,7 +242,7 @@ export const tesla4680: ProductSpec = {
       color: "#b0b6bc",
       metalness: 0.8,
       roughness: 0.35,
-      cutawayHotspot: { x: 0.55, y: 0.108 },
+      cutawayHotspot: { x: 0.55, y: 0.105 },
     },
   ],
   relatedSites: ["giga-texas", "giga-nevada", "giga-berlin"],
