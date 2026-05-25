@@ -181,15 +181,16 @@ function parseXML(xml: string, source: string): RichNewsItem[] {
 async function fetchFeed(url: string, source: string): Promise<RichNewsItem[]> {
   try {
     const res = await fetch(url, {
-      // `cache: 'no-store'` disables Next.js fetch-level caching. A single
-      // timeout-induced empty fetch was getting cached for 1800s and
-      // every subsequent SSR replayed that empty result — which is why
-      // /news got stuck at 1 article and no amount of revalidatePath
-      // would help (the page cache was invalidated but the underlying
-      // RSS fetch was still serving the cached empty array).
-      // The page-level ISR (revalidate 60s in /news/page.tsx) is the
-      // only cache that should govern how often we re-render.
-      cache: "no-store",
+      // 60s fetch cache. Was 1800s — far too long, a single timeout-induced
+      // empty result would freeze /news at 1 article for half an hour
+      // even after revalidatePath() invalidated the page cache (fetch
+      // cache is separate). 60s matches the /news page ISR revalidate,
+      // so a transient RSS failure self-heals within one minute.
+      //
+      // `cache: 'no-store'` would be simpler but breaks the /feed.xml
+      // route which is statically prerendered at build time — it can't
+      // call a no-store fetch.
+      next: { revalidate: 60 },
       signal: AbortSignal.timeout(5000),
     });
     if (!res.ok) {
