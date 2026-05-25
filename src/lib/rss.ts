@@ -212,40 +212,66 @@ function hashUrl(url: string): string {
   return createHash("sha256").update(url).digest("hex").slice(0, 16);
 }
 
+// UAs tried in order. Browser UA first — looks like a real visitor and bypasses
+// any WAF that filters purely on bot-string. Then known link-preview crawlers
+// as fallback for sites that explicitly allow them. Diagnosis from production:
+// Vercel egress IPs were getting 0 hits to CleanTechnica/InsideEVs/Teslarati
+// while the same Discordbot UA worked perfectly from a laptop — strongly
+// implicating Vercel-IP block-listing, which UA rotation alone won't fully
+// solve, but Chrome-UA + browser-shaped headers raises the success rate.
+const SCRAPE_UAS = [
+  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+  "Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com)",
+  "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)",
+  "Mozilla/5.0 (compatible; Twitterbot/1.0)",
+];
+
+function extractImageFromHtml(html: string): string | undefined {
+  // og:image — attribute order varies, try both property-first and content-first.
+  let m = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i);
+  if (!m) m = html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
+  // Fall back to twitter:image
+  if (!m) m = html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i);
+  if (!m) m = html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i);
+  if (!m) return undefined;
+  return decodeEntities(m[1]);
+}
+
 /**
  * Fetch the article HTML and pull og:image (then twitter:image as fallback).
- * 4-second timeout — slow publishers get skipped rather than blocking the feed.
- * Any error (network, timeout, non-2xx, no match) returns undefined.
+ * Retries across 4 UAs with browser-shaped headers and an 8s timeout. Any
+ * single attempt returning 200 with no image short-circuits (no image is no
+ * image — UA doesn't change that). Network/timeout/4xx-5xx errors fall
+ * through to the next UA.
  */
 async function scrapeOgImage(articleUrl: string): Promise<string | undefined> {
-  try {
-    const res = await fetch(articleUrl, {
-      headers: {
-        // Discord's link-preview crawler. Tested across the news sources we
-        // use: passes insideevs.com's WAF (which 403s Facebook/Twitter/Slack
-        // UAs) while still being a recognized link-preview agent that sites
-        // generally allow for social sharing. Higher hit rate than the
-        // alternatives in this codebase's specific source list.
-        "User-Agent": "Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com)",
-        Accept: "text/html,application/xhtml+xml",
-      },
-      signal: AbortSignal.timeout(4000),
-    });
-    if (!res.ok) return undefined;
-    const html = await res.text();
-    // og:image — attribute order varies, try both property-first and content-first.
-    let m = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i);
-    if (!m) m = html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
-    // Fall back to twitter:image
-    if (!m) m = html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i);
-    if (!m) m = html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i);
-    if (!m) return undefined;
-    // Decode HTML entities — CNBC and others double-encode & in image URLs which
-    // would otherwise render as <img src="...&amp;amp;w=1920"> and fail to load.
-    return decodeEntities(m[1]);
-  } catch {
-    return undefined;
+  for (let attempt = 0; attempt < SCRAPE_UAS.length; attempt++) {
+    try {
+      const res = await fetch(articleUrl, {
+        headers: {
+          "User-Agent": SCRAPE_UAS[attempt],
+          // Realistic browser Accept header. Some WAFs reject the bare
+          // "text/html,application/xhtml+xml" we used to send because real
+          // browsers never look like that.
+          Accept:
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+          "Accept-Language": "en-US,en;q=0.9",
+        },
+        // 4s → 8s. Vercel edge → publisher origin latency can be slower than
+        // a laptop test, especially first-hit cold paths.
+        signal: AbortSignal.timeout(8000),
+      });
+      if (!res.ok) continue; // next UA
+      const html = await res.text();
+      const img = extractImageFromHtml(html);
+      if (img) return img;
+      // 200 OK but no image tag — article genuinely has none. Stop retrying.
+      return undefined;
+    } catch {
+      continue; // network/timeout — next UA
+    }
   }
+  return undefined;
 }
 
 /**
