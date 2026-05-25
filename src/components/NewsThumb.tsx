@@ -22,10 +22,20 @@ export default function NewsThumb({
   const [attempts, setAttempts] = useState(0);
 
   if (!src || attempts >= 2) {
+    // Placeholder for: no RSS image AND no og:image scrape result, OR an
+    // image URL that the browser refuses to load (hotlink-blocked, 404,
+    // CDN region-locked). Used to render as a flat grey rectangle with
+    // just the source name — which read like a broken card. Now it shows
+    // the source initials as a monogram + a tiny honest "no thumbnail"
+    // label so the user understands it's intentional, not a load failure.
+    const initials = source.slice(0, 2).toUpperCase();
     return (
-      <div className="w-full aspect-video bg-gradient-to-br from-surface to-border-custom flex items-center justify-center">
-        <span className="text-dim text-xs font-mono uppercase tracking-widest">
-          {source}
+      <div className="w-full aspect-video bg-gradient-to-br from-bg via-surface to-border-custom flex flex-col items-center justify-center gap-1 select-none">
+        <span className="text-text/30 font-bold text-5xl tracking-tighter font-mono">
+          {initials}
+        </span>
+        <span className="text-dim text-[10px] font-mono uppercase tracking-widest">
+          {source} · no thumbnail
         </span>
       </div>
     );
