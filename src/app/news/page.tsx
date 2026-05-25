@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import NewsZigzag from "@/components/NewsZigzag";
 
 // ISR — /api/news is its own cache layer (Upstash-backed og:image enrichment +
-// per-article fetch), so the page itself can safely revalidate on a 10-min
-// interval rather than SSR'ing every request.
-export const revalidate = 600;
+// per-article fetch), so the page itself can safely revalidate quickly.
+// Cut from 600s to 60s after Vercel edge in some regions held a pre-img-proxy
+// build for over an hour even after the deploy promoted. 60s ≈ next image
+// pipeline change propagates in ~1 min worst case, with the heavy lifting
+// (RSS parse + og scrape) still cached in lib/rss → minimal extra origin load.
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "News — Musk-empire build-out, primary sources — GIGASCOPE",
