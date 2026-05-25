@@ -140,17 +140,33 @@ export async function POST(req: Request) {
     );
   }
 
-  const chatId = process.env.OWNER_TELEGRAM_CHAT_ID;
+  const r = getRedis();
+  if (!r) {
+    return NextResponse.json({ ok: false, error: "redis_not_configured" }, { status: 503 });
+  }
+
+  // Resolve owner's Telegram chat_id. Two paths:
+  //   1) OWNER_TELEGRAM_CHAT_ID env var — explicit override, useful for dev.
+  //   2) Redis lookup by OWNER_EMAIL (default: site owner) — leverages the
+  //      same /account deep-link flow subscribers use. Owner just links once
+  //      and never has to fish for a chat_id manually.
+  let chatId: string | null = process.env.OWNER_TELEGRAM_CHAT_ID ?? null;
   if (!chatId) {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: "owner_chat_id_missing",
-        message:
-          "Set OWNER_TELEGRAM_CHAT_ID in Vercel env. Message @gigascopebot from your Telegram, then check the webhook log or /api/telegram/status for your chat_id.",
-      },
-      { status: 503 },
-    );
+    const ownerEmail = (process.env.OWNER_EMAIL ?? "sincetwentytwo@gmail.com").toLowerCase();
+    const lookup = await r.get(`telegram:chat:${ownerEmail}`);
+    chatId = typeof lookup === "string" ? lookup : null;
+    if (!chatId) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: "owner_chat_id_missing",
+          message:
+            "Owner Telegram not linked. Subscribe at gigascope.xyz → open /account → tap 'Link Telegram' → message @gigascopebot. OR set OWNER_TELEGRAM_CHAT_ID in Vercel env.",
+          checked: { env: "OWNER_TELEGRAM_CHAT_ID", redis: `telegram:chat:${ownerEmail}` },
+        },
+        { status: 503 },
+      );
+    }
   }
 
   const startRaw = process.env.X_LAUNCH_START_DATE;
@@ -170,11 +186,6 @@ export async function POST(req: Request) {
       { ok: false, error: "invalid_start_date", got: startRaw, expected: "YYYY-MM-DD" },
       { status: 400 },
     );
-  }
-
-  const r = getRedis();
-  if (!r) {
-    return NextResponse.json({ ok: false, error: "redis_not_configured" }, { status: 503 });
   }
 
   const now = Date.now();
