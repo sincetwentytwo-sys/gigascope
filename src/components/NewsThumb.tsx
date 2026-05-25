@@ -41,12 +41,19 @@ export default function NewsThumb({
     );
   }
 
-  // On the second attempt append a cache-buster so the browser re-issues
-  // the request instead of replaying a stale failure from disk cache.
-  // CDNs that ignore unknown query params (image.cnbcfm.com, wp hosts) just
-  // serve the same image; CDNs that key on query params see it as new.
+  // Route the publisher image through /api/img-proxy so the browser sees
+  // a same-origin gigascope.xyz URL — bypasses publisher hotlink defenses,
+  // CORS quirks, and CDN region blocks that were making /news devolve into
+  // a wall of placeholders. The proxy itself enforces a publisher
+  // allowlist (SSRF defense) and caches aggressively at the Vercel edge.
+  //
+  // On retry (attempts=1) we still append a cache-buster to defeat any
+  // disk-cached "broken" entry the browser holds onto, but the bust is on
+  // OUR proxy URL — the upstream URL stays clean for the edge cache to
+  // dedupe across users.
+  const proxiedSrc = `/api/img-proxy?url=${encodeURIComponent(src)}`;
   const finalSrc =
-    attempts === 0 ? src : `${src}${src.includes("?") ? "&" : "?"}_r=${attempts}`;
+    attempts === 0 ? proxiedSrc : `${proxiedSrc}&_r=${attempts}`;
 
   // `referrerPolicy="no-referrer"` is the actual fix here. CDNs like
   // image.cnbcfm.com return 403 when the Referer is anything other than
