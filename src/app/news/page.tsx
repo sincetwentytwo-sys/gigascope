@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import NewsZigzag from "@/components/NewsZigzag";
 
-// ISR — /api/news is its own cache layer (Upstash-backed og:image enrichment +
-// per-article fetch), so the page itself can safely revalidate quickly.
-// Cut from 600s to 60s after Vercel edge in some regions held a pre-img-proxy
-// build for over an hour even after the deploy promoted. 60s ≈ next image
-// pipeline change propagates in ~1 min worst case, with the heavy lifting
-// (RSS parse + og scrape) still cached in lib/rss → minimal extra origin load.
-export const revalidate = 60;
+// Force dynamic rendering — ISR was caching empty/partial results from
+// region-specific background revalidations (Vercel's icn1/Seoul edge was
+// hitting publisher WAFs that the iad1/build-region didn't, so the cached
+// SSR kept holding 1 article even though the build-time fetch saw 34).
+// force-dynamic means every page hit triggers a fresh SSR from Vercel's
+// default function region (US East), which has publisher access.
+// fetchAllNews still uses next.revalidate=60 internally to dedupe the
+// 6 RSS fetches across multiple concurrent visitors → cost is bounded.
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "News — Musk-empire build-out, primary sources — GIGASCOPE",
