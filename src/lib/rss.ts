@@ -302,10 +302,19 @@ async function enrichImages(items: RichNewsItem[]): Promise<RichNewsItem[]> {
       const img = await scrapeOgImage(item.link);
       try {
         if (img) {
+          // Found a real image — cache for a day (the article URL is stable
+          // and the image rarely changes).
           item.image = img;
           await r.set(key, img, { ex: 86400 });
         } else {
-          await r.set(key, "none", { ex: 86400 });
+          // Negative cache shorter (2h, not 1 day): some publishers add
+          // og:image hours after publish, or our Discordbot UA briefly trips
+          // a WAF rate-limit. A 2h TTL means a failed scrape retries on the
+          // next ISR tick rather than locking the card to a placeholder for
+          // a full day. The "scraped but no image" outcome is genuinely
+          // permanent for some podcast/list posts, but those just re-scrape
+          // 12× a day at near-zero cost.
+          await r.set(key, "none", { ex: 7200 });
         }
       } catch (e) {
         // Cache write failure is non-fatal — image (if any) is already set on item.
