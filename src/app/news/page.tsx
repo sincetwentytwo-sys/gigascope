@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import NewsZigzag from "@/components/NewsZigzag";
+import NewsFeed from "@/components/NewsFeed";
 
 // ISR — /api/news is its own cache layer (Upstash-backed og:image enrichment +
 // per-article fetch), so the page itself can safely revalidate on a 10-min
@@ -39,7 +39,17 @@ export default function NewsPage() {
         </p>
       </header>
 
-      <NewsZigzag />
+      {/* Switched from NewsZigzag (image-grid) to NewsFeed (compact list)
+          on 2026-05-25 after the zigzag's thumbnails degraded to a sea of
+          placeholders — publishers' hotlink/WAF rules + Vercel egress IP
+          blocking made server-side og:image scraping unreliable, and
+          client-side image loads were failing too. The compact list
+          ships fewer pixels, no broken thumbnails, and the article
+          headlines + sources + dates are what users actually scan for.
+          Zigzag stays in the repo for the home-page "Latest news"
+          section where it works with the curated subset; this page just
+          got cleaner. */}
+      <NewsFeed />
     </div>
   );
 }
