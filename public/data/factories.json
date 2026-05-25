@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-05-20",
-  "lastChecked": "2026-05-20",
+  "lastUpdated": "2026-05-25",
+  "lastChecked": "2026-05-25",
   "totalInvestment": "$80B+",
   "timelineYears": [
     2020,
@@ -105,7 +105,7 @@
       "investment": "$10B+",
       "employees": "20,000+",
       "color": "#e31937",
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-05-25",
       "milestones": [
         {
           "date": "2020-07",
@@ -156,7 +156,7 @@
         78
       ],
       "sources": {
-        "wikipediaRevision": "2026-05-15",
+        "wikipediaRevision": "2026-05-21",
         "wikipediaTitle": "Gigafactory_Texas"
       },
       "halfKm": 2.5
@@ -239,7 +239,7 @@
       "aka": "GF3",
       "flag": "🇨🇳",
       "location": "Shanghai, China",
-      "lat": 30.870,
+      "lat": 30.87,
       "lng": 121.769,
       "company": "tesla",
       "status": "operational",
@@ -392,7 +392,7 @@
       "investment": "$5B (est)",
       "employees": "Est. 5,000+",
       "color": "#e31937",
-      "lastUpdated": "2026-05-20",
+      "lastUpdated": "2026-05-25",
       "confidence": "speculative",
       "lastVerified": "2026-05-20",
       "sources": [
@@ -536,7 +536,7 @@
       "investment": "$959M",
       "employees": "1,500+",
       "color": "#e31937",
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-05-25",
       "milestones": [
         {
           "date": "2017-08",
@@ -575,7 +575,7 @@
         90
       ],
       "sources": {
-        "wikipediaRevision": "2026-05-16",
+        "wikipediaRevision": "2026-05-20",
         "wikipediaTitle": "Gigafactory_New_York"
       }
     },
@@ -601,7 +601,7 @@
         "Launch Pad": "OLM (Orbital Launch Mount)",
         "Tower": "Mechazilla catch tower"
       },
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-05-25",
       "milestones": [
         {
           "date": "2019-08",
@@ -637,6 +637,11 @@
           "done": true
         },
         {
+          "date": "2026-05-22",
+          "text": "Launch: Flight 12",
+          "done": true
+        },
+        {
           "date": "2026-H2",
           "text": "Starship Block 2 flights",
           "done": false
@@ -652,7 +657,7 @@
         70
       ],
       "sources": {
-        "wikipediaRevision": "2026-05-13",
+        "wikipediaRevision": "2026-05-24",
         "wikipediaTitle": "SpaceX_Starbase"
       },
       "halfKm": 4
@@ -744,7 +749,7 @@
       "investment": "$500M+",
       "employees": "2,500+",
       "color": "#005288",
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-05-25",
       "milestones": [
         {
           "date": "2010-06",
@@ -782,6 +787,11 @@
           "sourceUrl": "https://www.nasa.gov/commercial-resupply/"
         },
         {
+          "date": "2026-05-21",
+          "text": "Launch: Starlink Group 10-31",
+          "done": true
+        },
+        {
           "date": "2026-Q2",
           "text": "Starship launch tower at 39A",
           "done": false
@@ -797,7 +807,7 @@
         90
       ],
       "sources": {
-        "wikipediaRevision": "2026-05-09",
+        "wikipediaRevision": "2026-05-19",
         "wikipediaTitle": "Space_Launch_Complex_40"
       },
       "halfKm": 4
@@ -820,7 +830,7 @@
       "investment": "$200M+",
       "employees": "500+",
       "color": "#005288",
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-05-25",
       "milestones": [
         {
           "date": "2013-09",
@@ -851,6 +861,11 @@
           "sourceUrl": "https://www.faa.gov/space"
         },
         {
+          "date": "2026-05-20",
+          "text": "Launch: Starlink Group 17-42",
+          "done": true
+        },
+        {
           "date": "2026-Q3",
           "text": "SLC-6 Starship pad construction",
           "done": false
@@ -866,7 +881,7 @@
         85
       ],
       "sources": {
-        "wikipediaRevision": "2026-05-19",
+        "wikipediaRevision": "2026-05-22",
         "wikipediaTitle": "Vandenberg_Space_Launch_Complex_4"
       },
       "halfKm": 3
@@ -895,7 +910,7 @@
         "GPU Count": "200,000 H100s",
         "Power": "150 MW (Phase 1)"
       },
-      "lastUpdated": "2026-05-24",
+      "lastUpdated": "2026-05-25",
       "confidence": "speculative",
       "lastVerified": "2026-05-20",
       "sources": [
@@ -974,7 +989,7 @@
         "Implant": "N1 (1024 electrodes)",
         "Patients": "8+ (as of 2026-05, PRIME study NCT06429735)"
       },
-      "lastUpdated": "2026-05-24",
+      "lastUpdated": "2026-05-25",
       "milestones": [
         {
           "date": "2017-03",
@@ -1026,7 +1041,7 @@
         80
       ],
       "sources": {
-        "wikipediaRevision": "2026-05-18",
+        "wikipediaRevision": "2026-05-22",
         "wikipediaTitle": "Neuralink"
       },
       "halfKm": 0.5
@@ -1125,7 +1140,7 @@
         "Tunnel Miles": "2.2 mi open",
         "sourceUrl": "https://en.wikipedia.org/wiki/Vegas_Loop"
       },
-      "lastUpdated": "2026-05-20",
+      "lastUpdated": "2026-05-25",
       "milestones": [
         {
           "date": "2021-06",
