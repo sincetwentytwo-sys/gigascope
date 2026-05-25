@@ -398,26 +398,26 @@ export async function fetchAllNews(): Promise<RichNewsItem[]> {
       return true;
     });
 
-  // Scrape og:image for items the RSS didn't include images for. Cached in
-  // Upstash for 24h. Gracefully no-ops when Upstash isn't configured.
-  //
-  // Hard 5s ceiling. enrichImages with 4 UAs × 8s timeout × 6 workers can,
-  // worst case, take much longer than Vercel's 10s function limit. When
-  // that fires Vercel silently truncates everything — which is why /news
-  // started rendering 1 article instead of ~25 after a cache wipe.
-  // Promise.race here means: scrape whatever finishes inside 5s, return
-  // the merged list either way. Articles whose scrape didn't finish in
-  // time just keep their RSS image (or render the placeholder). Cache
-  // entries written before the deadline still persist in Upstash so the
-  // next render benefits — graceful degradation, not a hard fail.
-  const ENRICH_BUDGET_MS = 5000;
-  const enriched = await Promise.race([
-    enrichImages(merged),
-    new Promise<RichNewsItem[]>((resolve) =>
-      setTimeout(() => resolve(merged), ENRICH_BUDGET_MS),
-    ),
-  ]);
-  return enriched;
+  // DEBUG: emit the per-source count to Vercel function logs so we can
+  // see which feeds are timing out. Temporary — strip once /news article
+  // count stabilizes.
+  if (typeof process !== "undefined" && process.env.NODE_ENV === "production") {
+    const bySource = merged.reduce<Record<string, number>>((acc, item) => {
+      acc[item.source] = (acc[item.source] ?? 0) + 1;
+      return acc;
+    }, {});
+    console.log("fetchAllNews source counts:", JSON.stringify(bySource), "total:", merged.length);
+  }
+
+  // Skip enrichImages for now — Upstash cache wipe + fresh SSR was running
+  // og scrape on every article and burning the entire Vercel function
+  // budget before the page could render. Article count on /news dropped
+  // from ~25 to 1 because the function got killed mid-render. We bring
+  // enrichment back as a separate background cron once the article
+  // pipeline is stable; in the meantime articles render with whatever
+  // RSS image their feed gave us, which is most of them. The image proxy
+  // handles the client-load step from there.
+  return merged;
 }
 
 /** Pretty-print a relative time. Server-rendered against build time. */
