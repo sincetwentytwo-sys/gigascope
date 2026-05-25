@@ -180,14 +180,21 @@ function parseXML(xml: string, source: string): RichNewsItem[] {
 
 async function fetchFeed(url: string, source: string): Promise<RichNewsItem[]> {
   try {
-    const res = await fetch(url, { next: { revalidate: 1800 } });
+    const res = await fetch(url, {
+      next: { revalidate: 1800 },
+      // Hard 5s timeout. Previously no timeout meant a single slow / hung
+      // RSS source could block fetchAllNews until Vercel's 10s function
+      // limit kicked in, silently truncating the result set to whatever
+      // happened to complete first — exactly the bug we're fixing
+      // (article count on /news dropped from ~25 to 1).
+      signal: AbortSignal.timeout(5000),
+    });
     if (!res.ok) {
       console.error(`RSS ${source}: HTTP ${res.status}`);
       return [];
     }
     const xml = await res.text();
     const items = parseXML(xml, source);
-    console.log(`RSS ${source}: ${items.length} articles`);
     return items;
   } catch (err) {
     console.error(`RSS ${source}: fetch failed`, err);
@@ -213,17 +220,15 @@ function hashUrl(url: string): string {
 }
 
 // UAs tried in order. Browser UA first — looks like a real visitor and bypasses
-// any WAF that filters purely on bot-string. Then known link-preview crawlers
-// as fallback for sites that explicitly allow them. Diagnosis from production:
-// Vercel egress IPs were getting 0 hits to CleanTechnica/InsideEVs/Teslarati
-// while the same Discordbot UA worked perfectly from a laptop — strongly
-// implicating Vercel-IP block-listing, which UA rotation alone won't fully
-// solve, but Chrome-UA + browser-shaped headers raises the success rate.
+// any WAF that filters purely on bot-string. Discordbot as the only fallback
+// because it's the recognized link-preview crawler with the highest success
+// rate on our specific source list (publishers explicitly allow it for X/
+// Discord/Slack preview unfurls). Trimmed from 4 UAs to 2 to stay inside
+// Vercel's 10s function budget — 4 UAs × 4s each = 16s/article, worst case
+// blew through the entire enrichImages budget on a single hard-blocked URL.
 const SCRAPE_UAS = [
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
   "Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com)",
-  "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)",
-  "Mozilla/5.0 (compatible; Twitterbot/1.0)",
 ];
 
 function extractImageFromHtml(html: string): string | undefined {
@@ -257,9 +262,11 @@ async function scrapeOgImage(articleUrl: string): Promise<string | undefined> {
             "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
           "Accept-Language": "en-US,en;q=0.9",
         },
-        // 4s → 8s. Vercel edge → publisher origin latency can be slower than
-        // a laptop test, especially first-hit cold paths.
-        signal: AbortSignal.timeout(8000),
+        // 4s per attempt × 2 UAs = max 8s/article. Fits well inside the
+        // 5s enrichImages budget alongside other workers. Originally 8s,
+        // but with 4 UAs that compounded to ~32s and starved the rest of
+        // the queue.
+        signal: AbortSignal.timeout(4000),
       });
       if (!res.ok) continue; // next UA
       const html = await res.text();
@@ -393,7 +400,24 @@ export async function fetchAllNews(): Promise<RichNewsItem[]> {
 
   // Scrape og:image for items the RSS didn't include images for. Cached in
   // Upstash for 24h. Gracefully no-ops when Upstash isn't configured.
-  return await enrichImages(merged);
+  //
+  // Hard 5s ceiling. enrichImages with 4 UAs × 8s timeout × 6 workers can,
+  // worst case, take much longer than Vercel's 10s function limit. When
+  // that fires Vercel silently truncates everything — which is why /news
+  // started rendering 1 article instead of ~25 after a cache wipe.
+  // Promise.race here means: scrape whatever finishes inside 5s, return
+  // the merged list either way. Articles whose scrape didn't finish in
+  // time just keep their RSS image (or render the placeholder). Cache
+  // entries written before the deadline still persist in Upstash so the
+  // next render benefits — graceful degradation, not a hard fail.
+  const ENRICH_BUDGET_MS = 5000;
+  const enriched = await Promise.race([
+    enrichImages(merged),
+    new Promise<RichNewsItem[]>((resolve) =>
+      setTimeout(() => resolve(merged), ENRICH_BUDGET_MS),
+    ),
+  ]);
+  return enriched;
 }
 
 /** Pretty-print a relative time. Server-rendered against build time. */
