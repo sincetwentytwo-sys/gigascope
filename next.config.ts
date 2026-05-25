@@ -17,10 +17,16 @@ const nextConfig: NextConfig = {
       ],
     },
   ],
-  // 308 permanent redirects for the 7 product breakdowns retired in the
-  // Round 3 narrow (2026-05-24, 13 → 6). Search engines and any external
-  // links land on the hub. See src/data/products/index.ts for the rationale.
+  // 308 permanent redirects preserve SEO equity from retired routes.
+  //
+  // Round 3 (2026-05-24): 7 product breakdowns retired (13 → 6).
+  // Round 4 (2026-05-25): 4 page routes killed — /news, /timeline,
+  //   /downloads, /calendar. Elon-style pruning after a 4-hour /news
+  //   debug spiral revealed the page was thrash > value. Latest news
+  //   now lives inline on the home; per-site milestones live on
+  //   /site/[slug]; catalysts surface in the digest emails.
   redirects: async () => [
+    // Round 3 — product narrow
     { source: "/products/model-3",        destination: "/products", permanent: true },
     { source: "/products/model-y",        destination: "/products", permanent: true },
     { source: "/products/megapack",       destination: "/products", permanent: true },
@@ -28,6 +34,11 @@ const nextConfig: NextConfig = {
     { source: "/products/neuralink-n1",   destination: "/products", permanent: true },
     { source: "/products/supercharger-v4", destination: "/products", permanent: true },
     { source: "/products/falcon9",        destination: "/products", permanent: true },
+    // Round 4 — page kill
+    { source: "/news",                    destination: "/",         permanent: true },
+    { source: "/timeline",                destination: "/",         permanent: true },
+    { source: "/downloads",               destination: "/pro",      permanent: true },
+    { source: "/calendar",                destination: "/spacex-ipo", permanent: true },
   ],
 };
 

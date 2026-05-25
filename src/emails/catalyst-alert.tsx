@@ -93,12 +93,11 @@ export default function CatalystAlertEmail({ email, catalyst, window }: Catalyst
           </Section>
 
           <Text style={text}>
-            See the full calendar — every upcoming catalyst across Tesla, SpaceX, xAI,
-            Neuralink, and Boring — for context on what else is in the window:
+            See the SpaceX catalyst grid for context on what else is in the window:
           </Text>
 
-          <Link href="https://gigascope.xyz/calendar" style={cta}>
-            gigascope.xyz/calendar &rarr;
+          <Link href="https://gigascope.xyz/spacex-ipo" style={cta}>
+            gigascope.xyz/spacex-ipo &rarr;
           </Link>
 
           <Text style={{ ...text, marginTop: "16px" }}>

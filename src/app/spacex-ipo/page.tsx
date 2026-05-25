@@ -592,8 +592,8 @@ export default function SpaceXIPOPage() {
               </p>
             </div>
             <div className="flex gap-4 text-[13px] text-dim">
-              <Link href="/timeline" className="hover:text-text transition-colors">Combined timeline →</Link>
               <Link href="/compare" className="hover:text-text transition-colors">Before/after →</Link>
+              <Link href="/methodology" className="hover:text-text transition-colors">Methodology →</Link>
             </div>
           </div>
 
@@ -616,9 +616,6 @@ export default function SpaceXIPOPage() {
                 links on each milestone where verified.
               </p>
             </div>
-            <Link href="/calendar" className="text-[13px] text-dim hover:text-text transition-colors">
-              See all catalysts →
-            </Link>
           </div>
 
           {topCatalysts.length > 0 ? (
@@ -639,7 +636,7 @@ export default function SpaceXIPOPage() {
             </div>
           ) : (
             <p className="text-sm text-dim">
-              No upcoming catalysts in the data layer. <Link href="/calendar" className="underline">See the full calendar →</Link>
+              No upcoming catalysts in the data layer.
             </p>
           )}
         </div>

@@ -72,10 +72,10 @@ export default function DripD3({ email }: DripProps) {
           </Text>
 
           <Text style={text}>
-            A real example of what&apos;s in the queue this week is on the news page.
+            See what&apos;s in the queue this week on the SpaceX Financial Tracker.
           </Text>
 
-          <Link href="https://gigascope.xyz/news" style={cta}>
+          <Link href="https://gigascope.xyz/spacex-ipo" style={cta}>
             See this week&apos;s catalysts →
           </Link>
 

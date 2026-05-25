@@ -7,15 +7,15 @@ const BASE_URL = "https://gigascope.xyz";
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastMod = new Date(DATA_LAST_UPDATED);
 
+  // Round 4 page kill (2026-05-25): /news, /timeline, /calendar,
+  // /downloads removed. Don't list dead URLs in sitemap — search
+  // engines treat that as stale. The 308 redirects in next.config.ts
+  // handle any external/cached links.
   const staticPages: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: lastMod, changeFrequency: "daily", priority: 1 },
-    { url: `${BASE_URL}/news`, lastModified: lastMod, changeFrequency: "hourly", priority: 0.85 },
     { url: `${BASE_URL}/pro`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.85 },
     { url: `${BASE_URL}/spacex-ipo`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${BASE_URL}/calendar`, lastModified: lastMod, changeFrequency: "daily", priority: 0.7 },
-    { url: `${BASE_URL}/downloads`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.6 },
     { url: `${BASE_URL}/compare`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.7 },
-    { url: `${BASE_URL}/timeline`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE_URL}/products`, lastModified: lastMod, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE_URL}/about`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE_URL}/methodology`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.85 },

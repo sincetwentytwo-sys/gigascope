@@ -8,8 +8,8 @@ export const metadata = {
 const LINKS = [
   { href: "/", label: "All sites" },
   { href: "/products", label: "Products" },
-  { href: "/timeline", label: "Global timeline" },
-  { href: "/news", label: "News" },
+  { href: "/compare", label: "Compare" },
+  { href: "/methodology", label: "Methodology" },
 ];
 
 export default function NotFound() {

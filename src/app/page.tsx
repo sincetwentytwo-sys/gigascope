@@ -140,8 +140,8 @@ export default async function Home({
             </p>
           </div>
           <div className="flex gap-4 text-[13px] text-dim">
-            <a href="/timeline" className="hover:text-text transition-colors">Timeline →</a>
             <a href="/compare" className="hover:text-text transition-colors">Compare →</a>
+            <a href="/methodology" className="hover:text-text transition-colors">Methodology →</a>
           </div>
         </div>
 
@@ -199,7 +199,6 @@ export default async function Home({
           <div>
             <h2 className="text-2xl font-bold mb-6">Latest news</h2>
             <NewsFeed />
-            <a href="/news" className="text-xs text-dim hover:text-text mt-3 inline-block">All news →</a>
           </div>
           <div>
             <h2 className="text-2xl font-bold mb-6">Community</h2>

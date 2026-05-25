@@ -2,15 +2,16 @@ import { factories } from "@/data/factories";
 import { listProducts } from "@/data/products";
 import GlobalSearch from "./GlobalSearch";
 
+// Static pages kept in global search after Round 4 (2026-05-25 page-kill).
+// /news, /timeline, /calendar, /downloads dropped. Their 308 redirects
+// in next.config.ts handle external/cached links.
 const STATIC_PAGES: Array<{ title: string; href: string; subtitle: string }> = [
-  { title: "News", href: "/news", subtitle: "Aggregated headlines across the Musk empire" },
-  { title: "Calendar", href: "/calendar", subtitle: "Catalysts + milestones, chronological" },
   { title: "Charter membership", href: "/pro", subtitle: "Alerts, digest, downloads · $9 charter" },
-  { title: "Timeline", href: "/timeline", subtitle: "Site milestone timeline" },
   { title: "Compare", href: "/compare", subtitle: "Before/after satellite slider" },
   { title: "Products", href: "/products", subtitle: "Component breakdowns" },
   { title: "Methodology", href: "/methodology", subtitle: "How we calculate progress" },
   { title: "About", href: "/about", subtitle: "Data sources, confidence policy" },
+  { title: "SpaceX Financial Tracker", href: "/spacex-ipo", subtitle: "Capex, sites, S-1, catalysts" },
 ];
 
 export default function GlobalSearchProvider() {

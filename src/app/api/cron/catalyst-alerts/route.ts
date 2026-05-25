@@ -85,7 +85,7 @@ function formatCatalystForTelegram(
     `Milestone ${windowTag(window)} — *${escapeMd(catalyst.symbol)}*`,
     `*${escapeMd(catalyst.label)}*`,
     `${catalyst.date} · ${escapeMd(catalyst.confidence)} confidence`,
-    `https://gigascope.xyz/calendar`,
+    `https://gigascope.xyz/spacex-ipo`,
   ].join("\n");
 }
 

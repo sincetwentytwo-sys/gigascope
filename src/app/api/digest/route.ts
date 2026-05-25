@@ -30,36 +30,25 @@ function dateSort(s: string): number {
   return Date.UTC(year, month - 1, day);
 }
 
-// Pull fresh news from the existing /api/news RSS pipeline which is already
-// scoped to Musk-only sources. We mirror the same per-symbol fetch shape so
-// no duplicated RSS-parsing logic lives here.
-//
-// Each Musk company is mapped to its primary public ticker (or skipped for
-// privates). For privates with no ticker we surface their parent/operator's
-// news where overlap is high (Boring Co → news under "BORING"-keyed RSS won't
-// resolve; for those we skip and rely on Tesla/SpaceX dominating the digest).
-const NEWS_SOURCES: Array<{ symbol: string; label: string }> = [
-  { symbol: "TSLA", label: "Tesla" },
-  { symbol: "SPACEX", label: "SpaceX" }, // Yahoo will return empty; harmless
-];
+// Pull fresh news directly from src/lib/rss.ts. The /api/news endpoint
+// was deleted along with /news in Round 4 (2026-05-25 page-kill). The
+// underlying lib function (`fetchAllNews`) is unchanged — it parses the
+// same Tesla-only RSS feeds, applies the same keyword filters, and
+// dedupes. We just removed the indirection through an HTTP route.
+import { fetchAllNews } from "@/lib/rss";
 
-async function fetchNewsForSymbol(
-  origin: string,
-  symbol: string,
-  label: string,
-): Promise<Array<{ source: string; title: string; link: string; pubDate: string }>> {
+async function fetchRecentNews(): Promise<
+  Array<{ source: string; title: string; link: string; pubDate: string }>
+> {
   try {
-    const res = await fetch(`${origin}/api/news?symbol=${encodeURIComponent(symbol)}`, {
-      next: { revalidate: 600 },
-    });
-    if (!res.ok) return [];
-    const json = (await res.json()) as { items?: Array<{ title: string; link: string; pubDate: string }> };
-    const items = json.items ?? [];
-    return items.slice(0, 6).map((it) => ({
-      source: label,
+    const items = await fetchAllNews();
+    // Top 12 most recent across all sources, grouped by source for
+    // the email layout. Items already sorted newest-first by lib/rss.
+    return items.slice(0, 12).map((it) => ({
+      source: it.source,
       title: it.title,
       link: it.link,
-      pubDate: it.pubDate,
+      pubDate: String(it.timestamp),
     }));
   } catch {
     return [];
@@ -113,17 +102,15 @@ export async function GET(req: Request) {
   }
   upcomingMilestones.sort((a, b) => dateSort(a.date) - dateSort(b.date));
 
-  // Fresh news: pull the last-24h headlines via /api/news for each Musk
-  // public ticker. Privates (SpaceX, xAI, Neuralink, Boring) don't resolve
-  // on Yahoo RSS but the cost of asking is trivial and the empty result is
-  // filtered out below.
-  const newsResults = await Promise.all(
-    NEWS_SOURCES.map((s) => fetchNewsForSymbol(origin, s.symbol, s.label)),
-  );
-  const freshNews = newsResults
-    .flat()
-    .filter((it) => now - +new Date(it.pubDate) < 86400_000)
-    .sort((a, b) => +new Date(b.pubDate) - +new Date(a.pubDate))
+  // Fresh news for the digest email — pulled from fetchAllNews (the lib
+  // function used to back the home page's inline NewsFeed too). Filters
+  // to last 24h, top 12.
+  const allFresh = await fetchRecentNews();
+  const freshNews = allFresh
+    .filter((it) => {
+      const t = Number(it.pubDate);
+      return Number.isFinite(t) && now - t < 86400_000;
+    })
     .slice(0, 12);
 
   const payload: DigestPayload = {
