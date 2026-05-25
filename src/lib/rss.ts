@@ -181,15 +181,24 @@ function parseXML(xml: string, source: string): RichNewsItem[] {
 async function fetchFeed(url: string, source: string): Promise<RichNewsItem[]> {
   try {
     const res = await fetch(url, {
+      // Browser-shaped headers. Plain (no-header) fetch from Vercel egress
+      // was returning empty or 403 from most publisher RSS endpoints —
+      // some publishers have moved RSS behind the same WAF as their
+      // article pages, so a bare Node fetch user-agent gets blocked.
+      // Chrome UA + Accept header makes us look like Feedly/a normal
+      // RSS reader.
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+        Accept:
+          "application/rss+xml, application/xml, application/atom+xml, text/xml;q=0.9, */*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+      },
       // 60s fetch cache. Was 1800s — far too long, a single timeout-induced
       // empty result would freeze /news at 1 article for half an hour
       // even after revalidatePath() invalidated the page cache (fetch
       // cache is separate). 60s matches the /news page ISR revalidate,
       // so a transient RSS failure self-heals within one minute.
-      //
-      // `cache: 'no-store'` would be simpler but breaks the /feed.xml
-      // route which is statically prerendered at build time — it can't
-      // call a no-store fetch.
       next: { revalidate: 60 },
       signal: AbortSignal.timeout(5000),
     });
