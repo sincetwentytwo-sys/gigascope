@@ -181,12 +181,15 @@ function parseXML(xml: string, source: string): RichNewsItem[] {
 async function fetchFeed(url: string, source: string): Promise<RichNewsItem[]> {
   try {
     const res = await fetch(url, {
-      next: { revalidate: 1800 },
-      // Hard 5s timeout. Previously no timeout meant a single slow / hung
-      // RSS source could block fetchAllNews until Vercel's 10s function
-      // limit kicked in, silently truncating the result set to whatever
-      // happened to complete first — exactly the bug we're fixing
-      // (article count on /news dropped from ~25 to 1).
+      // `cache: 'no-store'` disables Next.js fetch-level caching. A single
+      // timeout-induced empty fetch was getting cached for 1800s and
+      // every subsequent SSR replayed that empty result — which is why
+      // /news got stuck at 1 article and no amount of revalidatePath
+      // would help (the page cache was invalidated but the underlying
+      // RSS fetch was still serving the cached empty array).
+      // The page-level ISR (revalidate 60s in /news/page.tsx) is the
+      // only cache that should govern how often we re-render.
+      cache: "no-store",
       signal: AbortSignal.timeout(5000),
     });
     if (!res.ok) {
