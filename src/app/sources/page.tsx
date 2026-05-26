@@ -64,9 +64,10 @@ export default function SourcesPage() {
             Every number, every link.
           </h1>
           <p className="text-dim text-base sm:text-lg max-w-2xl leading-relaxed">
-            The full bibliography behind the empire scoreboard. {totalEntries} primary-source
-            URLs cited across {groups.length} sites. Click through to the original filing if
-            you want to verify any single fact yourself.
+            The full bibliography behind the empire scoreboard. {totalEntries} unique
+            primary-source URLs cited across {groups.length} sites (the /pulse total counts
+            each citation event, even when the same URL is reused). Click through to the
+            original filing if you want to verify any single fact yourself.
           </p>
           <p className="text-[11px] font-mono text-dim mt-5">
             Data updated {stats.dataLastUpdated} · methodology at{" "}
