@@ -139,52 +139,56 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
       />
 
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Top strip: breadcrumb + ID + progress */}
-        <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-6">
-          <a href="/" className="text-dim text-sm hover:text-text transition-colors">&larr; All Sites</a>
-          <div
-            className="flex items-center gap-3 border-l-2 pl-3 py-1"
-            style={{ borderColor: accent }}
+        {/* Top strip: breadcrumb + company + status. Replaced the previous
+            "ID: <slug>" + duplicate-progress row with a single clean breadcrumb
+            line — the big progress headline below carries the % itself, so we
+            don't show it twice. */}
+        <div className="flex flex-wrap items-center gap-3 mb-4 text-sm">
+          <a href="/" className="text-dim hover:text-text transition-colors">&larr; All sites</a>
+          <span className="text-border-custom">/</span>
+          <span className="font-medium" style={{ color: accent }}>{company.name}</span>
+          <span className="text-border-custom">/</span>
+          <span className="text-dim font-mono text-[12px]">{factory.slug}</span>
+          <div className="flex-1" />
+          <span
+            className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded font-bold font-mono"
+            style={{ background: `${accent}15`, color: accent }}
           >
-            <span className="text-xs font-mono" style={{ color: accent }}>
-              {company.name}
-            </span>
-            <span className="font-mono text-[10px] text-dim">
-              / {factory.slug}
-            </span>
-          </div>
-          <div className="flex-1 min-w-full sm:min-w-[200px] max-w-md">
-            <div className="flex justify-between mb-1">
-              <span className="font-mono text-[10px] text-dim">ID: {factory.id}</span>
-              <span className="font-mono text-[10px]" style={{ color: accent }}>
-                {factory.progress}% complete
-              </span>
-            </div>
-            <div className="w-full bg-border-custom h-1 overflow-hidden">
-              <div
-                className="h-full transition-all"
-                style={{ width: `${factory.progress}%`, background: accent, boxShadow: `0 0 8px ${accent}` }}
-              />
-            </div>
-          </div>
-          <span className="px-2 py-1 border text-[10px] font-mono" style={{ borderColor: "#5d3f44", color: "var(--dim)" }}>
             {factory.status}
           </span>
         </div>
 
-        {/* Title block */}
-        <div className="mb-6 border-l-2 pl-4" style={{ borderColor: accent }}>
-          <h1 className="text-2xl sm:text-4xl font-bold tracking-tight break-words">
-            {factory.flag} {factory.name}
-          </h1>
-          <p className="text-dim mt-1 text-sm">
-            {factory.aka} &middot; {factory.location}
-          </p>
-          <p className="text-dim text-sm mt-1">{factory.products}</p>
-          <p className="font-mono text-[10px] text-dim mt-2">
-            Updated {factory.lastUpdated}
-            {imageryDate && <> &middot; Satellite imagery {imageryDate}</>}
-          </p>
+        {/* Title + headline progress side-by-side */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 mb-6 items-end">
+          <div className="border-l-2 pl-4" style={{ borderColor: accent }}>
+            <h1 className="text-2xl sm:text-4xl font-bold tracking-tight break-words">
+              {factory.flag} {factory.name}
+            </h1>
+            <p className="text-dim mt-1 text-sm">
+              {factory.aka} · {factory.location}
+            </p>
+            <p className="text-dim text-sm mt-1">{factory.products}</p>
+            <p className="font-mono text-[10px] text-dim mt-2">
+              Updated {factory.lastUpdated}
+              {imageryDate && <> · Satellite imagery {imageryDate}</>}
+              {" "}· {doneCount}/{factory.milestones.length} milestones verified
+            </p>
+          </div>
+          {/* Headline progress — single big number on the right */}
+          <div className="lg:text-right">
+            <div className="text-[10px] uppercase tracking-widest font-mono text-dim mb-1">
+              Built footprint
+            </div>
+            <div className="flex items-baseline gap-2 lg:justify-end">
+              <span className="text-5xl sm:text-6xl font-bold tabular-nums tracking-tight" style={{ color: accent }}>
+                {factory.progress}
+              </span>
+              <span className="text-2xl text-dim">%</span>
+            </div>
+            <div className="w-full lg:w-56 h-1.5 bg-border-custom rounded overflow-hidden mt-2">
+              <div className="h-full transition-all" style={{ width: `${factory.progress}%`, background: accent }} />
+            </div>
+          </div>
         </div>
 
         {/* Before / after satellite thumbnails — first and last frame of the timelapse */}
@@ -342,19 +346,9 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
               );
             })()}
 
-            {/* Stat strip below map — milestones omitted here to avoid
-                duplicate "Milestones" headings (the right-column section
-                already shows the same count). */}
-            <div className="mt-4 grid grid-cols-2 gap-3">
-              <div className="bg-surface  p-3 border-t border-border-custom">
-                <span className="block font-mono text-[9px] text-dim mb-1">Latitude</span>
-                <span className="font-mono text-base font-bold text-text">{lat.toFixed(4)}</span>
-              </div>
-              <div className="bg-surface  p-3 border-t border-border-custom">
-                <span className="block font-mono text-[9px] text-dim mb-1">Longitude</span>
-                <span className="font-mono text-base font-bold text-text">{lng.toFixed(4)}</span>
-              </div>
-            </div>
+            {/* Latitude/Longitude cards removed — same coords are already
+                shown in the floating overlay on top of the map. Showing them
+                twice was visual noise. */}
           </div>
 
           {/* Right 1/3 */}

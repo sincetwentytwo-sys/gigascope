@@ -177,10 +177,10 @@ export default function CompareSlider() {
   return (
     <div className="flex flex-col gap-5 ">
       {/* Factory selector grouped by company */}
-      <div className="border border-border-custom bg-surface p-3 sm:p-4 relative">
-        <span className="absolute -top-2 left-3 px-2 bg-bg text-[10px] font-mono uppercase tracking-[0.2em] text-dim">
-          Target Selector
-        </span>
+      <div className="rounded-md border border-border-custom bg-surface p-4">
+        <div className="text-[10px] uppercase tracking-widest font-mono text-dim mb-3">
+          Select a site
+        </div>
         <div className="flex flex-col gap-3">
           {COMPANY_ORDER.map((companyId) => {
             const sites = getSitesByCompany(companyId);
@@ -188,12 +188,15 @@ export default function CompareSlider() {
             const meta = getCompanyMeta(companyId);
             return (
               <div key={companyId} className="flex items-start gap-2 sm:gap-3 flex-wrap">
-                <span
-                  className="text-[9px] font-mono font-bold uppercase tracking-[0.15em] px-2 py-1 border"
-                  style={{ borderColor: meta.color, color: meta.color }}
-                >
-                  {meta.icon} {meta.name}
-                </span>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span
+                    className="w-1.5 h-1.5 rounded-full"
+                    style={{ background: meta.color }}
+                  />
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-dim w-16">
+                    {meta.name}
+                  </span>
+                </div>
                 <div role="group" aria-label={`${meta.name} sites`} className="flex gap-1.5 sm:gap-2 flex-wrap">
                   {sites.map((f) => {
                     const active = selectedId === f.id;
@@ -201,10 +204,10 @@ export default function CompareSlider() {
                       <button
                         key={f.id}
                         onClick={() => selectFactory(f)}
-                        className={`px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-[11px] font-mono uppercase tracking-wider border transition-all duration-150 ${
+                        className={`px-2 py-1 sm:px-2.5 sm:py-1 text-[11px] sm:text-[12px] rounded border transition-colors duration-150 ${
                           active
-                            ? "bg-text text-bg border-text "
-                            : "bg-transparent text-dim border-border-custom hover:bg-surface hover:text-text"
+                            ? "bg-text text-bg border-text font-bold"
+                            : "bg-bg text-dim border-border-custom hover:border-text hover:text-text"
                         }`}
                       >
                         {f.flag} {f.name}
@@ -218,24 +221,15 @@ export default function CompareSlider() {
         </div>
       </div>
 
-      {/* Viewer canvas */}
+      {/* Viewer canvas — chrome stripped (no scanline / dot grid overlays). The
+          before/after photo carries the visual weight by itself; the cyan
+          overlay was carryover from an earlier "satellite intelligence" theme
+          and read as faux-mil rather than serious tracker. */}
       <div
         ref={containerRef}
-        className="relative overflow-hidden border border-border-custom bg-surface select-none "
+        className="relative overflow-hidden rounded-md border border-border-custom bg-surface select-none"
         style={{ height: "clamp(420px, calc(100vh - 280px), 720px)" }}
       >
-        {/* Scanline overlay */}
-        <div
-          className="absolute inset-x-0 top-0 z-[20] pointer-events-none h-24"
-          style={{ background: "linear-gradient(to bottom, transparent 0%, rgba(0,212,255,0.05) 50%, transparent 100%)" }}
-        />
-
-        {/* Grid dots overlay */}
-        <div
-          className="absolute inset-0 z-[2] pointer-events-none"
-          style={{ backgroundImage: "radial-gradient(rgba(0,212,255,0.08) 1px, transparent 1px)", backgroundSize: "32px 32px" }}
-        />
-
         {/* Left map — Sentinel-2 */}
         <div ref={leftMapRef} className="absolute top-0 bottom-0 left-0 z-[1]" style={{ width: "50%" }} />
 
@@ -266,18 +260,18 @@ export default function CompareSlider() {
         </div>
 
         {/* Left label */}
-        <div className="absolute top-2 left-2 sm:top-4 sm:left-4 z-[1000]">
-          <div className="bg-surface border-l-2 border-text px-2 py-1 sm:px-3 sm:py-2 ">
-            <h3 className="font-mono text-[9px] sm:text-[11px] text-text font-bold uppercase tracking-wider"><span className="sm:hidden">2019 BASELINE</span><span className="hidden sm:inline">2019-05 BASELINE</span></h3>
-            <p className="hidden sm:block font-mono text-[9px] text-text/40 mt-0.5 uppercase tracking-tighter">SOURCE: ESRI WAYBACK · MAXAR / VEXCEL</p>
+        <div className="absolute top-3 left-3 z-[1000]">
+          <div className="bg-black/65 rounded px-2 py-1 sm:px-2.5 sm:py-1.5">
+            <h3 className="font-mono text-[10px] sm:text-[11px] text-white font-bold uppercase tracking-wider">2019</h3>
+            <p className="hidden sm:block font-mono text-[9px] text-white/60 mt-0.5">ESRI Wayback · Maxar/Vexcel</p>
           </div>
         </div>
 
         {/* Right label */}
-        <div className="absolute top-2 right-2 sm:top-4 sm:right-4 z-[1000] text-right">
-          <div className="bg-surface border-r-2 border-text px-2 py-1 sm:px-3 sm:py-2 ">
-            <h3 className="font-mono text-[9px] sm:text-[11px] text-text font-bold uppercase tracking-wider"><span className="sm:hidden">ESRI</span><span className="hidden sm:inline">ESRI — LATEST (~3-6 MO)</span></h3>
-            <p className="hidden sm:block font-mono text-[9px] text-text/40 mt-0.5 uppercase tracking-tighter">REF: WORLD IMAGERY SERVICE</p>
+        <div className="absolute top-3 right-3 z-[1000] text-right">
+          <div className="bg-black/65 rounded px-2 py-1 sm:px-2.5 sm:py-1.5">
+            <h3 className="font-mono text-[10px] sm:text-[11px] text-white font-bold uppercase tracking-wider">Latest</h3>
+            <p className="hidden sm:block font-mono text-[9px] text-white/60 mt-0.5">ESRI World Imagery · ~3-6 mo</p>
           </div>
         </div>
 
@@ -306,44 +300,36 @@ export default function CompareSlider() {
           </button>
         </div>
 
-        {/* Site progress card (top right) */}
-        <div className="hidden md:flex absolute top-4 right-[14rem] z-[1000] w-48 h-20 border border-border-custom p-2 flex-col gap-1 bg-bg/80 backdrop-blur-sm">
-          <div className="text-[10px] text-dim flex justify-between">
-            <span>Site</span>
-            <span className="text-text">{selected.slug}</span>
+        {/* Bottom info strip — clean site name + status + coords */}
+        <div className="absolute bottom-0 left-0 right-0 z-[1000] bg-bg/92 backdrop-blur-sm border-t border-border-custom px-3 py-2 sm:px-4 flex justify-between items-center gap-2 text-[11px] text-dim">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <span className="text-text font-bold truncate text-sm">{selected.flag} {selected.name}</span>
+            <span className="hidden sm:inline">·</span>
+            <span className="hidden sm:inline truncate">{selected.location}</span>
           </div>
-          <div className="h-1 bg-surface w-full relative overflow-hidden">
-            <div className="absolute top-0 left-0 h-full bg-text" style={{ width: `${selected.progress}%` }} />
-          </div>
-          <div className="text-[10px] text-dim flex justify-between mt-auto">
-            <span>Built</span>
-            <span className="text-text">{selected.progress}%</span>
-          </div>
-        </div>
-
-        {/* Bottom info strip */}
-        <div className="absolute bottom-0 left-0 right-0 z-[1000] bg-bg/90 border-t border-border-custom  px-2 py-2 sm:px-4 flex justify-between items-center gap-2 font-mono text-[9px] sm:text-[10px] text-text uppercase tracking-wider">
-          <div className="flex items-center gap-2 sm:gap-4 min-w-0">
-            <span className="text-text font-bold truncate">{selected.flag} {selected.name}</span>
-            <span className="hidden sm:inline text-dim">{selected.location}</span>
-          </div>
-          <div className="flex items-center gap-2 sm:gap-4 text-dim flex-shrink-0">
-            <span className="hidden md:inline">LAT: <span className="text-text font-bold">{latLabel}</span></span>
-            <span className="hidden md:inline">LON: <span className="text-text font-bold">{lngLabel}</span></span>
-            <span>STATUS: <span className="text-text font-bold">{selected.status.toUpperCase()}</span></span>
+          <div className="flex items-center gap-3 sm:gap-4 font-mono shrink-0">
+            <span className="hidden md:inline tabular-nums">{latLabel}, {lngLabel}</span>
+            <span className="uppercase tracking-wider">
+              <span className="text-text">{selected.progress}%</span> · {selected.status}
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Footer info strip */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-[11px]">
-        <div className="border border-border-custom bg-surface p-3">
-          <div className="text-dim uppercase text-[9px] tracking-[0.2em] mb-1">LEFT FEED · BASELINE</div>
-          <div className="text-text/80">ESRI Wayback — 2019-05-15 snapshot (sub-meter Maxar/Vexcel). Pre-buildout reference for Giga Texas, Berlin, Starbase, Memphis, Boring LV.</div>
+      {/* Footer info strip — sources, in plain text */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+        <div className="rounded-md border border-border-custom bg-surface p-3">
+          <div className="text-[10px] uppercase tracking-widest font-mono text-dim mb-1">Left · 2019 baseline</div>
+          <div className="text-text/80 leading-relaxed">
+            ESRI Wayback 2019-05-15 snapshot. Sub-meter Maxar/Vexcel imagery, locked to a
+            historic capture so before/after stays anchored.
+          </div>
         </div>
-        <div className="border border-border-custom bg-surface p-3">
-          <div className="text-dim uppercase text-[9px] tracking-[0.2em] mb-1">RIGHT FEED</div>
-          <div className="text-text/80">ESRI — high-res imagery (sub-meter, updated ~3-6 months)</div>
+        <div className="rounded-md border border-border-custom bg-surface p-3">
+          <div className="text-[10px] uppercase tracking-widest font-mono text-dim mb-1">Right · latest</div>
+          <div className="text-text/80 leading-relaxed">
+            ESRI World Imagery, sub-meter, refreshed every 3-6 months by the upstream provider.
+          </div>
         </div>
       </div>
     </div>

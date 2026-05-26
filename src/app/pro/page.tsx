@@ -3,47 +3,38 @@ import Link from "next/link";
 import { Redis } from "@upstash/redis";
 import EmailSignup from "@/components/EmailSignup";
 import InvestorCheckout from "@/components/InvestorCheckout";
+import DailyDigestPreview from "@/components/DailyDigestPreview";
+import TelegramAlertPreview from "@/components/TelegramAlertPreview";
+import { getEmpireStats } from "@/lib/pulse";
 
-// Live charter-counter — keep page fresh enough that the badge isn't stale,
-// but don't hammer Upstash on every request.
+// Charter-counter is live, page revalidates every minute so the badge
+// reflects the most recent purchase without hammering Upstash.
 export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Charter membership — $9/mo for life — GIGASCOPE",
   description:
-    "GIGASCOPE charter: daily milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 charter → $29 (Jun 2026) → $49-79 long-term.",
+    "GIGASCOPE charter: daily digest, satellite-drop alerts, weekly recap, and bulk data exports. First 100 charters lock $9/mo forever — public launch at $29 in Jun 2026.",
   alternates: { canonical: "https://gigascope.xyz/pro" },
   openGraph: {
     title: "Charter membership — $9/mo for life — GIGASCOPE",
     description:
-      "GIGASCOPE charter: daily milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 charter → $29 (Jun 2026) → $49-79 long-term.",
+      "GIGASCOPE charter: daily digest, satellite-drop alerts, weekly recap, bulk data exports. First 100 charters lock $9/mo for life.",
     url: "https://gigascope.xyz/pro",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Charter membership — $9/mo for life — GIGASCOPE",
+    title: "GIGASCOPE Charter — $9/mo for life",
     description:
-      "GIGASCOPE charter: daily milestone alerts, curated daily digest, interactive component breakdowns, data downloads, no ads. Single tier, no upsells. $9 charter → $29 (Jun 2026) → $49-79 long-term.",
+      "Daily digest, satellite-drop alerts, weekly recap, bulk data exports. First 100 lock $9 forever.",
   },
 };
-
-const FEATURES = [
-  { label: "Daily alerts (email)", note: "One digest at 14:00 UTC: construction progress jumps, fab milestones, regulatory decisions, earnings, launches." },
-  { label: "Curated daily digest", note: "One email at 7am local. Cross-company synthesis: what mattered, what's next, with primary-source links." },
-  { label: "Interactive component breakdowns", note: "Click any component on Raptor, Optimus, Cybertruck, 4680, GB200 — see the part, the spec, the supplier." },
-  { label: "Data downloads (CSV, JSON)", note: "Milestones, facility coordinates, supply-chain edges, historical timelines — bulk export for your own analysis." },
-  { label: "Comparison tools", note: "Side-by-side: Gigafactories vs Pyeongtaek, MI300X vs B200, Tanbreez vs Mountain Pass." },
-  { label: "No ads, no upsells", note: "Single tier. No 'Pro / Premium / Enterprise' nonsense. One price. Everything on." },
-];
 
 // IMPORTANT: paid charter count and free digest count are different keys.
 //   `subscribers:charter:count` — INCR'd only by the Stripe webhook on a
 //     successful checkout. Stays at 0 until billing goes live AND someone pays.
 //   `subscribers:emails` — every email that hit the signup form (free digest).
-// Earlier this used SCARD subscribers:emails for the "charter" counter,
-// which inflated paid traction with free signups → phantom scarcity. Now we
-// surface them separately and honestly.
 async function getCounts(): Promise<{ paidCharter: number | null; freeDigest: number | null }> {
   const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
   const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
@@ -68,21 +59,12 @@ async function getCounts(): Promise<{ paidCharter: number | null; freeDigest: nu
 }
 
 export default async function ProPage() {
+  const stats = getEmpireStats();
   const { paidCharter, freeDigest } = await getCounts();
   const cap = 100;
   const taken = paidCharter === null ? null : Math.min(paidCharter, cap);
   const remaining = taken === null ? null : Math.max(cap - taken, 0);
-
-  // Gate the paid-charter counter: only surface a literal count once at
-  // least one person has actually paid. Below 1, lean on "Founding 100"
-  // framing without claiming traction we don't have.
   const showCount = taken !== null && taken >= 1;
-  const badge = showCount
-    ? `${taken} of ${cap} charter spots claimed`
-    : "Founding 100 · first 100 paid charters lock $9/mo forever";
-
-  // Separate free-digest count gates its own "join N readers" line. We
-  // require ≥10 before exposing the number so we don't show "join 2 readers".
   const FREE_PROOF_THRESHOLD = 10;
   const showFreeCount = freeDigest !== null && freeDigest >= FREE_PROOF_THRESHOLD;
 
@@ -91,105 +73,289 @@ export default async function ProPage() {
   const stripeLive = !!process.env.STRIPE_SECRET_KEY;
 
   return (
-    <div className="max-w-[900px] mx-auto px-6 py-12">
-      <header className="text-center mb-10">
-        <div className="inline-block px-3 py-1 rounded-full bg-text text-bg text-[11px] font-bold uppercase tracking-wider mb-4">
-          {badge}
-        </div>
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-3">
-          Charter membership
-        </h1>
-        <p className="text-dim max-w-xl mx-auto mb-3">
-          A <strong className="text-text">paid software subscription</strong> to GIGASCOPE. Unlocks satellite-drop alerts,
-          a curated daily digest, interactive component breakdowns, and CSV/JSON data exports.
-        </p>
-        {showCount ? (
-          <>
-            <p className="text-[11px] text-dim max-w-md mx-auto mb-2">
-              {taken} of {cap} charter spots claimed · {remaining} remaining · charter pricing locks when billing opens.
-            </p>
-            <div className="max-w-xs mx-auto mb-2">
-              <div className="h-1 rounded-full bg-surface border border-border-custom overflow-hidden">
+    <div className="bg-bg text-text">
+      {/* ── Hero ──────────────────────────────────────────────────────── */}
+      <header className="border-b border-border-custom">
+        <div className="max-w-[1100px] mx-auto px-6 py-12 sm:py-16 text-center">
+          <div className="inline-block px-3 py-1 rounded-full bg-text text-bg text-[11px] font-bold uppercase tracking-wider mb-5">
+            {showCount
+              ? `${taken} of ${cap} charter spots claimed`
+              : "Founding 100 · first 100 lock $9/mo for life"}
+          </div>
+          <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-4 leading-[1.05]">
+            $9 for the empire,<br />locked for life.
+          </h1>
+          <p className="text-dim text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+            A paid subscription to GIGASCOPE. Daily digest, satellite-drop alerts, weekly
+            recap, and bulk data exports. Public launches at $29 in June 2026. Charter pricing
+            is grandfathered for as long as your subscription stays active.
+          </p>
+          {showCount && remaining !== null && (
+            <div className="max-w-md mx-auto mt-7">
+              <div className="flex justify-between text-[11px] font-mono text-dim mb-1.5">
+                <span>{taken} of {cap} claimed</span>
+                <span>{remaining} remaining</span>
+              </div>
+              <div className="h-1.5 rounded-full bg-surface border border-border-custom overflow-hidden">
                 <div
                   className="h-full bg-text transition-all"
                   style={{ width: `${Math.round(((taken ?? 0) / cap) * 100)}%` }}
                 />
               </div>
             </div>
-          </>
-        ) : (
-          <p className="text-[11px] text-dim max-w-md mx-auto mb-2">
-            Founding 100 — charter pricing locked at $9/mo forever for the first 100 members.
-          </p>
-        )}
-        <p className="text-[11px] text-dim max-w-md mx-auto">
-          ⚠ This is not equity in the project, not a token, not a security. It's a $9/month subscription to a software service. Cancel any time.
-        </p>
-        {showFreeCount && (
-          <p className="text-[11px] text-dim max-w-md mx-auto mt-2">
-            Already <strong className="text-text">{freeDigest}</strong> reading the free daily digest.
-          </p>
-        )}
-        <p className="text-[11px] text-dim max-w-md mx-auto mt-2">
-          <Link href="/charter-terms" className="underline">Charter price-lock terms →</Link>
-        </p>
+          )}
+        </div>
       </header>
 
-      <div className="text-center mb-10">
-        <div className="flex items-baseline justify-center gap-2 mb-1">
-          <span className="text-5xl font-bold">$9</span>
-          <span className="text-dim">/ month · charter</span>
-        </div>
-        <div className="text-xs text-dim">→ $29 standard launch (Jun 2026) · $49-79 long-term · charter rate locked for life</div>
-        <div className="text-xs text-dim mt-2">or $90 / year (charter · 17% off) · cancel anytime</div>
-      </div>
+      {/* ── Pricing + checkout ───────────────────────────────────────── */}
+      <section className="border-b border-border-custom bg-surface">
+        <div className="max-w-[900px] mx-auto px-6 py-10 sm:py-14">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="rounded-lg border-2 border-text bg-bg p-6 sm:p-8 flex flex-col">
+              <div className="text-[10px] uppercase tracking-widest font-mono text-text font-bold mb-2">
+                Charter · first 100
+              </div>
+              <div className="flex items-baseline gap-2 mb-1">
+                <span className="text-5xl font-bold tabular-nums">$9</span>
+                <span className="text-dim">/ month</span>
+              </div>
+              <div className="text-xs text-dim mb-5">or $90 / year · 17% off · charter rate locked for life</div>
+              <ul className="text-sm flex flex-col gap-2 mb-6">
+                <Bullet>Daily digest at 07:00 local</Bullet>
+                <Bullet>Satellite-drop alerts (Telegram + email)</Bullet>
+                <Bullet>Saturday weekly recap</Bullet>
+                <Bullet>CSV / JSON bulk data exports</Bullet>
+                <Bullet>Founding member badge in account</Bullet>
+                <Bullet>$9/mo locked when public hits $29</Bullet>
+              </ul>
+              <div className="mt-auto">
+                <InvestorCheckout stripeLive={stripeLive} />
+              </div>
+            </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
-        {FEATURES.map((f, i) => (
-          <div key={i} className="flex gap-3 p-4 rounded border border-border-custom">
-            <span className="text-green-600 mt-0.5">✓</span>
-            <div>
-              <div className="font-bold text-sm mb-0.5">{f.label}</div>
-              <div className="text-xs text-dim">{f.note}</div>
+            <div className="rounded-lg border border-border-custom bg-bg p-6 sm:p-8 flex flex-col">
+              <div className="text-[10px] uppercase tracking-widest font-mono text-dim mb-2">
+                Free
+              </div>
+              <div className="flex items-baseline gap-2 mb-1">
+                <span className="text-5xl font-bold tabular-nums">$0</span>
+                <span className="text-dim">/ forever</span>
+              </div>
+              <div className="text-xs text-dim mb-5">no card, no time limit</div>
+              <ul className="text-sm flex flex-col gap-2 mb-6">
+                <Bullet>Daily digest at 07:00 local</Bullet>
+                <Bullet>Public site, all 16 site pages</Bullet>
+                <Bullet>Compare imagery + product cutaways</Bullet>
+                <Bullet muted>No drop alerts</Bullet>
+                <Bullet muted>No weekly recap</Bullet>
+                <Bullet muted>No data exports</Bullet>
+              </ul>
+              <div className="mt-auto">
+                <EmailSignup tier="free" source="pro:free-card" variant="inline" />
+              </div>
             </div>
           </div>
-        ))}
-      </div>
-
-      <section className="max-w-md mx-auto mb-12">
-        <InvestorCheckout stripeLive={stripeLive} />
+          <p className="text-[11px] text-dim text-center mt-6 max-w-md mx-auto">
+            ⚠ This is a paid software subscription, not equity, not a token, not a security.
+            Cancel any time.{" "}
+            <Link href="/charter-terms" className="underline">Charter price-lock terms →</Link>
+            {showFreeCount && (
+              <> · Already <strong className="text-text">{freeDigest}</strong> on the free digest.</>
+            )}
+          </p>
+        </div>
       </section>
 
-      <section className="max-w-md mx-auto mb-16">
-        <div className="text-center text-xs text-dim mb-3">— or just get the free daily digest —</div>
-        <EmailSignup tier="free" source="pro:landing" variant="card" />
+      {/* ── What it actually looks like ──────────────────────────────── */}
+      <section className="border-b border-border-custom">
+        <div className="max-w-[1100px] mx-auto px-6 py-14 sm:py-20">
+          <div className="text-center mb-10">
+            <div className="text-[10px] uppercase tracking-widest font-mono text-dim mb-2">
+              What you get
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+              No marketing copy. The actual product.
+            </h2>
+            <p className="text-dim max-w-2xl mx-auto leading-relaxed">
+              Both the digest and the alert feed are wired to the same data the public site
+              uses — {stats.satelliteFrames} satellite frames, {stats.milestonesTracked}{" "}
+              milestones, {stats.sourcesCited} cited sources. Below is exactly what a
+              recipient inbox looks like.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-6">
+            <div>
+              <div className="text-[10px] uppercase tracking-widest font-mono text-dim mb-2">
+                1 · Daily digest email
+              </div>
+              <h3 className="text-xl font-bold mb-2">07:00 local · empire-wide</h3>
+              <p className="text-sm text-dim mb-5 leading-relaxed">
+                Every morning, the milestones verified in the last 24 hours plus a 30-day
+                lookahead of catalysts (earnings, FAA static-fire windows, county filings).
+                Charter members get the same email, on the same schedule, plus the right to
+                turn on the alert channel below.
+              </p>
+              <DailyDigestPreview />
+            </div>
+
+            <div>
+              <div className="text-[10px] uppercase tracking-widest font-mono text-dim mb-2">
+                2 · Satellite-drop alert
+              </div>
+              <h3 className="text-xl font-bold mb-2">Telegram + email · charter only</h3>
+              <p className="text-sm text-dim mb-5 leading-relaxed">
+                When a fresh Sentinel-2 frame lands on a tracked site and the polygon
+                comparison shows a non-trivial change, the alert fires within an hour. No
+                "TSLA is up 2%" noise. Only when a building physically moves.
+              </p>
+              <TelegramAlertPreview />
+            </div>
+          </div>
+        </div>
       </section>
 
+      {/* ── Roadmap honesty ──────────────────────────────────────────── */}
+      <section className="border-b border-border-custom bg-surface">
+        <div className="max-w-[900px] mx-auto px-6 py-12 sm:py-16">
+          <div className="text-[10px] uppercase tracking-widest font-mono text-dim mb-2">
+            Roadmap honesty
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
+            What's live, what's next, what's not yet built.
+          </h2>
+          <p className="text-dim mb-8 leading-relaxed">
+            Charter pricing pays for the build. We list every feature in one of three columns
+            so you can see exactly where the product is, not where the deck says it will be.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+            <RoadmapCol
+              title="Live"
+              tone="ops"
+              items={[
+                "Daily digest at 07:00 local",
+                "Full /pulse scoreboard",
+                "16 site pages + before/after",
+                "Compare imagery slider",
+                "Product cutaway hotspots",
+                "Methodology + sources cited",
+              ]}
+            />
+            <RoadmapCol
+              title="Charter unlocks at launch"
+              tone="text"
+              items={[
+                "Satellite-drop alerts (Telegram + email)",
+                "Saturday weekly recap",
+                "CSV / JSON bulk exports",
+                "Account-level alert filters",
+                "Founding member badge",
+              ]}
+            />
+            <RoadmapCol
+              title="On the build list"
+              tone="dim"
+              items={[
+                "Polygon-trace overlays on /compare",
+                "Per-site progress sparklines",
+                "Construction velocity API",
+                "Email-only digest archive page",
+                "Discord / Slack relay",
+              ]}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ──────────────────────────────────────────────────────── */}
       <section>
-        <h2 className="text-2xl font-bold mb-4">FAQ</h2>
-        <dl className="flex flex-col gap-5 text-sm">
-          <div>
-            <dt className="font-bold mb-1">Why one tier and not three?</dt>
-            <dd className="text-dim">Because "Pro / Premium / Enterprise" is a tax on attention. One price. Everything on.</dd>
-          </div>
-          <div>
-            <dt className="font-bold mb-1">Is the free tier going away?</dt>
-            <dd className="text-dim">No. The free site — every company page, every facility map, every news feed — stays open. Charter membership is additive.</dd>
-          </div>
-          <div>
-            <dt className="font-bold mb-1">Is this financial advice?</dt>
-            <dd className="text-dim">No. GIGASCOPE is industrial intelligence — what's being built, where, by whom. We cite primary sources (SEC EDGAR, DART, IR decks, government data) so you can verify everything yourself.</dd>
-          </div>
-          <div>
-            <dt className="font-bold mb-1">Why charter at $9?</dt>
-            <dd className="text-dim">Charter members fund the next 50 company pages, satellite pipeline, and Telegram alert system (on the build roadmap). You get lifetime price-lock at $9 even when public launch hits $29 (June 2026) and long-term reaches $49-79.</dd>
-          </div>
-          <div>
-            <dt className="font-bold mb-1">What happens to my data if I cancel?</dt>
-            <dd className="text-dim">Your watchlist is local-only (browser storage), not server-side, so cancelling has no effect on it. Alerts and digest emails simply stop.</dd>
-          </div>
-        </dl>
+        <div className="max-w-[900px] mx-auto px-6 py-14">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-6">
+            Frequently asked
+          </h2>
+          <dl className="flex flex-col gap-6 text-sm">
+            <FaqRow q="Why one tier and not three?">
+              Because "Pro / Premium / Enterprise" is a tax on attention. One tier, one
+              price. Pay it once and stop thinking about it.
+            </FaqRow>
+            <FaqRow q="Is the free tier going away?">
+              No. The free site — every company page, every satellite map, every product
+              cutaway — stays open. Charter is additive, not gated.
+            </FaqRow>
+            <FaqRow q="Is this financial advice?">
+              No. GIGASCOPE is industrial intelligence — what is being built, where, by
+              whom. We cite primary sources (FAA filings, SEC EDGAR, county permits) so you
+              can verify everything yourself.
+            </FaqRow>
+            <FaqRow q="Why $9, locked for life?">
+              Charter members fund the build of the alert system, exports, and the next
+              cohort of company pages. Locking your rate means you pay $9 even when the
+              public price is $29 (June 2026) and likely $49-79 long-term, as long as your
+              subscription stays active.
+            </FaqRow>
+            <FaqRow q="What if I cancel and come back?">
+              The charter rate is for continuous, active subscriptions. A cancelled
+              subscription forfeits the lock — restart pricing is public-rate at that time.
+              Full terms at <Link href="/charter-terms" className="underline">/charter-terms</Link>.
+            </FaqRow>
+            <FaqRow q="When does billing actually open?">
+              The day the payment provider clears KYB. Until then, leaving your email on
+              the form above puts you on the charter waitlist and pulls you in the moment
+              the gate opens — at the rate shown today.
+            </FaqRow>
+          </dl>
+        </div>
       </section>
+    </div>
+  );
+}
+
+// ── Local subcomponents ────────────────────────────────────────────────
+
+function Bullet({ children, muted = false }: { children: React.ReactNode; muted?: boolean }) {
+  return (
+    <li className="flex gap-2 items-start">
+      <span className={muted ? "text-dim mt-0.5" : "text-accent-green mt-0.5"}>
+        {muted ? "—" : "✓"}
+      </span>
+      <span className={muted ? "text-dim" : ""}>{children}</span>
+    </li>
+  );
+}
+
+function RoadmapCol({
+  title,
+  items,
+  tone,
+}: {
+  title: string;
+  items: string[];
+  tone: "ops" | "text" | "dim";
+}) {
+  const headColor =
+    tone === "ops" ? "text-accent-green" : tone === "text" ? "text-text" : "text-dim";
+  return (
+    <div className="bg-bg rounded-md border border-border-custom p-4">
+      <div className={`text-[10px] uppercase tracking-widest font-mono mb-3 ${headColor}`}>
+        {title}
+      </div>
+      <ul className="flex flex-col gap-1.5">
+        {items.map((it, i) => (
+          <li key={i} className="flex gap-2 items-start">
+            <span className={`mt-0.5 shrink-0 ${headColor}`}>·</span>
+            <span className={tone === "dim" ? "text-dim" : ""}>{it}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function FaqRow({ q, children }: { q: string; children: React.ReactNode }) {
+  return (
+    <div className="border-b border-border-custom pb-5 last:border-0">
+      <dt className="font-bold mb-1.5">{q}</dt>
+      <dd className="text-dim leading-relaxed">{children}</dd>
     </div>
   );
 }
