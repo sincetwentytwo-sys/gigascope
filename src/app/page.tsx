@@ -138,12 +138,12 @@ export default async function Home({
       <section aria-label="Empire scoreboard" className="border-b border-border-custom bg-bg">
         <div className="max-w-[1300px] mx-auto px-6 py-6 sm:py-8">
           <div className="grid grid-cols-3 lg:grid-cols-6 gap-px bg-border-custom rounded-md overflow-hidden border border-border-custom">
-            <ScoreCell label="Sites" value={String(stats.sites)} sub={`${stats.operationalSites} ops · ${stats.expandingSites} expanding`} />
+            <ScoreCell label="Sites" value={String(stats.sites)} sub={`${stats.operationalSites} ops · ${stats.expandingSites} expanding`} href="#sites" />
             <ScoreCell label="Capital" value={stats.totalInvestment} sub="declared investment" />
             <ScoreCell label="Footprint" value={formatKm2(stats.totalFootprintKm2)} sub="industrial area" />
-            <ScoreCell label="Captures" value={formatCount(stats.satelliteFrames)} sub={`${stats.timelapseSites} timelapses`} />
-            <ScoreCell label="Milestones" value={String(stats.milestonesTracked)} sub={`${stats.milestonesDone} verified`} />
-            <ScoreCell label="Sources" value={String(stats.sourcesCited)} sub="primary links" />
+            <ScoreCell label="Captures" value={formatCount(stats.satelliteFrames)} sub={`${stats.timelapseSites} timelapses`} href="/compare" />
+            <ScoreCell label="Milestones" value={String(stats.milestonesTracked)} sub={`${stats.milestonesDone} verified`} href="/pulse" />
+            <ScoreCell label="Sources" value={String(stats.sourcesCited)} sub="primary links" href="/sources" />
           </div>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-dim font-mono">
             <StockTicker />
@@ -339,9 +339,21 @@ export default async function Home({
 }
 
 // ── inline scorecard component (same shape as /pulse) ────────────────────
-function ScoreCell({ label, value, sub }: { label: string; value: string; sub?: string }) {
-  return (
-    <div className="bg-bg p-3 sm:p-4">
+// When `href` is set, the cell becomes a Link that hover-darkens — turns the
+// scoreboard into a drill-down launcher instead of a static stat strip.
+function ScoreCell({
+  label,
+  value,
+  sub,
+  href,
+}: {
+  label: string;
+  value: string;
+  sub?: string;
+  href?: string;
+}) {
+  const body = (
+    <>
       <div className="text-[9px] uppercase tracking-widest font-mono text-dim mb-1.5">
         {label}
       </div>
@@ -349,6 +361,17 @@ function ScoreCell({ label, value, sub }: { label: string; value: string; sub?: 
         {value}
       </div>
       {sub && <div className="text-[10px] text-dim leading-snug">{sub}</div>}
-    </div>
+    </>
   );
+  if (href) {
+    return (
+      <Link
+        href={href}
+        className="bg-bg p-3 sm:p-4 hover:bg-surface transition-colors block"
+      >
+        {body}
+      </Link>
+    );
+  }
+  return <div className="bg-bg p-3 sm:p-4">{body}</div>;
 }
