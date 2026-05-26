@@ -1,13 +1,31 @@
-import { existsSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
 import type { Factory } from "@/data/types";
 import Sparkline from "./Sparkline";
+
+// Read the timelapse index once at module load. Used to surface a small
+// "fresh capture" badge on cards whose most recent satellite frame is within
+// the last 60 days.
+type TimelapseMeta = { frames: number; latest: string; builtAt: string };
+const timelapseIndexPath = resolve(process.cwd(), "public", "timelapses", "index.json");
+const TIMELAPSE_INDEX: Record<string, TimelapseMeta> = existsSync(timelapseIndexPath)
+  ? JSON.parse(readFileSync(timelapseIndexPath, "utf8"))
+  : {};
 
 function hasTimelapseThumbnails(slug: string): boolean {
   return (
     existsSync(join(process.cwd(), "public", "timelapses", `${slug}-first.jpg`)) &&
     existsSync(join(process.cwd(), "public", "timelapses", `${slug}-last.jpg`))
   );
+}
+
+function captureFreshness(slug: string): { latest: string; daysOld: number } | null {
+  const tl = TIMELAPSE_INDEX[slug];
+  if (!tl?.latest) return null;
+  const ts = new Date(tl.latest).getTime();
+  if (!isFinite(ts)) return null;
+  const days = Math.round((Date.now() - ts) / 86_400_000);
+  return { latest: tl.latest, daysOld: days };
 }
 
 export default function FactoryCard({
@@ -29,6 +47,7 @@ export default function FactoryCard({
   // inside Sparkline so we don't get a deceptive upward slope.
   const timeline = factory.timeline ?? [];
   const hasYearData = timeline.some((v) => typeof v === "number" && v > 0);
+  const fresh = captureFreshness(factory.slug);
 
   return (
     <a
@@ -37,7 +56,7 @@ export default function FactoryCard({
       style={{ borderLeftWidth: 4, borderLeftColor: accent }}
     >
       {showThumbs && (
-        <div className="grid grid-cols-2 gap-px bg-border-custom border-b border-border-custom">
+        <div className="relative grid grid-cols-2 gap-px bg-border-custom border-b border-border-custom">
           <div className="relative">
             {/* width/height attrs reserve aspect-correct space before the
                 pixels arrive — prevents the card from CLS-shifting once
@@ -67,6 +86,17 @@ export default function FactoryCard({
             <span className="absolute top-1 right-1 px-1 py-0.5 text-[9px] font-mono uppercase tracking-wider bg-black/60 text-white/90 rounded">
               Now
             </span>
+            {fresh && (
+              // Capture-date pill on the "Now" thumbnail — gives the user a
+              // sense of how recent the imagery is without pretending it's
+              // realtime. Uses bg-black/60 to stay readable on any photo.
+              <span
+                title={`Latest capture ${fresh.latest} (${fresh.daysOld}d ago)`}
+                className="absolute bottom-1 right-1 px-1.5 py-0.5 text-[9px] font-mono rounded bg-black/65 text-white/90"
+              >
+                {fresh.latest}
+              </span>
+            )}
           </div>
         </div>
       )}
