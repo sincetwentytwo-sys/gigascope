@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Privacy Policy — GIGASCOPE",
   description:
-    "What data GIGASCOPE collects, why, how long we keep it, who we share it with (Paddle, Resend, Upstash, Vercel), and how to exercise your rights under PIPA (Korea), GDPR (EU), and CCPA (California). Effective 2026-05-26.",
+    "What data GIGASCOPE collects, why, how long we keep it, who we share it with, and how to exercise your rights under PIPA (Korea), GDPR (EU), and CCPA (California).",
   alternates: { canonical: "https://gigascope.xyz/privacy-policy" },
   robots: { index: true, follow: true },
 };
@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
         <p className="text-dim text-lg leading-relaxed">
           What we collect, why, how long we keep it, and what control you have over it.
         </p>
-        <p className="text-sm text-dim mt-4">Plain English. Effective 2026-05-26.</p>
+        <p className="text-sm text-dim mt-4">Effective 2026-05-26.</p>
       </header>
 
       <section>
@@ -51,26 +51,26 @@ export default function PrivacyPolicyPage() {
         </p>
         <ul className="list-disc pl-6 text-text leading-relaxed mb-4 space-y-2">
           <li>
-            <strong>Email address</strong> &mdash; collected when you subscribe to the free digest or start a paid
+            <strong>Email address</strong>. Collected when you subscribe to the free digest or start a paid
             subscription. Used to send the digest, billing receipts, and service notices.
           </li>
           <li>
-            <strong>Subscription tier and status</strong> &mdash; whether you are on the free digest, charter paid
-            tier, or unsubscribed; the timestamp of state changes.
+            <strong>Subscription tier and status</strong>. Whether you are on the free digest, paid charter tier,
+            or unsubscribed; the timestamp of state changes.
           </li>
           <li>
-            <strong>Telegram chat ID</strong> &mdash; only if you explicitly link a Telegram account at{" "}
+            <strong>Telegram chat ID</strong>. Only if you explicitly link a Telegram account at{" "}
             <Link href="/account" className="underline hover:text-dim">/account</Link>. Used to deliver alerts you
             opted into.
           </li>
           <li>
-            <strong>Server-side request data</strong> &mdash; standard web-server access logs: IP address,
-            user-agent, request path, timestamp. Retained for security and rate-limiting; not used for advertising.
+            <strong>Server-side request data</strong>. Standard web-server access logs (IP address, user-agent,
+            request path, timestamp). Retained for security and rate-limiting. Not used for advertising.
           </li>
           <li>
-            <strong>Payment and billing data</strong> &mdash; processed by Paddle, our Merchant of Record. We
-            receive only the subscription status, customer identifier, and country (for tax classification). We
-            <strong> do not store</strong> card numbers, bank details, or full billing addresses.
+            <strong>Payment and billing data</strong>. Processed by a third-party payment provider acting as our
+            Merchant of Record. We receive only subscription status, customer identifier, and country (for tax
+            classification). We do not store card numbers, bank details, or full billing addresses.
           </li>
         </ul>
         <p className="text-text leading-relaxed mb-4">
@@ -83,20 +83,19 @@ export default function PrivacyPolicyPage() {
         <h2 className="text-2xl font-bold mt-12 mb-3">3. Why we collect (lawful basis)</h2>
         <ul className="list-disc pl-6 text-text leading-relaxed mb-4 space-y-2">
           <li>
-            <strong>Performance of contract</strong> &mdash; to deliver the digest, alerts, and paid features you
-            signed up for.
+            <strong>Performance of contract</strong>. To deliver the digest, alerts, and paid features you signed
+            up for.
           </li>
           <li>
-            <strong>Legitimate interest</strong> &mdash; to operate, secure, and improve the service (rate
-            limiting, anti-abuse, debugging).
+            <strong>Legitimate interest</strong>. To operate, secure, and improve the service (rate-limiting,
+            anti-abuse, debugging).
           </li>
           <li>
-            <strong>Consent</strong> &mdash; for optional features such as Telegram linking and any future
-            marketing emails (none currently sent).
+            <strong>Consent</strong>. For optional features such as Telegram linking and any future marketing
+            emails (none currently sent).
           </li>
           <li>
-            <strong>Legal obligation</strong> &mdash; tax record-keeping under Korean law (5-year retention of
-            transactional records).
+            <strong>Legal obligation</strong>. Tax record-keeping as required by applicable Korean tax law.
           </li>
         </ul>
       </section>
@@ -104,48 +103,17 @@ export default function PrivacyPolicyPage() {
       <section>
         <h2 className="text-2xl font-bold mt-12 mb-3">4. Who we share data with</h2>
         <p className="text-text leading-relaxed mb-4">
-          We share data only with the processors needed to operate the service. We do not sell personal data.
+          We share data only with the service providers needed to operate the site. We do not sell personal data.
         </p>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border border-border-custom">
-            <thead className="text-left text-[11px] uppercase text-dim bg-surface">
-              <tr>
-                <th className="py-2.5 px-3 border-b border-border-custom">Processor</th>
-                <th className="py-2.5 px-3 border-b border-border-custom">Purpose</th>
-                <th className="py-2.5 px-3 border-b border-border-custom">Location</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-border-custom">
-                <td className="py-2.5 px-3 font-medium">Paddle.com Market Limited</td>
-                <td className="py-2.5 px-3">Payment processing, tax remittance, billing support (Merchant of Record)</td>
-                <td className="py-2.5 px-3 text-dim">United Kingdom / United States</td>
-              </tr>
-              <tr className="border-b border-border-custom">
-                <td className="py-2.5 px-3 font-medium">Resend, Inc.</td>
-                <td className="py-2.5 px-3">Transactional email delivery (digest, receipts, alerts)</td>
-                <td className="py-2.5 px-3 text-dim">United States</td>
-              </tr>
-              <tr className="border-b border-border-custom">
-                <td className="py-2.5 px-3 font-medium">Upstash, Inc.</td>
-                <td className="py-2.5 px-3">Redis storage for subscriber list, visit counters, dedup flags</td>
-                <td className="py-2.5 px-3 text-dim">United States (US-east region)</td>
-              </tr>
-              <tr className="border-b border-border-custom">
-                <td className="py-2.5 px-3 font-medium">Vercel, Inc.</td>
-                <td className="py-2.5 px-3">Web hosting, CDN, serverless function execution</td>
-                <td className="py-2.5 px-3 text-dim">United States (multi-region)</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 px-3 font-medium">Telegram Messenger LLP</td>
-                <td className="py-2.5 px-3">Optional bot alerts (only if you link Telegram)</td>
-                <td className="py-2.5 px-3 text-dim">Global infrastructure</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p className="text-text leading-relaxed mb-4 mt-4">
-          Each processor receives only the minimum data needed for its function and is contractually bound to use
+        <p className="text-text leading-relaxed mb-4">
+          Resend (US) handles transactional email delivery. Upstash (US) stores the subscriber list and visit
+          counters in a Redis instance. Vercel (US) hosts the site and runs serverless functions. If you link a
+          Telegram account, Telegram delivers the bot messages on its own infrastructure. Payment processing is
+          handled by a third-party Merchant of Record (currently being onboarded). The active provider is named
+          on the checkout page and every billing receipt.
+        </p>
+        <p className="text-text leading-relaxed mb-4">
+          Each provider receives only the minimum data needed for its function, and is contractually bound to use
           that data only for service delivery.
         </p>
       </section>
@@ -170,8 +138,8 @@ export default function PrivacyPolicyPage() {
           </li>
           <li>
             <strong>Paid subscribers</strong>: subscription record kept for the duration of the subscription plus
-            <strong> 5 years</strong> after the last transaction, as required by Korean tax law (전자상거래법 6조,
-            국세기본법 85조의3).
+            <strong> 5 years</strong> after the last transaction, in line with Korean tax record-retention rules
+            for businesses.
           </li>
           <li>
             <strong>Server access logs</strong>: 90 days, then aggregated and discarded.
@@ -226,8 +194,9 @@ export default function PrivacyPolicyPage() {
         <h2 className="text-2xl font-bold mt-12 mb-3">10. Security</h2>
         <p className="text-text leading-relaxed mb-4">
           All traffic between you and the service is TLS-encrypted. Subscriber data at rest is stored on Upstash
-          and Vercel infrastructure with encryption at rest. Payment data is never stored on our infrastructure;
-          it lives only with Paddle. Access to production systems is restricted to the operator.
+          and Vercel infrastructure with encryption at rest. Payment data is never stored on our infrastructure.
+          It lives only with the third-party payment provider. Access to production systems is restricted to the
+          operator.
         </p>
       </section>
 

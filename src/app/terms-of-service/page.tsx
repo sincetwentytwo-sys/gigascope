@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Terms of Service — GIGASCOPE",
   description:
-    "Plain-English terms governing your use of GIGASCOPE. Service definition, account terms, acceptable use, intellectual property, disclaimers, governing law (Republic of Korea). Effective 2026-05-26.",
+    "Terms governing use of the GIGASCOPE website, daily digest, and paid subscriptions. Service definition, account terms, intellectual property, disclaimers, and governing law (Republic of Korea).",
   alternates: { canonical: "https://gigascope.xyz/terms-of-service" },
   robots: { index: true, follow: true },
 };
@@ -24,7 +24,7 @@ export default function TermsOfServicePage() {
           The agreement between you and GIGASCOPE for use of the website, the daily digest, and any paid subscription.
         </p>
         <p className="text-sm text-dim mt-4">
-          Plain English. Effective 2026-05-26.
+          Effective 2026-05-26.
         </p>
       </header>
 
@@ -39,10 +39,11 @@ export default function TermsOfServicePage() {
       <section>
         <h2 className="text-2xl font-bold mt-12 mb-3">2. The service</h2>
         <p className="text-text leading-relaxed mb-4">
-          GIGASCOPE (&ldquo;we&rdquo;, &ldquo;us&rdquo;) is a subscription dashboard that tracks construction progress
-          at 16 industrial sites operated by Tesla, SpaceX, xAI, Neuralink, and The Boring Company. We publish:
-          satellite imagery comparisons (Sentinel-2, ESRI Wayback), hand-traced timelapses, milestone logs, a daily
-          email digest, and (for paid charter members) priority alerts.
+          GIGASCOPE (&ldquo;we&rdquo;, &ldquo;us&rdquo;) is a subscription dashboard that tracks construction
+          progress at 16 industrial sites operated by Tesla, SpaceX, xAI, Neuralink, and The Boring Company. We
+          publish satellite imagery comparisons (Sentinel-2, ESRI Wayback), site timelapses compiled from those
+          captures, milestone logs sourced from primary documents, a daily email digest, and priority alerts
+          for paid charter members.
         </p>
         <p className="text-text leading-relaxed mb-4">
           GIGASCOPE is not affiliated with Tesla, SpaceX, xAI, Neuralink, The Boring Company, Elon Musk, or any
@@ -84,11 +85,12 @@ export default function TermsOfServicePage() {
       <section>
         <h2 className="text-2xl font-bold mt-12 mb-3">5. Pricing, billing, and refunds</h2>
         <p className="text-text leading-relaxed mb-4">
-          Paid subscriptions are processed by <strong>Paddle.com Market Limited</strong> (&ldquo;Paddle&rdquo;), our
-          Merchant of Record. Paddle handles payment processing, sales-tax/VAT/GST collection and remittance, and
-          customer support for billing matters. Prices on the{" "}
+          Paid subscriptions are processed by a third-party payment provider acting as our Merchant of Record. The
+          provider handles payment processing, sales tax / VAT / GST collection and remittance, and billing
+          support. Prices on the{" "}
           <Link href="/pro" className="underline hover:text-dim">/pro</Link> page are in USD and exclude any
-          applicable tax that Paddle will add at checkout.
+          applicable tax that the provider adds at checkout. The name of the active payment provider is shown on
+          the checkout page and on every billing receipt.
         </p>
         <p className="text-text leading-relaxed mb-4">
           Refund eligibility, request procedure, and processing time are documented at{" "}
@@ -104,16 +106,16 @@ export default function TermsOfServicePage() {
       <section>
         <h2 className="text-2xl font-bold mt-12 mb-3">6. Intellectual property</h2>
         <p className="text-text leading-relaxed mb-4">
-          The GIGASCOPE codebase, dashboard, written commentary, hand-traced polygons, and curated timelapses are
-          our copyrighted work. Subject to your paid subscription staying in good standing, we grant you a limited,
-          non-exclusive, non-transferable, revocable license to access and view the content for your own
-          investing-research purposes.
+          The GIGASCOPE codebase, dashboard, written commentary, curated timelapses, and polygon annotation
+          overlays are our copyrighted work. Subject to your paid subscription staying in good standing, we grant
+          you a limited, non-exclusive, non-transferable, revocable license to access and view the content for
+          your own personal research and reference.
         </p>
         <p className="text-text leading-relaxed mb-4">
-          Underlying satellite imagery is licensed from third parties (Copernicus Sentinel-2 — free use under
-          European Commission terms; ESRI World Imagery / Wayback — display use under ESRI tile-service terms).
-          You may not extract or redistribute satellite imagery outside the GIGASCOPE viewing context without
-          obtaining your own license from the upstream provider.
+          Underlying satellite imagery is licensed from third parties. Copernicus Sentinel-2 is used under the
+          European Commission&rsquo;s free-use terms. ESRI World Imagery and Wayback tiles are displayed under
+          ESRI&rsquo;s tile-service terms. You may not extract or redistribute satellite imagery outside the
+          GIGASCOPE viewing context without obtaining your own license from the upstream provider.
         </p>
         <p className="text-text leading-relaxed mb-4">
           The GIGASCOPE source code is published at{" "}
@@ -130,7 +132,7 @@ export default function TermsOfServicePage() {
       </section>
 
       <section>
-        <h2 className="text-2xl font-bold mt-12 mb-3">7. Disclaimers — not financial advice</h2>
+        <h2 className="text-2xl font-bold mt-12 mb-3">7. Disclaimers (not financial advice)</h2>
         <p className="text-text leading-relaxed mb-4">
           <strong>
             GIGASCOPE is strictly informational. We do not provide investment, trading, securities, tax, legal, or
@@ -160,8 +162,8 @@ export default function TermsOfServicePage() {
           opportunities, or losses arising from investment decisions made in reliance on the service.
         </p>
         <p className="text-text leading-relaxed mb-4">
-          Our aggregate liability arising from or relating to your use of the service is limited to the amount you
-          paid us in the twelve (12) months preceding the event giving rise to the claim, or USD $50, whichever is
+          Our aggregate liability for any claim arising out of your use of the service is limited to the amount
+          you paid us in the 12 months before the event that gave rise to the claim, or USD $50, whichever is
           greater.
         </p>
       </section>

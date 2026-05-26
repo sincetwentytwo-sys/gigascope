@@ -21,26 +21,28 @@ export default function RefundPolicyPage() {
       <header className="mb-10">
         <h1 className="text-4xl font-bold tracking-tight mb-3">Refund Policy</h1>
         <p className="text-dim text-lg leading-relaxed">
-          Plain English. Eligibility, how to request, and how long refunds take.
+          Eligibility, how to request a refund, and how long it takes to process.
         </p>
         <p className="text-sm text-dim mt-4">Effective 2026-05-26.</p>
       </header>
 
       <section>
-        <h2 className="text-2xl font-bold mt-12 mb-3">1. Paddle as Merchant of Record</h2>
+        <h2 className="text-2xl font-bold mt-12 mb-3">1. Merchant of Record</h2>
         <p className="text-text leading-relaxed mb-4">
-          GIGASCOPE paid subscriptions are sold and processed by <strong>Paddle.com Market Limited</strong>
-          (&ldquo;Paddle&rdquo;), acting as our Merchant of Record. Paddle issues the receipt, collects any
-          applicable sales tax / VAT / GST, and processes refunds back to the original payment method.
+          GIGASCOPE paid subscriptions are sold and processed by a third-party payment provider acting as our
+          Merchant of Record. The provider issues the receipt, collects any applicable sales tax / VAT / GST, and
+          processes refunds back to the original payment method. The active provider is named on the checkout
+          page and on every billing receipt.
         </p>
         <p className="text-text leading-relaxed mb-4">
-          You can request a refund directly from Paddle using the link in your billing receipt, or by emailing
-          GIGASCOPE support &mdash; we&rsquo;ll review and approve eligible requests through Paddle on your behalf.
+          You can request a refund directly from the payment provider using the link in your billing receipt, or
+          by emailing GIGASCOPE support. We review eligible requests and process them through the provider on
+          your behalf.
         </p>
       </section>
 
       <section>
-        <h2 className="text-2xl font-bold mt-12 mb-3">2. Standard refund — pro-rata on cancellation</h2>
+        <h2 className="text-2xl font-bold mt-12 mb-3">2. Standard refund (pro-rata on cancellation)</h2>
         <p className="text-text leading-relaxed mb-4">
           If you cancel a subscription mid-cycle, you receive a <strong>pro-rata refund</strong> for the unused
           portion of the current billing cycle, calculated from the date your cancellation request is received.
@@ -78,14 +80,13 @@ export default function RefundPolicyPage() {
       <section>
         <h2 className="text-2xl font-bold mt-12 mb-3">4. Korean consumer protection</h2>
         <p className="text-text leading-relaxed mb-4">
-          For consumers in the Republic of Korea, the Act on Consumer Protection in Electronic Commerce
-          (전자상거래법) provides a 7-day right of withdrawal for digital content from the date of purchase or the
-          date of first access, whichever is later. The right may be limited where the digital content has been
-          consumed or where the limitation has been disclosed in advance, in accordance with Article 17(2) of the
-          Act.
+          For consumers in the Republic of Korea, the Act on Consumer Protection in Electronic Commerce provides
+          a right of withdrawal for digital content within a short statutory window from the date of purchase or
+          first access. The right can be limited once the digital content has been consumed, where that
+          limitation has been disclosed in advance.
         </p>
         <p className="text-text leading-relaxed mb-4">
-          In practice, GIGASCOPE will issue a pro-rata refund (section 2) regardless of the 7-day cap if the
+          In practice, GIGASCOPE issues a pro-rata refund (section 2) regardless of the statutory cap when the
           request is made in good faith and reflects a service-quality concern.
         </p>
       </section>
@@ -94,8 +95,8 @@ export default function RefundPolicyPage() {
         <h2 className="text-2xl font-bold mt-12 mb-3">5. How to request a refund</h2>
         <ol className="list-decimal pl-6 text-text leading-relaxed mb-4 space-y-2">
           <li>
-            <strong>Easiest path</strong>: open your most recent Paddle receipt email and click the
-            &ldquo;Cancel subscription / request refund&rdquo; link. Paddle handles the rest.
+            <strong>Easiest path</strong>: open your most recent billing receipt email and click the
+            &ldquo;Cancel subscription / request refund&rdquo; link. The payment provider handles the rest.
           </li>
           <li>
             <strong>Or email</strong>{" "}
@@ -103,7 +104,7 @@ export default function RefundPolicyPage() {
               sincetwentytwo@gmail.com
             </a>{" "}
             from the address associated with the subscription. Subject line: &ldquo;Refund request&rdquo;. Include
-            your Paddle order ID (visible on the receipt) if you have it.
+            the order ID from your receipt if you have it.
           </li>
         </ol>
         <p className="text-text leading-relaxed mb-4">
@@ -114,9 +115,9 @@ export default function RefundPolicyPage() {
       <section>
         <h2 className="text-2xl font-bold mt-12 mb-3">6. Processing time</h2>
         <p className="text-text leading-relaxed mb-4">
-          Once approved, Paddle issues the refund to your original payment method within{" "}
-          <strong>14 business days</strong>. Bank or card-network settlement may add a further 3-5 business days
-          before the refund appears on your statement, depending on your card issuer.
+          Once approved, the payment provider issues the refund to your original payment method within
+          14 business days. Bank or card-network settlement may add a further 3-5 business days before the
+          refund appears on your statement, depending on your card issuer.
         </p>
       </section>
 
@@ -132,9 +133,9 @@ export default function RefundPolicyPage() {
       <section>
         <h2 className="text-2xl font-bold mt-12 mb-3">8. Chargebacks</h2>
         <p className="text-text leading-relaxed mb-4">
-          If you have a billing concern, please contact us first &mdash; we resolve almost every legitimate
-          dispute within 5 business days. Filing a chargeback before contacting us results in immediate forfeiture
-          of Charter status and termination of the subscription, per the{" "}
+          If you have a billing concern, please contact us first. We resolve almost every legitimate dispute
+          within 5 business days. Filing a chargeback before contacting us results in immediate forfeiture of
+          Charter status and termination of the subscription, per the{" "}
           <Link href="/charter-terms" className="underline hover:text-dim">Charter terms</Link>.
         </p>
       </section>
