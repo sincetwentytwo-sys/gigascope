@@ -1,5 +1,13 @@
-import { factories, getSitesByCompany, getTotalInvestment, DATA_LAST_UPDATED } from "@/data/factories";
+import Link from "next/link";
+import { factories, getSitesByCompany } from "@/data/factories";
 import { getCompanyMeta } from "@/data/companies";
+import {
+  getEmpireStats,
+  getLatestCaptures,
+  getRecentMilestones,
+  formatKm2,
+  formatCount,
+} from "@/lib/pulse";
 import FactoryCard from "@/components/FactoryCard";
 import NewsFeed from "@/components/NewsFeed";
 import CommunityFeed from "@/components/CommunityFeed";
@@ -56,12 +64,14 @@ export default async function Home({
 }) {
   const params = await searchParams;
   const hero = pickHero(params?.hero);
-  const countries = new Set(factories.map((f) => f.flag)).size;
+  const stats = getEmpireStats();
+  const captures = getLatestCaptures(3);
+  const milestones = getRecentMilestones(5);
   const announced = factories.filter((f) => f.status === "announced");
 
   return (
     <>
-      {/* Full-bleed satellite-timelapse hero — rotates daily across Giga Texas / Starbase */}
+      {/* ── Full-bleed satellite-timelapse hero — rotates daily ─────────── */}
       <section className="relative w-full overflow-hidden bg-black" style={{ aspectRatio: "16 / 9", maxHeight: "78vh" }}>
         <video
           key={hero.slug}
@@ -98,50 +108,154 @@ export default async function Home({
             <span className="text-white/85">{hero.headlineTail}</span>
           </h1>
           <p className="text-sm sm:text-base text-white/80 max-w-xl mb-6">
-            The only place tracking Tesla, SpaceX & xAI from orbit.
+            The empire-wide satellite scoreboard for Tesla, SpaceX, xAI, Neuralink, and The Boring Company.
             <br className="hidden sm:block" />
-            {factories.length} Musk-empire sites, refreshed as new imagery drops.
+            {stats.sites} sites, {stats.satelliteFrames} captures, {stats.milestonesTracked} milestones.
           </p>
           <div className="flex flex-wrap items-center gap-3">
-            <a
-              href="#sites"
+            <Link
+              href="/pulse"
               className="px-4 py-2 rounded bg-white text-black text-sm font-bold hover:opacity-85"
             >
-              See all {factories.length} sites →
-            </a>
+              See the pulse →
+            </Link>
             <a
-              href="/methodology"
+              href="#sites"
               className="px-4 py-2 rounded border border-white/30 text-white text-sm hover:border-white"
             >
-              How we calculate progress
+              All {stats.sites} sites
             </a>
           </div>
         </div>
       </section>
 
-      {/* Secondary stats — kept small, no atlas extension */}
-      <section className="border-b border-border-custom">
-        <div className="max-w-[1200px] mx-auto px-6 py-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[13px] text-dim">
-          <StockTicker />
-          <span className="hidden sm:inline">·</span>
-          <SpaceXStats />
-          <span className="hidden sm:inline">·</span>
-          <span>{countries} countries · {getTotalInvestment()} invested</span>
+      {/* ── Empire scoreboard — six-cell strip on lg, two-row stack on mobile ── */}
+      <section aria-label="Empire scoreboard" className="border-b border-border-custom bg-bg">
+        <div className="max-w-[1300px] mx-auto px-6 py-6 sm:py-8">
+          <div className="grid grid-cols-3 lg:grid-cols-6 gap-px bg-border-custom rounded-md overflow-hidden border border-border-custom">
+            <ScoreCell label="Sites" value={String(stats.sites)} sub={`${stats.operationalSites} ops · ${stats.expandingSites} expanding`} />
+            <ScoreCell label="Capital" value={stats.totalInvestment} sub="declared investment" />
+            <ScoreCell label="Footprint" value={formatKm2(stats.totalFootprintKm2)} sub="industrial area" />
+            <ScoreCell label="Captures" value={formatCount(stats.satelliteFrames)} sub={`${stats.timelapseSites} timelapses`} />
+            <ScoreCell label="Milestones" value={String(stats.milestonesTracked)} sub={`${stats.milestonesDone} verified`} />
+            <ScoreCell label="Sources" value={String(stats.sourcesCited)} sub="primary links" />
+          </div>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-dim font-mono">
+            <StockTicker />
+            <span className="hidden sm:inline text-border-custom">·</span>
+            <SpaceXStats />
+            <span className="hidden sm:inline text-border-custom">·</span>
+            <span>Last capture {stats.latestCaptureDate || "—"}</span>
+            <span className="hidden sm:inline text-border-custom">·</span>
+            <Link href="/methodology" className="underline hover:text-text">How we count</Link>
+          </div>
         </div>
       </section>
 
-      {/* PRIMARY: Musk Empire sites grouped by company */}
-      <section id="sites" className="max-w-[1200px] mx-auto px-6 pt-12 pb-12">
+      {/* ── Pulse this week — 2-col: latest captures + recent milestones ──── */}
+      <section className="border-b border-border-custom">
+        <div className="max-w-[1300px] mx-auto px-6 py-10 sm:py-14 grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-x-10 gap-y-8">
+          {/* Captures (1.2fr) */}
+          <div>
+            <div className="flex items-end justify-between mb-4">
+              <div>
+                <div className="text-[10px] uppercase tracking-widest font-mono text-dim mb-1">Latest captures</div>
+                <h2 className="text-xl font-bold tracking-tight">Fresh satellite frames</h2>
+              </div>
+              <Link href="/pulse" className="text-[13px] text-dim hover:text-text shrink-0">All →</Link>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {captures.map((c) => {
+                const meta = getCompanyMeta(c.company as ReturnType<typeof getCompanyMeta>["id"]);
+                return (
+                  <Link
+                    key={c.slug}
+                    href={`/site/${c.slug}`}
+                    className="group rounded-md overflow-hidden border border-border-custom bg-bg hover:border-text transition-colors"
+                    style={{ borderLeftWidth: 3, borderLeftColor: meta.color }}
+                  >
+                    <div className="relative aspect-video bg-surface overflow-hidden">
+                      <img
+                        src={`/timelapses/${c.slug}-last.jpg`}
+                        alt={`${c.name} most recent satellite capture`}
+                        loading="lazy"
+                        width={1600}
+                        height={900}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                      />
+                      <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-black/65 text-white/90 text-[9px] font-mono uppercase tracking-wider rounded">
+                        {c.latest}
+                      </div>
+                    </div>
+                    <div className="p-2.5">
+                      <h3 className="font-bold text-sm truncate">{c.flag} {c.name}</h3>
+                      <p className="text-[11px] text-dim truncate">{c.location}</p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Milestones (1fr) */}
+          <div>
+            <div className="flex items-end justify-between mb-4">
+              <div>
+                <div className="text-[10px] uppercase tracking-widest font-mono text-dim mb-1">Verified</div>
+                <h2 className="text-xl font-bold tracking-tight">Recent milestones</h2>
+              </div>
+              <Link href="/pulse" className="text-[13px] text-dim hover:text-text shrink-0">All →</Link>
+            </div>
+            <ol className="flex flex-col">
+              {milestones.map((m, i) => {
+                const meta = getCompanyMeta(m.company as ReturnType<typeof getCompanyMeta>["id"]);
+                return (
+                  <li
+                    key={`${m.slug}-${i}`}
+                    className="grid grid-cols-[64px_1fr] gap-3 py-2.5 border-b border-border-custom last:border-0"
+                  >
+                    <div className="font-mono text-[10px] text-dim pt-0.5">{m.date}</div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5 mb-0.5">
+                        <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: meta.color }} />
+                        <Link href={`/site/${m.slug}`} className="text-[10px] font-mono uppercase tracking-wider hover:underline" style={{ color: meta.color }}>
+                          {m.site}
+                        </Link>
+                      </div>
+                      <p className="text-sm leading-snug">
+                        {m.text}
+                        {m.sourceUrl && (
+                          <a
+                            href={m.sourceUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="ml-2 text-[10px] text-dim hover:text-text underline underline-offset-2"
+                          >
+                            [src]
+                          </a>
+                        )}
+                      </p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      {/* ── PRIMARY: Musk Empire sites grouped by company ──────────────────── */}
+      <section id="sites" className="max-w-[1300px] mx-auto px-6 pt-12 pb-12">
         <div className="flex items-end justify-between mb-8">
           <div>
             <h2 className="text-2xl font-bold">Musk Empire</h2>
             <p className="text-xs text-dim mt-1">
-              {factories.length} sites · monthly to quarterly satellite captures · <a href="/methodology" className="underline">methodology →</a>
+              {stats.sites} sites · monthly to quarterly satellite captures · <Link href="/methodology" className="underline">methodology →</Link>
             </p>
           </div>
           <div className="flex gap-4 text-[13px] text-dim">
-            <a href="/compare" className="hover:text-text transition-colors">Compare →</a>
-            <a href="/methodology" className="hover:text-text transition-colors">Methodology →</a>
+            <Link href="/pulse" className="hover:text-text transition-colors">Pulse →</Link>
+            <Link href="/compare" className="hover:text-text transition-colors">Compare →</Link>
           </div>
         </div>
 
@@ -169,13 +283,13 @@ export default async function Home({
         </div>
 
         <p className="text-xs text-dim mt-6">
-          Updated {DATA_LAST_UPDATED} · Progress estimates based on satellite imagery, official announcements, and public filings. <a href="/methodology" className="underline">Methodology →</a>
+          Data updated {stats.dataLastUpdated} · Progress estimates based on satellite imagery, official announcements, and public filings. <Link href="/methodology" className="underline">Methodology →</Link>
         </p>
       </section>
 
-      {/* Announced Projects */}
+      {/* ── Announced Projects ─────────────────────────────────────────────── */}
       {announced.length > 0 && (
-        <section className="max-w-[1200px] mx-auto px-6 pb-12">
+        <section className="max-w-[1300px] mx-auto px-6 pb-12">
           <div className="flex items-end justify-between mb-6">
             <h2 className="text-2xl font-bold">Announced</h2>
             <span className="text-xs text-dim">{announced.length} project{announced.length > 1 ? "s" : ""} · groundbreaking not started</span>
@@ -188,14 +302,14 @@ export default async function Home({
         </section>
       )}
 
-      {/* Daily digest CTA — primary monetization funnel */}
+      {/* ── Daily digest CTA — primary monetization funnel ────────────────── */}
       <section className="max-w-[900px] mx-auto px-6 pb-16">
         <EmailSignup tier="free" source="home" variant="card" />
       </section>
 
-      {/* News + Community */}
+      {/* ── News + Community ──────────────────────────────────────────────── */}
       <section className="border-t border-border-custom">
-        <div className="max-w-[1200px] mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="max-w-[1300px] mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div>
             <h2 className="text-2xl font-bold mb-6">Latest news</h2>
             <NewsFeed />
@@ -206,7 +320,21 @@ export default async function Home({
           </div>
         </div>
       </section>
-
     </>
+  );
+}
+
+// ── inline scorecard component (same shape as /pulse) ────────────────────
+function ScoreCell({ label, value, sub }: { label: string; value: string; sub?: string }) {
+  return (
+    <div className="bg-bg p-3 sm:p-4">
+      <div className="text-[9px] uppercase tracking-widest font-mono text-dim mb-1.5">
+        {label}
+      </div>
+      <div className="text-lg sm:text-2xl font-bold tabular-nums tracking-tight mb-0.5">
+        {value}
+      </div>
+      {sub && <div className="text-[10px] text-dim leading-snug">{sub}</div>}
+    </div>
   );
 }

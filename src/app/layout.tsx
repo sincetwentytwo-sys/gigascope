@@ -103,12 +103,13 @@ export default function RootLayout({
             </a>
             <div className="hidden sm:flex items-center gap-5 text-[13px] text-dim">
               {/* Trimmed nav — /timeline /calendar /news /downloads deleted
-                  2026-05-25 (Elon-level pruning). The remaining 5 routes
-                  are the only ones with non-trivial value:
-                  Compare (satellite slider), Products (6 cutaways),
-                  Methodology (trust signal), About (founder + project),
+                  2026-05-25 (Elon-level pruning). The remaining routes are
+                  the only ones with non-trivial value:
+                  Pulse (empire scoreboard — the flagship), Compare (slider),
+                  Products (cutaways), Methodology (trust), About (founder),
                   /pro (paid funnel). Latest news lives inline on the home
                   page; site-level milestones live on /site/[slug]. */}
+              <a href="/pulse" className="hover:text-text transition-colors">Pulse</a>
               <a href="/compare" className="hover:text-text transition-colors">Compare</a>
               <a href="/products" className="hover:text-text transition-colors">Products</a>
               <a href="/methodology" className="hover:text-text transition-colors">Methodology</a>
@@ -125,6 +126,10 @@ export default function RootLayout({
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
             Home
           </a>
+          <a href="/pulse" className="flex flex-col items-center gap-0.5 text-dim text-[10px]">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
+            Pulse
+          </a>
           <a href="/compare" className="flex flex-col items-center gap-0.5 text-dim text-[10px]">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
             Compare
@@ -132,10 +137,6 @@ export default function RootLayout({
           <a href="/products" className="flex flex-col items-center gap-0.5 text-dim text-[10px]">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
             Products
-          </a>
-          <a href="/methodology" className="flex flex-col items-center gap-0.5 text-dim text-[10px]">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 4h13a2 2 0 012 2v12a2 2 0 01-2 2H4z"/><line x1="7" y1="8" x2="16" y2="8"/><line x1="7" y1="12" x2="16" y2="12"/><line x1="7" y1="16" x2="12" y2="16"/></svg>
-            Method
           </a>
           <a href="/pro" className="flex flex-col items-center gap-0.5 text-[10px] text-text font-bold">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
