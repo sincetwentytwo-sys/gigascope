@@ -98,9 +98,17 @@ async function sendViaTelegram(chatId: string, draft: XPostDraft): Promise<Chann
   if (draft.notes) {
     metaLines.push("", `*Notes:* ${escapeMd(draft.notes)}`);
   }
+  if (draft.reddit) {
+    // Cross-reference to email — full reddit draft (subs + title + body) lives
+    // there. Telegram stays focused on the mobile X workflow.
+    metaLines.push(
+      "",
+      `_Reddit version available — check email for the full draft (subs: ${escapeMd(draft.reddit.subreddits.slice(0, 2).join(", "))})._`,
+    );
+  }
   metaLines.push(
     "",
-    `_Reply "done" with the tweet URL after posting so we can track Day-${draft.day} signal._`,
+    `_Reply "done" with the post URL after posting so we can track Day-${draft.day} signal._`,
   );
 
   const ok1 = await sendTelegramMessage(chatId, headerMsg, { disable_web_page_preview: true });
@@ -175,7 +183,7 @@ async function sendViaEmail(
   to: string,
   draft: XPostDraft,
 ): Promise<ChannelResult> {
-  const subject = `GIGASCOPE · X Post Day ${draft.day}/7 — ${draft.theme}`;
+  const subject = `GIGASCOPE · Day ${draft.day}/7 — ${draft.theme}`;
 
   const safeText = escapeHtml(draft.text);
   const safeReply = escapeHtml(draft.replyText);
@@ -184,6 +192,7 @@ async function sendViaEmail(
   const safeNotes = draft.notes ? escapeHtml(draft.notes) : "";
   const mediaUrl = draft.mediaUrl ?? null;
   const previewUrl = draft.previewImageUrl ?? null;
+  const reddit = draft.reddit;
 
   // Pull the media file inline as a real email attachment so owner can save
   // it directly from Gmail mobile → camera roll → swap to X. URL fallback
@@ -225,12 +234,37 @@ async function sendViaEmail(
     <span style="font-size:13px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">${title}</span>
   </div>`;
 
+  // Reddit block — Section 4. Optional, skipped if draft.reddit undefined.
+  // Different visual treatment from X sections (purple instead of black/blue/
+  // green) so owner can scan the email and immediately see "X stuff on top,
+  // Reddit stuff at bottom".
+  const redditBlock = reddit
+    ? `
+  ${sectionLabel(4, "Reddit version · different platform, different post", "#7e22ce")}
+  <div style="font-size:12px;color:#666;margin-bottom:6px;">Reddit is a separate workflow from X. Pick one sub at a time, don't cross-post within 30min (anti-spam).</div>
+
+  <div style="font-size:12px;color:#888;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.04em;font-weight:600;">Recommended subreddits</div>
+  <ul style="font-size:13px;color:#0a0a0a;margin:0 0 16px;padding-left:20px;">
+${reddit.subreddits.map((s) => `    <li style="margin-bottom:2px;">${escapeHtml(s)}</li>`).join("\n")}
+  </ul>
+
+  <div style="font-size:12px;color:#666;margin-bottom:6px;"><strong>Title</strong> (Reddit-style, copy below):</div>
+  <pre style="background:#faf5ff;border:1px solid #e9d5ff;border-radius:6px;padding:14px;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word;margin:0 0 12px;">${escapeHtml(reddit.title)}</pre>
+
+  <div style="font-size:12px;color:#666;margin-bottom:6px;"><strong>Body</strong> (longer than X, fine on Reddit):</div>
+  <pre style="background:#faf5ff;border:1px solid #e9d5ff;border-radius:6px;padding:14px;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word;margin:0 0 12px;">${escapeHtml(reddit.body)}</pre>
+
+  ${reddit.notes ? `<div style="font-size:12px;color:#888;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.04em;font-weight:600;">Reddit notes</div>
+  <div style="font-size:13px;color:#444;margin-bottom:16px;">${escapeHtml(reddit.notes)}</div>` : ""}
+`
+    : "";
+
   const html = `<!doctype html>
 <html><head><meta charset="utf-8"></head>
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#0a0a0a;max-width:560px;margin:0 auto;padding:24px;">
   <div style="font-size:11px;letter-spacing:0.1em;color:#888;text-transform:uppercase;margin-bottom:4px;">Day ${draft.day} / 7</div>
   <h2 style="font-size:18px;margin:0 0 4px;">${safeTheme}</h2>
-  <div style="font-size:12px;color:#888;margin-bottom:8px;">Post in 3 steps: main tweet → reply with link → attach media.</div>
+  <div style="font-size:12px;color:#888;margin-bottom:8px;">${reddit ? "X: 3 steps (main → reply → media). Reddit: separate version below." : "Post in 3 steps: main tweet → reply with link → attach media."}</div>
 
   ${sectionLabel(1, "Main tweet · post first", "#0a0a0a")}
   <div style="font-size:12px;color:#666;margin-bottom:6px;">No link in the main body — X algorithm down-ranks link posts. Long-press to copy:</div>
@@ -243,20 +277,22 @@ async function sendViaEmail(
   ${sectionLabel(3, "Attachment · for the main tweet", "#059669")}
 ${mediaBlock}
 
+${redditBlock}
+
   ${safeNotes ? `<hr style="border:none;border-top:1px solid #e5e5e5;margin:24px 0;">
-  <div style="font-size:12px;color:#888;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.04em;font-weight:600;">Notes</div>
+  <div style="font-size:12px;color:#888;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.04em;font-weight:600;">X notes</div>
   <div style="font-size:13px;color:#444;margin-bottom:16px;">${safeNotes}</div>` : ""}
 
   <hr style="border:none;border-top:1px solid #e5e5e5;margin:24px 0;">
   <div style="font-size:11px;color:#888;">
-    Day ${draft.day} of 7-day X launch cycle.<br>
-    Reply to this email with the tweet URL after posting so we can track Day-${draft.day} signal.
+    Day ${draft.day} of 7-day launch cycle.<br>
+    Reply to this email with the tweet/Reddit URL after posting so we can track Day-${draft.day} signal.
   </div>
 </body></html>`;
 
-  // Text alternative — same 3-section structure for clients that strip HTML.
+  // Text alternative — same multi-section structure for clients that strip HTML.
   const text = [
-    `GIGASCOPE · X Post Day ${draft.day}/7`,
+    `GIGASCOPE · Day ${draft.day}/7`,
     draft.theme,
     "",
     "═══ 1. MAIN TWEET (no link — post first) ═══",
@@ -270,9 +306,18 @@ ${mediaBlock}
     "═══ 3. ATTACHMENT ═══",
     `Media: ${draft.mediaHint}`,
     attachment ? `Attached: ${attachment.filename}` : (mediaUrl ? `Download: ${mediaUrl}` : ""),
-    draft.notes ? `\nNotes: ${draft.notes}` : "",
+    draft.notes ? `\n[X notes] ${draft.notes}` : "",
+    reddit ? "" : "",
+    reddit ? "═══ 4. REDDIT VERSION ═══" : "",
+    reddit ? `Subreddits: ${reddit.subreddits.join(" / ")}` : "",
+    reddit ? "" : "",
+    reddit ? "--- Title ---" : "",
+    reddit ? reddit.title : "",
+    reddit ? "--- Body ---" : "",
+    reddit ? reddit.body : "",
+    reddit?.notes ? `\n[Reddit notes] ${reddit.notes}` : "",
     "",
-    `Reply to this email with the tweet URL after posting so we can track Day-${draft.day} signal.`,
+    `Reply to this email with the post URL after posting so we can track Day-${draft.day} signal.`,
   ].filter(Boolean).join("\n");
 
   // Resend SDK returns { data, error } and does NOT throw on API-level errors
