@@ -412,6 +412,40 @@ export default function PulsePage() {
         </div>
       </section>
 
+      {/* ── Trust strip ────────────────────────────────────────────────── */}
+      <section className="border-b border-border-custom bg-surface">
+        <div className="max-w-[1300px] mx-auto px-6 py-7 text-center">
+          <div className="text-[10px] uppercase tracking-widest font-mono text-dim mb-3">
+            Verified against
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] text-text font-mono">
+            <span>FAA filings</span>
+            <span className="text-border-custom">·</span>
+            <span>SEC EDGAR</span>
+            <span className="text-border-custom">·</span>
+            <span>USGS</span>
+            <span className="text-border-custom">·</span>
+            <span>KOSIS</span>
+            <span className="text-border-custom">·</span>
+            <span>DART</span>
+            <span className="text-border-custom">·</span>
+            <span>Travis County permits</span>
+            <span className="text-border-custom">·</span>
+            <span>NASA mission pages</span>
+            <span className="text-border-custom">·</span>
+            <span>NRC dockets</span>
+            <span className="text-border-custom">·</span>
+            <span>ClinicalTrials.gov</span>
+            <span className="text-border-custom">·</span>
+            <span>IR press releases</span>
+          </div>
+          <p className="text-[11px] text-dim mt-3">
+            {stats.sourcesCited}+ primary-source links cited across {stats.sites} sites.{" "}
+            <Link href="/methodology" className="underline hover:text-text">Citation policy →</Link>
+          </p>
+        </div>
+      </section>
+
       {/* ── CTA ────────────────────────────────────────────────────────── */}
       <section>
         <div className="max-w-[900px] mx-auto px-6 py-14">
