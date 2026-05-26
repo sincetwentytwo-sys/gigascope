@@ -3,9 +3,11 @@
 **Watch Musk's empire get built, one satellite frame at a time.**
 
 Public dashboard tracking 16 Tesla / SpaceX / xAI / Neuralink / Boring Company
-construction and production sites from orbit. Sentinel-2 weekly captures, ESRI
-high-resolution overlays, milestone timelines, and 2D product breakdowns for
-the hardware that ships from those sites.
+construction and production sites from orbit. Sentinel-2 + ESRI imagery, hand-
+traced progress polygons, milestone timelines cited to primary sources, and 2D
+product breakdowns of the hardware that ships from those sites. The `/pulse`
+flagship rolls the whole empire — captures, milestones, velocity, sources —
+into a single scoreboard.
 
 🌐 Live: **https://gigascope.xyz** (alias: https://gigascope-ten.vercel.app)
 
