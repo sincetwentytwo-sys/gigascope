@@ -23,7 +23,9 @@ import {
 } from "@/lib/pulse";
 import { getCompanyMeta } from "@/data/companies";
 import EmailSignup from "@/components/EmailSignup";
+import Sparkline from "@/components/Sparkline";
 import { safeJsonLd } from "@/lib/safeJsonLd";
+import { factories } from "@/data/factories";
 
 export const revalidate = 1800; // 30 min
 
@@ -312,6 +314,7 @@ export default function PulsePage() {
                   <tr className="border-b border-border-custom text-[10px] uppercase tracking-wider text-dim font-mono">
                     <th className="py-2 pr-4 text-left w-8">#</th>
                     <th className="py-2 pr-4 text-left">Site</th>
+                    <th className="py-2 pr-3 text-left hidden sm:table-cell">Trajectory</th>
                     <th className="py-2 pr-4 text-right">Prior</th>
                     <th className="py-2 pr-4 text-right">Current</th>
                     <th className="py-2 text-right">Δ</th>
@@ -320,6 +323,8 @@ export default function PulsePage() {
                 <tbody>
                   {velocity.map((row, i) => {
                     const meta = getCompanyMeta(row.company as ReturnType<typeof getCompanyMeta>["id"]);
+                    const factory = factories.find((f) => f.slug === row.slug);
+                    const timeline = factory?.timeline ?? [];
                     return (
                       <tr key={row.slug} className="border-b border-border-custom last:border-0 hover:bg-surface">
                         <td className="py-3 pr-4 font-mono text-[10px] text-dim">{i + 1}</td>
@@ -331,6 +336,18 @@ export default function PulsePage() {
                             />
                             <span className="font-bold text-sm">{row.flag} {row.name}</span>
                           </Link>
+                        </td>
+                        <td className="py-3 pr-3 hidden sm:table-cell">
+                          <div style={{ color: meta.color }}>
+                            <Sparkline
+                              values={timeline}
+                              width={120}
+                              height={22}
+                              stroke={meta.color}
+                              fill={meta.color}
+                              strokeWidth={1.5}
+                            />
+                          </div>
                         </td>
                         <td className="py-3 pr-4 text-right font-mono text-dim tabular-nums">{row.prior}%</td>
                         <td className="py-3 pr-4 text-right font-mono tabular-nums">{row.current}%</td>

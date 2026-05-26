@@ -1,8 +1,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import type { Factory } from "@/data/types";
-
-const SEGMENTS = 8;
+import Sparkline from "./Sparkline";
 
 function hasTimelapseThumbnails(slug: string): boolean {
   return (
@@ -24,8 +23,12 @@ export default function FactoryCard({
   const isAlert = !isAnnounced && (factory.status === "paused" || factory.status === "planned");
   const accent = isAnnounced ? "#c4a000" : isAlert ? "#e63946" : color;
 
-  const filled = Math.max(1, Math.round((factory.progress / 100) * SEGMENTS));
   const showThumbs = hasTimelapseThumbnails(factory.slug);
+  // Sparkline reads the per-year progress timeline directly. Empty / all-zero
+  // timelines (announced sites pre-groundbreaking) render as a flat baseline
+  // inside Sparkline so we don't get a deceptive upward slope.
+  const timeline = factory.timeline ?? [];
+  const hasYearData = timeline.some((v) => typeof v === "number" && v > 0);
 
   return (
     <a
@@ -100,15 +103,24 @@ export default function FactoryCard({
 
         {isAnnounced ? (
           <div className="h-1.5 w-full rounded border border-dashed" style={{ borderColor: `${accent}66` }} />
+        ) : hasYearData ? (
+          // Sparkline traces the year-over-year progress curve. Replaces
+          // the 8-segment fill bar so the card surfaces TRAJECTORY (where
+          // is this trending) and not just current state.
+          <div className="w-full overflow-hidden" style={{ color: accent }}>
+            <Sparkline
+              values={timeline}
+              width={240}
+              height={24}
+              stroke={accent}
+              fill={accent}
+              strokeWidth={1.5}
+              className="w-full h-6"
+            />
+          </div>
         ) : (
-          <div className="flex h-1.5 w-full gap-0.5">
-            {Array.from({ length: SEGMENTS }).map((_, i) => (
-              <div
-                key={i}
-                className="h-full flex-grow rounded-sm"
-                style={i < filled ? { background: accent } : { background: `${accent}1f` }}
-              />
-            ))}
+          <div className="h-1.5 w-full rounded" style={{ background: `${accent}1f` }}>
+            <div className="h-full rounded transition-all" style={{ width: `${factory.progress}%`, background: accent }} />
           </div>
         )}
       </div>
