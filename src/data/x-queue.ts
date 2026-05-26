@@ -49,9 +49,13 @@ export const X_QUEUE_WEEK_1: XPostDraft[] = [
   {
     day: 1,
     theme: "Giga Texas: dirt → megafactory (HOOK)",
-    text: `Tesla Giga Texas: 2020 → 2026.
+    // 2026-05-26 fix: previous "2020 → 2026" mismatched the mp4 first frame
+    // (2018-08-15). Video starts at 2018 baseline (pre-Tesla farmland), Tesla
+    // broke ground Aug 2020. New copy lists both: 2018 = video span, "the 6
+    // years Tesla broke ground" = 2020-2026 build period. Both true.
+    text: `Tesla Giga Texas, 2018 → 2026.
 
-Dirt to the world's largest auto plant in 6 years.
+Bare farmland to megafactory in the 6 years Tesla broke ground.
 
 33 Sentinel-2 satellite frames, traced by hand.`,
     replyText: `Full breakdown of how this was traced:
