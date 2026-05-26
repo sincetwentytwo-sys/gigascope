@@ -15,6 +15,7 @@ import {
   formatRelativeDate,
   formatKm2,
   formatCount,
+  getAggregateTimeline,
 } from "./pulse";
 
 describe("parseAreaToKm2", () => {
@@ -120,6 +121,39 @@ describe("formatRelativeDate", () => {
     expect(formatRelativeDate("2026-05-13", NOW)).toBe("2w ago"); // 14 days
     expect(formatRelativeDate("2026-02-15", NOW)).toMatch(/mo ago$/);
     expect(formatRelativeDate("2024-05-27", NOW)).toMatch(/y ago$/);
+  });
+});
+
+describe("getAggregateTimeline", () => {
+  // Live data integration smoke — we don't pin to exact numbers because the
+  // dataset churns; we just sanity-check shape + monotonicity.
+  it("returns one row per timeline year, year ascending", () => {
+    const rows = getAggregateTimeline([2020, 2021, 2022, 2023, 2024, 2025, 2026]);
+    expect(rows).toHaveLength(7);
+    expect(rows.map((r) => r.year)).toEqual([2020, 2021, 2022, 2023, 2024, 2025, 2026]);
+  });
+
+  it("averageProgress is a 0-100 integer for each row", () => {
+    const rows = getAggregateTimeline([2020, 2021, 2022, 2023, 2024, 2025, 2026]);
+    for (const r of rows) {
+      expect(Number.isInteger(r.averageProgress)).toBe(true);
+      expect(r.averageProgress).toBeGreaterThanOrEqual(0);
+      expect(r.averageProgress).toBeLessThanOrEqual(100);
+    }
+  });
+
+  it("contributingSites grows or stays flat year-over-year (no sites disappear once on)", () => {
+    const rows = getAggregateTimeline([2020, 2021, 2022, 2023, 2024, 2025, 2026]);
+    for (let i = 1; i < rows.length; i++) {
+      // Sites with zero progress are excluded, so as more sites break ground
+      // the count should monotonically grow. This catches regressions where
+      // a site's later-year progress accidentally got set to 0.
+      expect(rows[i].contributingSites).toBeGreaterThanOrEqual(rows[i - 1].contributingSites);
+    }
+  });
+
+  it("empty years array returns []", () => {
+    expect(getAggregateTimeline([])).toEqual([]);
   });
 });
 

@@ -352,6 +352,46 @@ export function getCompanyBreakdown(): CompanyBreakdown[] {
 }
 
 // ──────────────────────────────────────────────────────────────────────────
+// Aggregate timeline — averaged progress per year across all non-announced
+// sites. Used by the empire-build-out chart on /pulse.
+//
+// Sites that haven't broken ground (all-zero timeline) are excluded from the
+// average so they don't drag the curve down — pre-groundbreaking projects
+// belong in the "Announced" bucket, not in the "empire built so far" story.
+// ──────────────────────────────────────────────────────────────────────────
+export interface AggregateYear {
+  year: number;
+  averageProgress: number;
+  contributingSites: number;
+}
+
+export function getAggregateTimeline(timelineYears: number[]): AggregateYear[] {
+  if (!timelineYears || timelineYears.length === 0) return [];
+  const rows: AggregateYear[] = [];
+  for (let i = 0; i < timelineYears.length; i++) {
+    let sum = 0;
+    let count = 0;
+    for (const f of factories) {
+      const tl = f.timeline ?? [];
+      if (tl.length <= i) continue;
+      const v = tl[i];
+      if (typeof v !== "number") continue;
+      // Skip sites with no progress yet — they're not "part of the empire"
+      // for the year in question.
+      if (v <= 0) continue;
+      sum += v;
+      count += 1;
+    }
+    rows.push({
+      year: timelineYears[i],
+      averageProgress: count > 0 ? Math.round(sum / count) : 0,
+      contributingSites: count,
+    });
+  }
+  return rows;
+}
+
+// ──────────────────────────────────────────────────────────────────────────
 // Formatting helpers used by both /pulse and homepage strip.
 // ──────────────────────────────────────────────────────────────────────────
 export function formatKm2(km2: number): string {

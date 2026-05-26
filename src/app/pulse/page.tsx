@@ -17,10 +17,12 @@ import {
   getUpcomingMilestones,
   getVelocityLeaderboard,
   getCompanyBreakdown,
+  getAggregateTimeline,
   formatKm2,
   formatCount,
   formatRelativeDate,
 } from "@/lib/pulse";
+import { TIMELINE_YEARS } from "@/data/factories";
 import { getCompanyMeta } from "@/data/companies";
 import EmailSignup from "@/components/EmailSignup";
 import Sparkline from "@/components/Sparkline";
@@ -57,6 +59,7 @@ export default function PulsePage() {
   const upcoming = getUpcomingMilestones(8);
   const velocity = getVelocityLeaderboard(6);
   const companies = getCompanyBreakdown();
+  const aggregate = getAggregateTimeline(TIMELINE_YEARS);
 
   // ── Schema.org structured data so search engines see a real dataset ──
   const jsonLd = {
@@ -129,6 +132,44 @@ export default function PulsePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Aggregate empire build-out chart ──────────────────────────── */}
+      {aggregate.length > 0 && (
+        <section aria-label="Empire build-out over time" className="border-b border-border-custom">
+          <div className="max-w-[1300px] mx-auto px-6 py-10 sm:py-14">
+            <SectionHeader
+              kicker="Aggregate"
+              title="Empire build-out, 2020 → today"
+              tail="Average progress across all sites with a non-zero footprint"
+            />
+            <div className="rounded-md border border-border-custom bg-bg p-5 sm:p-6">
+              {/* Tall sparkline + axis labels — same component used elsewhere
+                  but expanded to fill the section. Anchored to current text
+                  color so it picks up theme accents automatically. */}
+              <div className="text-text">
+                <Sparkline
+                  values={aggregate.map((a) => a.averageProgress)}
+                  width={1200}
+                  height={140}
+                  stroke="currentColor"
+                  fill="currentColor"
+                  strokeWidth={2}
+                  className="w-full h-[140px]"
+                />
+              </div>
+              <div className="mt-3 grid grid-cols-7 text-[10px] font-mono text-dim tabular-nums">
+                {aggregate.map((a) => (
+                  <div key={a.year} className="flex flex-col items-center">
+                    <span className="text-text font-bold text-[13px]">{a.averageProgress}%</span>
+                    <span>'{String(a.year).slice(-2)}</span>
+                    <span className="text-dim/70">n={a.contributingSites}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── Latest captures ────────────────────────────────────────────── */}
       <section aria-label="Latest satellite captures" className="border-b border-border-custom">
