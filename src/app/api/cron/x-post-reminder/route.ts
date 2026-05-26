@@ -74,21 +74,25 @@ interface SendResult {
 }
 
 async function sendViaTelegram(chatId: string, draft: XPostDraft): Promise<ChannelResult> {
-  // Three-message format: header / bare-copy / metadata. The bare-copy block
-  // has no parse_mode so long-press-copy on phone yields exactly the X post
-  // text — no escape characters, no formatting marks.
+  // Four-message format mirrors the email's 3-section split so the mobile
+  // workflow is consistent: header → main copy → reply copy → metadata.
+  // Each copy block has no parse_mode so long-press-copy yields exactly the
+  // X post text — no escape characters, no formatting marks.
   const headerMsg = [
     `*X Post — Day ${draft.day}/7*`,
     `_${escapeMd(draft.theme)}_`,
     "",
-    "Copy the next message and paste into X. Long-press → Copy All.",
+    "*3 steps:*",
+    "1. Post the MAIN block (no link in body — algo penalty).",
+    "2. Reply to your own tweet with the REPLY block.",
+    "3. Attach the media file.",
   ].join("\n");
 
-  const metaLines = [`*Media:* ${escapeMd(draft.mediaHint)}`];
+  const mainLabel = `*1. MAIN TWEET* — copy below ⬇️`;
+  const replyLabel = `*2. REPLY 1* — reply to your own tweet with this ⬇️`;
+
+  const metaLines = [`*3. Media:* ${escapeMd(draft.mediaHint)}`];
   if (draft.mediaUrl) {
-    // Bare URL on its own line — Telegram auto-renders it as a tappable
-    // download link with video/image preview enabled (we leave web_page_preview
-    // ON for the meta message, unlike the copy block).
     metaLines.push("", `Download: ${draft.mediaUrl}`);
   }
   if (draft.notes) {
@@ -102,18 +106,28 @@ async function sendViaTelegram(chatId: string, draft: XPostDraft): Promise<Chann
   const ok1 = await sendTelegramMessage(chatId, headerMsg, { disable_web_page_preview: true });
   if (!ok1) return { channel: "telegram", ok: false, reason: "header_failed" };
 
+  // MAIN label + bare copy block (two messages so the copy block stands alone
+  // for clean long-press-copy).
+  await sendTelegramMessage(chatId, mainLabel, { disable_web_page_preview: true });
   const ok2 = await sendTelegramMessage(chatId, draft.text, {
     parse_mode: undefined,
     disable_web_page_preview: true,
   } as Parameters<typeof sendTelegramMessage>[2]);
-  if (!ok2) return { channel: "telegram", ok: false, reason: "copy_failed" };
+  if (!ok2) return { channel: "telegram", ok: false, reason: "main_copy_failed" };
 
-  // Leave web_page_preview ON here so the Download URL renders inline as a
-  // tappable video/image preview — the whole point of including the URL.
-  const ok3 = await sendTelegramMessage(chatId, metaLines.join("\n"), {
+  // REPLY label + bare reply copy.
+  await sendTelegramMessage(chatId, replyLabel, { disable_web_page_preview: true });
+  const ok3 = await sendTelegramMessage(chatId, draft.replyText, {
+    parse_mode: undefined,
+    disable_web_page_preview: true,
+  } as Parameters<typeof sendTelegramMessage>[2]);
+  if (!ok3) return { channel: "telegram", ok: false, reason: "reply_copy_failed" };
+
+  // Meta (preview ON when there's a downloadable media URL so it renders inline).
+  const ok4 = await sendTelegramMessage(chatId, metaLines.join("\n"), {
     disable_web_page_preview: !draft.mediaUrl,
   });
-  if (!ok3) return { channel: "telegram", ok: true, reason: "meta_failed" }; // partial success
+  if (!ok4) return { channel: "telegram", ok: true, reason: "meta_failed" }; // partial success
 
   return { channel: "telegram", ok: true };
 }
@@ -164,6 +178,7 @@ async function sendViaEmail(
   const subject = `GIGASCOPE · X Post Day ${draft.day}/7 — ${draft.theme}`;
 
   const safeText = escapeHtml(draft.text);
+  const safeReply = escapeHtml(draft.replyText);
   const safeTheme = escapeHtml(draft.theme);
   const safeMedia = escapeHtml(draft.mediaHint);
   const safeNotes = draft.notes ? escapeHtml(draft.notes) : "";
@@ -200,42 +215,64 @@ async function sendViaEmail(
   <div style="font-size:13px;margin-bottom:20px;word-wrap:break-word;">${safeMedia}</div>
 `;
 
+  // Section header used to visually separate the three posting steps:
+  //   1. MAIN TWEET (no link — X algo penalty)
+  //   2. REPLY 1 (link lives here)
+  //   3. ATTACHMENT (already in the email)
+  const sectionLabel = (n: number, title: string, color: string) => `
+  <div style="display:flex;align-items:center;gap:8px;margin:24px 0 8px;">
+    <span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:${color};color:#fff;font-size:12px;font-weight:700;border-radius:50%;">${n}</span>
+    <span style="font-size:13px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">${title}</span>
+  </div>`;
+
   const html = `<!doctype html>
 <html><head><meta charset="utf-8"></head>
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#0a0a0a;max-width:560px;margin:0 auto;padding:24px;">
   <div style="font-size:11px;letter-spacing:0.1em;color:#888;text-transform:uppercase;margin-bottom:4px;">Day ${draft.day} / 7</div>
-  <h2 style="font-size:18px;margin:0 0 16px;">${safeTheme}</h2>
+  <h2 style="font-size:18px;margin:0 0 4px;">${safeTheme}</h2>
+  <div style="font-size:12px;color:#888;margin-bottom:8px;">Post in 3 steps: main tweet → reply with link → attach media.</div>
 
-  <div style="font-size:13px;color:#666;margin-bottom:8px;">Tweet text — long-press to copy:</div>
-  <pre style="background:#f5f5f5;border:1px solid #e5e5e5;border-radius:6px;padding:14px;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word;margin:0 0 20px;">${safeText}</pre>
+  ${sectionLabel(1, "Main tweet · post first", "#0a0a0a")}
+  <div style="font-size:12px;color:#666;margin-bottom:6px;">No link in the main body — X algorithm down-ranks link posts. Long-press to copy:</div>
+  <pre style="background:#f5f5f5;border:1px solid #e5e5e5;border-radius:6px;padding:14px;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word;margin:0 0 8px;">${safeText}</pre>
 
+  ${sectionLabel(2, "Reply 1 · link lives here", "#1d4ed8")}
+  <div style="font-size:12px;color:#666;margin-bottom:6px;">After the main tweet posts, reply to your own tweet with this:</div>
+  <pre style="background:#eef4ff;border:1px solid #bfdbfe;border-radius:6px;padding:14px;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word;margin:0 0 8px;">${safeReply}</pre>
+
+  ${sectionLabel(3, "Attachment · for the main tweet", "#059669")}
 ${mediaBlock}
 
-  ${safeNotes ? `<div style="font-size:13px;color:#666;margin-bottom:4px;"><strong>Notes:</strong></div>
-  <div style="font-size:13px;margin-bottom:16px;">${safeNotes}</div>` : ""}
+  ${safeNotes ? `<hr style="border:none;border-top:1px solid #e5e5e5;margin:24px 0;">
+  <div style="font-size:12px;color:#888;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.04em;font-weight:600;">Notes</div>
+  <div style="font-size:13px;color:#444;margin-bottom:16px;">${safeNotes}</div>` : ""}
 
   <hr style="border:none;border-top:1px solid #e5e5e5;margin:24px 0;">
   <div style="font-size:11px;color:#888;">
     Day ${draft.day} of 7-day X launch cycle.<br>
-    Reply with the tweet URL after posting so we can track Day-${draft.day} signal.
+    Reply to this email with the tweet URL after posting so we can track Day-${draft.day} signal.
   </div>
 </body></html>`;
 
-  // Text alternative — same content, no markup. Mobile mail clients that
-  // strip HTML still get a fully usable copy surface.
+  // Text alternative — same 3-section structure for clients that strip HTML.
   const text = [
     `GIGASCOPE · X Post Day ${draft.day}/7`,
     draft.theme,
     "",
-    "─── Tweet text (copy below) ───",
+    "═══ 1. MAIN TWEET (no link — post first) ═══",
     draft.text,
-    "─── End tweet text ───",
+    "═══ end main ═══",
     "",
+    "═══ 2. REPLY 1 (link — reply to your own tweet) ═══",
+    draft.replyText,
+    "═══ end reply ═══",
+    "",
+    "═══ 3. ATTACHMENT ═══",
     `Media: ${draft.mediaHint}`,
-    mediaUrl ? `Download: ${mediaUrl}` : "",
+    attachment ? `Attached: ${attachment.filename}` : (mediaUrl ? `Download: ${mediaUrl}` : ""),
     draft.notes ? `\nNotes: ${draft.notes}` : "",
     "",
-    `Reply with the tweet URL after posting so we can track Day-${draft.day} signal.`,
+    `Reply to this email with the tweet URL after posting so we can track Day-${draft.day} signal.`,
   ].filter(Boolean).join("\n");
 
   // Resend SDK returns { data, error } and does NOT throw on API-level errors

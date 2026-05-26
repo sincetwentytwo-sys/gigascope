@@ -8,17 +8,23 @@
 // Kept inline (not file-read) because Vercel runtime can't reach G:/jb.
 //
 // Owner workflow per day:
-//   1. Receive Telegram ping at 18:00 KST (cron in /api/cron/x-post-reminder)
-//   2. Long-press → Copy the `text` block
-//   3. Grab media from `mediaHint` (G:/jb path on PC, OR capture screenshot)
-//   4. Paste into X app, attach media, hit Send
+//   1. Receive email at 18:00 KST (cron in /api/cron/x-post-reminder)
+//   2. Post `text` to X (no link in body — algo penalty is real)
+//   3. Reply to own tweet with `replyText` (link lives here)
+//   4. Attach media file (Days 1-2 pre-prepared, Days 3-7 screenshot day-of)
 //
 // Week 2+ generator NOT built yet (per owner: validate Week 1 first).
 
 export interface XPostDraft {
   day: number; // 1..7
   theme: string;
+  // Main tweet body — no external link (X algo penalizes link-bearing posts
+  // by ~30-50%, especially for accounts with low engagement history).
   text: string;
+  // First-reply to the main tweet — link lives here. X's algorithm doesn't
+  // penalize links in replies the same way it penalizes them in the parent
+  // post, so we keep main reach high and route conversion via the reply.
+  replyText: string;
   mediaHint: string; // human-readable description of what to attach
   // Public URL of the media file to attach (mp4/gif/png). Owner taps the
   // download button in the email → file lands in their gallery → swap to
@@ -30,8 +36,8 @@ export interface XPostDraft {
   // jpg only — modern mail clients render inline JPG reliably; video tags
   // are stripped in most.
   previewImageUrl?: string;
-  // Reply tactic / why this post / what to watch for. Sent as second telegram
-  // message to keep the main draft easy to copy without commentary noise.
+  // Reply tactic / why this post / what to watch for. Sent as the meta block
+  // in the email so the main copy blocks stay clean.
   notes?: string;
 }
 
@@ -47,8 +53,8 @@ export const X_QUEUE_WEEK_1: XPostDraft[] = [
 
 Dirt to the world's largest auto plant in 6 years.
 
-33 Sentinel-2 satellite frames, traced by hand.
-
+33 Sentinel-2 satellite frames, traced by hand.`,
+    replyText: `Full breakdown of how this was traced:
 gigascope.xyz/site/giga-texas`,
     mediaHint: "Giga Texas 6-year timelapse (1.9MB mp4 — X auto-loops)",
     mediaUrl: `${BASE}/timelapses/giga-texas.mp4`,
@@ -61,8 +67,8 @@ gigascope.xyz/site/giga-texas`,
     text: `SpaceX Starbase: sand to Starship pad in 5 years.
 
 26 Sentinel-2 frames, 2019 → 2026.
-OLM tower, Mechazilla, the orbital ring — all built on what was mudflats.
-
+OLM tower, Mechazilla, the orbital ring — all built on what was mudflats.`,
+    replyText: `Tracked here:
 gigascope.xyz/site/starbase`,
     mediaHint: "Starbase 5-year timelapse (1.7MB mp4)",
     mediaUrl: `${BASE}/timelapses/starbase.mp4`,
@@ -74,9 +80,9 @@ gigascope.xyz/site/starbase`,
     theme: "Cross-empire: 16 sites in one place",
     text: `Nobody tracks the full Musk empire from orbit.
 
-I built one — 16 sites across Tesla / SpaceX / xAI / Neuralink / Boring, all on a single satellite feed.
-
-Free daily digest: gigascope.xyz`,
+I built one — 16 sites across Tesla / SpaceX / xAI / Neuralink / Boring, all on a single satellite feed.`,
+    replyText: `Free daily digest 👇
+gigascope.xyz`,
     mediaHint: "Screenshot gigascope.xyz home (16 site cards visible). Capture day-of so it's fresh.",
     notes: "First conversion-pitch post. Watch digest signups in next 24h.",
   },
@@ -87,8 +93,8 @@ Free daily digest: gigascope.xyz`,
 
 Real cadence: Sentinel-2 EOX annual + ESRI 3-6mo refresh = ~2 months/site.
 
-Honest methodology > marketing claims.
-
+Honest methodology > marketing claims.`,
+    replyText: `Full breakdown:
 gigascope.xyz/methodology`,
     mediaHint: "Screenshot gigascope.xyz/methodology (cadence table + traced polygon section).",
     notes: "Raw honesty post. NASASpaceflight forum tone. Differentiates from marketing-noisy alt-data sites.",
@@ -98,9 +104,8 @@ gigascope.xyz/methodology`,
     theme: "Colossus inside-vs-outside",
     text: `xAI Colossus, Memphis: 200K NVIDIA GB200 GPUs going in.
 
-The outside changed barely. The change is *inside* — 200MW rack install, chiller plumbing, gas turbines.
-
-Tracked the externally-visible parts here:
+The outside changed barely. The real change is *inside* — 200MW rack install, chiller plumbing, gas turbines.`,
+    replyText: `Tracking the externally-visible parts:
 gigascope.xyz/site/colossus`,
     mediaHint: "Screenshot gigascope.xyz/site/colossus (site card or before/after thumb).",
     notes: "Acknowledges limitation honestly — that limitation IS the trust signal.",
@@ -110,9 +115,8 @@ gigascope.xyz/site/colossus`,
     theme: "Permit alerts wedge teaser",
     text: `Idea I'm testing: when Tesla files a Giga Texas building permit at Travis County, I get an alert in <24hr.
 
-Currently owner-only. If it works for a month, charter subscribers get it too.
-
-Free signups already include the daily digest:
+Currently owner-only. If it works for a month, charter subscribers get it too.`,
+    replyText: `Free signup includes the daily digest:
 gigascope.xyz/pro`,
     mediaHint: "Text-only, OR screenshot of Travis County permit listing.",
     notes: "Reveals the unique wedge. Public announcement = traction signal + locks in charter narrative.",
@@ -127,9 +131,8 @@ gigascope.xyz/pro`,
 ▢ 16 cross-empire sites
 ▢ Methodology
 ▢ Colossus inside-vs-outside
-▢ Permit alerts wedge
-
-If you want this in your inbox every morning:
+▢ Permit alerts wedge`,
+    replyText: `If you want this in your inbox every morning:
 gigascope.xyz`,
     mediaHint: "Day 1 + Day 2 GIF combo, OR 16-site grid screenshot from home.",
     notes: "Week-1 retro. After this, decide: Week 2 continues (≥30 free signups) or pivot.",
