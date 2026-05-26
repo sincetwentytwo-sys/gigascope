@@ -163,18 +163,28 @@ async function sendViaEmail(
     `Reply with the tweet URL after posting so we can track Day-${draft.day} signal.`,
   ].join("\n");
 
+  // Resend SDK returns { data, error } and does NOT throw on API-level errors
+  // — it only throws on network/SDK-internal problems. Caller must inspect
+  // `error` explicitly, otherwise a domain-not-verified or invalid-to bounces
+  // silently with ok:true.
   try {
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: `GIGASCOPE <${from}>`,
       to,
       subject,
       html,
       text,
     });
-    return { channel: "email", ok: true };
+    if (result.error) {
+      const msg = (result.error.message ?? "").slice(0, 200);
+      const name = result.error.name ?? "ResendError";
+      return { channel: "email", ok: false, reason: `resend_api_error:${name}:${msg}` };
+    }
+    const id = result.data?.id ?? "no-id";
+    return { channel: "email", ok: true, reason: `sent:${id}` };
   } catch (e) {
-    const err = e instanceof Error ? e.message.slice(0, 120) : "unknown";
-    return { channel: "email", ok: false, reason: `send_failed:${err}` };
+    const err = e instanceof Error ? e.message.slice(0, 200) : "unknown";
+    return { channel: "email", ok: false, reason: `send_threw:${err}` };
   }
 }
 
