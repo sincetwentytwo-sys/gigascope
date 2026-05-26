@@ -355,7 +355,10 @@ export default function MethodologyPage() {
             <p className="text-sm text-dim leading-relaxed mb-3">
               Every verified milestone links to a primary source — FAA notice, SEC EDGAR
               filing, county permit, IR press release, NASA mission page, ClinicalTrials.gov
-              entry, NRC docket, or government data table (USGS, EIA, KOSIS, DART).
+              entry, NRC docket, or government data table (USGS, EIA, KOSIS, DART). The full
+              bibliography lives at{" "}
+              <Link href="/sources" className="underline hover:text-text">/sources</Link>{" "}
+              — every URL we cite, grouped by site.
             </p>
             <p className="text-sm text-dim leading-relaxed mb-3">
               When sources conflict, both are noted on the site page (for example,{" "}
