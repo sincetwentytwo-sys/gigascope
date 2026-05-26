@@ -159,7 +159,15 @@ export default async function Home({
 
       {/* ── Pulse this week — 2-col: latest captures + recent milestones ──── */}
       <section className="border-b border-border-custom">
-        <div className="max-w-[1300px] mx-auto px-6 py-10 sm:py-14 grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-x-10 gap-y-8">
+        <div className="max-w-[1300px] mx-auto px-6 py-10 sm:py-14">
+          <div className="flex items-end justify-between gap-4 mb-8">
+            <div>
+              <div className="text-[10px] uppercase tracking-widest font-mono text-dim mb-1">Pulse</div>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">What just landed</h2>
+            </div>
+            <Link href="/pulse" className="text-[13px] text-dim hover:text-text shrink-0">Full scoreboard →</Link>
+          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-x-10 gap-y-8">
           {/* Captures (1.2fr) */}
           <div>
             <div className="flex items-end justify-between mb-4">
@@ -246,6 +254,7 @@ export default async function Home({
               })}
             </ol>
           </div>
+        </div>
         </div>
       </section>
 
