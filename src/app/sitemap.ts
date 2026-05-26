@@ -20,6 +20,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/about`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE_URL}/methodology`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.85 },
     { url: `${BASE_URL}/charter-terms`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${BASE_URL}/terms-of-service`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${BASE_URL}/privacy-policy`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${BASE_URL}/refund-policy`, lastModified: lastMod, changeFrequency: "monthly", priority: 0.4 },
   ];
 
   const factoryPages: MetadataRoute.Sitemap = factories.map((f) => ({

@@ -149,10 +149,41 @@ export default function RootLayout({
             sm:pb-0 removes the padding once the mobile nav is hidden. */}
         <main id="main-content" className="flex-1 pb-20 sm:pb-0">{children}</main>
 
-        <footer className="py-8 px-6 pb-20 sm:pb-8 text-center text-xs text-dim flex flex-col gap-3 items-center">
-          <div>GIGASCOPE — Community project. Not affiliated with Tesla, SpaceX, xAI, Neuralink, or The Boring Company.</div>
+        <footer className="py-8 px-6 pb-20 sm:pb-8 text-center text-xs text-dim flex flex-col gap-4 items-center max-w-[1100px] mx-auto">
+          <div>GIGASCOPE — Not affiliated with Tesla, SpaceX, xAI, Neuralink, or The Boring Company.</div>
+
+          {/* Policy + legal links — required for Paddle MoR + Korean e-commerce law */}
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[11px]">
+            <a href="/terms-of-service" className="hover:text-text transition-colors">Terms of Service</a>
+            <a href="/privacy-policy" className="hover:text-text transition-colors">Privacy Policy</a>
+            <a href="/refund-policy" className="hover:text-text transition-colors">Refund Policy</a>
+            <a href="/charter-terms" className="hover:text-text transition-colors">Charter Terms</a>
+            <a href="/methodology" className="hover:text-text transition-colors">Methodology</a>
+          </div>
+
           <SupportLinks />
           <VisitCounter />
+
+          {/* Korean e-commerce act (전자상거래법) — business operator disclosure.
+              Required on any site that takes payments from Korean residents
+              and prudent for global checkout via Paddle MoR. Kept compact and
+              legible (deg-dim) so it isn't visually noisy.
+
+              사업자등록증 사실관계와 항상 일치해야 함. 변경 시 즉시 업데이트.
+              통신판매업 신고는 사업자등록 후 별도 신청; 신고번호 받으면 라인 추가. */}
+          <div className="mt-2 pt-3 border-t border-border-custom/60 w-full max-w-xl text-[10px] text-dim leading-relaxed">
+            <div className="font-semibold mb-1 text-text/80">사업자 정보 / Business operator</div>
+            <div>상호 (Trade name): 기가스코프 (GIGASCOPE)</div>
+            <div>대표자 (Representative): Jaebin Kim</div>
+            <div>사업자등록번호 (Business reg.): 568-24-02193</div>
+            <div>주소 (Address): 서울특별시 마포구 홍익로5안길 42 / 42, Hongik-ro 5an-gil, Mapo-gu, Seoul 04039</div>
+            <div>
+              이메일 (Email):{" "}
+              <a href="mailto:sincetwentytwo@gmail.com" className="hover:text-text transition-colors">
+                sincetwentytwo@gmail.com
+              </a>
+            </div>
+          </div>
         </footer>
       </body>
     </html>
