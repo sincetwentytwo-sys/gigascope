@@ -1,12 +1,17 @@
 // RSS 2.0 feed for /feed.xml. Sources fetchAllNews() from src/lib/rss.ts —
-// same parser the on-site feed uses, so /news and /feed.xml stay in sync.
-// Cache-Control mirrors /api/news (10 min) — feeds don't need to be tighter.
+// same parser the on-site feed uses, so the home news block and /feed.xml
+// stay in sync. Cache-Control mirrors /api/news (10 min).
+//
+// The channel <link> points at /pulse — the post-rebuild flagship dashboard
+// where the news block is co-surfaced with milestone + capture data. /news
+// was killed in the Round 4 page prune (2026-05-25), so feeds pointing at it
+// would 404.
 
 import { fetchAllNews } from "@/lib/rss";
 
 const SITE_URL = "https://gigascope.xyz";
 const FEED_URL = `${SITE_URL}/feed.xml`;
-const NEWS_URL = `${SITE_URL}/news`;
+const CHANNEL_URL = `${SITE_URL}/pulse`;
 const MAX_ITEMS = 20;
 
 export const revalidate = 600;
@@ -54,7 +59,7 @@ export async function GET() {
     '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">',
     "  <channel>",
     "    <title>GIGASCOPE News</title>",
-    `    <link>${NEWS_URL}</link>`,
+    `    <link>${CHANNEL_URL}</link>`,
     `    <atom:link href="${FEED_URL}" rel="self" type="application/rss+xml" />`,
     "    <description>Musk-empire construction tracker — daily satellite + news digest</description>",
     "    <language>en</language>",

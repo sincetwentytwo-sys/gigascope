@@ -9,7 +9,7 @@ import SearchOpener from "@/components/SearchOpener";
 export const metadata: Metadata = {
   title: "GIGASCOPE — Watch Musk's empire get built, one satellite frame at a time",
   description:
-    "Sentinel-2 + ESRI satellite timelapses of 16 Musk-empire sites, refreshed as new imagery drops (typically every 2-3 months per site). Tesla Gigafactories from dirt to delivery, SpaceX Starbase orbital launches, xAI Colossus GPU cluster, Neuralink, Boring Co. Methodology + catalyst calendar. Free.",
+    "Empire-wide satellite scoreboard for 16 Musk industrial sites (Tesla, SpaceX, xAI, Neuralink, Boring Co.). Sentinel-2 + ESRI timelapses, hand-traced progress polygons, primary-source milestones, daily digest, methodology cited. The /pulse dashboard rolls it all into one view. Free.",
   keywords: ["Tesla", "SpaceX", "xAI", "Neuralink", "Boring Company", "Elon Musk", "Gigafactory", "Starlink", "Cybertruck", "Starship", "Model 3", "Model Y", "Megapack", "Optimus", "Colossus", "satellite imagery", "construction tracking"],
   icons: { icon: "/favicon.svg" },
   manifest: "/manifest.json",
