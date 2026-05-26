@@ -16,6 +16,7 @@ import {
   getRecentMilestones,
   getUpcomingMilestones,
   getVelocityLeaderboard,
+  getCompanyBreakdown,
   formatKm2,
   formatCount,
   formatRelativeDate,
@@ -53,6 +54,7 @@ export default function PulsePage() {
   const recent = getRecentMilestones(10);
   const upcoming = getUpcomingMilestones(8);
   const velocity = getVelocityLeaderboard(6);
+  const companies = getCompanyBreakdown();
 
   // ── Schema.org structured data so search engines see a real dataset ──
   const jsonLd = {
@@ -347,19 +349,49 @@ export default function PulsePage() {
 
       {/* ── Status mix bar ─────────────────────────────────────────────── */}
       <section className="border-b border-border-custom">
-        <div className="max-w-[1300px] mx-auto px-6 py-10">
-          <SectionHeader
-            kicker="Mix"
-            title="Status across the empire"
-            tail={`${stats.sites} sites in scope`}
-          />
-          <StatusMixBar
-            ops={stats.operationalSites}
-            expanding={stats.expandingSites}
-            construction={stats.constructionSites}
-            announced={stats.announcedSites}
-            total={stats.sites}
-          />
+        <div className="max-w-[1300px] mx-auto px-6 py-10 sm:py-14 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-x-12 gap-y-10">
+          <div>
+            <SectionHeader
+              kicker="Mix"
+              title="Status across the empire"
+              tail={`${stats.sites} sites in scope`}
+            />
+            <StatusMixBar
+              ops={stats.operationalSites}
+              expanding={stats.expandingSites}
+              construction={stats.constructionSites}
+              announced={stats.announcedSites}
+              total={stats.sites}
+            />
+          </div>
+          <div>
+            <SectionHeader
+              kicker="By company"
+              title="Average build progress"
+              tail="Sites with measurable footprint"
+            />
+            <div className="flex flex-col gap-3">
+              {companies
+                .sort((a, b) => b.averageProgress - a.averageProgress)
+                .map((row) => {
+                  const meta = getCompanyMeta(row.company as ReturnType<typeof getCompanyMeta>["id"]);
+                  return (
+                    <div key={row.company} className="grid grid-cols-[100px_1fr_56px] gap-3 items-center">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: meta.color }} />
+                        <span className="text-[12px] font-mono uppercase tracking-wider truncate">{meta.name}</span>
+                      </div>
+                      <div className="h-1.5 rounded bg-surface overflow-hidden border border-border-custom">
+                        <div className="h-full" style={{ width: `${row.averageProgress}%`, background: meta.color }} />
+                      </div>
+                      <div className="text-right font-mono text-[12px] tabular-nums">
+                        {row.averageProgress}<span className="text-dim">%</span>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
         </div>
       </section>
 

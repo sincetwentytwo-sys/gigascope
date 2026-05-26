@@ -34,10 +34,15 @@ type Hero = {
 // (sand→OLM tower) carry the visual weight.
 const HEROES: Hero[] = [
   {
+    // Video first frame is 2018-08-15 (Sentinel-2 capture predates groundbreaking).
+    // Tesla broke ground in 2020 → site was operational by 2022 → continued
+    // expansion through 2026, so the construction story is "bare farmland to
+    // megafactory" across the full window. Kicker reflects the actual video
+    // range; headline reflects the construction-only window from groundbreaking.
     slug: "giga-texas",
-    kicker: "Tesla Gigafactory Texas · Sentinel-2 · 2020 → 2026",
+    kicker: "Tesla Gigafactory Texas · Sentinel-2 · 2018 → 2026",
     headlineLead: "Tesla Gigafactory Texas —",
-    headlineTail: "six years from dirt.",
+    headlineTail: "bare farmland to megafactory in six years.",
   },
   {
     slug: "starbase",
@@ -108,9 +113,9 @@ export default async function Home({
             <span className="text-white/85">{hero.headlineTail}</span>
           </h1>
           <p className="text-sm sm:text-base text-white/80 max-w-xl mb-6">
-            The empire-wide satellite scoreboard for Tesla, SpaceX, xAI, Neuralink, and The Boring Company.
+            The satellite scoreboard for the Musk empire.
             <br className="hidden sm:block" />
-            {stats.sites} sites, {stats.satelliteFrames} captures, {stats.milestonesTracked} milestones.
+            {stats.sites} sites · {stats.satelliteFrames} captures · {stats.milestonesTracked} milestones, all cited.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <Link
