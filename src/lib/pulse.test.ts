@@ -16,6 +16,12 @@ import {
   formatKm2,
   formatCount,
   getAggregateTimeline,
+  getEmpireStats,
+  getLatestCaptures,
+  getRecentMilestones,
+  getUpcomingMilestones,
+  getVelocityLeaderboard,
+  getCompanyBreakdown,
 } from "./pulse";
 
 describe("parseAreaToKm2", () => {
@@ -154,6 +160,88 @@ describe("getAggregateTimeline", () => {
 
   it("empty years array returns []", () => {
     expect(getAggregateTimeline([])).toEqual([]);
+  });
+});
+
+// ──────────────────────────────────────────────────────────────────────────
+// Integration smoke tests for the aggregate getters. These call the real
+// helpers against the live factories.json + timelapses/index.json. We don't
+// pin to exact values (those data files churn); we assert shape + invariants.
+// ──────────────────────────────────────────────────────────────────────────
+describe("aggregate getters — shape + invariants", () => {
+  it("getEmpireStats returns a well-formed EmpireStats", () => {
+    const stats = getEmpireStats();
+    expect(stats.sites).toBeGreaterThanOrEqual(16);
+    expect(stats.countries).toBeGreaterThanOrEqual(1);
+    expect(stats.satelliteFrames).toBeGreaterThan(0);
+    expect(stats.milestonesTracked).toBeGreaterThan(0);
+    expect(stats.milestonesDone).toBeLessThanOrEqual(stats.milestonesTracked);
+    expect(stats.totalFootprintKm2).toBeGreaterThan(0);
+    expect(stats.totalInvestment).toMatch(/^~?\$\d+B/);
+    expect(stats.dataLastUpdated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
+
+  it("getLatestCaptures returns at most the requested count, sorted desc by date", () => {
+    const captures = getLatestCaptures(5);
+    expect(captures.length).toBeLessThanOrEqual(5);
+    for (let i = 1; i < captures.length; i++) {
+      expect(captures[i - 1].latest >= captures[i].latest).toBe(true);
+    }
+    for (const c of captures) {
+      expect(c.frames).toBeGreaterThan(0);
+      expect(c.slug.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("getRecentMilestones returns only done=true milestones, sorted desc by date", () => {
+    const recent = getRecentMilestones(20);
+    // Sorted descending — but compare via parseMilestoneDate timestamp, not
+    // raw string. String compare would put '2026-03-15' before '2026-Q1'
+    // alphabetically, even though Q1 (mid-Feb) is earlier than March.
+    for (let i = 1; i < recent.length; i++) {
+      const prev = parseMilestoneDate(recent[i - 1].date) ?? 0;
+      const cur = parseMilestoneDate(recent[i].date) ?? 0;
+      expect(prev >= cur).toBe(true);
+    }
+    // All entries have non-empty text + site
+    for (const m of recent) {
+      expect(m.text.length).toBeGreaterThan(0);
+      expect(m.site.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("getUpcomingMilestones returns within window, sorted asc by days", () => {
+    const NOW = Date.UTC(2026, 4, 27); // pin to deterministic anchor
+    const upcoming = getUpcomingMilestones(10, NOW);
+    for (let i = 1; i < upcoming.length; i++) {
+      expect(upcoming[i - 1].daysAway <= upcoming[i].daysAway).toBe(true);
+    }
+    for (const m of upcoming) {
+      expect(m.daysAway).toBeGreaterThanOrEqual(-30);
+      expect(m.daysAway).toBeLessThanOrEqual(540);
+    }
+  });
+
+  it("getVelocityLeaderboard returns positive deltas sorted desc", () => {
+    const velocity = getVelocityLeaderboard(10);
+    for (let i = 1; i < velocity.length; i++) {
+      expect(velocity[i - 1].delta >= velocity[i].delta).toBe(true);
+    }
+    for (const v of velocity) {
+      expect(v.delta).toBeGreaterThan(0);
+      expect(v.current).toBeGreaterThan(v.prior);
+    }
+  });
+
+  it("getCompanyBreakdown returns one row per company with averageProgress in [0,100]", () => {
+    const rows = getCompanyBreakdown();
+    expect(rows.length).toBeGreaterThan(0);
+    for (const row of rows) {
+      expect(row.sites).toBeGreaterThan(0);
+      expect(row.averageProgress).toBeGreaterThanOrEqual(0);
+      expect(row.averageProgress).toBeLessThanOrEqual(100);
+      expect(row.totalArea).toBeGreaterThanOrEqual(0);
+    }
   });
 });
 
