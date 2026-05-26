@@ -7,6 +7,7 @@ export const metadata = {
 
 const LINKS = [
   { href: "/", label: "All sites" },
+  { href: "/pulse", label: "Pulse" },
   { href: "/products", label: "Products" },
   { href: "/compare", label: "Compare" },
   { href: "/methodology", label: "Methodology" },

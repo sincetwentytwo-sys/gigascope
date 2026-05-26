@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { factories } from "@/data/factories";
+import { getEmpireStats, formatKm2, formatCount } from "@/lib/pulse";
 
 export const metadata: Metadata = {
   title: "About — GIGASCOPE",
@@ -23,15 +24,25 @@ const NOT_THIS = [
 ];
 
 export default function AboutPage() {
+  const stats = getEmpireStats();
+
   return (
     <div className="max-w-[820px] mx-auto px-6 py-12">
       {/* Hero */}
-      <header className="mb-12">
+      <header className="mb-10">
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">About GIGASCOPE</h1>
         <p className="text-dim text-lg leading-relaxed max-w-xl">
           Watch Musk's empire get built — Tesla, SpaceX, xAI, Neuralink, Boring Company — one satellite frame at a time.
         </p>
       </header>
+
+      {/* Tiny "today" stat strip — visible proof the site has data, not just copy. */}
+      <section className="mb-12 grid grid-cols-2 sm:grid-cols-4 gap-px bg-border-custom rounded-md overflow-hidden border border-border-custom">
+        <MiniStat label="Sites" value={String(stats.sites)} />
+        <MiniStat label="Footprint" value={formatKm2(stats.totalFootprintKm2)} />
+        <MiniStat label="Captures" value={formatCount(stats.satelliteFrames)} />
+        <MiniStat label="Sources" value={String(stats.sourcesCited)} />
+      </section>
 
       {/* Why this exists */}
       <section className="mb-12">
@@ -142,6 +153,15 @@ export default function AboutPage() {
         <strong className="text-text">Disclaimer</strong> — GIGASCOPE is an independent community project. Not affiliated with Tesla, SpaceX, xAI, Neuralink, or The Boring Company.
         Satellite imagery is not real-time; refresh cadence and limitations are documented on the methodology page. Not financial advice. Always verify with primary sources before acting.
       </section>
+    </div>
+  );
+}
+
+function MiniStat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="bg-bg p-3 sm:p-4">
+      <div className="text-[9px] uppercase tracking-widest font-mono text-dim mb-1">{label}</div>
+      <div className="text-xl sm:text-2xl font-bold tabular-nums">{value}</div>
     </div>
   );
 }
