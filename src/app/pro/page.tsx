@@ -178,7 +178,7 @@ export default async function ProPage() {
             </h2>
             <p className="text-dim max-w-2xl mx-auto leading-relaxed">
               Both the digest and the alert feed are wired to the same data the public site
-              uses — {stats.satelliteFrames} satellite frames, {stats.milestonesTracked}{" "}
+              uses: {stats.satelliteFrames} satellite frames, {stats.milestonesTracked}{" "}
               milestones, {stats.sourcesCited} cited sources. Below is exactly what a
               recipient inbox looks like.
             </p>

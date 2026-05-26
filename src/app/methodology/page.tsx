@@ -91,7 +91,7 @@ const CONFIDENCE_TIERS = [
     tier: "low",
     color: "var(--amber)",
     description:
-      "Inferred from satellite delta alone — a structure appeared, but we have not yet matched it to an authoritative filing.",
+      "Inferred from satellite delta alone. A structure appeared, but we have not yet matched it to an authoritative filing.",
   },
   {
     tier: "speculative",
