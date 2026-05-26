@@ -1,6 +1,44 @@
 # GIGASCOPE — Session Handoff
 
-**Last updated**: 2026-05-22 (Resend LIVE · payment infra parked per validate-before-overhead)
+**Last updated**: 2026-05-27 (senior-grade rebuild · /pulse + sparklines + previews + trust strip)
+
+## 🆕 2026-05-27 overnight rebuild (this session)
+
+Major site rebuild executed across the small hours of May 27. Owner instruction: "마스터플랜을 뒤엎더라도, 일론이 봤을때 인정할 만큼 시니어급 그 이상으로 사이트 재빌드해라." Autonomous run, no prompts. All commits pushed to `main`, Vercel auto-deploys.
+
+**New flagship page**: `/pulse` — empire-wide scoreboard. Reads `factories.json` + `timelapses/index.json`. Shows aggregate stats (sites, footprint km², capital, satellite frames, milestones, sources), latest captures grid, recent + upcoming milestones, single-year velocity leaderboard with per-row sparklines, status mix + company breakdown, "Verified against" trust strip. 30-min revalidate.
+
+**Homepage**: scoreboard strip (6 cells) under hero + "Pulse this week" 2-col mini (captures + milestones) above the sites grid. Hero kicker corrected to "2018 → 2026" to match the video's actual first frame. Hero CTA changed to "See the pulse →" as primary.
+
+**`/pro`**: gutted the generic feature list. Now shows two concrete UI previews — `DailyDigestPreview` (real recent milestones rendered as a mock inbox email) + `TelegramAlertPreview` (charter-only three-bubble alert format). Pricing rebuilt as charter-vs-free side-by-side. New "Roadmap honesty" section splits features into Live / Charter unlocks at launch / On the build list.
+
+**`/methodology`**: rebuilt as senior trust signal — mini scoreboard, imagery sources table with live status badges, confidence framework (high/medium/low/speculative) as 4 colored cards, per-site capture cadence table with frame counts pulled from `timelapses/index.json`, sticky TOC sidebar.
+
+**`/compare`**: stripped faux-mil chrome (scanline overlay, cyan dot grid, "Target Selector" label, oversized "REF" annotations, floating slug+progress card). Clean rounded site selector chips. Before/after labels collapse to "2019" / "Latest" on dark pills.
+
+**`/site/[slug]`**: header reworked — removed "ID: <slug>" engineer-vanity row + duplicate progress bar. Single breadcrumb + big right-aligned 5xl-6xl "Built footprint" headline number. Lat/Lng duplicate cards removed (same data in map overlay).
+
+**New shared components**:
+- `src/lib/pulse.ts` + 14 unit tests — parseAreaToKm2 (handles M sqft / K sqft / acres / ha / km²), parseMilestoneDate (handles YYYY / YYYY-MM / YYYY-MM-DD / YYYY-Qx / YYYY-Hx), format helpers, aggregate getters.
+- `src/components/Sparkline.tsx` + 7 tests — pure SVG, zero client JS. Replaces FactoryCard's 8-segment fill bar with a year-over-year trajectory line. Also used per-row in /pulse velocity table.
+- `src/components/DailyDigestPreview.tsx` — inline mock of the daily email rendered with real recent-milestone data from `getRecentMilestones`.
+- `src/components/TelegramAlertPreview.tsx` — three-bubble charter alert mock (satellite drop / milestone / catalyst T-7).
+- `vitest.config.ts` — adds `@/` alias resolution + `.tsx` includes. Suite: 36 tests across 3 files, all green.
+
+**Polish**: capture-date pill on factory cards (from `timelapses/index.json`), 404 page gains a `/pulse` link, About page opens with a 4-cell mini-scoreboard, `/pulse` has a "Verified against" trust strip listing the primary-source providers.
+
+**Files touched (high-level)**:
+- new: `src/lib/pulse.ts`, `src/lib/pulse.test.ts`, `src/app/pulse/page.tsx`, `src/app/pulse/loading.tsx`, `src/components/Sparkline.tsx`, `src/components/Sparkline.test.tsx`, `src/components/DailyDigestPreview.tsx`, `src/components/TelegramAlertPreview.tsx`, `vitest.config.ts`
+- updated: `src/app/page.tsx`, `src/app/layout.tsx`, `src/app/pro/page.tsx`, `src/app/methodology/page.tsx`, `src/app/compare/page.tsx` (via CompareSlider), `src/app/site/[slug]/page.tsx`, `src/app/about/page.tsx`, `src/app/not-found.tsx`, `src/app/sitemap.ts`, `src/components/CompareSlider.tsx`, `src/components/FactoryCard.tsx`
+
+**What's still WIP / not in this session**:
+- `/spacex-ipo` (757 lines, untouched — risk/reward)
+- `/charter-terms` (legal copy, untouched)
+- Payment gateway still parked (Lemon Squeezy KYB pending)
+- The Telegram alert system shown in the `/pro` preview is scaffold-only, not wired into a charter cron
+- CSV/JSON bulk exports promised on `/pro` not yet built — `/pro` Roadmap-honesty section flags them as "Charter unlocks at launch"
+
+---
 
 ## 📚 Canonical docs (read in this order)
 
