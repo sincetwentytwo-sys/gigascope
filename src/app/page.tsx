@@ -114,6 +114,9 @@ export default async function Home({
           </h1>
           <p className="text-sm sm:text-base text-white/80 max-w-xl mb-6">
             The satellite scoreboard for the Musk empire.
+            {/* Visible space on mobile (where the <br /> is hidden) — without
+                it the two sentences smash together as "empire.16 sites". */}
+            <span className="sm:hidden"> </span>
             <br className="hidden sm:block" />
             {stats.sites} sites · {stats.satelliteFrames} captures · {stats.milestonesTracked} milestones, all cited.
           </p>
