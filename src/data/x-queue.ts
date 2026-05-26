@@ -20,10 +20,24 @@ export interface XPostDraft {
   theme: string;
   text: string;
   mediaHint: string; // human-readable description of what to attach
+  // Public URL of the media file to attach (mp4/gif/png). Owner taps the
+  // download button in the email → file lands in their gallery → swap to
+  // X app → attach from gallery. Undefined for Days 3-7 where media is
+  // owner-captured screenshots taken day-of.
+  mediaUrl?: string;
+  // Public URL of a still-frame thumbnail. Rendered inline in the email so
+  // owner sees what they'll be attaching before downloading the full file.
+  // jpg only — modern mail clients render inline JPG reliably; video tags
+  // are stripped in most.
+  previewImageUrl?: string;
   // Reply tactic / why this post / what to watch for. Sent as second telegram
   // message to keep the main draft easy to copy without commentary noise.
   notes?: string;
 }
+
+// Absolute base used in the email/telegram templates. Public URLs must be
+// absolute because mail clients strip relative paths.
+const BASE = "https://gigascope.xyz";
 
 export const X_QUEUE_WEEK_1: XPostDraft[] = [
   {
@@ -36,7 +50,9 @@ Dirt to the world's largest auto plant in 6 years.
 33 Sentinel-2 satellite frames, traced by hand.
 
 gigascope.xyz/site/giga-texas`,
-    mediaHint: "G:/jb/x-launch-kit/01-giga-texas-2020-2026.mp4 (1.9MB, X auto-loops) OR .gif (5.2MB)",
+    mediaHint: "Giga Texas 6-year timelapse (1.9MB mp4 — X auto-loops)",
+    mediaUrl: `${BASE}/timelapses/giga-texas.mp4`,
+    previewImageUrl: `${BASE}/timelapses/giga-texas-first.jpg`,
     notes: "Reply tactic: @SawyerMerritt, @WholeMarsBlog — link only, no @-tag spam. Watch first-hour likes/RT as Day 1 signal.",
   },
   {
@@ -48,7 +64,9 @@ gigascope.xyz/site/giga-texas`,
 OLM tower, Mechazilla, the orbital ring — all built on what was mudflats.
 
 gigascope.xyz/site/starbase`,
-    mediaHint: "G:/jb/x-launch-kit/02-starbase-2019-2026.mp4",
+    mediaHint: "Starbase 5-year timelapse (1.7MB mp4)",
+    mediaUrl: `${BASE}/timelapses/starbase.mp4`,
+    previewImageUrl: `${BASE}/timelapses/starbase-first.jpg`,
     notes: "SpaceX audience > Tesla audience for satellite content. Day 2 might outperform Day 1.",
   },
   {

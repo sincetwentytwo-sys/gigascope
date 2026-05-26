@@ -85,6 +85,12 @@ async function sendViaTelegram(chatId: string, draft: XPostDraft): Promise<Chann
   ].join("\n");
 
   const metaLines = [`*Media:* ${escapeMd(draft.mediaHint)}`];
+  if (draft.mediaUrl) {
+    // Bare URL on its own line — Telegram auto-renders it as a tappable
+    // download link with video/image preview enabled (we leave web_page_preview
+    // ON for the meta message, unlike the copy block).
+    metaLines.push("", `Download: ${draft.mediaUrl}`);
+  }
   if (draft.notes) {
     metaLines.push("", `*Notes:* ${escapeMd(draft.notes)}`);
   }
@@ -102,8 +108,10 @@ async function sendViaTelegram(chatId: string, draft: XPostDraft): Promise<Chann
   } as Parameters<typeof sendTelegramMessage>[2]);
   if (!ok2) return { channel: "telegram", ok: false, reason: "copy_failed" };
 
+  // Leave web_page_preview ON here so the Download URL renders inline as a
+  // tappable video/image preview — the whole point of including the URL.
   const ok3 = await sendTelegramMessage(chatId, metaLines.join("\n"), {
-    disable_web_page_preview: true,
+    disable_web_page_preview: !draft.mediaUrl,
   });
   if (!ok3) return { channel: "telegram", ok: true, reason: "meta_failed" }; // partial success
 
@@ -124,6 +132,26 @@ async function sendViaEmail(
   const safeTheme = escapeHtml(draft.theme);
   const safeMedia = escapeHtml(draft.mediaHint);
   const safeNotes = draft.notes ? escapeHtml(draft.notes) : "";
+  const mediaUrl = draft.mediaUrl ?? null;
+  const previewUrl = draft.previewImageUrl ?? null;
+
+  // Media block — two flavors:
+  //  (a) pre-prepared file (Days 1-2): inline preview thumbnail + giant
+  //      tappable download button → URL. Mobile flow: tap → save to gallery
+  //      → swap to X → attach.
+  //  (b) screenshot owner captures day-of (Days 3-7): just the hint text.
+  const mediaBlock = mediaUrl
+    ? `
+  <div style="font-size:13px;color:#666;margin-bottom:8px;"><strong>Media to attach:</strong></div>
+  ${previewUrl ? `<a href="${escapeHtml(mediaUrl)}" style="display:block;margin:0 0 12px;"><img src="${escapeHtml(previewUrl)}" alt="${safeMedia}" style="display:block;width:100%;max-width:512px;border:1px solid #e5e5e5;border-radius:6px;" /></a>` : ""}
+  <div style="font-size:13px;color:#666;margin-bottom:8px;">${safeMedia}</div>
+  <a href="${escapeHtml(mediaUrl)}" download style="display:inline-block;background:#0a0a0a;color:#fff;padding:12px 20px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:600;margin-bottom:20px;">⬇ Download file to attach</a>
+  <div style="font-size:11px;color:#888;margin-bottom:20px;">Mobile: tap → save to camera roll → open X → attach from gallery.</div>
+`
+    : `
+  <div style="font-size:13px;color:#666;margin-bottom:4px;"><strong>Media:</strong></div>
+  <div style="font-size:13px;margin-bottom:20px;word-wrap:break-word;">${safeMedia}</div>
+`;
 
   const html = `<!doctype html>
 <html><head><meta charset="utf-8"></head>
@@ -134,8 +162,7 @@ async function sendViaEmail(
   <div style="font-size:13px;color:#666;margin-bottom:8px;">Tweet text — long-press to copy:</div>
   <pre style="background:#f5f5f5;border:1px solid #e5e5e5;border-radius:6px;padding:14px;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word;margin:0 0 20px;">${safeText}</pre>
 
-  <div style="font-size:13px;color:#666;margin-bottom:4px;"><strong>Media:</strong></div>
-  <div style="font-size:13px;margin-bottom:16px;word-wrap:break-word;">${safeMedia}</div>
+${mediaBlock}
 
   ${safeNotes ? `<div style="font-size:13px;color:#666;margin-bottom:4px;"><strong>Notes:</strong></div>
   <div style="font-size:13px;margin-bottom:16px;">${safeNotes}</div>` : ""}
@@ -158,10 +185,11 @@ async function sendViaEmail(
     "─── End tweet text ───",
     "",
     `Media: ${draft.mediaHint}`,
+    mediaUrl ? `Download: ${mediaUrl}` : "",
     draft.notes ? `\nNotes: ${draft.notes}` : "",
     "",
     `Reply with the tweet URL after posting so we can track Day-${draft.day} signal.`,
-  ].join("\n");
+  ].filter(Boolean).join("\n");
 
   // Resend SDK returns { data, error } and does NOT throw on API-level errors
   // — it only throws on network/SDK-internal problems. Caller must inspect
