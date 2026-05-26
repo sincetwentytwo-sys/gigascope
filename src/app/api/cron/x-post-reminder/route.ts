@@ -118,6 +118,43 @@ async function sendViaTelegram(chatId: string, draft: XPostDraft): Promise<Chann
   return { channel: "telegram", ok: true };
 }
 
+/**
+ * Fetch a publicly-hosted media URL and convert to a Resend-attachable buffer.
+ * Returns null on any failure — caller falls back to URL-only mode so a
+ * transient blob-host outage never blocks the reminder send.
+ *
+ * filename is derived from the URL path tail so the attachment shows up in
+ * Gmail with a sensible name (e.g. "giga-texas.mp4") rather than a random
+ * hash or "attachment.bin".
+ */
+async function fetchMediaAttachment(
+  url: string,
+): Promise<{ filename: string; content: Buffer; contentType: string } | null> {
+  try {
+    // 8s timeout — fetch off Vercel CDN normally takes <500ms; anything beyond
+    // 8s means something is wrong and we'd rather degrade than hang the cron.
+    const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
+    if (!res.ok) {
+      console.error("media_fetch_failed", { url, status: res.status });
+      return null;
+    }
+    const buf = Buffer.from(await res.arrayBuffer());
+    // Resend caps attachments at ~40MB total; our X-launch files are <2MB
+    // each but defend against accidental misuse if mediaUrl ever points
+    // somewhere huge.
+    if (buf.byteLength > 30 * 1024 * 1024) {
+      console.error("media_too_large", { url, bytes: buf.byteLength });
+      return null;
+    }
+    const tail = url.split("?")[0].split("/").pop() ?? "media.bin";
+    const contentType = res.headers.get("content-type") ?? "application/octet-stream";
+    return { filename: tail, content: buf, contentType };
+  } catch (e) {
+    console.error("media_fetch_exception", { url, error: e instanceof Error ? e.message : "unknown" });
+    return null;
+  }
+}
+
 async function sendViaEmail(
   resend: Resend,
   from: string,
@@ -126,8 +163,6 @@ async function sendViaEmail(
 ): Promise<ChannelResult> {
   const subject = `GIGASCOPE · X Post Day ${draft.day}/7 — ${draft.theme}`;
 
-  // Plain block layout. Mobile mail clients render this with `pre` so the
-  // tweet text is monospace and trivially long-press-copyable.
   const safeText = escapeHtml(draft.text);
   const safeTheme = escapeHtml(draft.theme);
   const safeMedia = escapeHtml(draft.mediaHint);
@@ -135,20 +170,32 @@ async function sendViaEmail(
   const mediaUrl = draft.mediaUrl ?? null;
   const previewUrl = draft.previewImageUrl ?? null;
 
-  // Media block — two flavors:
-  //  (a) pre-prepared file (Days 1-2): inline preview thumbnail + giant
-  //      tappable download button → URL. Mobile flow: tap → save to gallery
-  //      → swap to X → attach.
-  //  (b) screenshot owner captures day-of (Days 3-7): just the hint text.
-  const mediaBlock = mediaUrl
+  // Pull the media file inline as a real email attachment so owner can save
+  // it directly from Gmail mobile → camera roll → swap to X. URL fallback
+  // stays as a backup if the fetch fails.
+  const attachment = mediaUrl ? await fetchMediaAttachment(mediaUrl) : null;
+
+  // Media block — three states:
+  //  (a) Days 1-2 with successful attachment fetch: preview thumbnail +
+  //      "Attached above as <filename>" callout. Mobile flow: open email →
+  //      tap attachment → Save to Photos → swap to X → attach from gallery.
+  //  (b) Days 1-2 with fetch failure: degrades to URL-download button.
+  //  (c) Days 3-7 screenshot day-of: just the hint text.
+  const mediaBlock = attachment
     ? `
-  <div style="font-size:13px;color:#666;margin-bottom:8px;"><strong>Media to attach:</strong></div>
+  <div style="font-size:13px;color:#666;margin-bottom:8px;"><strong>Media:</strong> attached as <code style="font-family:ui-monospace,monospace;font-size:12px;background:#f5f5f5;padding:2px 6px;border-radius:3px;">${escapeHtml(attachment.filename)}</code></div>
+  ${previewUrl ? `<img src="${escapeHtml(previewUrl)}" alt="${safeMedia}" style="display:block;width:100%;max-width:512px;border:1px solid #e5e5e5;border-radius:6px;margin:0 0 12px;" />` : ""}
+  <div style="font-size:13px;color:#666;margin-bottom:20px;">${safeMedia}</div>
+  <div style="font-size:11px;color:#888;margin-bottom:20px;">Mobile: tap the attachment above → save to camera roll → open X → attach from gallery.</div>
+`
+    : mediaUrl
+      ? `
+  <div style="font-size:13px;color:#666;margin-bottom:8px;"><strong>Media to attach</strong> (attachment fetch failed — use the link below):</div>
   ${previewUrl ? `<a href="${escapeHtml(mediaUrl)}" style="display:block;margin:0 0 12px;"><img src="${escapeHtml(previewUrl)}" alt="${safeMedia}" style="display:block;width:100%;max-width:512px;border:1px solid #e5e5e5;border-radius:6px;" /></a>` : ""}
   <div style="font-size:13px;color:#666;margin-bottom:8px;">${safeMedia}</div>
-  <a href="${escapeHtml(mediaUrl)}" download style="display:inline-block;background:#0a0a0a;color:#fff;padding:12px 20px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:600;margin-bottom:20px;">⬇ Download file to attach</a>
-  <div style="font-size:11px;color:#888;margin-bottom:20px;">Mobile: tap → save to camera roll → open X → attach from gallery.</div>
+  <a href="${escapeHtml(mediaUrl)}" download style="display:inline-block;background:#0a0a0a;color:#fff;padding:12px 20px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:600;margin-bottom:20px;">⬇ Download file</a>
 `
-    : `
+      : `
   <div style="font-size:13px;color:#666;margin-bottom:4px;"><strong>Media:</strong></div>
   <div style="font-size:13px;margin-bottom:20px;word-wrap:break-word;">${safeMedia}</div>
 `;
@@ -202,6 +249,19 @@ ${mediaBlock}
       subject,
       html,
       text,
+      // Resend accepts `attachments: [{ filename, content }]` where content
+      // is a Buffer or base64 string. We pass the raw buffer; Resend handles
+      // the MIME encoding. Content-type is inferred from filename extension.
+      ...(attachment
+        ? {
+            attachments: [
+              {
+                filename: attachment.filename,
+                content: attachment.content,
+              },
+            ],
+          }
+        : {}),
     });
     if (result.error) {
       const msg = (result.error.message ?? "").slice(0, 200);
@@ -209,7 +269,8 @@ ${mediaBlock}
       return { channel: "email", ok: false, reason: `resend_api_error:${name}:${msg}` };
     }
     const id = result.data?.id ?? "no-id";
-    return { channel: "email", ok: true, reason: `sent:${id}` };
+    const attachedTag = attachment ? `:attached(${attachment.filename})` : "";
+    return { channel: "email", ok: true, reason: `sent:${id}${attachedTag}` };
   } catch (e) {
     const err = e instanceof Error ? e.message.slice(0, 200) : "unknown";
     return { channel: "email", ok: false, reason: `send_threw:${err}` };
