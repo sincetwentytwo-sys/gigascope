@@ -12,10 +12,108 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
 import { analyses, getAnalysisBySlug } from "@/data/analyses";
 import { getFactory } from "@/data/factories";
 import { safeJsonLd } from "@/lib/safeJsonLd";
+
+// Self-contained markdown renderer for the small subset we actually use
+// (## headings, paragraphs, - bullets, **bold**). Replaced react-markdown
+// because its ESM-only transitive deps (remark / unified / micromark) broke
+// Vercel's Next.js 16 build pipeline. The owned subset stays predictable and
+// has zero transitive deps. If we ever need full markdown, add the lib back
+// behind a feature flag.
+function renderMarkdownBody(md: string): React.ReactNode {
+  const lines = md.split("\n");
+  const blocks: React.ReactNode[] = [];
+  let i = 0;
+  let blockKey = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (line.startsWith("## ")) {
+      blocks.push(
+        <h2 key={blockKey++} className="text-xl sm:text-2xl font-bold tracking-tight mt-10 mb-4">
+          {renderInline(line.slice(3).trim())}
+        </h2>,
+      );
+      i++;
+      continue;
+    }
+    if (line.startsWith("### ")) {
+      blocks.push(
+        <h3 key={blockKey++} className="text-base sm:text-lg font-semibold tracking-tight mt-8 mb-3">
+          {renderInline(line.slice(4).trim())}
+        </h3>,
+      );
+      i++;
+      continue;
+    }
+    if (line.startsWith("- ")) {
+      const items: string[] = [];
+      while (i < lines.length && lines[i].startsWith("- ")) {
+        items.push(lines[i].slice(2));
+        i++;
+      }
+      blocks.push(
+        <ul key={blockKey++} className="list-disc list-outside pl-5 mb-5 space-y-2 text-[15px] leading-relaxed">
+          {items.map((it, idx) => (
+            <li key={idx} className="text-text">
+              {renderInline(it)}
+            </li>
+          ))}
+        </ul>,
+      );
+      continue;
+    }
+    if (line.trim() === "") {
+      i++;
+      continue;
+    }
+    // Paragraph — consume until blank line or block-level marker.
+    const paraLines: string[] = [];
+    while (
+      i < lines.length &&
+      lines[i].trim() !== "" &&
+      !lines[i].startsWith("## ") &&
+      !lines[i].startsWith("### ") &&
+      !lines[i].startsWith("- ")
+    ) {
+      paraLines.push(lines[i]);
+      i++;
+    }
+    blocks.push(
+      <p key={blockKey++} className="text-[15px] leading-relaxed text-text mb-5">
+        {renderInline(paraLines.join(" "))}
+      </p>,
+    );
+  }
+  return blocks;
+}
+
+// Inline-token render — **bold** + plain text. We don't currently use
+// _italic_ or `code` inline in the analysis bodies so we keep this minimal.
+// Extend if a future analysis needs them.
+function renderInline(text: string): React.ReactNode {
+  const parts: React.ReactNode[] = [];
+  const re = /\*\*([^*]+)\*\*/g;
+  let lastIndex = 0;
+  let m: RegExpExecArray | null;
+  let idx = 0;
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > lastIndex) {
+      parts.push(text.slice(lastIndex, m.index));
+    }
+    parts.push(
+      <strong key={idx++} className="font-bold text-text">
+        {m[1]}
+      </strong>,
+    );
+    lastIndex = m.index + m[0].length;
+  }
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+  return parts;
+}
 
 export const revalidate = 1800; // 30 min
 
@@ -164,60 +262,11 @@ export default async function PulseArticlePage({
           </div>
         )}
 
-        {/* Markdown body. Component overrides map every tag we expect
-            to use onto the project's typography tokens so we don't need
-            a global prose stylesheet. Anything not listed falls back to
-            the raw tag, which inherits .text/.bg-bg from the wrapper. */}
-        <div className="text-text">
-          <ReactMarkdown
-            components={{
-              h2: ({ children }) => (
-                <h2 className="text-xl sm:text-2xl font-bold tracking-tight mt-10 mb-4">
-                  {children}
-                </h2>
-              ),
-              h3: ({ children }) => (
-                <h3 className="text-base sm:text-lg font-semibold tracking-tight mt-8 mb-3">
-                  {children}
-                </h3>
-              ),
-              p: ({ children }) => (
-                <p className="text-[15px] leading-relaxed text-text mb-5">{children}</p>
-              ),
-              ul: ({ children }) => (
-                <ul className="list-disc list-outside pl-5 mb-5 space-y-2 text-[15px] leading-relaxed">
-                  {children}
-                </ul>
-              ),
-              ol: ({ children }) => (
-                <ol className="list-decimal list-outside pl-5 mb-5 space-y-2 text-[15px] leading-relaxed">
-                  {children}
-                </ol>
-              ),
-              li: ({ children }) => <li className="text-text">{children}</li>,
-              a: ({ href, children }) => (
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline underline-offset-2 hover:text-dim"
-                >
-                  {children}
-                </a>
-              ),
-              strong: ({ children }) => (
-                <strong className="font-bold text-text">{children}</strong>
-              ),
-              code: ({ children }) => (
-                <code className="font-mono text-[13px] px-1 py-0.5 bg-surface border border-border-custom rounded">
-                  {children}
-                </code>
-              ),
-            }}
-          >
-            {a.bodyMarkdown}
-          </ReactMarkdown>
-        </div>
+        {/* Markdown body. Uses our zero-dep renderer above so we don't pull
+            in react-markdown's transitive ESM-only deps (which broke
+            Vercel's Next.js 16 build pipeline). Supports ## headings,
+            paragraphs, - bullets, **bold**. That's all the analyses use. */}
+        <div className="text-text">{renderMarkdownBody(a.bodyMarkdown)}</div>
 
         {/* Sources */}
         {a.sources.length > 0 && (
