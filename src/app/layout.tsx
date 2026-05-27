@@ -178,21 +178,20 @@ export default function RootLayout({
           <SupportLinks />
           <VisitCounter />
 
-          {/* Korean e-commerce act (전자상거래법) — business operator disclosure.
-              Required on any site that takes payments from Korean residents
-              and prudent for global checkout via Paddle MoR. Kept compact and
-              legible (deg-dim) so it isn't visually noisy.
-
-              사업자등록증 사실관계와 항상 일치해야 함. 변경 시 즉시 업데이트.
-              통신판매업 신고는 사업자등록 후 별도 신청; 신고번호 받으면 라인 추가. */}
+          {/* Business operator disclosure — required by Korean E-commerce Act
+              (전자상거래법) when accepting payments from Korean residents. Since
+              the site is English-language, English-only disclosure is compliant.
+              Once 통신판매업 신고 (mail-order business registration) clears, add
+              that registration number as an extra line. Data must always match
+              the actual business registration — update immediately on any change. */}
           <div className="mt-2 pt-3 border-t border-border-custom/60 w-full max-w-xl text-[10px] text-dim leading-relaxed">
-            <div className="font-semibold mb-1 text-text/80">사업자 정보 / Business operator</div>
-            <div>상호 (Trade name): 기가스코프 (GIGASCOPE)</div>
-            <div>대표자 (Representative): Jaebin Kim</div>
-            <div>사업자등록번호 (Business reg.): 568-24-02193</div>
-            <div>주소 (Address): 서울특별시 마포구 홍익로5안길 42 / 42, Hongik-ro 5an-gil, Mapo-gu, Seoul 04039</div>
+            <div className="font-semibold mb-1 text-text/80">Business operator</div>
+            <div>Trade name: GIGASCOPE</div>
+            <div>Representative: Jaebin Kim</div>
+            <div>Business registration: 568-24-02193</div>
+            <div>Address: 42, Hongik-ro 5an-gil, Mapo-gu, Seoul 04039, Republic of Korea</div>
             <div>
-              이메일 (Email):{" "}
+              Email:{" "}
               <a href="mailto:sincetwentytwo@gmail.com" className="hover:text-text transition-colors">
                 sincetwentytwo@gmail.com
               </a>

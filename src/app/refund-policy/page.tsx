@@ -143,7 +143,7 @@ export default function RefundPolicyPage() {
       <section>
         <h2 className="text-2xl font-bold mt-12 mb-3">9. Contact</h2>
         <p className="text-text leading-relaxed mb-4">
-          GIGASCOPE / 기가스코프, business registration 568-24-02193, Seoul, Republic of Korea. Email:{" "}
+          GIGASCOPE, business registration 568-24-02193, Seoul, Republic of Korea. Email:{" "}
           <a href="mailto:sincetwentytwo@gmail.com" className="underline hover:text-dim">
             sincetwentytwo@gmail.com
           </a>

@@ -201,10 +201,10 @@ export default function TermsOfServicePage() {
       <section>
         <h2 className="text-2xl font-bold mt-12 mb-3">12. Operator and contact</h2>
         <p className="text-text leading-relaxed mb-4">
-          GIGASCOPE is operated as a Korean sole proprietorship (개인사업자):
+          GIGASCOPE is operated as a Korean sole proprietorship:
         </p>
         <ul className="list-none text-text leading-relaxed mb-4 space-y-1 text-sm font-mono">
-          <li>Trade name: 기가스코프 (GIGASCOPE)</li>
+          <li>Trade name: GIGASCOPE</li>
           <li>Business registration: 568-24-02193</li>
           <li>Representative: Jaebin Kim</li>
           <li>Address: 42, Hongik-ro 5an-gil, Mapo-gu, Seoul 04039, Republic of Korea</li>

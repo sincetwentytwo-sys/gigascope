@@ -29,8 +29,8 @@ export default function PrivacyPolicyPage() {
       <section>
         <h2 className="text-2xl font-bold mt-12 mb-3">1. Who we are</h2>
         <p className="text-text leading-relaxed mb-4">
-          GIGASCOPE is operated as a Korean sole proprietorship (개인사업자) by Jaebin Kim, registered as 기가스코프
-          (GIGASCOPE), business registration number 568-24-02193, based at 42, Hongik-ro 5an-gil, Mapo-gu,
+          GIGASCOPE is operated as a Korean sole proprietorship by Jaebin Kim, registered as GIGASCOPE,
+          business registration number 568-24-02193, based at 42, Hongik-ro 5an-gil, Mapo-gu,
           Seoul 04039, Republic of Korea. Contact:{" "}
           <a href="mailto:sincetwentytwo@gmail.com" className="underline hover:text-dim">
             sincetwentytwo@gmail.com

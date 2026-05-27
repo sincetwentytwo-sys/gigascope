@@ -177,7 +177,7 @@ export default function CharterTermsPage() {
         <h2 className="text-2xl font-bold mt-12 mb-3">Operator and governing law</h2>
         <p className="text-text leading-relaxed mb-4">
           GIGASCOPE is operated by Jaebin, based in Seoul, Republic of Korea. Charter membership sign-up is
-          available now. Card billing activates once Korean business registration (개인사업자) completes
+          available now. Card billing activates once Korean business registration completes
           &mdash; in progress, expected within 1&ndash;2 weeks &mdash; and no charges occur before then. Signing
           up now locks in the $9/month charter rate for the life of your subscription. This page will be updated
           with the registered business name and number on the day billing opens.
