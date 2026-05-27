@@ -104,15 +104,21 @@ interface HNResponse {
   hits?: HNHit[];
 }
 
-// HN Algolia: use popularity sort, filter by points + recency.
+// HN Algolia: rank by popularity, filter only by recency.
+//
+// Earlier this had `points>20` filter — too aggressive: most recent
+// posts haven't accumulated 20 upvotes yet, so the filter returned 0
+// for active sub-topics. Dropped it. Algolia's default popularity sort
+// (with `search` endpoint, not `search_by_date`) already pushes
+// substantive posts above noise.
 async function fetchHN(query: string, limit = 10): Promise<SocialPost[]> {
   try {
-    const weekAgo = Math.floor(Date.now() / 1000) - 30 * 24 * 3600; // 30 days
+    const monthAgo = Math.floor(Date.now() / 1000) - 30 * 24 * 3600;
     const params = new URLSearchParams({
       query,
       tags: "story",
       hitsPerPage: String(limit),
-      numericFilters: `points>20,created_at_i>${weekAgo}`,
+      numericFilters: `created_at_i>${monthAgo}`,
     });
     const res = await fetch(
       `https://hn.algolia.com/api/v1/search?${params}`, // default sort = popularity
@@ -146,12 +152,20 @@ async function fetchHN(query: string, limit = 10): Promise<SocialPost[]> {
 
 // Fetch all community sources. `keywords` boost factory-relevant posts.
 export async function fetchCommunityPosts(keywords: string[] = []): Promise<SocialPost[]> {
+  // Split queries instead of OR clauses — Algolia's `search` endpoint
+  // doesn't parse our `A OR B OR "C D"` syntax the way Google does, and
+  // returned 0 hits for the long combined query even though "Tesla"
+  // alone returned 5+. Six small queries × 5 hits each, deduped later.
   const results = await Promise.allSettled([
     fetchSubredditRSS("teslamotors"),
     fetchSubredditRSS("SpaceXLounge"),
     fetchSubredditRSS("teslainvestorsclub"),
-    fetchHN("Tesla Gigafactory OR Cybertruck OR Cybercab OR \"Tesla Semi\" OR Optimus OR \"Full Self Driving\"", 8),
-    fetchHN("SpaceX Starship OR Starlink OR \"Falcon 9\"", 5),
+    fetchHN("Tesla", 4),
+    fetchHN("Cybertruck", 3),
+    fetchHN("Cybercab", 3),
+    fetchHN("Optimus", 3),
+    fetchHN("SpaceX", 4),
+    fetchHN("Starship", 3),
   ]);
 
   const all = results
