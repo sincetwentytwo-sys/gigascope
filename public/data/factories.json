@@ -105,7 +105,7 @@
       "investment": "$10B+",
       "employees": "20,000+",
       "color": "#e31937",
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-05-27",
       "milestones": [
         {
           "date": "2020-07",
@@ -136,6 +136,12 @@
           "done": true
         },
         {
+          "date": "2025-Q4",
+          "text": "Cortex 2.0 datacenter construction begins on parcel (Megapack deployment for 500MW power) — see /site/cortex",
+          "done": true,
+          "sourceUrl": "https://www.notateslaapp.com/news/3520/tesla-adds-megapacks-for-its-next-generation-supercomputer-cortex-2"
+        },
+        {
           "date": "2026-02",
           "text": "Cybercab small-batch production began (first unit off line)",
           "done": true,
@@ -143,15 +149,27 @@
           "sourceUrl": "https://electrek.co/2026/04/23/"
         },
         {
+          "date": "2026-03",
+          "text": "DC2-102 CORTEX 2.0 wet utilities permit filed (12733 TESLA RD): 16\" water + 24\" reclaimed water + 12\" wastewater process piping",
+          "done": true,
+          "sourceUrl": "https://data.austintexas.gov/resource/3syk-w9eu"
+        },
+        {
+          "date": "2026-03",
+          "text": "Massive expansion plans filed (SP-2026-0021.ETJX, 5 permits over 60 days)",
+          "done": true
+        },
+        {
+          "date": "2026-04",
+          "text": "Cell phase 2 building permit filed: 200K sqft new addition (Tesla Energy Operations direct contractor)",
+          "done": true,
+          "sourceUrl": "https://data.austintexas.gov/resource/3syk-w9eu"
+        },
+        {
           "date": "2026-05",
           "text": "~70 Cybercabs staged in outbound lots (no customer deliveries confirmed)",
           "done": true,
           "confidence": "medium"
-        },
-        {
-          "date": "2026-03",
-          "text": "Massive expansion plans filed",
-          "done": true
         },
         {
           "date": "2026-H2",
@@ -174,6 +192,119 @@
         "wikipediaTitle": "Gigafactory_Texas"
       },
       "halfKm": 2.5
+    },
+    {
+      "id": "cortex",
+      "slug": "cortex",
+      "name": "Cortex",
+      "aka": "Tesla AI Training Supercluster (Giga Texas)",
+      "flag": "🇺🇸",
+      "location": "Austin, Texas (inside Giga Texas parcel)",
+      "lat": 30.22747,
+      "lng": -97.61691,
+      "company": "tesla",
+      "status": "expanding",
+      "progress": 55,
+      "area": "Est. 500K+ sqft (Cortex 2.0 datacenter buildings)",
+      "capacity": "~150K GPU target (Cortex 1: ~50K H100 operational + Cortex 2.0: ~100K H100/H200 under buildout)",
+      "products": "FSD training, Optimus AI, Tesla in-house AI compute",
+      "investment": "—",
+      "employees": "—",
+      "color": "#e31937",
+      "timelapseSlug": null,
+      "extras": {
+        "Cortex 1": "~50K H100 (operational since 2024)",
+        "Cortex 2.0": "~100K H100/H200 target, 500MW total power, phased rollout",
+        "Power": "500MW (Cortex 2.0), ~150 Megapacks installed",
+        "Note": "Physically inside the Giga Texas parcel (TCAD 0315410104). Tracked separately for AI-cluster-specific milestones."
+      },
+      "lastUpdated": "2026-05-27",
+      "confidence": "medium",
+      "lastVerified": "2026-05-27",
+      "sources": [
+        {
+          "url": "https://www.teslaoracle.com/2025/06/27/tesla-fsd-cortex-ai-supercluster-is-running-at-full-capacity-confirms-elon-musk/",
+          "label": "Tesla Oracle — Cortex running at full capacity (Musk)",
+          "date": "2025-06-27"
+        },
+        {
+          "url": "https://www.basenor.com/blogs/news/tesla-cortex-2-0-one-year-later-how-far-its-come",
+          "label": "Basenor — Cortex 2.0 one year later",
+          "date": "2025-09"
+        },
+        {
+          "url": "https://www.tweaktown.com/news/99714/teslas-supercomputing-cluster-at-giga-texas-100k-h100-h200-for-video-training-fsd-optimus/index.html",
+          "label": "TweakTown — Cortex 100K H100/H200 target",
+          "date": "2024-09"
+        },
+        {
+          "url": "https://www.notateslaapp.com/news/3520/tesla-adds-megapacks-for-its-next-generation-supercomputer-cortex-2",
+          "label": "Not a Tesla App — Megapack deployment for Cortex 2",
+          "date": "2025-Q4"
+        },
+        {
+          "url": "https://techcrunch.com/2025/09/02/teslas-dojo-a-timeline/",
+          "label": "TechCrunch — Tesla Dojo timeline (Dojo discontinued, Cortex takes over)",
+          "date": "2025-09-02"
+        }
+      ],
+      "milestones": [
+        {
+          "date": "2024-Q4",
+          "text": "Cortex 1 deployed: ~50K H100 GPU cluster operational",
+          "done": true,
+          "sourceUrl": "https://techcrunch.com/2025/09/02/teslas-dojo-a-timeline/"
+        },
+        {
+          "date": "2025-06",
+          "text": "Musk confirms Cortex 'running at full capacity'",
+          "done": true,
+          "sourceUrl": "https://www.teslaoracle.com/2025/06/27/tesla-fsd-cortex-ai-supercluster-is-running-at-full-capacity-confirms-elon-musk/"
+        },
+        {
+          "date": "2025-08",
+          "text": "Tesla discontinues Dojo; Cortex becomes Tesla's single AI training backbone",
+          "done": true,
+          "sourceUrl": "https://techcrunch.com/2025/09/02/teslas-dojo-a-timeline/"
+        },
+        {
+          "date": "2025-Q4",
+          "text": "Cortex 2.0 construction begins (~150 Megapacks installed for 500MW power)",
+          "done": true,
+          "sourceUrl": "https://www.notateslaapp.com/news/3520/tesla-adds-megapacks-for-its-next-generation-supercomputer-cortex-2"
+        },
+        {
+          "date": "2026-03",
+          "text": "DC2-102 CORTEX 2.0 wet utilities permit filed at 12733 TESLA RD",
+          "done": true,
+          "sourceUrl": "https://data.austintexas.gov/resource/3syk-w9eu"
+        },
+        {
+          "date": "2026-04",
+          "text": "Cortex 2.0 phase 1 (250MW) activation target",
+          "done": false,
+          "confidence": "medium",
+          "sourceUrl": "https://www.financespotnews.com/tech/tesla-expands-megapack-deployment-at-giga-texas-to-power-cortex-2-gpu-cluster"
+        },
+        {
+          "date": "2026-mid",
+          "text": "Cortex 2.0 full 500MW activation target (~100K H100/H200 online)",
+          "done": false,
+          "confidence": "medium",
+          "sourceUrl": "https://www.tweaktown.com/news/99714/teslas-supercomputing-cluster-at-giga-texas-100k-h100-h200-for-video-training-fsd-optimus/index.html"
+        }
+      ],
+      "timeline": [
+        0,
+        0,
+        0,
+        0,
+        25,
+        45,
+        55
+      ],
+      "_progressNote": "Cortex 1 (50K H100) fully operational. Cortex 2.0 (100K H100/H200, 500MW) under construction with phased activation targeting April 2026 (250MW) and mid-2026 (500MW). 'progress' reflects estimated capacity online vs the combined ~150K GPU target.",
+      "halfKm": 0.4
     },
     {
       "id": "giga-nevada",
