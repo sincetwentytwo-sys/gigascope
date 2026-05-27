@@ -26,7 +26,7 @@ export default function DripD14({ email }: DripProps) {
         <Container style={container}>
           <Heading style={brand}>GIGASCOPE</Heading>
           <Text style={tagline}>
-            Watch Musk's empire get built, one satellite frame at a time.
+            Watch the Musk-orbit empire get built, one satellite frame at a time.
           </Text>
 
           <Hr style={hr} />

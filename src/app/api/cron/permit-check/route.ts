@@ -4,6 +4,7 @@ import { Resend } from "resend";
 import PermitAlertEmail from "@/emails/permit-alert";
 import { fetchTravisPermits, filterGigaTexas, type Permit } from "@/lib/permits";
 import { isCronAuthorized } from "@/lib/cronAuth";
+import { emailTags, recordEmailSent } from "@/lib/emailMetrics";
 
 export const runtime = "nodejs";
 
@@ -116,7 +117,11 @@ async function handle(req: Request): Promise<NextResponse> {
       to: POC_RECIPIENT,
       subject,
       react: PermitAlertEmail({ permits: newPermits, generatedAt }),
+      // Tags persist on the message; future webhook attribution.
+      tags: emailTags("permit-alert"),
     });
+    // Best-effort send-volume counter; never throws.
+    void recordEmailSent(r, "permit-alert");
     alerted = 1;
   } catch (e) {
     // Release the flags so the next run can retry.

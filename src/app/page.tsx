@@ -34,23 +34,18 @@ type Hero = {
 // (sand→OLM tower) carry the visual weight.
 const HEROES: Hero[] = [
   {
-    // Headline says "six years" — that's the construction window from Tesla's
-    // 2020 groundbreaking to 2026. Kicker now matches that window so the
-    // dates don't contradict the headline. The video clip itself contains
-    // earlier Sentinel-2 frames as pre-groundbreaking baseline, but the
-    // STORY the page tells is the construction story, not the imagery's full
-    // archive history.
+    // Kicker stays generic about the source (Sentinel-2 + ESRI) without
+    // committing to a year range — the headline already says "six years"
+    // and a contradicting year span in the kicker just invited "wait,
+    // which one is right?" 1-second confusion.
     slug: "giga-texas",
-    kicker: "Tesla Gigafactory Texas · 6yr satellite timelapse · 2020 → 2026",
+    kicker: "Tesla Gigafactory Texas · Sentinel-2 + ESRI timelapse",
     headlineLead: "Tesla Gigafactory Texas —",
     headlineTail: "bare farmland to megafactory in six years.",
   },
   {
-    // Same logic — headline "five years" = 2021→2026 (OLM tower install
-    // through current rapid-cadence operations). Earlier Boca Chica frames
-    // are baseline, the construction-on-OLM story is the 5yr window.
     slug: "starbase",
-    kicker: "SpaceX Starbase · 5yr satellite timelapse · 2021 → 2026",
+    kicker: "SpaceX Starbase · Sentinel-2 + ESRI timelapse",
     headlineLead: "Starbase —",
     headlineTail: "from sand to Starship pad in five years.",
   },
@@ -94,11 +89,22 @@ export default async function Home({
         >
           {/* Mobile variant — 480p, ~70% smaller. Browsers pick the matching
               <source> from top to bottom, so this MUST come before the full
-              variant. Cellular users get ~600KB instead of ~2MB. */}
+              variant. Cellular users get ~600KB instead of ~2MB.
+              AV1 sources first (~40-60% smaller than H.264); Safari/iOS lacks
+              <video> AV1 support and falls through to the H.264 fallback. */}
+          <source
+            media="(max-width: 768px)"
+            src={`/timelapses/${hero.slug}-mobile.av1.mp4`}
+            type='video/mp4; codecs="av01.0.04M.08"'
+          />
           <source
             media="(max-width: 768px)"
             src={`/timelapses/${hero.slug}-mobile.mp4`}
             type="video/mp4"
+          />
+          <source
+            src={`/timelapses/${hero.slug}.av1.mp4`}
+            type='video/mp4; codecs="av01.0.04M.08"'
           />
           <source src={`/timelapses/${hero.slug}.mp4`} type="video/mp4" />
         </video>
@@ -117,7 +123,7 @@ export default async function Home({
             <span className="text-white/85">{hero.headlineTail}</span>
           </h1>
           <p className="text-sm sm:text-base text-white/80 max-w-xl mb-6">
-            The satellite scoreboard for the Musk empire.
+            The satellite scoreboard for the Musk-orbit empire.
             {/* Visible space on mobile (where the <br /> is hidden) — without
                 it the two sentences smash together as "empire.16 sites". */}
             <span className="sm:hidden"> </span>
@@ -374,11 +380,11 @@ function ScoreCell({
     return (
       <Link
         href={href}
-        className="bg-bg p-3 sm:p-4 hover:bg-surface transition-colors block"
+        className="bg-bg p-4 sm:p-5 hover:bg-surface transition-colors block"
       >
         {body}
       </Link>
     );
   }
-  return <div className="bg-bg p-3 sm:p-4">{body}</div>;
+  return <div className="bg-bg p-4 sm:p-5">{body}</div>;
 }

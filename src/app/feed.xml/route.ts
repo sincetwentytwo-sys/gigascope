@@ -61,7 +61,7 @@ export async function GET() {
     "    <title>GIGASCOPE News</title>",
     `    <link>${CHANNEL_URL}</link>`,
     `    <atom:link href="${FEED_URL}" rel="self" type="application/rss+xml" />`,
-    "    <description>Musk-empire construction tracker — daily satellite + news digest</description>",
+    "    <description>Musk-orbit construction tracker — daily satellite + news digest</description>",
     "    <language>en</language>",
     `    <lastBuildDate>${lastBuild}</lastBuildDate>`,
     itemXml,

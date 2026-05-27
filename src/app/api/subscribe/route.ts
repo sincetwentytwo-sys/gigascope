@@ -1,8 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { Redis } from "@upstash/redis";
 import { Resend } from "resend";
 import WelcomeEmail from "@/emails/welcome";
 import { unsubHeaders } from "@/lib/unsubscribe";
+import { emailTags, recordEmailSent } from "@/lib/emailMetrics";
 
 export const runtime = "nodejs";
 
@@ -19,7 +20,11 @@ function getResend(): Resend | null {
   return new Resend(key);
 }
 
-async function sendWelcome(email: string, tier: "free" | "pro" | "terminal"): Promise<boolean> {
+async function sendWelcome(
+  email: string,
+  tier: "free" | "pro" | "terminal",
+  r: Redis | null,
+): Promise<boolean> {
   const resend = getResend();
   if (!resend) return false;
   const from = process.env.RESEND_FROM_EMAIL ?? "digest@gigascope.xyz";
@@ -34,7 +39,15 @@ async function sendWelcome(email: string, tier: "free" | "pro" | "terminal"): Pr
       subject,
       react: WelcomeEmail({ email, tier }),
       headers: unsubHeaders(email),
+      // Resend tags persist on the message — once webhook ingestion is
+      // wired (TODO in /api/admin/metrics) open/click events are attributed
+      // back to the `type` tag for per-email-type rate breakdowns.
+      tags: emailTags("welcome"),
     });
+    // Metric counter — fire-and-forget. recordEmailSent never throws and
+    // returns "redis_error" silently if Upstash is unreachable, so a
+    // metric-side failure never blocks the welcome send hot path.
+    if (r) void recordEmailSent(r, "welcome");
     return true;
   } catch (e) {
     console.error("resend_send_failed", e);
@@ -112,22 +125,54 @@ export async function POST(req: Request) {
   if (!r) {
     // Without Redis, still accept (useful for local dev). The user can plumb
     // KV credentials in Vercel without breaking the API contract.
-    const emailed = await sendWelcome(email, typedTier);
-    return NextResponse.json({ ok: true, stored: false, emailed, note: "no_redis_configured" });
+    // `after` defers the Resend round-trip until *after* the JSON response
+    // has been flushed, so dev clients don't eat 800-1500ms of email latency.
+    after(async () => {
+      await sendWelcome(email, typedTier, null);
+    });
+    return NextResponse.json({
+      ok: true,
+      stored: false,
+      // "scheduled" because the send happens after the response is flushed —
+      // we no longer know the success/failure boolean at response time.
+      emailed: "scheduled",
+      note: "no_redis_configured",
+    });
   }
 
   const record = { email, tier, source, ts: Date.now() };
   try {
-    await r.sadd("subscribers:emails", email);
-    await r.hset(`subscriber:${email}`, record);
-    await r.zadd("subscribers:timeline", { score: record.ts, member: email });
+    // Pipeline collapses 3 sequential HTTP round-trips to Upstash REST into
+    // a single batched request. Order is preserved, so the semantics match
+    // the prior sequential awaits exactly. NOTE: pipeline execution is NOT
+    // atomic — but neither was the prior sequential code, and the writes
+    // are independent (different keys), so we don't need MULTI/EXEC here.
+    await r
+      .pipeline()
+      .sadd("subscribers:emails", email)
+      .hset(`subscriber:${email}`, record)
+      .zadd("subscribers:timeline", { score: record.ts, member: email })
+      .exec();
   } catch (e) {
+    console.error("subscribe_redis_failed", e);
     return NextResponse.json({ ok: false, error: "redis_failed" }, { status: 500 });
   }
 
-  // Welcome email is best-effort: never fail the subscribe over it.
-  const emailed = await sendWelcome(email, typedTier);
-  return NextResponse.json({ ok: true, stored: true, emailed });
+  // Welcome email is best-effort: never fail the subscribe over it. Use
+  // `next/server`'s `after()` to defer the Resend round-trip until the
+  // JSON response has been flushed to the client. Vercel keeps the
+  // function alive past the response specifically for this pattern; on
+  // local dev (Node) the event loop holds the promise to completion.
+  // Pass `r` through so the welcome's metric counter can be bumped.
+  after(async () => {
+    await sendWelcome(email, typedTier, r);
+  });
+
+  // `emailed: "scheduled"` reflects that the send is queued to run after
+  // the response is closed — we no longer await it and so cannot return
+  // the true boolean. Callers that previously checked `emailed === true`
+  // should treat "scheduled" as best-effort success.
+  return NextResponse.json({ ok: true, stored: true, emailed: "scheduled" });
 }
 
 export async function GET() {

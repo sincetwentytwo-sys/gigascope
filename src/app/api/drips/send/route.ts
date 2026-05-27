@@ -9,6 +9,8 @@ import DripD30 from "@/emails/drip-d30";
 import { unsubHeaders } from "@/lib/unsubscribe";
 import { isTelegramConfigured, sendTelegramMessage } from "@/lib/telegram";
 import { isCronAuthorized } from "@/lib/cronAuth";
+import { isDripEligible } from "@/lib/drips";
+import { emailTags, recordEmailSent, type EmailType } from "@/lib/emailMetrics";
 
 export const runtime = "nodejs";
 
@@ -127,7 +129,8 @@ export async function POST(req: Request) {
       // Eligible inside the [day, day+7) window — wide catch-up so a delayed
       // cron run (incident, deploy, etc.) doesn't permanently miss a drip.
       // The atomic SET-NX flag below guarantees no double-send.
-      if (ageDays < drip.day || ageDays >= drip.day + 7) continue;
+      // Predicate extracted to src/lib/drips.ts for unit-testability.
+      if (!isDripEligible(ageDays, drip.day)) continue;
 
       const flagKey = `drip:sent:${email}:${drip.key}`;
       // Atomic claim BEFORE send — prevents read-then-write race between
@@ -139,13 +142,19 @@ export async function POST(req: Request) {
       }
 
       try {
+        // Tag value matches the EmailType enum — e.g. "drip-d3" — so
+        // webhook open/click events can be attributed per drip stage.
+        const metricType = `drip-${drip.key}` as EmailType;
         await resend.emails.send({
           from: `GIGASCOPE <${from}>`,
           to: email,
           subject: drip.subject,
           react: drip.react({ email }),
           headers: unsubHeaders(email),
+          tags: emailTags(metricType),
         });
+        // Best-effort send-volume counter; never throws.
+        void recordEmailSent(r, metricType);
         sent.push({ email, drip: drip.key });
       } catch (e) {
         // Release the flag so a later run can retry.

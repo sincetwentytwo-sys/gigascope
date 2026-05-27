@@ -4,6 +4,7 @@ import { Resend } from "resend";
 import { isTelegramConfigured, sendTelegramMessage } from "@/lib/telegram";
 import { dayForToday, getDraft, X_QUEUE_WEEK_1, type XPostDraft } from "@/data/x-queue";
 import { isCronAuthorized } from "@/lib/cronAuth";
+import { emailTags, recordEmailSent } from "@/lib/emailMetrics";
 
 export const runtime = "nodejs";
 
@@ -323,6 +324,10 @@ ${redditBlock}
       subject,
       html,
       text,
+      // Tags persist on the message; future webhook attribution. Counter
+      // increment happens at the call site (sendForDay) where the Redis
+      // client is already in hand — keeps this function free of side deps.
+      tags: emailTags("x-reminder"),
       // Resend accepts `attachments: [{ filename, content }]` where content
       // is a Buffer or base64 string. We pass the raw buffer; Resend handles
       // the MIME encoding. Content-type is inferred from filename extension.
@@ -397,6 +402,12 @@ async function sendForDay(
   if (!anySuccess) {
     // All attempted channels failed — release flag for retry.
     await r.del(flagKey);
+  } else {
+    // Per-day x-reminder sent successfully on at least one channel. Bump
+    // the email send counter ONLY if the email channel itself succeeded —
+    // a Telegram-only delivery shouldn't count as a Resend send.
+    const emailOk = channels.some((c) => c.channel === "email" && c.ok);
+    if (emailOk) void recordEmailSent(r, "x-reminder");
   }
 
   return { ok: anySuccess, day, channels };

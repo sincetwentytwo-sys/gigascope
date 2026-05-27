@@ -7,7 +7,7 @@ import GlobalSearchProvider from "@/components/GlobalSearchProvider";
 import SearchOpener from "@/components/SearchOpener";
 
 export const metadata: Metadata = {
-  title: "GIGASCOPE — Watch Musk's empire get built, one satellite frame at a time",
+  title: "GIGASCOPE — Watch the Musk-orbit empire get built, one satellite frame at a time",
   description:
     "Empire-wide satellite scoreboard for 16 Musk industrial sites (Tesla, SpaceX, xAI, Neuralink, Boring Co.). Sentinel-2 + ESRI timelapses, hand-traced progress polygons, primary-source milestones, daily digest, methodology cited. The /pulse dashboard rolls it all into one view. Free.",
   keywords: ["Tesla", "SpaceX", "xAI", "Neuralink", "Boring Company", "Elon Musk", "Gigafactory", "Starlink", "Cybertruck", "Starship", "Model 3", "Model Y", "Megapack", "Optimus", "Colossus", "satellite imagery", "construction tracking"],
@@ -15,14 +15,14 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   metadataBase: new URL("https://gigascope.xyz"),
   openGraph: {
-    title: "Watch Musk's empire get built, one satellite frame at a time",
+    title: "Watch the Musk-orbit empire get built, one satellite frame at a time",
     description: "16 sites · Sentinel-2 + ESRI satellite timelapses · methodology cited. Tesla, SpaceX, xAI, Neuralink, Boring Co.",
     type: "website",
     siteName: "GIGASCOPE",
   },
   twitter: {
     card: "summary_large_image",
-    title: "GIGASCOPE — Musk Empire from orbit",
+    title: "GIGASCOPE — Musk-orbit industrial sites from above",
     description: "Sentinel-2 + ESRI timelapses of every Gigafactory, every launch pad, Colossus GPU cluster. Refreshed as new imagery drops. Methodology cited.",
   },
   robots: {
@@ -53,7 +53,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebApplication",
               name: "GIGASCOPE",
-              description: "Musk Empire site tracker — Tesla, SpaceX, xAI, Neuralink, Boring Company with satellite imagery, milestones, and timelapses refreshed as new captures land.",
+              description: "Musk-orbit industrial site tracker — Tesla, SpaceX, xAI, Neuralink, Boring Company with satellite imagery, milestones, and timelapses refreshed as new captures land.",
               url: "https://gigascope.xyz",
               applicationCategory: "ReferenceApplication",
               operatingSystem: "All",

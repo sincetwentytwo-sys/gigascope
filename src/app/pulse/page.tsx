@@ -34,12 +34,12 @@ export const revalidate = 1800; // 30 min
 const SITE_URL = "https://gigascope.xyz";
 
 export const metadata: Metadata = {
-  title: "Pulse — what's moving across the Musk empire — GIGASCOPE",
+  title: "Pulse — what's moving across the Musk-orbit empire — GIGASCOPE",
   description:
-    "Empire-wide scoreboard for the 16 Musk-empire construction sites. Latest satellite captures, recent verified milestones, upcoming launches and ground-breaks, and per-site progress velocity. Refreshed as new captures and filings land.",
+    "Empire-wide scoreboard for the 16 Musk-orbit construction sites. Latest satellite captures, recent verified milestones, upcoming launches and ground-breaks, and per-site progress velocity. Refreshed as new captures and filings land.",
   alternates: { canonical: `${SITE_URL}/pulse` },
   openGraph: {
-    title: "Pulse — what's moving across the Musk empire",
+    title: "Pulse — what's moving across the Musk-orbit empire",
     description:
       "Scoreboard for 16 sites across Tesla, SpaceX, xAI, Neuralink, and The Boring Company. Latest captures, milestones, velocity ranking.",
     url: `${SITE_URL}/pulse`,
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pulse — Musk empire from orbit",
+    title: "Pulse — Musk-orbit industrial sites from orbit",
     description: "16 sites · latest captures · verified milestones · velocity ranking.",
   },
 };
@@ -65,9 +65,9 @@ export default function PulsePage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Dataset",
-    name: "GIGASCOPE Pulse — Musk Empire construction scoreboard",
+    name: "GIGASCOPE Pulse — Musk-orbit construction scoreboard",
     description:
-      "Aggregate construction-progress metrics across 16 Musk-empire industrial sites, derived from Sentinel-2 / ESRI satellite captures and primary-source filings.",
+      "Aggregate construction-progress metrics across 16 Musk-orbit industrial sites, derived from Sentinel-2 / ESRI satellite captures and primary-source filings.",
     url: `${SITE_URL}/pulse`,
     creator: { "@type": "Organization", name: "GIGASCOPE" },
     keywords: ["satellite", "Tesla", "SpaceX", "xAI", "Neuralink", "Gigafactory", "Starbase"],

@@ -7,16 +7,8 @@
 // Pure server-side; no network, no Redis, no client state. Safe to call
 // from any Server Component or build-time route.
 
-import { readFileSync, existsSync } from "node:fs";
-import { resolve } from "node:path";
 import { factories, getTotalInvestment, DATA_LAST_UPDATED } from "@/data/factories";
-
-type TimelapseMeta = { frames: number; latest: string; builtAt: string };
-
-const timelapseIndexPath = resolve(process.cwd(), "public", "timelapses", "index.json");
-const TIMELAPSE_INDEX: Record<string, TimelapseMeta> = existsSync(timelapseIndexPath)
-  ? JSON.parse(readFileSync(timelapseIndexPath, "utf8"))
-  : {};
+import { TIMELAPSE_INDEX } from "@/lib/timelapseIndex";
 
 // ──────────────────────────────────────────────────────────────────────────
 // Area parsing — turn the various `area` shapes in factories.json into km².

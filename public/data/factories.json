@@ -132,9 +132,21 @@
         },
         {
           "date": "2025-06",
-          "text": "Cybercab pilot line tooling staged (production timing TBD)",
-          "done": false,
-          "confidence": "speculative"
+          "text": "Cybercab pilot line tooling staged",
+          "done": true
+        },
+        {
+          "date": "2026-02",
+          "text": "Cybercab small-batch production began (first unit off line)",
+          "done": true,
+          "confidence": "medium",
+          "sourceUrl": "https://electrek.co/2026/04/23/"
+        },
+        {
+          "date": "2026-05",
+          "text": "~70 Cybercabs staged in outbound lots (no customer deliveries confirmed)",
+          "done": true,
+          "confidence": "medium"
         },
         {
           "date": "2026-03",
@@ -147,6 +159,7 @@
           "done": false
         }
       ],
+      "_progressNote": "78% reflects Giga Texas SHELL + Phase 2 expansion. Cybercab-specific production is small-batch only — Musk-stated 'hundreds/week' is unverified.",
       "timeline": [
         10,
         25,
@@ -599,10 +612,10 @@
       "employees": "3,000+",
       "color": "#005288",
       "extras": {
-        "Launch Pad": "OLM (Orbital Launch Mount)",
-        "Tower": "Mechazilla catch tower"
+        "Launch Pads": "OLM-A (Pad 1, IFT-1 through IFT-11) + OLM-B (Pad 2, operational 2026-05)",
+        "Tower": "Mechazilla catch tower (Pad 1)"
       },
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-05-27",
       "milestones": [
         {
           "date": "2019-08",
@@ -616,7 +629,7 @@
         },
         {
           "date": "2023-04",
-          "text": "First orbital attempt (IFT-1)",
+          "text": "First orbital attempt (IFT-1) from OLM-A",
           "done": true,
           "sourceUrl": "https://www.faa.gov/space/stakeholder_engagement/spacex_starship"
         },
@@ -627,19 +640,24 @@
           "sourceUrl": "https://www.faa.gov/space/stakeholder_engagement/spacex_starship"
         },
         {
-          "date": "2025-06",
-          "text": "Starship reuse demonstrated",
-          "done": true,
-          "sourceUrl": "https://www.faa.gov/space/stakeholder_engagement/spacex_starship"
-        },
-        {
-          "date": "2026-01",
-          "text": "Rapid cadence launches begin",
+          "date": "2025-05",
+          "text": "OLM-B (Pad 2) launch mount installed",
           "done": true
         },
         {
+          "date": "2025-06",
+          "text": "Ship 36 anomaly at Massey's test site",
+          "done": true
+        },
+        {
+          "date": "2026-05",
+          "text": "Flight 12: maiden launch from OLM-B (Pad 2), first Block 3 / Starship V3",
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Starship_flight_test_12"
+        },
+        {
           "date": "2026-H2",
-          "text": "Starship Block 2 flights",
+          "text": "Starship Block 3 cadence ramp across both pads",
           "done": false
         }
       ],
@@ -875,8 +893,8 @@
     {
       "id": "colossus",
       "slug": "colossus",
-      "name": "Colossus",
-      "aka": "xAI Supercomputer Cluster",
+      "name": "Colossus 1",
+      "aka": "xAI Memphis Supercomputer Cluster",
       "flag": "🇺🇸",
       "location": "Memphis, Tennessee",
       "lat": 35.0592,
@@ -885,19 +903,19 @@
       "status": "expanding",
       "progress": 60,
       "area": "500K+ sqft",
-      "capacity": "200K H100 GPUs (Phase 2: 1M)",
+      "capacity": "~555K mixed GPUs · 1M target moved to Colossus 2",
       "products": "Grok training, AI research compute",
-      "investment": "$4B+",
+      "investment": "~$18B (cumulative spend)",
       "employees": "500+",
       "color": "#7b2dbd",
       "extras": {
         "Grok Version": "Grok-4 (training, started 2026-03)",
         "Active Serving": "Grok-3",
-        "GPU Count": "200,000 H100s",
-        "Power": "150 MW (Phase 1)"
+        "GPU Mix": "~100K H100 · ~50K H200 · ~30K+ GB200 · GB300 (added late 2025/early 2026)",
+        "Power": "~2 GW (campus, incl. dedicated natural-gas plant)"
       },
-      "lastUpdated": "2026-05-24",
-      "confidence": "speculative",
+      "lastUpdated": "2026-05-27",
+      "confidence": "medium",
       "lastVerified": "2026-05-20",
       "sources": [
         {
@@ -954,6 +972,151 @@
       ],
       "_progressNote": "Building shell complete in 2024; 'progress' reflects GPU racks installed against the 1M-GPU plan. Indoor work is invisible from orbit — % is operator-estimated from announced GPU count, not from polygon trace.",
       "halfKm": 1.2
+    },
+    {
+      "id": "colossus-2",
+      "slug": "colossus-2",
+      "name": "Colossus 2",
+      "aka": "xAI Southaven Gigawatt Datacenter",
+      "flag": "🇺🇸",
+      "location": "Southaven, Mississippi (also Memphis warehouse acq.)",
+      "lat": 34.9890,
+      "lng": -90.0126,
+      "company": "xai",
+      "status": "construction",
+      "progress": 30,
+      "area": "1M+ sqft (Memphis warehouse) + Southaven build-out",
+      "capacity": "350K-550K GPUs target · 1-2 GW",
+      "products": "Grok next-gen training, frontier model compute",
+      "investment": "$20B+ (largest econ-dev project in Mississippi history)",
+      "employees": "—",
+      "color": "#7b2dbd",
+      "extras": {
+        "GPU Plan": "Blackwell GB200/GB300 + NVIDIA Rubin (Rubin portion analyst-stated, not xAI-confirmed)",
+        "Power": "1-2 GW target"
+      },
+      "lastUpdated": "2026-05-27",
+      "confidence": "medium",
+      "lastVerified": "2026-05-27",
+      "sources": [
+        {
+          "url": "https://mississippitoday.org/2025/12/31/",
+          "label": "Mississippi Today — xAI Southaven announcement",
+          "date": "2025-12-31"
+        },
+        {
+          "url": "https://newsletter.semianalysis.com/p/xais-colossus-2-first-gigawatt-datacenter",
+          "label": "SemiAnalysis — Colossus 2 gigawatt analysis",
+          "date": "2026-01"
+        }
+      ],
+      "milestones": [
+        {
+          "date": "2025-03",
+          "text": "xAI buys 1M-sqft Memphis warehouse + 100 acres",
+          "done": true
+        },
+        {
+          "date": "2025-12",
+          "text": "Southaven expansion announced ($20B+, MS econ-dev record)",
+          "done": true,
+          "sourceUrl": "https://mississippitoday.org/2025/12/31/"
+        },
+        {
+          "date": "2026-02",
+          "text": "Operational milestone (partial GPU racks online)",
+          "done": true,
+          "confidence": "medium"
+        },
+        {
+          "date": "2026-H2",
+          "text": "Blackwell GB200/GB300 ramp",
+          "done": false,
+          "confidence": "medium"
+        },
+        {
+          "date": "2027",
+          "text": "1M GPU target (Rubin-class compute)",
+          "done": false,
+          "confidence": "speculative"
+        }
+      ],
+      "timeline": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        5,
+        30
+      ],
+      "_progressNote": "Construction-phase site. Progress reflects building shell + initial rack install against the multi-year gigawatt target. Like Colossus 1, GPU-count is operator-estimated, not polygon-traced.",
+      "halfKm": 1.5
+    },
+    {
+      "id": "xai-humain-saudi",
+      "slug": "xai-humain-saudi",
+      "name": "xAI × HUMAIN (Saudi)",
+      "aka": "500 MW xAI datacenter — Saudi Arabia",
+      "flag": "🇸🇦",
+      "location": "Saudi Arabia (specific city TBD)",
+      "lat": 24.7136,
+      "lng": 46.6753,
+      "company": "xai",
+      "status": "announced",
+      "progress": 5,
+      "area": "TBD (500 MW power footprint)",
+      "capacity": "~600K NVIDIA GPUs (announced)",
+      "products": "Grok training capacity, regional compute",
+      "investment": "—",
+      "employees": "—",
+      "color": "#7b2dbd",
+      "extras": {
+        "Partner": "HUMAIN (PIF sovereign-wealth-backed)",
+        "Announced": "2025-11-19 at U.S.–Saudi Investment Forum",
+        "Status": "Announced, groundbreaking reported. Specific city not finalized in public sources."
+      },
+      "lastUpdated": "2026-05-27",
+      "confidence": "speculative",
+      "lastVerified": "2026-05-27",
+      "sources": [
+        {
+          "url": "https://www.cnbc.com/2025/11/19/",
+          "label": "CNBC — xAI / HUMAIN 500 MW announcement",
+          "date": "2025-11-19"
+        }
+      ],
+      "milestones": [
+        {
+          "date": "2025-11",
+          "text": "xAI × HUMAIN 500 MW deal announced (Musk + Jensen Huang)",
+          "done": true,
+          "sourceUrl": "https://www.cnbc.com/2025/11/19/"
+        },
+        {
+          "date": "2026",
+          "text": "Site selection + groundbreaking",
+          "done": false,
+          "confidence": "speculative"
+        },
+        {
+          "date": "2027",
+          "text": "First GPU racks online (target)",
+          "done": false,
+          "confidence": "speculative"
+        }
+      ],
+      "timeline": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        5
+      ],
+      "_progressNote": "First xAI site outside the US. Most data points are Musk-stated or partner-stated. No groundbreaking image yet — speculative until satellite confirms ground disturbance.",
+      "halfKm": 2
     },
     {
       "id": "neuralink-fremont",

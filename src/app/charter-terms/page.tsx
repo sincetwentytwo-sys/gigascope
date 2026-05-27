@@ -167,7 +167,7 @@ export default function CharterTermsPage() {
           operator. You are paying for access to a software service.
         </p>
         <p className="text-text leading-relaxed mb-4">
-          GIGASCOPE is industrial intelligence built for people who follow Musk-empire build-out for
+          GIGASCOPE is industrial intelligence built for people who follow Musk-orbit industrial build-out for
           investing-research purposes &mdash; the subscription does not create any investment relationship
           between you and GIGASCOPE.
         </p>

@@ -30,7 +30,7 @@ export default function WelcomeEmail({ email, tier = "free" }: WelcomeEmailProps
         <Container style={container}>
           <Heading style={brand}>GIGASCOPE</Heading>
           <Text style={tagline}>
-            Watch Musk's empire get built, one satellite frame at a time.
+            Watch the Musk-orbit empire get built, one satellite frame at a time.
           </Text>
 
           <Hr style={hr} />
@@ -62,7 +62,7 @@ export default function WelcomeEmail({ email, tier = "free" }: WelcomeEmailProps
           )}
 
           <Section style={list}>
-            <Text style={listItem}>→ Sentinel-2 + ESRI satellite captures across Musk-empire sites — refreshed as new imagery drops (typically every 2-3 months per site)</Text>
+            <Text style={listItem}>→ Sentinel-2 + ESRI satellite captures across Musk-orbit sites — refreshed as new imagery drops (typically every 2-3 months per site)</Text>
             <Text style={listItem}>→ Milestone log: groundbreakings, FAA notices, permit pulls, IR drops</Text>
             <Text style={listItem}>→ Primary-source links only — SEC EDGAR, DART, county records</Text>
             <Text style={listItem}>→ No paid placements, no affiliate links, open source on GitHub</Text>

@@ -1,4 +1,4 @@
-import { readFileSync, existsSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { factories, getFactory, TIMELINE_YEARS } from "@/data/factories";
 import { getCompanyMeta } from "@/data/companies";
@@ -9,11 +9,7 @@ import { getESRIImageryDate } from "@/lib/satellite-date";
 import { FactoryNewsFeed } from "@/components/NewsFeed";
 import CommunityFeed from "@/components/CommunityFeed";
 import ShareButtons from "@/components/ShareButtons";
-
-const timelapseIndexPath = resolve(process.cwd(), "public", "timelapses", "index.json");
-const TIMELAPSE_INDEX: Record<string, { frames: number; latest: string; builtAt: string }> = existsSync(timelapseIndexPath)
-  ? JSON.parse(readFileSync(timelapseIndexPath, "utf8"))
-  : {};
+import { TIMELAPSE_INDEX } from "@/lib/timelapseIndex";
 
 function hasBeforeAfterThumbnails(slug: string): boolean {
   return (
@@ -56,7 +52,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const url = `${SITE_URL}/site/${slug}`;
   return {
     title: f ? `${f.name} — GIGASCOPE` : "Site — GIGASCOPE",
-    description: f ? `${f.name} (${company?.name}) progress: ${f.progress}% — ${f.products}` : "Musk Empire site tracker",
+    description: f ? `${f.name} (${company?.name}) progress: ${f.progress}% — ${f.products}` : "Musk-orbit industrial site tracker",
     alternates: { canonical: url },
     openGraph: {
       title: f ? `${f.name} — ${f.progress}% complete` : "Site — GIGASCOPE",

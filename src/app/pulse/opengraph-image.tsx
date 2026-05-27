@@ -5,7 +5,7 @@
 import { ImageResponse } from "next/og";
 import { getEmpireStats, formatKm2, formatCount } from "@/lib/pulse";
 
-export const alt = "GIGASCOPE Pulse — Musk Empire scoreboard";
+export const alt = "GIGASCOPE Pulse — Musk-orbit construction scoreboard";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

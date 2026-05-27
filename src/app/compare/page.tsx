@@ -5,7 +5,7 @@ const SITE_URL = "https://gigascope.xyz";
 
 export const metadata: Metadata = {
   title: "Compare — GIGASCOPE",
-  description: "Before/after satellite imagery of Musk Empire construction sites: Sentinel-2 2019 baseline vs ESRI latest (~3-6 months).",
+  description: "Before/after satellite imagery of Musk-orbit construction sites: Sentinel-2 2019 baseline vs ESRI latest (~3-6 months).",
   alternates: { canonical: `${SITE_URL}/compare` },
   openGraph: {
     title: "Compare imagery — GIGASCOPE",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Compare imagery — GIGASCOPE",
-    description: "Sentinel-2 2019 baseline vs ESRI latest imagery for Musk Empire construction sites.",
+    description: "Sentinel-2 2019 baseline vs ESRI latest imagery for Musk-orbit construction sites.",
   },
 };
 

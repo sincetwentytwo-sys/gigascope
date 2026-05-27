@@ -103,12 +103,12 @@ export default function InvestorCheckout({
         <button
           type="button"
           onClick={focusEmailInput}
-          className="px-8 py-3 rounded-full bg-text text-bg text-base font-bold hover:opacity-80"
+          className="px-8 py-3 rounded-full bg-text text-bg text-base font-bold hover:opacity-85 transition-opacity shadow-sm"
         >
-          Join charter waitlist
+          Join waitlist — gate opens on payment-provider clearance
         </button>
         <div className="text-xs text-dim max-w-md text-center">
-          Billing opens once charter spots fill — you'll be notified.
+          You'll be notified the day billing goes live, at the charter rate shown.
         </div>
       </div>
     );

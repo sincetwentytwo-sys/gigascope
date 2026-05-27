@@ -25,7 +25,7 @@ const PRODUCT_THUMB = new Map<string, string>(
 export const metadata: Metadata = {
   title: "Component Breakdowns — GIGASCOPE",
   description:
-    "Click-to-explore breakdowns of Musk-empire hardware — Raptor engine, Starship, Cybertruck, Cybercab, Optimus, and the 4680 cell. Each component links to a tech blurb you can actually read.",
+    "Click-to-explore breakdowns of Musk-orbit hardware — Raptor engine, Starship, Cybertruck, Cybercab, Optimus, and the 4680 cell. Each component links to a tech blurb you can actually read.",
   alternates: { canonical: "https://gigascope.xyz/products" },
   openGraph: {
     title: "Component Breakdowns — GIGASCOPE",
@@ -94,7 +94,7 @@ export default function ProductsHubPage() {
         </h1>
         <p className="text-dim text-base sm:text-lg leading-relaxed max-w-2xl">
           Real reference photos with clickable parts. Engines, rockets, cars,
-          batteries, robots — the hardware that defines the Musk empire,
+          batteries, robots — the hardware that defines the Musk-orbit empire,
           dissected one component at a time.
         </p>
       </header>

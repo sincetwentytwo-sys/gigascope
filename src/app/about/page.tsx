@@ -5,7 +5,7 @@ import { getEmpireStats, formatKm2, formatCount } from "@/lib/pulse";
 export const metadata: Metadata = {
   title: "About — GIGASCOPE",
   description:
-    "GIGASCOPE tracks Musk-empire build-out from orbit: Tesla, SpaceX, xAI, Neuralink, Boring Company — 16 sites refreshed as new Sentinel-2 / ESRI imagery drops (typically every 2-3 months), primary sources.",
+    "GIGASCOPE tracks Musk-orbit industrial build-out from above: Tesla, SpaceX, xAI, Neuralink, Boring Company — 16 sites refreshed as new Sentinel-2 / ESRI imagery drops (typically every 2-3 months), primary sources.",
 };
 
 const TRACKED = [
@@ -32,7 +32,7 @@ export default function AboutPage() {
       <header className="mb-10">
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">About GIGASCOPE</h1>
         <p className="text-dim text-lg leading-relaxed max-w-xl">
-          Watch Musk's empire get built — Tesla, SpaceX, xAI, Neuralink, Boring Company — one satellite frame at a time.
+          Watch the Musk-orbit empire get built — Tesla, SpaceX, xAI, Neuralink, Boring Company — one satellite frame at a time.
         </p>
       </header>
 

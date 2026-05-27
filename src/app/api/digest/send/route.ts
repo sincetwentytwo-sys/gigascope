@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
 import { unsubHeaders } from "@/lib/unsubscribe";
 import { isCronAuthorized } from "@/lib/cronAuth";
+import { emailTags, recordEmailSent } from "@/lib/emailMetrics";
 
 export const runtime = "nodejs";
 
@@ -55,7 +56,7 @@ function renderHtml(data: {
     .join("");
   return `<!doctype html><html><body style="font-family:-apple-system,system-ui,sans-serif;color:#1d1d1f;max-width:600px;margin:0 auto;padding:24px">
     <h1 style="font-size:22px;margin:0 0 8px">GIGASCOPE digest</h1>
-    <div style="color:#86868b;font-size:13px;margin-bottom:24px">Watch Musk's empire get built, one satellite frame at a time &middot; <a href="https://gigascope.xyz" style="color:#86868b">gigascope.xyz</a></div>
+    <div style="color:#86868b;font-size:13px;margin-bottom:24px">Watch the Musk-orbit empire get built, one satellite frame at a time &middot; <a href="https://gigascope.xyz" style="color:#86868b">gigascope.xyz</a></div>
     <h2 style="font-size:14px;text-transform:uppercase;letter-spacing:0.05em;color:#86868b;margin:24px 0 8px">Milestones ahead</h2>
     <table style="width:100%;border-collapse:collapse">${milestones || '<tr><td style="padding:8px;color:#86868b;font-size:13px">No upcoming milestones in window.</td></tr>'}</table>
     <h2 style="font-size:14px;text-transform:uppercase;letter-spacing:0.05em;color:#86868b;margin:24px 0 8px">Last 24h news</h2>
@@ -109,6 +110,9 @@ export async function POST(req: Request) {
   let failed = 0;
   // Resend supports up to 50 recipients per batch via /emails/batch.
   // For simplicity, fire individually in chunks to respect rate limits.
+  // Tags are passed in the body alongside `headers` — Resend's REST API
+  // accepts the same `tags: [{name, value}]` shape that the SDK does.
+  const tags = emailTags("digest");
   for (let i = 0; i < subscribers.length; i += 5) {
     const chunk = subscribers.slice(i, i + 5);
     const results = await Promise.all(
@@ -120,7 +124,7 @@ export async function POST(req: Request) {
               Authorization: `Bearer ${resendKey}`,
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ from, to, subject, html, headers: unsubHeaders(to) }),
+            body: JSON.stringify({ from, to, subject, html, headers: unsubHeaders(to), tags }),
           });
           return res.ok;
         } catch {
@@ -128,8 +132,13 @@ export async function POST(req: Request) {
         }
       }),
     );
-    sent += results.filter(Boolean).length;
+    const chunkSent = results.filter(Boolean).length;
+    sent += chunkSent;
     failed += results.filter((x) => !x).length;
+    // One counter increment per successfully-sent message. Bumping in a
+    // loop is fine here — Upstash INCR is cheap and fire-and-forget so the
+    // batch latency is unaffected. Wrap in try/catch via recordEmailSent.
+    for (let k = 0; k < chunkSent; k++) void recordEmailSent(r, "digest");
     if (i + 5 < subscribers.length) await new Promise((r) => setTimeout(r, 1100));
   }
 

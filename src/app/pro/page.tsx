@@ -85,6 +85,9 @@ export default async function ProPage() {
           <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-4 leading-[1.05]">
             $9 for the empire,<br />locked for life.
           </h1>
+          <p className="text-base sm:text-lg text-text font-medium max-w-2xl mx-auto mb-4 leading-snug">
+            For retail investors tracking Tesla / SpaceX / xAI capex velocity without paying $30K for Planet Labs.
+          </p>
           <p className="text-dim text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
             A paid subscription to GIGASCOPE. Daily digest, satellite-drop alerts, weekly
             recap, and bulk data exports. Public launches at $29 in June 2026. Charter pricing
@@ -133,6 +136,11 @@ export default async function ProPage() {
                 <span className="text-text">◇ unlocks at launch — charter pricing pays for the build</span>
               </p>
               <div className="mt-auto">
+                {showCount && remaining !== null && remaining > 0 && (
+                  <div className="text-center text-[11px] font-mono uppercase tracking-widest text-dim mb-3">
+                    Charter spots remaining: <span className="text-text font-bold">{remaining}</span> / {cap}
+                  </div>
+                )}
                 <InvestorCheckout stripeLive={stripeLive} />
               </div>
             </div>

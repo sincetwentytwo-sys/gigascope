@@ -7,6 +7,7 @@ import { unsubHeaders } from "@/lib/unsubscribe";
 import { factories } from "@/data/factories";
 import { isTelegramConfigured, sendTelegramMessage } from "@/lib/telegram";
 import { isCronAuthorized } from "@/lib/cronAuth";
+import { emailTags, recordEmailSent } from "@/lib/emailMetrics";
 
 export const runtime = "nodejs";
 
@@ -218,7 +219,11 @@ export async function POST(req: Request) {
             window: c.window,
           }),
           headers: unsubHeaders(email),
+          // Tags persist on the Resend message — open/click attribution later.
+          tags: emailTags("catalyst-alert"),
         });
+        // Best-effort send-volume counter; never throws.
+        void recordEmailSent(r, "catalyst-alert");
         sent.push({ email, symbol: c.symbol, window: c.window });
       } catch (e) {
         // Release the flag so a later run can retry.

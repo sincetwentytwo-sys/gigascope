@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { factories, getTotalInvestment } from "@/data/factories";
 
-export const alt = "GIGASCOPE — Watch Musk's empire get built, one satellite frame at a time";
+export const alt = "GIGASCOPE — Watch the Musk-orbit empire get built, one satellite frame at a time";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -28,7 +28,7 @@ export default function OGImage() {
               GIGASCOPE
             </div>
             <div style={{ fontSize: 18, color: "#86868b", marginTop: 4 }}>
-              Watch Musk's empire get built
+              Watch the Musk-orbit empire get built
             </div>
           </div>
           <div style={{ display: "flex", gap: 32 }}>

@@ -54,6 +54,37 @@ describe("x-queue", () => {
     expect(dayForToday(start, dayMinus1)).toBeNull();
   });
 
+  // Day-boundary edges. Cron fires at 14:30 UTC (per vercel.json); the route
+  // rounds today to UTC midnight before calling dayForToday(). These tests
+  // cover the rounding behavior directly so the route doesn't have to.
+  it("edge: midnight UTC boundary — start vs start exactly = Day 1; start + 1 UTC day = Day 2 with no off-by-one", () => {
+    const start = utcMidnight(2026, 5, 26);
+    // Caller-side contract: dayForToday is fed UTC-midnight values only. The
+    // canonical truncation result for any moment on 2026-05-26 is `start`
+    // itself → Day 1. One full UTC-day later (canonical truncation for any
+    // moment on 2026-05-27) → Day 2.
+    expect(dayForToday(start, start)).toBe(1);
+    expect(dayForToday(start, start + DAY_MS)).toBe(2);
+  });
+
+  it("edge: daylight-saving crossover (US 2026-11-01) — function is timezone-agnostic because inputs are UTC-midnight; the DST jump does not shift day count", () => {
+    // Hypothetical launch on 2026-10-29. DST ends 2026-11-01 in US locales.
+    // If any local-time math snuck into this function it would off-by-one
+    // on Day 4. Since both inputs are pre-truncated UTC, it can't.
+    const start = utcMidnight(2026, 10, 29);
+    const day4 = utcMidnight(2026, 11, 1);
+    expect(dayForToday(start, day4)).toBe(4);
+    expect(dayForToday(start, utcMidnight(2026, 11, 2))).toBe(5);
+  });
+
+  it("edge: before-launch by many days — returns null, never a negative day index", () => {
+    const start = utcMidnight(2026, 5, 26);
+    // Owner deploys 30 days ahead of launch and Vercel cron starts firing
+    // immediately. Route must skip silently, not return -29 and crash the
+    // downstream draft lookup.
+    expect(dayForToday(start, start - 30 * DAY_MS)).toBeNull();
+  });
+
   // ─────────────────────────────────────────────────────────────
   // Failure cases (2)
   // ─────────────────────────────────────────────────────────────

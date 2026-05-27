@@ -26,7 +26,7 @@ export default function DripD21({ email }: DripProps) {
         <Container style={container}>
           <Heading style={brand}>GIGASCOPE</Heading>
           <Text style={tagline}>
-            Watch Musk's empire get built, one satellite frame at a time.
+            Watch the Musk-orbit empire get built, one satellite frame at a time.
           </Text>
 
           <Hr style={hr} />
@@ -61,7 +61,7 @@ export default function DripD21({ email }: DripProps) {
 
           <Text style={text}>
             Giga Texas is the hero of the site for a reason. It's the cleanest
-            "dirt to delivery" timelapse in the entire Musk empire — six years,
+            "dirt to delivery" timelapse in the entire Musk-orbit empire — six years,
             one continuous build, every frame on accessible Sentinel-2 data.
             It's the proof case for the methodology that everything else on
             GIGASCOPE uses. If you only watch one site, watch this one.
