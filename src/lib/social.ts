@@ -31,10 +31,17 @@ function stripCData(str: string): string {
 }
 
 // Reddit via RSS (Atom format). JSON API gets blocked from cloud IPs.
+//
+// Endpoint choice: /new/.rss instead of /top/.rss?t=day. Reddit's "top of
+// day" returns an empty feed for low-traffic subs (or just early in the
+// UTC day cycle) because their top-of-day ranking pool isn't populated
+// yet. /new returns the most recent N posts regardless of upvotes, so it
+// stays populated. The community panel cares about recency more than
+// upvote rank — for upvote-weighted feeds we'd use t=week instead.
 async function fetchSubredditRSS(sub: string): Promise<SocialPost[]> {
   try {
     const res = await fetch(
-      `https://www.reddit.com/r/${sub}/top/.rss?t=day&limit=10`,
+      `https://www.reddit.com/r/${sub}/new/.rss?limit=10`,
       {
         headers: {
           "User-Agent": "web:gigascope:v1.0 (https://gigascope-ten.vercel.app)",
