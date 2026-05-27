@@ -3,8 +3,10 @@ import { join } from "node:path";
 import type { Factory } from "@/data/types";
 import Sparkline from "./Sparkline";
 import { captureFreshness } from "@/lib/timelapseIndex";
+import { getTimelapseSlug } from "@/data/factories";
 
-function hasTimelapseThumbnails(slug: string): boolean {
+function hasTimelapseThumbnails(slug: string | null): boolean {
+  if (!slug) return false;
   return (
     existsSync(join(process.cwd(), "public", "timelapses", `${slug}-first.jpg`)) &&
     existsSync(join(process.cwd(), "public", "timelapses", `${slug}-last.jpg`))
@@ -24,13 +26,14 @@ export default function FactoryCard({
   const isAlert = !isAnnounced && (factory.status === "paused" || factory.status === "planned");
   const accent = isAnnounced ? "#c4a000" : isAlert ? "#e63946" : color;
 
-  const showThumbs = hasTimelapseThumbnails(factory.slug);
+  const tlSlug = getTimelapseSlug(factory);
+  const showThumbs = hasTimelapseThumbnails(tlSlug);
   // Sparkline reads the per-year progress timeline directly. Empty / all-zero
   // timelines (announced sites pre-groundbreaking) render as a flat baseline
   // inside Sparkline so we don't get a deceptive upward slope.
   const timeline = factory.timeline ?? [];
   const hasYearData = timeline.some((v) => typeof v === "number" && v > 0);
-  const fresh = captureFreshness(factory.slug);
+  const fresh = tlSlug ? captureFreshness(tlSlug) : null;
 
   return (
     <a
@@ -46,7 +49,7 @@ export default function FactoryCard({
                 the timelapse thumb loads. CSS still constrains actual
                 rendered size via aspect-video + object-cover. */}
             <img
-              src={`/timelapses/${factory.slug}-first.jpg`}
+              src={`/timelapses/${tlSlug}-first.jpg`}
               alt={`${factory.name} — earlier satellite view`}
               loading="lazy"
               width={1600}
@@ -62,7 +65,7 @@ export default function FactoryCard({
           </div>
           <div className="relative">
             <img
-              src={`/timelapses/${factory.slug}-last.jpg`}
+              src={`/timelapses/${tlSlug}-last.jpg`}
               alt={`${factory.name} — recent satellite view`}
               loading="lazy"
               width={1600}

@@ -153,6 +153,19 @@ export default function RootLayout({
         <footer className="py-8 px-6 pb-20 sm:pb-8 text-center text-xs text-dim flex flex-col gap-4 items-center max-w-[1100px] mx-auto">
           <div>GIGASCOPE — Not affiliated with Tesla, SpaceX, xAI, Neuralink, or The Boring Company.</div>
 
+          {/* Imagery credit — surfaced on every page so the credit is visible
+              even on pages without a live Leaflet map (the map's own
+              attribution control covers those). Required by Esri / EOX
+              license terms. Deep-link goes to the methodology page's
+              imagery section. */}
+          <div className="text-[10px] text-dim/80 max-w-2xl leading-relaxed">
+            Satellite imagery © Esri, Maxar, Earthstar Geographics and the GIS User Community ·
+            Sentinel-2 cloudless 2024 by{" "}
+            <a href="https://s2maps.eu" target="_blank" rel="noopener noreferrer" className="hover:text-text transition-colors underline">EOX</a>{" "}
+            (contains modified Copernicus Sentinel data 2024, CC BY-NC-SA 4.0) ·{" "}
+            <a href="/methodology#imagery" className="hover:text-text transition-colors underline">full attribution</a>
+          </div>
+
           {/* Policy + legal links — required for Paddle MoR + Korean e-commerce law */}
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[11px]">
             <a href="/terms-of-service" className="hover:text-text transition-colors">Terms of Service</a>

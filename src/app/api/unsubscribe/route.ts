@@ -45,6 +45,28 @@ async function doUnsub(
     } catch {
       /* best-effort cleanup — don't block unsub on a stray key */
     }
+    // GDPR Art. 17 / PIPA Art. 36 — right to erasure. Catalyst-alert
+    // dedup flags are keyed `catalyst:alert:sent:<email>:<key>:<window>`
+    // and bind email → milestone-viewed history (= behavioral PII).
+    // Sweep via SCAN. Best-effort: if Upstash MATCH pagination misses
+    // anything the 400d TTL on each flag is the backstop.
+    try {
+      // Upstash SDK returns [nextCursor (string | number), keys (string[])].
+      // Normalize to a number for the loop check — "0" / 0 both mean "done".
+      let cursor: string | number = 0;
+      const pattern = `catalyst:alert:sent:${email}:*`;
+      do {
+        const res = (await r.scan(cursor, { match: pattern, count: 100 })) as unknown as [
+          string | number,
+          string[],
+        ];
+        cursor = res[0];
+        const keys = res[1] ?? [];
+        if (keys.length > 0) await r.del(...keys);
+      } while (Number(cursor) !== 0);
+    } catch {
+      /* best-effort cleanup — flags expire after 400d anyway */
+    }
   } catch (e) {
     console.error("unsubscribe_redis_failed", e);
     return { ok: false, status: 500, message: "redis_failed" };

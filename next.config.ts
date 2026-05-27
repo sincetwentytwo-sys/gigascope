@@ -39,6 +39,12 @@ const nextConfig: NextConfig = {
     { source: "/timeline",                destination: "/",         permanent: true },
     { source: "/downloads",               destination: "/pro",      permanent: true },
     { source: "/calendar",                destination: "/spacex-ipo", permanent: true },
+    // 2026-05-27 — Starbase split into launch + build sites. /factory/starbase
+    // is already a /site alias upstream; both legacy URLs preserve inbound
+    // SEO equity by 308-redirecting to the launch-side entry (which inherits
+    // the legacy timelapse + most of the public mindshare).
+    { source: "/site/starbase",           destination: "/site/starbase-launch", permanent: true },
+    { source: "/factory/starbase",        destination: "/site/starbase-launch", permanent: true },
   ],
 };
 

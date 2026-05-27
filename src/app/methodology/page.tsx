@@ -12,7 +12,7 @@
 
 import type { Metadata } from "next";
 import Link from "next/link";
-import { factories, DATA_LAST_UPDATED } from "@/data/factories";
+import { factories, DATA_LAST_UPDATED, getTimelapseSlug } from "@/data/factories";
 import { getEmpireStats, formatCount } from "@/lib/pulse";
 import { TIMELAPSE_INDEX } from "@/lib/timelapseIndex";
 
@@ -96,7 +96,10 @@ const CONFIDENCE_TIERS = [
 
 export default function MethodologyPage() {
   const stats = getEmpireStats();
-  const sitesWithTimelapse = factories.filter((f) => TIMELAPSE_INDEX[f.slug]);
+  const sitesWithTimelapse = factories.filter((f) => {
+    const s = getTimelapseSlug(f);
+    return s !== null && TIMELAPSE_INDEX[s];
+  });
   const totalFrames = stats.satelliteFrames;
   const avgFrames = sitesWithTimelapse.length > 0
     ? Math.round(totalFrames / sitesWithTimelapse.length)
@@ -193,6 +196,69 @@ export default function MethodologyPage() {
                 </tbody>
               </table>
             </div>
+
+            {/* Required attribution per Esri / EOX / Copernicus license terms.
+                Surfaced here AND on every page footer (layout.tsx) AND on the
+                live Leaflet maps via attributionControl. Redundant on purpose. */}
+            <div id="imagery-attribution" className="mt-8 rounded-md border border-border-custom bg-surface px-5 py-5">
+              <div className="text-[10px] uppercase tracking-widest font-mono text-dim mb-3">
+                Attribution & licensing
+              </div>
+              <ul className="flex flex-col gap-2.5 text-sm">
+                <li>
+                  <strong>ESRI World Imagery (current + Wayback historic snapshots):</strong>{" "}
+                  <span className="text-dim">
+                    Credit: <em>Imagery © Esri, Maxar, Earthstar Geographics, and the GIS User Community</em>.
+                    Use governed by the{" "}
+                    <a
+                      href="https://www.esri.com/legal/use-restrictions"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-text"
+                    >
+                      Esri Master Agreement
+                    </a>{" "}
+                    + service-specific terms.
+                  </span>
+                </li>
+                <li>
+                  <strong>Copernicus Sentinel-2 (L2A, via EOX cloudless 2024 mosaic):</strong>{" "}
+                  <span className="text-dim">
+                    Credit: <em>Sentinel-2 cloudless 2024 by EOX IT Services GmbH</em>, contains modified
+                    Copernicus Sentinel data 2024. EOX mosaic is{" "}
+                    <a
+                      href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-text"
+                    >
+                      CC BY-NC-SA 4.0
+                    </a>{" "}
+                    — non-commercial, share-alike.{" "}
+                    <a
+                      href="https://s2maps.eu"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-text"
+                    >
+                      s2maps.eu
+                    </a>.
+                  </span>
+                </li>
+                <li>
+                  <strong>OpenStreetMap / CARTO basemaps (dark map view):</strong>{" "}
+                  <span className="text-dim">
+                    Map data © OpenStreetMap contributors (ODbL), tiles © CARTO (CC-BY).
+                  </span>
+                </li>
+              </ul>
+              <p className="text-[12px] text-dim mt-4 leading-relaxed">
+                Downloadable timelapses + before/after thumbnails in{" "}
+                <code className="font-mono text-[11px] bg-bg px-1 py-0.5 rounded">public/timelapses/</code>{" "}
+                are derived works built from these sources and inherit the above credit obligations.
+                If you republish, carry the credits forward.
+              </p>
+            </div>
           </section>
 
           {/* 2. Progress formula */}
@@ -276,11 +342,11 @@ export default function MethodologyPage() {
             </div>
 
             <p className="text-[12px] text-dim mt-5 leading-relaxed">
-              <strong className="text-text">Honest note:</strong> the aggregate{" "}
+              <strong className="text-text">Where you see it:</strong> the aggregate{" "}
               <Link href="/pulse" className="underline hover:text-text">/pulse</Link>{" "}
-              "Empire build-out, 2020 → today" chart does not yet render this band visually
-              — it's documented here so you can apply the mental ±3 yourself when you read
-              that curve. Band overlay is in the build list.
+              "Empire build-out, 2020 → today" chart now renders this same ±3pp band as
+              a translucent strip behind the build-out curve — apply the same mental band
+              to per-site sparklines (those are too small to show it without crowding).
             </p>
           </section>
 
@@ -342,7 +408,8 @@ export default function MethodologyPage() {
                 </thead>
                 <tbody>
                   {factories.map((f) => {
-                    const tl = TIMELAPSE_INDEX[f.slug];
+                    const s = getTimelapseSlug(f);
+                    const tl = s ? TIMELAPSE_INDEX[s] : undefined;
                     return (
                       <tr key={f.slug} className="border-b border-border-custom hover:bg-surface">
                         <td className="py-2.5 pr-3">

@@ -60,6 +60,18 @@ export interface Factory {
 
   /** 타임랩스 캡처용 (빌드 스크립트 전용) */
   halfKm?: number;
+
+  /**
+   * Timelapse asset slug — overrides `slug` when looking up
+   * `public/timelapses/<x>.mp4`, `<x>-first.jpg`, `<x>-last.jpg`, etc.
+   * Defaults to `slug` when unset. Set to `null` to declare "no timelapse
+   * assets exist yet" (renderer falls back to the no-timelapse path).
+   *
+   * Introduced 2026-05-27 when `starbase` was split into `starbase-launch`
+   * (which reuses the legacy `starbase` video files) + `starbase-build`
+   * (no assets yet).
+   */
+  timelapseSlug?: string | null;
 }
 
 export interface CompanyMeta {

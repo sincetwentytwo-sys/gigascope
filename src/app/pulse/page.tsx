@@ -143,15 +143,21 @@ export default function PulsePage() {
             <SectionHeader
               kicker="Aggregate"
               title="Empire build-out, 2020 → today"
-              tail="Mean progress across sites with non-zero progress in that year (excludes pre-groundbreaking)"
+              tail="Mean progress across sites with non-zero progress in that year (excludes pre-groundbreaking) · shaded ±3pp band shows typical operator variance"
             />
             <div className="rounded-md border border-border-custom bg-bg p-5 sm:p-6">
               {/* Tall sparkline + axis labels — same component used elsewhere
                   but expanded to fill the section. Anchored to current text
-                  color so it picks up theme accents automatically. */}
+                  color so it picks up theme accents automatically. The
+                  band={low,high} prop renders the ±3pp uncertainty strip
+                  documented at /methodology#uncertainty. */}
               <div className="text-text">
                 <Sparkline
                   values={aggregate.map((a) => a.averageProgress)}
+                  band={{
+                    low: aggregate.map((a) => Math.max(0, a.averageProgress - 3)),
+                    high: aggregate.map((a) => Math.min(100, a.averageProgress + 3)),
+                  }}
                   width={1200}
                   height={140}
                   stroke="currentColor"
@@ -159,6 +165,15 @@ export default function PulsePage() {
                   strokeWidth={2}
                   className="w-full h-[140px]"
                 />
+              </div>
+              <div className="mt-2 flex items-center gap-2 text-[10px] font-mono text-dim">
+                <span className="inline-block w-3 h-2 rounded-sm border border-dashed border-text/40 bg-text/15" />
+                <span>
+                  ±3pp typical error band —{" "}
+                  <Link href="/methodology#uncertainty" className="underline hover:text-text">
+                    see /methodology
+                  </Link>
+                </span>
               </div>
               <div className="mt-3 grid grid-cols-7 text-[10px] font-mono text-dim tabular-nums">
                 {aggregate.map((a) => (

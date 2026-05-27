@@ -7,7 +7,7 @@
 // Pure server-side; no network, no Redis, no client state. Safe to call
 // from any Server Component or build-time route.
 
-import { factories, getTotalInvestment, DATA_LAST_UPDATED } from "@/data/factories";
+import { factories, getTotalInvestment, DATA_LAST_UPDATED, getTimelapseSlug } from "@/data/factories";
 import { TIMELAPSE_INDEX } from "@/lib/timelapseIndex";
 
 // ──────────────────────────────────────────────────────────────────────────
@@ -89,7 +89,16 @@ export function getEmpireStats(): EmpireStats {
     (sum, f) => sum + (parseAreaToKm2(f.area) ?? 0),
     0,
   );
-  const timelapseEntries = Object.values(TIMELAPSE_INDEX);
+  // Count timelapse stats from the perspective of FACTORIES so that the
+  // 2026-05-27 starbase split (launch + build sharing the legacy `starbase.*`
+  // assets via `timelapseSlug`) is not double-counted. One asset bundle =
+  // one timelapse for empire-scoreboard purposes.
+  const usedTimelapseSlugs = new Set<string>();
+  for (const f of factories) {
+    const s = getTimelapseSlug(f);
+    if (s && TIMELAPSE_INDEX[s]) usedTimelapseSlugs.add(s);
+  }
+  const timelapseEntries = Array.from(usedTimelapseSlugs).map((s) => TIMELAPSE_INDEX[s]);
   const satelliteFrames = timelapseEntries.reduce((s, t) => s + (t.frames ?? 0), 0);
   const timelapseSites = timelapseEntries.length;
   const milestonesTracked = factories.reduce((s, f) => s + f.milestones.length, 0);
@@ -143,19 +152,25 @@ export interface CaptureCard {
 }
 
 export function getLatestCaptures(limit = 8): CaptureCard[] {
-  return factories
-    .filter((f) => TIMELAPSE_INDEX[f.slug])
-    .map((f) => ({
+  const rows: CaptureCard[] = [];
+  for (const f of factories) {
+    const tlSlug = getTimelapseSlug(f);
+    if (!tlSlug) continue;
+    const tl = TIMELAPSE_INDEX[tlSlug];
+    if (!tl) continue;
+    rows.push({
       slug: f.slug,
       name: f.name,
       aka: f.aka,
       company: f.company,
       location: f.location,
-      latest: TIMELAPSE_INDEX[f.slug].latest,
-      frames: TIMELAPSE_INDEX[f.slug].frames,
+      latest: tl.latest,
+      frames: tl.frames,
       progress: f.progress,
       flag: f.flag,
-    }))
+    });
+  }
+  return rows
     .sort((a, b) => {
       // Newest first, then by frame count (more coverage), then alphabetical
       if (b.latest !== a.latest) return b.latest.localeCompare(a.latest);

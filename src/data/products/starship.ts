@@ -397,7 +397,7 @@ export const starship: ProductSpec = {
       license: "CC0",
     },
   },
-  relatedSites: ["starbase", "cape-canaveral"],
+  relatedSites: ["starbase-launch", "starbase-build", "cape-canaveral"],
   photoCredit: {
     author: "Steve Jurvetson",
     license: "CC BY 2.0",

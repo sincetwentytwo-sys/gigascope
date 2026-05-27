@@ -43,11 +43,15 @@ export default function SatelliteMap({
         center: [lat, lng],
         zoom,
         zoomControl: true,
-        attributionControl: false,
+        // attributionControl: true (Leaflet default). REQUIRED by Esri /
+        // EOX / OSM-Carto licenses — the credit MUST be visible on the
+        // rendered map. Don't disable this.
+        attributionControl: true,
       });
 
       const tile = L.tileLayer(tileSources[1].url, {
         maxZoom: tileSources[1].maxZoom,
+        attribution: tileSources[1].attribution,
         errorTileUrl: "",
       }).addTo(map);
 
@@ -84,6 +88,7 @@ export default function SatelliteMap({
         leafletMap.current!.removeLayer(tileLayerRef.current!);
         const newTile = L.tileLayer(tileSources[nextIdx].url, {
           maxZoom: tileSources[nextIdx].maxZoom,
+          attribution: tileSources[nextIdx].attribution,
         }).addTo(leafletMap.current!);
         tileLayerRef.current = newTile;
       });

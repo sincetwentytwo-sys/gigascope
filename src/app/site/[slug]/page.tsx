@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
-import { factories, getFactory, TIMELINE_YEARS } from "@/data/factories";
+import { factories, getFactory, getTimelapseSlug, TIMELINE_YEARS } from "@/data/factories";
 import { getCompanyMeta } from "@/data/companies";
 import SatelliteMapWrapper from "@/components/SatelliteMapWrapper";
 import { listProducts } from "@/data/products";
@@ -11,7 +11,8 @@ import CommunityFeed from "@/components/CommunityFeed";
 import ShareButtons from "@/components/ShareButtons";
 import { TIMELAPSE_INDEX } from "@/lib/timelapseIndex";
 
-function hasBeforeAfterThumbnails(slug: string): boolean {
+function hasBeforeAfterThumbnails(slug: string | null): boolean {
+  if (!slug) return false;
   return (
     existsSync(resolve(process.cwd(), "public", "timelapses", `${slug}-first.jpg`)) &&
     existsSync(resolve(process.cwd(), "public", "timelapses", `${slug}-last.jpg`))
@@ -35,7 +36,9 @@ const SITE_KEYWORDS: Record<string, string[]> = {
   "giga-mexico": ["mexico", "nuevo leon", "santa catarina", "affordable", "compact"],
   fremont: ["fremont", "model s", "model x", "model 3", "model y", "california"],
   "giga-buffalo": ["buffalo", "new york", "solar roof", "solar", "supercharger", "megapack", "energy"],
-  starbase: ["starbase", "boca chica", "starship", "super heavy", "raptor", "mechazilla", "orbital launch"],
+  "starbase-launch": ["starbase", "boca chica", "starship", "super heavy", "olm", "mechazilla", "orbital launch", "pad b", "ift-12", "flight 12"],
+  "starbase-build": ["starbase", "boca chica", "star factory", "high bay", "mid bay", "starship production", "super heavy production"],
+  mcgregor: ["mcgregor", "raptor", "raptor 2", "raptor 3", "engine test", "test stand", "hot fire", "merlin"],
   "spacex-hawthorne": ["hawthorne", "falcon 9", "falcon heavy", "dragon", "spacex hq"],
   "cape-canaveral": ["cape canaveral", "slc-40", "lc-39a", "kennedy", "florida launch"],
   vandenberg: ["vandenberg", "slc-4", "polar orbit", "california launch"],
@@ -125,7 +128,8 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
     const db = b.date.replace(/Q\d|H\d/g, "").trim();
     return db.localeCompare(da);
   });
-  const showBeforeAfter = hasBeforeAfterThumbnails(factory.slug);
+  const tlSlug = getTimelapseSlug(factory);
+  const showBeforeAfter = hasBeforeAfterThumbnails(tlSlug);
 
   return (
     <div className="bg-bg text-text min-h-screen">
@@ -195,7 +199,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                 {/* width/height reserve aspect-correct space — kills CLS
                     when the timelapse thumb hydrates after page paint. */}
                 <img
-                  src={`/timelapses/${factory.slug}-first.jpg`}
+                  src={`/timelapses/${tlSlug}-first.jpg`}
                   alt={`${factory.name} — earlier satellite view`}
                   loading="lazy"
                   width={1600}
@@ -208,7 +212,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
               </div>
               <div className="relative">
                 <img
-                  src={`/timelapses/${factory.slug}-last.jpg`}
+                  src={`/timelapses/${tlSlug}-last.jpg`}
                   alt={`${factory.name} — recent satellite view`}
                   loading="lazy"
                   width={1600}
@@ -287,8 +291,8 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
               />
             </div>
 
-            {TIMELAPSE_INDEX[factory.slug] && (() => {
-              const tl = TIMELAPSE_INDEX[factory.slug];
+            {tlSlug && TIMELAPSE_INDEX[tlSlug] && (() => {
+              const tl = TIMELAPSE_INDEX[tlSlug];
               const v = new Date(tl.builtAt).getTime();
               return (
                 <div className="mt-4">
@@ -302,8 +306,8 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                   </div>
                   <div className="aspect-square sm:aspect-video w-full bg-surface relative overflow-hidden border border-border-custom">
                     <video
-                      src={`/timelapses/${factory.slug}.mp4?v=${v}`}
-                      poster={`/timelapses/${factory.slug}.jpg?v=${v}`}
+                      src={`/timelapses/${tlSlug}.mp4?v=${v}`}
+                      poster={`/timelapses/${tlSlug}.jpg?v=${v}`}
                       controls
                       loop
                       muted

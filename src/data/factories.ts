@@ -25,6 +25,22 @@ export function getSitesByCompany(company: Company): Factory[] {
 }
 
 /**
+ * Resolve the asset slug for timelapse files (`<x>.mp4`, `<x>-first.jpg`,
+ * `<x>-last.jpg`, `<x>.av1.mp4`, `<x>-mobile.mp4`, etc.) for a given site.
+ *
+ * - Returns the explicit `timelapseSlug` when set (e.g. `starbase-launch`
+ *   reuses the legacy `"starbase"` assets so we don't have to rename
+ *   files in `public/timelapses/`).
+ * - Returns `null` when the field is explicitly `null` (the site has no
+ *   timelapse yet — callers should render the no-timelapse path).
+ * - Falls back to `factory.slug` for everything else.
+ */
+export function getTimelapseSlug(factory: Pick<Factory, "slug" | "timelapseSlug">): string | null {
+  if (factory.timelapseSlug === null) return null;
+  return factory.timelapseSlug ?? factory.slug;
+}
+
+/**
  * Parse one `investment` string from factories.json into a USD-billions number.
  * Handles the four shapes the data actually uses:
  *   - "$X-YB"   → midpoint of X and Y

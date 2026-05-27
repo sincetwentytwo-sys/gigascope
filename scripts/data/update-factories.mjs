@@ -18,7 +18,9 @@ const WIKIPEDIA_TITLES = {
   "giga-mexico": "Gigafactory_Mexico",
   "fremont": "Tesla_Fremont_Factory",
   "giga-buffalo": "Gigafactory_New_York",
-  "starbase": "SpaceX_Starbase",
+  "starbase-launch": "SpaceX_Starbase",
+  "starbase-build": "SpaceX_Starbase",
+  "mcgregor": "SpaceX_Rocket_Development_and_Test_Facility",
   "spacex-hawthorne": "SpaceX_headquarters",
   "cape-canaveral": "Space_Launch_Complex_40",
   "vandenberg": "Vandenberg_Space_Launch_Complex_4",
@@ -29,7 +31,9 @@ const WIKIPEDIA_TITLES = {
 };
 
 const SPACEX_PAD_FILTER = {
-  "starbase": ["Starbase", "Boca Chica"],
+  "starbase-launch": ["Starbase", "Boca Chica", "OLM", "Pad A", "Pad B"],
+  "starbase-build": ["Star Factory", "High Bay", "Mid Bay"],
+  "mcgregor": ["McGregor", "Raptor", "test stand", "hot fire"],
   "cape-canaveral": ["SLC-40", "LC-39A", "Kennedy", "Cape Canaveral"],
   "vandenberg": ["SLC-4E", "Vandenberg"],
 };

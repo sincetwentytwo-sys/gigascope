@@ -21,7 +21,15 @@ export const revalidate = 1800;
 const COMPANY_ORDER: Company[] = ["tesla", "spacex", "xai", "neuralink", "boring"];
 
 type Hero = {
+  /** factory.slug used for the link target + scoreboard lookups */
   slug: string;
+  /**
+   * Optional override for the `/timelapses/<x>.{mp4,jpg,av1.mp4}` asset slug.
+   * Used after the 2026-05-27 starbase split: `starbase-launch` is the new
+   * site slug, but the existing video files are still named `starbase.*`.
+   * Defaults to `slug` when omitted.
+   */
+  videoSlug?: string;
   kicker: string;
   headlineLead: string;
   headlineTail: string;
@@ -44,7 +52,11 @@ const HEROES: Hero[] = [
     headlineTail: "bare farmland to megafactory in six years.",
   },
   {
-    slug: "starbase",
+    // 2026-05-27 split: `starbase` site → `starbase-launch` + `starbase-build`.
+    // Video files remain on disk as `starbase.*` (renaming would invalidate
+    // CDN cache for no win), so we keep the old asset slug via `videoSlug`.
+    slug: "starbase-launch",
+    videoSlug: "starbase",
     kicker: "SpaceX Starbase · Sentinel-2 + ESRI timelapse",
     headlineLead: "Starbase —",
     headlineTail: "from sand to Starship pad in five years.",
@@ -68,6 +80,10 @@ export default async function Home({
 }) {
   const params = await searchParams;
   const hero = pickHero(params?.hero);
+  // Asset slug — `videoSlug` lets us reuse legacy timelapse files (named
+  // `starbase.*`) for a renamed factory (`starbase-launch`) without
+  // rewriting the CDN cache key.
+  const heroVideoSlug = hero.videoSlug ?? hero.slug;
   const stats = getEmpireStats();
   const captures = getLatestCaptures(3);
   const milestones = getRecentMilestones(5);
@@ -78,13 +94,13 @@ export default async function Home({
       {/* ── Full-bleed satellite-timelapse hero — rotates daily ─────────── */}
       <section className="relative w-full overflow-hidden bg-black" style={{ aspectRatio: "16 / 9", maxHeight: "78vh" }}>
         <video
-          key={hero.slug}
+          key={heroVideoSlug}
           autoPlay
           muted
           loop
           playsInline
           preload="metadata"
-          poster={`/timelapses/${hero.slug}.jpg`}
+          poster={`/timelapses/${heroVideoSlug}.jpg`}
           className="absolute inset-0 w-full h-full object-cover"
         >
           {/* Mobile variant — 480p, ~70% smaller. Browsers pick the matching
@@ -94,19 +110,19 @@ export default async function Home({
               <video> AV1 support and falls through to the H.264 fallback. */}
           <source
             media="(max-width: 768px)"
-            src={`/timelapses/${hero.slug}-mobile.av1.mp4`}
+            src={`/timelapses/${heroVideoSlug}-mobile.av1.mp4`}
             type='video/mp4; codecs="av01.0.04M.08"'
           />
           <source
             media="(max-width: 768px)"
-            src={`/timelapses/${hero.slug}-mobile.mp4`}
+            src={`/timelapses/${heroVideoSlug}-mobile.mp4`}
             type="video/mp4"
           />
           <source
-            src={`/timelapses/${hero.slug}.av1.mp4`}
+            src={`/timelapses/${heroVideoSlug}.av1.mp4`}
             type='video/mp4; codecs="av01.0.04M.08"'
           />
-          <source src={`/timelapses/${hero.slug}.mp4`} type="video/mp4" />
+          <source src={`/timelapses/${heroVideoSlug}.mp4`} type="video/mp4" />
         </video>
 
         {/* Gradient overlay for legibility */}

@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
 };
 
-const SLUGS = ["starbase", "spacex-hawthorne", "cape-canaveral", "vandenberg"] as const;
+const SLUGS = ["starbase-launch", "spacex-hawthorne", "cape-canaveral", "vandenberg"] as const;
 
 // ---------------------------------------------------------------------------
 // S-1 excerpts

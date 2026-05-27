@@ -64,4 +64,33 @@ describe("Sparkline", () => {
     const html = render({ values: [0, 5, 10] });
     expect(html).not.toContain("<polygon");
   });
+
+  // ── Band overlay (P2 #5: ±3pp confidence band on /pulse aggregate) ──
+  it("band: renders a translucent polygon when band={low,high} provided", () => {
+    const html = render({
+      values: [10, 30, 50],
+      band: { low: [7, 27, 47], high: [13, 33, 53] },
+    });
+    expect(html).toContain("<polygon");
+    // Polygon must come BEFORE the polyline in source order so it renders
+    // behind it visually (SVG painter's algorithm, no z-index).
+    const polyIdx = html.indexOf("<polygon");
+    const lineIdx = html.indexOf("<polyline");
+    expect(polyIdx).toBeGreaterThan(-1);
+    expect(lineIdx).toBeGreaterThan(polyIdx);
+  });
+
+  it("band: omitted band emits no polygon (matches the fill=transparent default)", () => {
+    const html = render({ values: [10, 30, 50] });
+    expect(html).not.toContain("<polygon");
+  });
+
+  it("band: mismatched low.length vs values.length skips the band gracefully (no throw)", () => {
+    const html = render({
+      values: [10, 30, 50],
+      band: { low: [7, 27], high: [13, 33, 53] }, // low is shorter
+    });
+    expect(html).toContain("<polyline"); // main curve still renders
+    expect(html).not.toContain("<polygon"); // band silently dropped
+  });
 });

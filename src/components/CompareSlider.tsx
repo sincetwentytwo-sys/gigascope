@@ -8,6 +8,13 @@ import { tileSources } from "@/lib/tiles";
 import type { Company, Factory } from "@/data/types";
 
 const ESRI_URL = tileSources[1].url;
+// Both left + right are ESRI imagery — left is a Wayback historic snapshot,
+// right is current World Imagery. Same license, same attribution, just
+// different temporal slices.
+const ESRI_ATTRIBUTION = tileSources[1].attribution;
+const WAYBACK_ATTRIBUTION =
+  'Wayback historic imagery via <a href="https://livingatlas.arcgis.com/wayback/" target="_blank" rel="noopener">Esri Living Atlas</a> · ' +
+  ESRI_ATTRIBUTION;
 // Left feed: 2019-05-15 ESRI Wayback snapshot. Used to be EOX Sentinel-2
 // cloudless mosaic, but EOX's cloudless aggregation returns ~1-12 KB grey
 // placeholder tiles for desert / arid regions (Nevada, Boca Chica mudflats,
@@ -102,20 +109,25 @@ export default function CompareSlider() {
         center,
         zoom: 14,
         zoomControl: false,
-        attributionControl: false,
+        // Attribution control ENABLED — Esri TOU requires the credit be
+        // visible on every map render. Only the LEFT pane renders the
+        // control (the slider obscures the right pane's bottom-right).
+        attributionControl: true,
       });
       // ESRI Wayback is native at zoom 19 (same as the right feed), so no
       // maxNativeZoom upscaling needed — left and right stay pixel-matched
       // at every zoom level.
-      L.tileLayer(SENTINEL_URL, { maxZoom: 19 }).addTo(lMap);
+      L.tileLayer(SENTINEL_URL, { maxZoom: 19, attribution: WAYBACK_ATTRIBUTION }).addTo(lMap);
 
       const rMap = L.map(rightMapRef.current, {
         center,
         zoom: 14,
         zoomControl: false,
+        // Right pane intentionally hides the attribution UI (slider would
+        // overlap it) — credit is carried on the left pane + global footer.
         attributionControl: false,
       });
-      L.tileLayer(ESRI_URL, { maxZoom: 19 }).addTo(rMap);
+      L.tileLayer(ESRI_URL, { maxZoom: 19, attribution: ESRI_ATTRIBUTION }).addTo(rMap);
 
       // Pulsing cyan marker at site's exact coordinates. Same icon on both
       // maps so the dot lines up across the slider divider — visually

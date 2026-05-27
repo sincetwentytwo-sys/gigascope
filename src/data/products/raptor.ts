@@ -33,7 +33,7 @@ export const raptor: ProductSpec = {
       license: "CC0",
     },
   },
-  relatedSites: ["starbase", "spacex-hawthorne"],
+  relatedSites: ["mcgregor", "starbase-build", "starbase-launch", "spacex-hawthorne"],
   parts: [
     {
       id: "nozzle",

@@ -23,6 +23,14 @@ export interface SparklineProps {
    * (rare — and it makes the curve lie about its shape).
    */
   preserveAspectRatio?: "none" | "xMidYMid meet" | "xMidYMid slice";
+  /**
+   * Optional uncertainty band. When present, renders a translucent polygon
+   * between `band.low` and `band.high` BEHIND the main polyline.
+   * Lengths must match `values.length`; mismatched lengths skip the band
+   * (no throw — degenerates gracefully so a bad input doesn't crash a
+   * server-rendered page).
+   */
+  band?: { low: number[]; high: number[] };
 }
 
 export default function Sparkline({
@@ -35,6 +43,7 @@ export default function Sparkline({
   className,
   showLatest = true,
   preserveAspectRatio = "xMidYMid meet",
+  band,
 }: SparklineProps) {
   if (!values || values.length < 2) {
     return (
@@ -73,6 +82,29 @@ export default function Sparkline({
   const lastX = points[points.length - 1][0];
   const lastY = points[points.length - 1][1];
 
+  // Optional uncertainty band — closed polygon traced low (L→R) then high
+  // (R→L). Values get clamped to [0, max] so the band can't escape the
+  // chart even with absurd inputs. Skipped silently if shapes don't agree
+  // with `values` — better to drop the band than throw at render time.
+  const bandPoints: string | null = (() => {
+    if (!band) return null;
+    if (band.low.length !== values.length || band.high.length !== values.length) return null;
+    const clamp = (v: number) => Math.min(Math.max(v, 0), max);
+    const lowPts = band.low.map((v, i) => {
+      const x = i * stepX;
+      const y = padY + innerH - (clamp(v) / max) * innerH;
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    });
+    const highPtsReverse = band.high
+      .map((v, i) => {
+        const x = i * stepX;
+        const y = padY + innerH - (clamp(v) / max) * innerH;
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      })
+      .reverse();
+    return [...lowPts, ...highPtsReverse].join(" ");
+  })();
+
   return (
     <svg
       width={width}
@@ -82,6 +114,9 @@ export default function Sparkline({
       aria-hidden="true"
       preserveAspectRatio={preserveAspectRatio}
     >
+      {bandPoints && (
+        <polygon points={bandPoints} fill={stroke} opacity={0.15} />
+      )}
       {fill !== "transparent" && (
         <polygon points={area} fill={fill} opacity={0.18} />
       )}

@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-05-20",
-  "lastChecked": "2026-05-20",
+  "lastUpdated": "2026-05-27",
+  "lastChecked": "2026-05-27",
   "totalInvestment": "$80B+",
   "timelineYears": [
     2020,
@@ -253,7 +253,7 @@
       "aka": "GF3",
       "flag": "🇨🇳",
       "location": "Shanghai, China",
-      "lat": 30.870,
+      "lat": 30.87,
       "lng": 121.769,
       "company": "tesla",
       "status": "operational",
@@ -594,28 +594,29 @@
       }
     },
     {
-      "id": "starbase",
-      "slug": "starbase",
-      "name": "Starbase",
-      "aka": "Boca Chica Launch Complex",
+      "id": "starbase-launch",
+      "slug": "starbase-launch",
+      "name": "Starbase Launch Site",
+      "aka": "Boca Chica Pads A + B",
       "flag": "🇺🇸",
       "location": "Boca Chica, Texas",
       "lat": 25.9971,
       "lng": -97.1554,
       "company": "spacex",
       "status": "expanding",
-      "progress": 70,
-      "area": "800+ acres",
+      "progress": 75,
+      "area": "200+ acres (pads + roads)",
       "capacity": "12 Starship flights/yr",
-      "products": "Starship, Super Heavy, Raptor engines",
-      "investment": "$3B+",
-      "employees": "3,000+",
+      "products": "Starship flights, Super Heavy reuse",
+      "investment": "$1.8B+ (launch-side allocation)",
+      "employees": "1,800+",
       "color": "#005288",
       "extras": {
         "Launch Pads": "OLM-A (Pad 1, IFT-1 through IFT-11) + OLM-B (Pad 2, operational 2026-05)",
         "Tower": "Mechazilla catch tower (Pad 1)"
       },
       "lastUpdated": "2026-05-27",
+      "timelapseSlug": "starbase",
       "milestones": [
         {
           "date": "2019-08",
@@ -668,13 +669,164 @@
         30,
         45,
         60,
-        70
+        75
       ],
       "sources": {
         "wikipediaRevision": "2026-05-13",
         "wikipediaTitle": "SpaceX_Starbase"
       },
       "halfKm": 4
+    },
+    {
+      "id": "starbase-build",
+      "slug": "starbase-build",
+      "name": "Starbase Factory",
+      "aka": "Star Factory + High/Mid Bay",
+      "flag": "🇺🇸",
+      "location": "Boca Chica, Texas",
+      "lat": 25.997,
+      "lng": -97.157,
+      "company": "spacex",
+      "status": "expanding",
+      "progress": 70,
+      "area": "Est. 500+ acres (production + storage)",
+      "capacity": "Up to 120 Starships + 100 Boosters /yr (planned)",
+      "products": "Starship, Super Heavy production",
+      "investment": "$1.2B+ (build-side allocation)",
+      "employees": "1,200+",
+      "color": "#005288",
+      "extras": {
+        "Star Factory": "Mass-production hall for Ship + Booster (operational 2024-2025 ramp)",
+        "High Bay": "Super Heavy Booster stacking",
+        "Mid Bay": "Starship upper-stage stacking",
+        "Paint shop": "Surface coating & QA"
+      },
+      "lastUpdated": "2026-05-27",
+      "confidence": "medium",
+      "lastVerified": "2026-05-27",
+      "timelapseSlug": null,
+      "milestones": [
+        {
+          "date": "2020-09",
+          "text": "High Bay completed (Booster stacking)",
+          "done": true,
+          "confidence": "medium",
+          "sourceUrl": "https://en.wikipedia.org/wiki/SpaceX_Starbase"
+        },
+        {
+          "date": "2021-03",
+          "text": "Mid Bay operational (Ship stacking) (operator estimate)",
+          "done": true,
+          "confidence": "medium"
+        },
+        {
+          "date": "2024-07",
+          "text": "Star Factory groundbreaking — mass-production hall",
+          "done": true,
+          "confidence": "medium",
+          "sourceUrl": "https://en.wikipedia.org/wiki/SpaceX_Starbase"
+        },
+        {
+          "date": "2025-Q3",
+          "text": "Star Factory partial occupancy / first Ship rolled out (operator estimate)",
+          "done": true,
+          "confidence": "medium"
+        },
+        {
+          "date": "2026-H2",
+          "text": "Star Factory full ramp + paint shop online (operator estimate)",
+          "done": false,
+          "confidence": "speculative"
+        }
+      ],
+      "timeline": [
+        5,
+        15,
+        25,
+        35,
+        50,
+        62,
+        70
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/SpaceX_Starbase",
+          "label": "Wikipedia — SpaceX Starbase (production site coverage)",
+          "date": "2026-05-13"
+        }
+      ],
+      "halfKm": 2
+    },
+    {
+      "id": "mcgregor",
+      "slug": "mcgregor",
+      "name": "SpaceX McGregor",
+      "aka": "Raptor Engine Test Facility",
+      "flag": "🇺🇸",
+      "location": "McGregor, Texas",
+      "lat": 31.3839,
+      "lng": -97.3961,
+      "company": "spacex",
+      "status": "expanding",
+      "progress": 80,
+      "area": "Est. 1,500+ acres",
+      "capacity": "All SpaceX engine acceptance testing (Merlin, Raptor, Falcon stage hot-fire)",
+      "products": "Raptor 2/3 acceptance, Merlin acceptance, Stage 2 hot-fire",
+      "investment": "—",
+      "employees": "500+",
+      "color": "#005288",
+      "lastUpdated": "2026-05-27",
+      "confidence": "medium",
+      "lastVerified": "2026-05-27",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/SpaceX_Rocket_Development_and_Test_Facility",
+          "label": "Wikipedia — SpaceX Rocket Development and Test Facility",
+          "date": "2026-05-20"
+        }
+      ],
+      "milestones": [
+        {
+          "date": "2003-06",
+          "text": "SpaceX acquires McGregor site from Beal Aerospace",
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/SpaceX_Rocket_Development_and_Test_Facility"
+        },
+        {
+          "date": "2009-09",
+          "text": "Merlin engine testing scales for Falcon 9 (operator estimate)",
+          "done": true,
+          "confidence": "medium"
+        },
+        {
+          "date": "2016-09",
+          "text": "First Raptor engine hot-fire at McGregor",
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/SpaceX_Raptor"
+        },
+        {
+          "date": "2022-Q4",
+          "text": "Raptor 2 acceptance testing throughput ramp (operator estimate)",
+          "done": true,
+          "confidence": "medium"
+        },
+        {
+          "date": "2025-H1",
+          "text": "Raptor 3 test stand additions / first Raptor 3 hot-fires (operator estimate)",
+          "done": true,
+          "confidence": "medium"
+        }
+      ],
+      "timeline": [
+        60,
+        65,
+        65,
+        70,
+        75,
+        78,
+        80
+      ],
+      "halfKm": 8
     },
     {
       "id": "spacex-hawthorne",
@@ -980,7 +1132,7 @@
       "aka": "xAI Southaven Gigawatt Datacenter",
       "flag": "🇺🇸",
       "location": "Southaven, Mississippi (also Memphis warehouse acq.)",
-      "lat": 34.9890,
+      "lat": 34.989,
       "lng": -90.0126,
       "company": "xai",
       "status": "construction",
