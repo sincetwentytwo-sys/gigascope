@@ -98,3 +98,33 @@ export interface TileSource {
   maxZoom: number;
   attribution?: string;
 }
+
+/**
+ * AI-augmented inference article published under /pulse/[slug].
+ *
+ * Introduced 2026-05-27: gigascope shifts from "static data catalog" to
+ * "AI workflow output". An `Analysis` is a markdown-rendered article that
+ * cross-links to one or more `factories.json` entries via `factoryRefs`,
+ * carries a `confidence` tag (verified/medium/speculative), and cites
+ * primary sources in `sources`.
+ */
+export type Analysis = {
+  /** URL slug under /pulse/[slug] */
+  slug: string;
+  /** Headline */
+  title: string;
+  /** Small kicker label, e.g. "Permit-driven inference · Giga Texas" */
+  kicker: string;
+  /** ISO datetime */
+  publishedAt: string;
+  /** Factory slugs this analysis cross-links — must match factories.json */
+  factoryRefs: string[];
+  /** Confidence tier — controls badge color on the page */
+  confidence: "verified" | "medium" | "speculative";
+  /** Article body, markdown */
+  bodyMarkdown: string;
+  /** Primary-source citations */
+  sources: Array<{ url: string; label: string }>;
+  /** Free-form tags */
+  tags: string[];
+};
