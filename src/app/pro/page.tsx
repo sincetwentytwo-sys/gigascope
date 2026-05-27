@@ -237,7 +237,7 @@ export default async function ProPage() {
               title="Live"
               tone="ops"
               items={[
-                "Daily digest at 07:00 local",
+                "Daily digest at 07:00 ET",
                 "Full /pulse scoreboard",
                 "16 site pages + before/after",
                 "Compare imagery slider",
