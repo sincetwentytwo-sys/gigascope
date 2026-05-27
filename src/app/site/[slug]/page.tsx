@@ -458,7 +458,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
             <h3 className="font-semibold text-sm text-accent-blue mb-4">
               Community
             </h3>
-            <CommunityFeed keywords={newsKeywords} factoryName={factory.name} />
+            <CommunityFeed keywords={newsKeywords} factoryName={factory.name} factorySlug={factory.slug} />
           </div>
         </div>
 

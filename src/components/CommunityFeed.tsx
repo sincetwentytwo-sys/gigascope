@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { fetchCommunityPosts, type SocialPost } from "@/lib/social";
+import { getLatestAnalyses, getAnalysesForFactory } from "@/data/analyses";
 
 interface CommunityFeedProps {
   keywords?: string[];
@@ -6,6 +8,9 @@ interface CommunityFeedProps {
   // sites) but no longer rendered — the compressed footer strip is generic
   // across all sites.
   factoryName?: string;
+  // When present, prefer analyses cross-linked to this factory slug for the
+  // fallback panel. Falls back to global latest if no per-factory matches.
+  factorySlug?: string;
 }
 
 const SOURCE_BADGE: Record<SocialPost["source"], string> = {
@@ -92,22 +97,77 @@ function OfficialStrip() {
   );
 }
 
-export default async function CommunityFeed({ keywords = [] }: CommunityFeedProps) {
+// Render a single GIGASCOPE-owned analysis card. Mirrors PostCard density but
+// signals "our analysis" via the badge so users can tell it's curated, not a
+// scraped community post.
+function AnalysisCard({
+  slug,
+  title,
+  kicker,
+  publishedAt,
+}: {
+  slug: string;
+  title: string;
+  kicker: string;
+  publishedAt: string;
+}) {
+  const ts = new Date(publishedAt).getTime();
+  return (
+    <Link
+      href={`/pulse/${slug}`}
+      className="block border border-border-custom rounded-lg p-3 hover:bg-surface transition-colors"
+    >
+      <div className="flex items-center gap-2 mb-1.5">
+        <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-text text-bg">
+          GIGASCOPE
+        </span>
+        <span className="text-xs text-dim">{kicker}</span>
+        <span className="text-xs text-dim">&middot;</span>
+        <span className="text-xs text-dim">{timeAgo(ts)}</span>
+      </div>
+      <p className="text-sm font-medium leading-snug">{title}</p>
+    </Link>
+  );
+}
+
+export default async function CommunityFeed({
+  keywords = [],
+  factorySlug,
+}: CommunityFeedProps) {
   const posts = await fetchCommunityPosts(keywords);
   const top = posts.slice(0, 8);
 
+  // When the community feed is empty (Reddit blocks Vercel egress on many
+  // days, HN returns nothing relevant), fall through to our own analysis
+  // feed. Per-factory matches first, then global latest. The dead "No
+  // recent community posts" state is gone — there's always something to
+  // read, and that something is *our* work, not a Reddit cross-post.
+  const fallbackAnalyses =
+    top.length === 0
+      ? (() => {
+          const perFactory = factorySlug ? getAnalysesForFactory(factorySlug) : [];
+          if (perFactory.length > 0) return perFactory.slice(0, 3);
+          return getLatestAnalyses(3);
+        })()
+      : [];
+
   return (
     <div className="flex flex-col gap-2">
-      {top.length > 0 ? (
-        top.map((post) => <PostCard key={post.id} post={post} />)
-      ) : (
-        <p className="text-sm text-dim py-2">No recent community posts.</p>
-      )}
+      {top.length > 0
+        ? top.map((post) => <PostCard key={post.id} post={post} />)
+        : fallbackAnalyses.map((a) => (
+            <AnalysisCard
+              key={a.slug}
+              slug={a.slug}
+              title={a.title}
+              kicker={a.kicker}
+              publishedAt={a.publishedAt}
+            />
+          ))}
 
-      {/* When we have real Reddit/HN posts the X strip is filler — hide it.
-          When there's nothing else, surface the compressed inline strip so
-          the user has at least one path to follow live updates. */}
-      {top.length === 0 && <OfficialStrip />}
+      {/* X strip stays as a quiet footer regardless of what's above it —
+          this is the audience pointer, not the feed. */}
+      <OfficialStrip />
     </div>
   );
 }
