@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
+import { isCronAuthorized } from "@/lib/cronAuth";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -11,13 +12,7 @@ function getRedis(): Redis | null {
   return new Redis({ url, token });
 }
 
-function authorized(req: Request): boolean {
-  const expected = process.env.CRON_SECRET;
-  if (!expected) return process.env.NODE_ENV !== "production";
-  const got = req.headers.get("authorization");
-  if (!got) return false;
-  return got === `Bearer ${expected}` || got === expected;
-}
+const authorized = isCronAuthorized;
 
 const CACHE_TTL_SECONDS = 48 * 60 * 60; // 48h — cron runs daily, double TTL for safety
 

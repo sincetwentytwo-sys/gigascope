@@ -91,10 +91,18 @@ export async function POST(req: Request) {
   const r = getRedis();
   const typedTier = tier as "free" | "pro" | "terminal";
 
-  // IP-keyed rate limiting. Vercel populates `x-forwarded-for` with the
-  // client IP first, then any proxies — split on comma and take the first.
+  // IP-keyed rate limiting. Trust Vercel's canonical `x-real-ip` header first
+  // (set by the Vercel CDN, not forwardable from a client). Fall back to the
+  // leftmost x-forwarded-for value only when x-real-ip is absent — and only
+  // accept x-forwarded-for at all on Vercel, where the CDN guarantees the
+  // first value is the real client IP. On any other host we fall through to
+  // "unknown", which buckets everyone into one rate-limit slot rather than
+  // letting a client spoof its way into infinite individual buckets.
   if (r) {
-    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const realIp = req.headers.get("x-real-ip")?.trim();
+    const xff = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+    const onVercel = !!process.env.VERCEL;
+    const ip = realIp || (onVercel ? xff : undefined) || "unknown";
     const allowed = await checkRateLimit(r, ip);
     if (!allowed) {
       return NextResponse.json({ error: "rate_limited" }, { status: 429 });

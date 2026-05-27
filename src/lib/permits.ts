@@ -17,6 +17,10 @@ const AUSTIN_SODA_BASE = `https://data.austintexas.gov/resource/${AUSTIN_PERMITS
 const GIGA_TEXAS_LAT = 30.22;
 const GIGA_TEXAS_LON = -97.62;
 const GEO_BOX_HALF_DEG = 0.02; // ~2.2km box around centroid
+// FP epsilon for the inclusive boundary check. Without this, a permit
+// geocoded exactly to the corner (30.24, -97.60) would silently miss
+// because 30.24 - 30.22 === 0.020000000000000018 > 0.02 in IEEE-754.
+const GEO_BOX_EPS = 1e-9;
 
 // SODA returns optional string fields — every key may be absent. Keep the raw
 // shape loose and let the normalizer coerce.
@@ -98,6 +102,23 @@ function sumNumeric(...vs: Array<string | undefined>): number | null {
   return any ? total : null;
 }
 
+// SODA exposes both a master `total_job_valuation` field AND per-trade
+// breakdowns (building / plumbing / electrical / mechanical / remodel).
+// On many rows the master is the SUM of the trades, so summing all six
+// double-counts every dollar. Pick the master when present, otherwise
+// fall back to summing the trade-specific sub-fields.
+function pickValuation(raw: RawAustinPermit): number | null {
+  const master = toNumber(raw.total_job_valuation);
+  if (master !== null) return master;
+  return sumNumeric(
+    raw.building_valuation,
+    raw.plumbing_valuation,
+    raw.electrical_valuation,
+    raw.mechanical_valuation,
+    raw.total_valuation_remodel,
+  );
+}
+
 function normalize(raw: RawAustinPermit): Permit | null {
   const id = raw.permit_number?.trim();
   if (!id) return null;
@@ -110,14 +131,7 @@ function normalize(raw: RawAustinPermit): Permit | null {
     workClass: raw.work_class ?? "",
     description: raw.description ?? "",
     sqft: sumNumeric(raw.total_new_add_bldg_sqft, raw.remodel_repair_sqft),
-    valuation: sumNumeric(
-      raw.total_job_valuation,
-      raw.building_valuation,
-      raw.plumbing_valuation,
-      raw.electrical_valuation,
-      raw.mechanical_valuation,
-      raw.total_valuation_remodel,
-    ),
+    valuation: pickValuation(raw),
     filedAt: raw.applieddate ?? raw.issue_date ?? null,
     applicant: raw.applicant_full_name ?? raw.contractor_company_name ?? null,
     contractor: raw.contractor_company_name ?? raw.contractor_full_name ?? null,
@@ -188,7 +202,9 @@ function isGigaTexasMatch(p: Permit): boolean {
   if (p.latitude !== null && p.longitude !== null) {
     const dLat = Math.abs(p.latitude - GIGA_TEXAS_LAT);
     const dLon = Math.abs(p.longitude - GIGA_TEXAS_LON);
-    if (dLat <= GEO_BOX_HALF_DEG && dLon <= GEO_BOX_HALF_DEG) return true;
+    if (dLat <= GEO_BOX_HALF_DEG + GEO_BOX_EPS && dLon <= GEO_BOX_HALF_DEG + GEO_BOX_EPS) {
+      return true;
+    }
   }
   return false;
 }

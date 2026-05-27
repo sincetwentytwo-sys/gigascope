@@ -3,6 +3,7 @@ import { Redis } from "@upstash/redis";
 import { Resend } from "resend";
 import PermitAlertEmail from "@/emails/permit-alert";
 import { fetchTravisPermits, filterGigaTexas, type Permit } from "@/lib/permits";
+import { isCronAuthorized } from "@/lib/cronAuth";
 
 export const runtime = "nodejs";
 
@@ -13,17 +14,7 @@ function getRedis(): Redis | null {
   return new Redis({ url, token });
 }
 
-function authorized(req: Request): boolean {
-  const expected = process.env.CRON_SECRET;
-  if (!expected) {
-    // Same convention as digest/drips/catalyst-alerts: fail closed in prod,
-    // allow in dev for manual curl-based testing.
-    return process.env.NODE_ENV !== "production";
-  }
-  const got = req.headers.get("authorization");
-  if (!got) return false;
-  return got === `Bearer ${expected}` || got === expected;
-}
+const authorized = isCronAuthorized;
 
 // 90 days is plenty for the dedup window. Tesla Road permits never re-issue
 // under the same ID, so the TTL is just hygiene to keep Redis tidy.

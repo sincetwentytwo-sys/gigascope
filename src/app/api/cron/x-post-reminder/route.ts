@@ -3,6 +3,7 @@ import { Redis } from "@upstash/redis";
 import { Resend } from "resend";
 import { isTelegramConfigured, sendTelegramMessage } from "@/lib/telegram";
 import { dayForToday, getDraft, X_QUEUE_WEEK_1, type XPostDraft } from "@/data/x-queue";
+import { isCronAuthorized } from "@/lib/cronAuth";
 
 export const runtime = "nodejs";
 
@@ -13,16 +14,7 @@ function getRedis(): Redis | null {
   return new Redis({ url, token });
 }
 
-function authorized(req: Request): boolean {
-  const expected = process.env.CRON_SECRET;
-  if (!expected) {
-    // Same pattern as other crons — fail closed in prod, open in dev for curl.
-    return process.env.NODE_ENV !== "production";
-  }
-  const got = req.headers.get("authorization");
-  if (!got) return false;
-  return got === `Bearer ${expected}` || got === expected;
-}
+const authorized = isCronAuthorized;
 
 const ISO_DATE = /^(\d{4})-(\d{2})-(\d{2})$/;
 

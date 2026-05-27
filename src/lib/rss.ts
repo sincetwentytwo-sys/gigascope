@@ -1,5 +1,3 @@
-import { createHash } from "node:crypto";
-import { Redis } from "@upstash/redis";
 import type { NewsItem } from "@/data/types";
 
 // Tesla-dedicated sources (all articles are relevant, no keyword filter needed)
@@ -216,166 +214,16 @@ async function fetchFeed(url: string, source: string): Promise<RichNewsItem[]> {
 }
 
 /**
- * Lazy Upstash client. Mirrors the pattern used by other API routes
- * (src/app/api/subscribe/route.ts etc.). If credentials aren't set we
- * return null and callers skip caching/enrichment.
- */
-function getRedis(): Redis | null {
-  const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
-  if (!url || !token) return null;
-  return new Redis({ url, token });
-}
-
-/** Short stable cache key per article URL — first 16 hex chars of sha256. */
-function hashUrl(url: string): string {
-  return createHash("sha256").update(url).digest("hex").slice(0, 16);
-}
-
-// UAs tried in order. Browser UA first — looks like a real visitor and bypasses
-// any WAF that filters purely on bot-string. Discordbot as the only fallback
-// because it's the recognized link-preview crawler with the highest success
-// rate on our specific source list (publishers explicitly allow it for X/
-// Discord/Slack preview unfurls). Trimmed from 4 UAs to 2 to stay inside
-// Vercel's 10s function budget — 4 UAs × 4s each = 16s/article, worst case
-// blew through the entire enrichImages budget on a single hard-blocked URL.
-const SCRAPE_UAS = [
-  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
-  "Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com)",
-];
-
-function extractImageFromHtml(html: string): string | undefined {
-  // og:image — attribute order varies, try both property-first and content-first.
-  let m = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i);
-  if (!m) m = html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
-  // Fall back to twitter:image
-  if (!m) m = html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i);
-  if (!m) m = html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i);
-  if (!m) return undefined;
-  return decodeEntities(m[1]);
-}
-
-/**
- * Fetch the article HTML and pull og:image (then twitter:image as fallback).
- * Retries across 4 UAs with browser-shaped headers and an 8s timeout. Any
- * single attempt returning 200 with no image short-circuits (no image is no
- * image — UA doesn't change that). Network/timeout/4xx-5xx errors fall
- * through to the next UA.
- */
-async function scrapeOgImage(articleUrl: string): Promise<string | undefined> {
-  for (let attempt = 0; attempt < SCRAPE_UAS.length; attempt++) {
-    try {
-      const res = await fetch(articleUrl, {
-        headers: {
-          "User-Agent": SCRAPE_UAS[attempt],
-          // Realistic browser Accept header. Some WAFs reject the bare
-          // "text/html,application/xhtml+xml" we used to send because real
-          // browsers never look like that.
-          Accept:
-            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-          "Accept-Language": "en-US,en;q=0.9",
-        },
-        // 4s per attempt × 2 UAs = max 8s/article. Fits well inside the
-        // 5s enrichImages budget alongside other workers. Originally 8s,
-        // but with 4 UAs that compounded to ~32s and starved the rest of
-        // the queue.
-        signal: AbortSignal.timeout(4000),
-      });
-      if (!res.ok) continue; // next UA
-      const html = await res.text();
-      const img = extractImageFromHtml(html);
-      if (img) return img;
-      // 200 OK but no image tag — article genuinely has none. Stop retrying.
-      return undefined;
-    } catch {
-      continue; // network/timeout — next UA
-    }
-  }
-  return undefined;
-}
-
-/**
- * For items where RSS didn't include an image, scrape og:image from the
- * article page. Results cached in Upstash for 1 day; "none" is cached to
- * avoid retrying URLs that genuinely have no og:image every render.
- * Concurrency capped at 6 to avoid hammering publishers + Vercel limits.
- */
-async function enrichImages(items: RichNewsItem[]): Promise<RichNewsItem[]> {
-  // Skip during the static-prerender build phase. The Upstash REST SDK uses
-  // `fetch` with `cache: 'no-store'` internally, which flips any caller page
-  // from ISR to dynamic at build time even when we catch the error. ISR
-  // revalidation (running in a serverless function, not the build) will
-  // populate the cache, so users see real thumbnails within one revalidate
-  // tick (~30 min) of the first deploy. Without this guard, /, /news, and
-  // /site/[slug] all become dynamic-rendered.
-  if (process.env.NEXT_PHASE === "phase-production-build") return items;
-
-  const r = getRedis();
-  if (!r) return items;
-
-  const missing = items.filter((i) => !i.image);
-  if (missing.length === 0) return items;
-
-  const keys = missing.map((i) => `og:image:${hashUrl(i.link)}`);
-  let cached: Array<string | null> = [];
-  try {
-    cached = (await r.mget<Array<string | null>>(...keys)) ?? [];
-  } catch (e) {
-    console.error("og:image mget failed", e);
-    // Fall through with empty cached array — we'll treat everything as a miss.
-  }
-
-  const queue: Array<{ item: RichNewsItem; key: string }> = [];
-  for (let i = 0; i < missing.length; i++) {
-    const v = cached[i];
-    if (typeof v === "string" && v !== "none") {
-      missing[i].image = v;
-    } else if (v === "none") {
-      // Known no og:image — leave undefined for gradient fallback.
-    } else {
-      queue.push({ item: missing[i], key: keys[i] });
-    }
-  }
-
-  if (queue.length === 0) return items;
-
-  const concurrency = Math.min(6, queue.length);
-  const workers = Array.from({ length: concurrency }, async () => {
-    while (queue.length) {
-      const next = queue.shift();
-      if (!next) break;
-      const { item, key } = next;
-      const img = await scrapeOgImage(item.link);
-      try {
-        if (img) {
-          // Found a real image — cache for a day (the article URL is stable
-          // and the image rarely changes).
-          item.image = img;
-          await r.set(key, img, { ex: 86400 });
-        } else {
-          // Negative cache shorter (2h, not 1 day): some publishers add
-          // og:image hours after publish, or our Discordbot UA briefly trips
-          // a WAF rate-limit. A 2h TTL means a failed scrape retries on the
-          // next ISR tick rather than locking the card to a placeholder for
-          // a full day. The "scraped but no image" outcome is genuinely
-          // permanent for some podcast/list posts, but those just re-scrape
-          // 12× a day at near-zero cost.
-          await r.set(key, "none", { ex: 7200 });
-        }
-      } catch (e) {
-        // Cache write failure is non-fatal — image (if any) is already set on item.
-        console.error("og:image set failed", e);
-      }
-    }
-  });
-  await Promise.all(workers);
-  return items;
-}
-
-/**
  * Fetch all Tesla / Musk-empire RSS feeds, dedupe by title prefix, and
  * return newest first. Used by both NewsFeed (compact list) and
  * NewsZigzag (thumbnail grid) so source list + parsing stay in one place.
+ *
+ * Note: og:image scraping (enrichImages, scrapeOgImage, SCRAPE_UAS,
+ * extractImageFromHtml) lived here through 2026-05-26. It was burning the
+ * /news Vercel function budget before render and was disabled, leaving the
+ * code dead. Removed wholesale 2026-05-27. If we bring og:image scraping
+ * back it belongs in a background cron that writes thumbnails into Upstash,
+ * not in the render path.
  */
 export async function fetchAllNews(): Promise<RichNewsItem[]> {
   const results = await Promise.allSettled([
@@ -422,14 +270,10 @@ export async function fetchAllNews(): Promise<RichNewsItem[]> {
     console.log("fetchAllNews source counts:", JSON.stringify(bySource), "total:", merged.length);
   }
 
-  // Skip enrichImages for now — Upstash cache wipe + fresh SSR was running
-  // og scrape on every article and burning the entire Vercel function
-  // budget before the page could render. Article count on /news dropped
-  // from ~25 to 1 because the function got killed mid-render. We bring
-  // enrichment back as a separate background cron once the article
-  // pipeline is stable; in the meantime articles render with whatever
-  // RSS image their feed gave us, which is most of them. The image proxy
-  // handles the client-load step from there.
+  // Articles render with whatever image their RSS feed embedded. Items with
+  // no embedded image fall back to a gradient placeholder in the rendering
+  // component — we used to run an og:image scraper here but it cost more
+  // than it saved (see file header note).
   return merged;
 }
 

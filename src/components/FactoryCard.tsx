@@ -70,8 +70,11 @@ export default function FactoryCard({
               height={900}
               className="w-full aspect-video object-cover"
             />
-            <span className="absolute top-1 left-1 px-1 py-0.5 text-[9px] font-mono uppercase tracking-wider bg-black/60 text-white/90 rounded">
-              Before
+            <span
+              className="absolute top-1 left-1 px-1 py-0.5 text-[9px] font-mono uppercase tracking-wider bg-black/60 text-white/90 rounded"
+              title="Earliest available Sentinel-2 capture — used as the visual baseline"
+            >
+              Before · Sentinel-2
             </span>
           </div>
           <div className="relative">
@@ -83,8 +86,11 @@ export default function FactoryCard({
               height={900}
               className="w-full aspect-video object-cover"
             />
-            <span className="absolute top-1 right-1 px-1 py-0.5 text-[9px] font-mono uppercase tracking-wider bg-black/60 text-white/90 rounded">
-              Now
+            <span
+              className="absolute top-1 right-1 px-1 py-0.5 text-[9px] font-mono uppercase tracking-wider bg-black/60 text-white/90 rounded"
+              title="Most recent ESRI World Imagery or Sentinel-2 capture, whichever is fresher"
+            >
+              Now · ESRI
             </span>
             {fresh && (
               // Capture-date pill on the "Now" thumbnail — gives the user a

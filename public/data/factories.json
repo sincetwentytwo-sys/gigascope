@@ -16,15 +16,15 @@
       "id": "terafab",
       "slug": "terafab",
       "name": "TERAFAB",
-      "aka": "Tesla × SpaceX × xAI Chip Fab",
+      "aka": "Tesla × SpaceX × xAI Chip Fab (announced, no groundbreaking)",
       "flag": "🇺🇸",
       "location": "Austin, TX (Giga Texas North Campus)",
       "lat": 30.228,
       "lng": -97.612,
       "company": "joint",
       "status": "announced",
-      "progress": 2,
-      "area": "Est. 10M+ sqft",
+      "progress": 0,
+      "area": "Est. 10M+ sqft (planned)",
       "capacity": "1 TW compute/yr",
       "products": "AI5 chip, 2nm process, Memory, Packaging",
       "investment": "$20-25B",
@@ -132,8 +132,9 @@
         },
         {
           "date": "2025-06",
-          "text": "Cybercab pilot line",
-          "done": true
+          "text": "Cybercab pilot line tooling staged (production timing TBD)",
+          "done": false,
+          "confidence": "speculative"
         },
         {
           "date": "2026-03",
@@ -947,10 +948,12 @@
         0,
         0,
         0,
-        0,
-        0,
-        0
-      ]
+        30,
+        50,
+        60
+      ],
+      "_progressNote": "Building shell complete in 2024; 'progress' reflects GPU racks installed against the 1M-GPU plan. Indoor work is invisible from orbit — % is operator-estimated from announced GPU count, not from polygon trace.",
+      "halfKm": 1.2
     },
     {
       "id": "neuralink-fremont",

@@ -39,8 +39,19 @@ describe("Sparkline", () => {
     expect(html).not.toContain("<circle");
   });
 
-  it("uses preserveAspectRatio='none' so it stretches with the container", () => {
+  it("default preserveAspectRatio is 'xMidYMid meet' so curves keep their shape", () => {
+    // Before 2026-05-27 the default was 'none', which let CSS-stretched
+    // sparklines visually deform — a curve that climbed gently looked like
+    // a vertical wall on a narrow column. Default now preserves aspect.
     const html = render({ values: [0, 5, 10] });
+    expect(html).toContain('preserveAspectRatio="xMidYMid meet"');
+  });
+
+  it("preserveAspectRatio='none' can still be opted into explicitly", () => {
+    // For deliberately stretching to fill a wide responsive container
+    // (e.g. the /pulse aggregate chart) callers can opt back into the
+    // old behavior — but it's an explicit choice, not the default.
+    const html = render({ values: [0, 5, 10], preserveAspectRatio: "none" });
     expect(html).toContain('preserveAspectRatio="none"');
   });
 

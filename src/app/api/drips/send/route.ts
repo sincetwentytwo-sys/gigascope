@@ -8,6 +8,7 @@ import DripD21 from "@/emails/drip-d21";
 import DripD30 from "@/emails/drip-d30";
 import { unsubHeaders } from "@/lib/unsubscribe";
 import { isTelegramConfigured, sendTelegramMessage } from "@/lib/telegram";
+import { isCronAuthorized } from "@/lib/cronAuth";
 
 export const runtime = "nodejs";
 
@@ -18,16 +19,7 @@ function getRedis(): Redis | null {
   return new Redis({ url, token });
 }
 
-function authorized(req: Request): boolean {
-  const expected = process.env.CRON_SECRET;
-  if (!expected) {
-    // In production, fail closed. In dev/local, allow for manual testing.
-    return process.env.NODE_ENV !== "production";
-  }
-  const got = req.headers.get("authorization");
-  if (!got) return false;
-  return got === `Bearer ${expected}` || got === expected;
-}
+const authorized = isCronAuthorized;
 
 type DripDef = {
   day: number;

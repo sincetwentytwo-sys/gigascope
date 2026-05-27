@@ -91,21 +91,24 @@ export default function PulsePage() {
       <header className="border-b border-border-custom">
         <div className="max-w-[1300px] mx-auto px-6 py-10 sm:py-16">
           <div className="flex items-center gap-3 mb-4">
-            <span className="relative flex h-2 w-2">
+            <span
+              className="relative flex h-2 w-2"
+              title="Page rebuilds every 30 minutes from static factories.json + timelapse index — not a real-time feed."
+            >
               <span className="absolute inline-flex h-full w-full rounded-full bg-accent-green opacity-75 animate-ping" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-green" />
             </span>
             <span className="text-[11px] uppercase tracking-widest text-dim font-mono">
-              Pulse · empire scoreboard
+              Pulse · empire scoreboard · refreshes every 30 min
             </span>
           </div>
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4 max-w-3xl leading-[1.05]">
             What the Musk empire is building, right now.
           </h1>
           <p className="text-dim text-base sm:text-lg max-w-2xl leading-relaxed">
-            {stats.sites} sites. {stats.countries} countries. Five companies. Every Sentinel-2
-            frame and primary-source filing we have, rolled up into one scoreboard. Refreshed as
-            new captures and filings land.
+            {stats.sites} sites. {stats.countries} countries. Five operating companies plus
+            joint ventures. Every Sentinel-2 frame and primary-source filing we have, rolled
+            up into one scoreboard. Page rebuilds every 30 minutes as captures and filings land.
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] font-mono text-dim">
             <span>Data updated {stats.dataLastUpdated}</span>
@@ -140,7 +143,7 @@ export default function PulsePage() {
             <SectionHeader
               kicker="Aggregate"
               title="Empire build-out, 2020 → today"
-              tail="Average progress across all sites with a non-zero footprint"
+              tail="Mean progress across sites with non-zero progress in that year (excludes pre-groundbreaking)"
             />
             <div className="rounded-md border border-border-custom bg-bg p-5 sm:p-6">
               {/* Tall sparkline + axis labels — same component used elsewhere
@@ -457,7 +460,7 @@ export default function PulsePage() {
       <section className="border-b border-border-custom bg-surface">
         <div className="max-w-[1300px] mx-auto px-6 py-7 text-center">
           <div className="text-[10px] uppercase tracking-widest font-mono text-dim mb-3">
-            Verified against
+            Milestones cited against
           </div>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] text-text font-mono">
             <span>FAA filings</span>

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { isCronAuthorized } from "@/lib/cronAuth";
 
 export const runtime = "nodejs";
 
@@ -9,15 +10,7 @@ export const runtime = "nodejs";
 //
 // CRON_SECRET-gated to match the pattern across our other admin/cron routes.
 
-function authorized(req: Request): boolean {
-  const expected = process.env.CRON_SECRET;
-  if (!expected) {
-    return process.env.NODE_ENV !== "production";
-  }
-  const got = req.headers.get("authorization");
-  if (!got) return false;
-  return got === `Bearer ${expected}` || got === expected;
-}
+const authorized = isCronAuthorized;
 
 const WEBHOOK_PATH = "/api/telegram/webhook";
 

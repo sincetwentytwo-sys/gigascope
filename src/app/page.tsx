@@ -34,19 +34,23 @@ type Hero = {
 // (sand→OLM tower) carry the visual weight.
 const HEROES: Hero[] = [
   {
-    // Video first frame is 2018-08-15 (Sentinel-2 capture predates groundbreaking).
-    // Tesla broke ground in 2020 → site was operational by 2022 → continued
-    // expansion through 2026, so the construction story is "bare farmland to
-    // megafactory" across the full window. Kicker reflects the actual video
-    // range; headline reflects the construction-only window from groundbreaking.
+    // Headline says "six years" — that's the construction window from Tesla's
+    // 2020 groundbreaking to 2026. Kicker now matches that window so the
+    // dates don't contradict the headline. The video clip itself contains
+    // earlier Sentinel-2 frames as pre-groundbreaking baseline, but the
+    // STORY the page tells is the construction story, not the imagery's full
+    // archive history.
     slug: "giga-texas",
-    kicker: "Tesla Gigafactory Texas · Sentinel-2 · 2018 → 2026",
+    kicker: "Tesla Gigafactory Texas · 6yr satellite timelapse · 2020 → 2026",
     headlineLead: "Tesla Gigafactory Texas —",
     headlineTail: "bare farmland to megafactory in six years.",
   },
   {
+    // Same logic — headline "five years" = 2021→2026 (OLM tower install
+    // through current rapid-cadence operations). Earlier Boca Chica frames
+    // are baseline, the construction-on-OLM story is the 5yr window.
     slug: "starbase",
-    kicker: "SpaceX Starbase · Sentinel-2 · 2019 → 2026",
+    kicker: "SpaceX Starbase · 5yr satellite timelapse · 2021 → 2026",
     headlineLead: "Starbase —",
     headlineTail: "from sand to Starship pad in five years.",
   },

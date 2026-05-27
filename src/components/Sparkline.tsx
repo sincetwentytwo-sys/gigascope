@@ -16,6 +16,13 @@ export interface SparklineProps {
   className?: string;
   /** Render a small dot at the most recent point. */
   showLatest?: boolean;
+  /**
+   * Default `xMidYMid meet` preserves the curve's aspect ratio when the
+   * SVG is responsive-stretched via CSS `width: 100%`. Set to `"none"`
+   * only when you intentionally want the curve to deform to fill the box
+   * (rare — and it makes the curve lie about its shape).
+   */
+  preserveAspectRatio?: "none" | "xMidYMid meet" | "xMidYMid slice";
 }
 
 export default function Sparkline({
@@ -27,6 +34,7 @@ export default function Sparkline({
   strokeWidth = 1.5,
   className,
   showLatest = true,
+  preserveAspectRatio = "xMidYMid meet",
 }: SparklineProps) {
   if (!values || values.length < 2) {
     return (
@@ -72,7 +80,7 @@ export default function Sparkline({
       viewBox={`0 0 ${width} ${height}`}
       className={className}
       aria-hidden="true"
-      preserveAspectRatio="none"
+      preserveAspectRatio={preserveAspectRatio}
     >
       {fill !== "transparent" && (
         <polygon points={area} fill={fill} opacity={0.18} />
