@@ -1,6 +1,20 @@
 # GIGASCOPE — Session Handoff
 
-**Last updated**: 2026-05-27 (senior-grade rebuild · /pulse + sparklines + previews + trust strip)
+**Last updated**: 2026-05-27 PM KST (P0/P1/P2 batches shipped → Path 2 validation kickoff)
+
+## 🔴 Next session: READ FIRST
+
+Full session context + Path 2 workflow + immediate next steps:
+- `G:\jb\gigascope-session-context-2026-05-27.md` (comprehensive, Korean+English)
+- `G:\jb\gigascope-next-session-startup-prompt.md` (paste-at-start prompt)
+
+Brief status as of 2026-05-27 PM KST:
+- P0/P1/P2 batches all shipped (commits `1dfbd09`, `a9e2d15`, `20efde7`)
+- 113 vitest tests passing · 20 sites · 86 SSG pages · build clean
+- **First Path 2 inference post going live ~22:00 KST tonight** at r/teslainvestorsclub (Travis County permits + DC2-102 CORTEX 2.0 + Cell phase 2). X thread follows 24h later.
+- Engagement window: 2 weeks. Outcome decides P3 feature build vs sustain mode.
+- Workflow agreement: claim↔source table → Claude adversarial → Gemini cross-check → post. **Both models must pass.**
+- Owner can't audit English. Adversarial Claude agent is now mandatory on every user-facing inference.
 
 ## 🆕 2026-05-27 overnight rebuild (this session)
 
