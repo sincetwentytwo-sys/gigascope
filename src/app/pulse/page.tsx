@@ -28,6 +28,7 @@ import EmailSignup from "@/components/EmailSignup";
 import Sparkline from "@/components/Sparkline";
 import { safeJsonLd } from "@/lib/safeJsonLd";
 import { factories } from "@/data/factories";
+import { getLatestAnalyses } from "@/data/analyses";
 
 export const revalidate = 1800; // 30 min
 
@@ -60,6 +61,7 @@ export default function PulsePage() {
   const velocity = getVelocityLeaderboard(6);
   const companies = getCompanyBreakdown();
   const aggregate = getAggregateTimeline(TIMELINE_YEARS);
+  const latestAnalyses = getLatestAnalyses(5);
 
   // ── Schema.org structured data so search engines see a real dataset ──
   const jsonLd = {
@@ -357,6 +359,83 @@ export default function PulsePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Latest analysis ────────────────────────────────────────────
+          AI-augmented inference articles (added 2026-05-27). Surfaces
+          the most recent `analyses.json` entries as cards linking to
+          `/pulse/[slug]`. Strictly additive — section hides itself when
+          no analyses exist, so the page degrades gracefully. */}
+      {latestAnalyses.length > 0 && (
+        <section aria-label="Latest analysis" className="border-b border-border-custom">
+          <div className="max-w-[1300px] mx-auto px-6 py-10 sm:py-14">
+            <SectionHeader
+              kicker="Inference"
+              title="Latest analysis"
+              tail={`${latestAnalyses.length} most recent`}
+            />
+            <div className="grid grid-cols-1 gap-3">
+              {latestAnalyses.map((a) => {
+                const conf =
+                  a.confidence === "verified"
+                    ? { color: "var(--green)", label: "Verified" }
+                    : a.confidence === "medium"
+                    ? { color: "var(--amber)", label: "Medium" }
+                    : { color: "var(--red)", label: "Speculative" };
+                const chips = a.factoryRefs.map((ref) => {
+                  const f = factories.find((x) => x.slug === ref);
+                  return {
+                    slug: ref,
+                    name: f?.name ?? ref.replace(/-/g, " "),
+                  };
+                });
+                return (
+                  <Link
+                    key={a.slug}
+                    href={`/pulse/${a.slug}`}
+                    className="block rounded-md border border-border-custom bg-bg p-4 sm:p-5 hover:border-text transition-colors"
+                  >
+                    <div className="flex flex-wrap items-center gap-2 mb-2 text-[11px] font-mono">
+                      <span className="uppercase tracking-widest text-dim">
+                        {a.kicker}
+                      </span>
+                      <span className="text-border-custom">·</span>
+                      <span
+                        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded uppercase tracking-wider font-bold"
+                        style={{ background: `${conf.color}15`, color: conf.color }}
+                      >
+                        <span
+                          className="w-1 h-1 rounded-full"
+                          style={{ background: conf.color }}
+                        />
+                        {conf.label}
+                      </span>
+                      <span className="text-border-custom">·</span>
+                      <time dateTime={a.publishedAt} className="text-dim">
+                        {a.publishedAt.slice(0, 10)}
+                      </time>
+                    </div>
+                    <h3 className="text-base sm:text-lg font-bold tracking-tight leading-snug mb-3">
+                      {a.title}
+                    </h3>
+                    {chips.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5">
+                        {chips.map((c) => (
+                          <span
+                            key={c.slug}
+                            className="font-mono text-[10px] px-1.5 py-0.5 border border-border-custom text-dim"
+                          >
+                            {c.name}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── Velocity leaderboard ───────────────────────────────────────── */}
       {velocity.length > 0 && (

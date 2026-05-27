@@ -125,15 +125,19 @@ export default async function ProPage() {
               <div className="text-xs text-dim mb-5">or $90 / year · 17% off · charter rate locked for life</div>
               <ul className="text-sm flex flex-col gap-2 mb-6">
                 <Bullet>Daily digest at 07:00 ET</Bullet>
-                <Bullet soon>Satellite-drop alerts (Telegram + email)</Bullet>
-                <Bullet soon>Saturday weekly recap</Bullet>
-                <Bullet soon>CSV / JSON bulk data exports</Bullet>
+                <Bullet>Satellite-drop alerts (Telegram + email)</Bullet>
+                <Bullet>Saturday weekly recap</Bullet>
+                <Bullet>AI-curated permit / SEC / FAA inference feed</Bullet>
                 <Bullet soon>Founding member badge in account</Bullet>
                 <Bullet>$9/mo locked when public hits $29</Bullet>
               </ul>
               <p className="text-[10px] text-dim mb-4 leading-snug">
                 <span className="text-text">✓ live today</span> ·{" "}
-                <span className="text-text">◇ unlocks at launch — charter pricing pays for the build</span>
+                <span className="text-text">◇ unlocks the moment Stripe / Paddle KYB clears</span>
+              </p>
+              <p className="text-[10px] text-dim mb-4 leading-snug">
+                More features in development.{" "}
+                <Link href="/roadmap" className="underline hover:text-text">Vote on what's next →</Link>
               </p>
               <div className="mt-auto">
                 {showCount && remaining !== null && remaining > 0 && (

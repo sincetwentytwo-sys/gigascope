@@ -1,6 +1,7 @@
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { factories, getFactory, getTimelapseSlug, TIMELINE_YEARS } from "@/data/factories";
+import { getAnalysesForFactory } from "@/data/analyses";
 import { getCompanyMeta } from "@/data/companies";
 import SatelliteMapWrapper from "@/components/SatelliteMapWrapper";
 import { listProducts } from "@/data/products";
@@ -130,6 +131,9 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
   });
   const tlSlug = getTimelapseSlug(factory);
   const showBeforeAfter = hasBeforeAfterThumbnails(tlSlug);
+  // Cross-link AI-augmented analyses that reference this site. Top 1-2,
+  // newest first. Empty list → the box is skipped entirely below.
+  const relatedAnalyses = getAnalysesForFactory(factory.slug).slice(0, 2);
 
   return (
     <div className="bg-bg text-text min-h-screen">
@@ -353,6 +357,62 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
 
           {/* Right 1/3 */}
           <div className="flex flex-col gap-6">
+            {/* Related analysis — AI-augmented inference articles that
+                cross-link to this site via factoryRefs. Box is omitted
+                entirely when none match, so existing sites with no
+                analysis coverage render unchanged. */}
+            {relatedAnalyses.length > 0 && (
+              <div className="bg-surface p-4 sm:p-5 border border-border-custom">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="font-semibold text-sm" style={{ color: accent }}>
+                    Related analysis
+                  </h3>
+                  <span className="font-mono text-[10px] text-dim">
+                    {relatedAnalyses.length} article{relatedAnalyses.length > 1 ? "s" : ""}
+                  </span>
+                </div>
+                <div className="flex flex-col gap-3">
+                  {relatedAnalyses.map((a) => {
+                    const conf =
+                      a.confidence === "verified"
+                        ? { color: "var(--green)", label: "Verified" }
+                        : a.confidence === "medium"
+                        ? { color: "var(--amber)", label: "Medium" }
+                        : { color: "var(--red)", label: "Speculative" };
+                    return (
+                      <a
+                        key={a.slug}
+                        href={`/pulse/${a.slug}`}
+                        className="block border border-border-custom p-3 hover:border-text transition-colors"
+                      >
+                        <div className="flex flex-wrap items-center gap-2 mb-2 text-[10px] font-mono">
+                          <span className="uppercase tracking-widest text-dim">
+                            {a.kicker}
+                          </span>
+                          <span
+                            className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded uppercase tracking-wider font-bold"
+                            style={{ background: `${conf.color}15`, color: conf.color }}
+                          >
+                            <span
+                              className="w-1 h-1 rounded-full"
+                              style={{ background: conf.color }}
+                            />
+                            {conf.label}
+                          </span>
+                        </div>
+                        <h4 className="text-sm font-bold text-text leading-snug">
+                          {a.title}
+                        </h4>
+                        <p className="font-mono text-[10px] text-dim mt-1">
+                          {a.publishedAt.slice(0, 10)}
+                        </p>
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             {/* Milestones */}
             <div className="bg-surface  p-4 sm:p-5 border border-border-custom">
               <div className="flex items-center justify-between mb-5">

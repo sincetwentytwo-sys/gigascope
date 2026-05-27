@@ -168,11 +168,12 @@ export default function RootLayout({
 
           {/* Policy + legal links — required for Paddle MoR + Korean e-commerce law */}
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[11px]">
+            <a href="/roadmap" className="hover:text-text transition-colors">Roadmap</a>
+            <a href="/methodology" className="hover:text-text transition-colors">Methodology</a>
+            <a href="/charter-terms" className="hover:text-text transition-colors">Charter Terms</a>
             <a href="/terms-of-service" className="hover:text-text transition-colors">Terms of Service</a>
             <a href="/privacy-policy" className="hover:text-text transition-colors">Privacy Policy</a>
             <a href="/refund-policy" className="hover:text-text transition-colors">Refund Policy</a>
-            <a href="/charter-terms" className="hover:text-text transition-colors">Charter Terms</a>
-            <a href="/methodology" className="hover:text-text transition-colors">Methodology</a>
           </div>
 
           <SupportLinks />
