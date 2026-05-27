@@ -358,7 +358,7 @@ export default async function Home({
             <NewsFeed />
           </div>
           <div>
-            <h2 className="text-2xl font-bold mb-6">Community</h2>
+            <h2 className="text-2xl font-bold mb-6">Latest signal</h2>
             <CommunityFeed factoryName="Musk" />
           </div>
         </div>
