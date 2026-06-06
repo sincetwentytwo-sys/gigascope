@@ -97,6 +97,22 @@ export default function InvestorCheckout({
     }
   };
 
+  // Fake-door: in waitlist mode, record an "I'd lock $9" intent click (the
+  // go/no-go demand signal) WITHOUT charging, then route to the email field.
+  const lockCharter = () => {
+    try {
+      void fetch("/api/charter-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      });
+    } catch {
+      /* never block the UX on a metric write */
+    }
+    setMsg("Charter rate locked. Drop your email below and you're set — no charge today.");
+    focusEmailInput();
+  };
+
   // ── Lemon Squeezy live mode (MoR hosted checkout) ──────────────────────
   // Highest-precedence path. The button is a plain link to LS's hosted
   // checkout — LS handles email capture, payment, tax, and the subscription.
@@ -167,13 +183,13 @@ export default function InvestorCheckout({
 
         <button
           type="button"
-          onClick={focusEmailInput}
+          onClick={lockCharter}
           className="px-8 py-3 rounded-full bg-text text-bg text-base font-bold hover:opacity-85 transition-opacity shadow-sm"
         >
-          Join waitlist — gate opens on payment-provider clearance
+          Lock the $9 charter rate — pay nothing today
         </button>
         <div className="text-xs text-dim max-w-md text-center">
-          You'll be notified the day billing goes live, at the charter rate shown.
+          {msg || "We'll email you the day billing opens, at the charter rate shown. No card now."}
         </div>
       </div>
     );

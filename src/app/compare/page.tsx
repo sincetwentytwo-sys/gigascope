@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import CompareSliderWrapper from "@/components/CompareSliderWrapper";
+import EmailSignup from "@/components/EmailSignup";
 
 const SITE_URL = "https://gigascope.xyz";
 
@@ -31,6 +32,15 @@ export default function ComparePage() {
       </div>
       <div className="max-w-[1400px] mx-auto px-3 sm:px-6 py-4 sm:py-6">
         <CompareSliderWrapper />
+      </div>
+      <div className="max-w-[640px] mx-auto px-4 sm:px-6 pb-10">
+        <div className="bg-surface border border-border-custom rounded-lg p-4 sm:p-5 text-center">
+          <h2 className="text-sm font-semibold mb-1">Get the next frame the day it lands</h2>
+          <p className="text-xs text-dim mb-3">
+            New satellite frames and permit filings, emailed as they happen. Free.
+          </p>
+          <EmailSignup tier="free" source="compare" variant="inline" />
+        </div>
       </div>
     </div>
   );

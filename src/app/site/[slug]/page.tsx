@@ -9,6 +9,7 @@ import { getESRIImageryDate } from "@/lib/satellite-date";
 import { FactoryNewsFeed } from "@/components/NewsFeed";
 import CommunityFeed from "@/components/CommunityFeed";
 import ShareButtons from "@/components/ShareButtons";
+import EmailSignup from "@/components/EmailSignup";
 import { TIMELAPSE_INDEX } from "@/lib/timelapseIndex";
 
 function hasBeforeAfterThumbnails(slug: string | null): boolean {
@@ -460,6 +461,16 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
             </h3>
             <CommunityFeed keywords={newsKeywords} factoryName={factory.name} factorySlug={factory.slug} />
           </div>
+        </div>
+
+        {/* Track-this-site free signup — the funnel top: turn a reader at peak
+            interest in THIS site into a free email sub. */}
+        <div className="bg-surface border border-border-custom p-4 sm:p-5 mb-4">
+          <h3 className="font-semibold text-sm mb-1">Track {factory.name}</h3>
+          <p className="text-xs text-dim mb-3">
+            Get an email the day {factory.name} gets a fresh satellite frame or a new permit filing. Free.
+          </p>
+          <EmailSignup tier="free" source={`site:${factory.slug}`} variant="inline" />
         </div>
 
         {/* Share + Links */}
