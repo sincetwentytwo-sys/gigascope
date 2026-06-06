@@ -35,6 +35,7 @@ export type EmailType =
   | "digest"
   | "catalyst-alert"
   | "permit-alert"
+  | "weekly-recap"
   | "x-reminder";
 
 /** UTC YYYY-MM-DD string for a given millisecond timestamp. */
