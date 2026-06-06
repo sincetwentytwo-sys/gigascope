@@ -132,8 +132,8 @@ export default async function ProPage() {
               <div className="text-xs text-dim mb-5">or $90 / year · 17% off · charter rate locked for life</div>
               <ul className="text-sm flex flex-col gap-2 mb-6">
                 <Bullet>Daily digest at 07:00 ET</Bullet>
-                <Bullet soon>Satellite-drop alerts (Telegram + email)</Bullet>
-                <Bullet soon>Saturday weekly recap</Bullet>
+                <Bullet>Satellite-drop alerts (Telegram + email)</Bullet>
+                <Bullet>Saturday weekly recap</Bullet>
                 <Bullet soon>CSV / JSON bulk data exports</Bullet>
                 <Bullet soon>Founding member badge in account</Bullet>
                 <Bullet>$9/mo locked when public hits $29</Bullet>
@@ -224,9 +224,10 @@ export default async function ProPage() {
               </div>
               <h3 className="text-xl font-bold mb-2">Telegram + email · charter only</h3>
               <p className="text-sm text-dim mb-5 leading-relaxed">
-                When a fresh Sentinel-2 frame lands on a tracked site and the polygon
-                comparison shows a non-trivial change, the alert fires within an hour. No
-                "TSLA is up 2%" noise. Only when a building physically moves.
+                When a tracked site gets a fresh satellite frame, you get an email the same
+                day — plus Telegram, if you've linked it — pointing you straight to the new
+                imagery so you can see what changed on the ground. No "TSLA is up 2%" market
+                noise. This fires on new pictures of the site, not stock ticks.
               </p>
               <TelegramAlertPreview />
             </div>
