@@ -105,9 +105,10 @@ export default function CharterTermsPage() {
             the standard rate in effect at that time, not $9.
           </li>
           <li>
-            <strong>Payment failure</strong> starts a 14-day grace period. During grace we will email you and
-            keep the subscription alive at the Charter rate. If payment is not restored within 14 days, the
-            subscription is cancelled and Charter status is forfeited.
+            <strong>Payment failure</strong> starts a grace period of up to 14 days. During grace, our payment
+            provider (Lemon Squeezy, our Merchant of Record) automatically retries the charge and emails you,
+            and your subscription stays active at the Charter rate. If payment is not restored within the grace
+            window, the subscription is cancelled and Charter status is forfeited.
           </li>
           <li>
             <strong>Chargebacks or fraud</strong> result in immediate forfeiture of Charter status and
@@ -154,7 +155,8 @@ export default function CharterTermsPage() {
           against the locked annual rate paid.
         </p>
         <p className="text-text leading-relaxed mb-4">
-          Refunds are issued to the original payment method within 14 business days.
+          Refunds are processed through our payment provider (Lemon Squeezy, our Merchant of Record) back to
+          your original payment method, typically within 14 business days.
         </p>
       </section>
 

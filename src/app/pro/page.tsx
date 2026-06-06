@@ -131,16 +131,15 @@ export default async function ProPage() {
               </div>
               <div className="text-xs text-dim mb-5">or $90 / year · 17% off · charter rate locked for life</div>
               <ul className="text-sm flex flex-col gap-2 mb-6">
-                <Bullet>Daily digest at 07:00 ET</Bullet>
+                <Bullet>Daily digest, ~7 AM ET</Bullet>
                 <Bullet>Satellite-drop alerts (Telegram + email)</Bullet>
                 <Bullet>Saturday weekly recap</Bullet>
-                <Bullet soon>CSV / JSON bulk data exports</Bullet>
                 <Bullet soon>Founding member badge in account</Bullet>
                 <Bullet>$9/mo locked when public hits $29</Bullet>
               </ul>
               <p className="text-[10px] text-dim mb-4 leading-snug">
-                <span className="text-text">✓ live today</span> ·{" "}
-                <span className="text-text">◇ unlocks at launch — charter pricing pays for the build</span>
+                <span className="text-text">✓ built &amp; live</span> ·{" "}
+                <span className="text-text">◇ not yet built — charter pricing funds it</span>
               </p>
               <div className="mt-auto">
                 {showCount && remaining !== null && remaining > 0 && (
@@ -162,8 +161,8 @@ export default async function ProPage() {
               </div>
               <div className="text-xs text-dim mb-5">no card, no time limit</div>
               <ul className="text-sm flex flex-col gap-2 mb-6">
-                <Bullet>Daily digest at 07:00 ET</Bullet>
-                <Bullet>Public site, all 16 site pages</Bullet>
+                <Bullet>Daily digest, ~7 AM ET</Bullet>
+                <Bullet>Public site, all {stats.sites} site pages</Bullet>
                 <Bullet>Compare imagery + product cutaways</Bullet>
                 <Bullet muted>No drop alerts</Bullet>
                 <Bullet muted>No weekly recap</Bullet>
@@ -208,7 +207,7 @@ export default async function ProPage() {
               <div className="text-[10px] uppercase tracking-widest font-mono text-dim mb-2">
                 1 · Daily digest email
               </div>
-              <h3 className="text-xl font-bold mb-2">07:00 ET · empire-wide</h3>
+              <h3 className="text-xl font-bold mb-2">Every morning, ET · empire-wide</h3>
               <p className="text-sm text-dim mb-5 leading-relaxed">
                 Every morning, the milestones verified in the last 24 hours plus a 30-day
                 lookahead of catalysts (earnings, FAA static-fire windows, county filings).
@@ -253,20 +252,20 @@ export default async function ProPage() {
               title="Live"
               tone="ops"
               items={[
-                "Daily digest at 07:00 ET",
+                "Daily digest (~7 AM ET)",
                 "Full /pulse scoreboard",
-                "16 site pages + before/after",
+                `${stats.sites} site pages + before/after`,
                 "Compare imagery slider",
                 "Product cutaway hotspots",
                 "Methodology + sources cited",
+                "Satellite-drop alerts (charter)",
+                "Saturday weekly recap (charter)",
               ]}
             />
             <RoadmapCol
               title="Charter unlocks at launch"
               tone="text"
               items={[
-                "Satellite-drop alerts (Telegram + email)",
-                "Saturday weekly recap",
                 "CSV / JSON bulk exports",
                 "Account-level alert filters",
                 "Founding member badge",

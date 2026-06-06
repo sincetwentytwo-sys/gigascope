@@ -88,7 +88,7 @@ export default function DailyDigestPreview() {
         </div>
 
         <p className="text-[11px] text-dim mt-6 leading-relaxed">
-          Sent every morning at 07:00 ET. Unsubscribe with one click in any email.
+          Sent every morning, around 7 AM ET. Unsubscribe with one click in any email.
         </p>
       </div>
     </div>
