@@ -23,9 +23,14 @@
 //                       failure)
 //   * 500 Internal    — handler threw after signature passed; Stripe WILL retry
 
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import Stripe from "stripe";
 import { Redis } from "@upstash/redis";
+import {
+  activateCharterMember,
+  revokeCharterMember,
+} from "@/lib/charterMembership";
+import { sendWelcomeEmail } from "@/lib/welcomeEmail";
 
 export const runtime = "nodejs";
 
@@ -105,22 +110,21 @@ export async function POST(req: Request) {
         const stripeSubscriptionId =
           typeof session.subscription === "string" ? session.subscription : null;
 
-        // Mirror the schema used by /api/subscribe so a single hash holds both
-        // waitlist + paid state. `tier: pro` upgrades the user from "free".
-        await r.sadd("subscribers:emails", email);
-        await r.hset(`subscriber:${email}`, {
+        // Shared fulfillment: writes the subscriber hash + subscribers:charter
+        // set + HWM counter (idempotent — counter only bumps on first
+        // activation). Same path the Lemon Squeezy webhook uses.
+        const isNew = await activateCharterMember(r, {
           email,
-          tier: "pro",
-          charterMember: true,
           plan,
+          source: "stripe",
           stripeCustomerId,
           stripeSubscriptionId,
-          paidAt: Date.now(),
         });
-        await r.zadd("subscribers:timeline", { score: Date.now(), member: email });
-        // High-water mark counter — never decremented. Drives the "X of 100
-        // charter spots taken" badge on /pro.
-        await r.incr("subscribers:charter:count");
+        if (isNew) {
+          after(async () => {
+            await sendWelcomeEmail(email, "pro", r);
+          });
+        }
         break;
       }
 
@@ -129,13 +133,9 @@ export async function POST(req: Request) {
         const customer = typeof sub.customer === "string" ? sub.customer : null;
         if (!customer) break;
         const email = await findEmailByStripeCustomer(r, customer);
-        if (email) {
-          await r.hset(`subscriber:${email}`, {
-            charterMember: false,
-            canceledAt: Date.now(),
-          });
-        }
-        // Intentionally do NOT touch `subscribers:charter:count` — see header.
+        if (email) await revokeCharterMember(r, email);
+        // revokeCharterMember srem's the active charter set + flips the flag.
+        // Intentionally does NOT touch `subscribers:charter:count` — see header.
         break;
       }
 

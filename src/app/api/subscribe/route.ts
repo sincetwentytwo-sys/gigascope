@@ -1,9 +1,6 @@
 import { NextResponse, after } from "next/server";
 import { Redis } from "@upstash/redis";
-import { Resend } from "resend";
-import WelcomeEmail from "@/emails/welcome";
-import { unsubHeaders } from "@/lib/unsubscribe";
-import { emailTags, recordEmailSent } from "@/lib/emailMetrics";
+import { sendWelcomeEmail } from "@/lib/welcomeEmail";
 
 export const runtime = "nodejs";
 
@@ -12,47 +9,6 @@ function getRedis(): Redis | null {
   const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
   if (!url || !token) return null;
   return new Redis({ url, token });
-}
-
-function getResend(): Resend | null {
-  const key = process.env.RESEND_API_KEY;
-  if (!key) return null;
-  return new Resend(key);
-}
-
-async function sendWelcome(
-  email: string,
-  tier: "free" | "pro" | "terminal",
-  r: Redis | null,
-): Promise<boolean> {
-  const resend = getResend();
-  if (!resend) return false;
-  const from = process.env.RESEND_FROM_EMAIL ?? "digest@gigascope.xyz";
-  const subject =
-    tier === "free"
-      ? "You're on the GIGASCOPE daily digest"
-      : "You're a charter member — $9/mo locked for life";
-  try {
-    await resend.emails.send({
-      from: `GIGASCOPE <${from}>`,
-      to: email,
-      subject,
-      react: WelcomeEmail({ email, tier }),
-      headers: unsubHeaders(email),
-      // Resend tags persist on the message — once webhook ingestion is
-      // wired (TODO in /api/admin/metrics) open/click events are attributed
-      // back to the `type` tag for per-email-type rate breakdowns.
-      tags: emailTags("welcome"),
-    });
-    // Metric counter — fire-and-forget. recordEmailSent never throws and
-    // returns "redis_error" silently if Upstash is unreachable, so a
-    // metric-side failure never blocks the welcome send hot path.
-    if (r) void recordEmailSent(r, "welcome");
-    return true;
-  } catch (e) {
-    console.error("resend_send_failed", e);
-    return false;
-  }
 }
 
 const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -91,18 +47,19 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "invalid_json" }, { status: 400 });
   }
   const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
-  const tier = typeof body.tier === "string" ? body.tier : "free";
+  // Public signups are ALWAYS free tier. Paid tiers (pro/charter) are set only
+  // by a verified payment webhook (Stripe / Lemon Squeezy), never by client
+  // input — otherwise anyone could POST tier:"pro" and receive the charter
+  // welcome email plus a forged paid subscriber record.
+  const tier = "free" as const;
   const source = typeof body.source === "string" ? body.source.slice(0, 80) : "unknown";
 
   if (!EMAIL_RX.test(email) || email.length > 320) {
     return NextResponse.json({ ok: false, error: "invalid_email" }, { status: 400 });
   }
-  if (!["free", "pro", "terminal"].includes(tier)) {
-    return NextResponse.json({ ok: false, error: "invalid_tier" }, { status: 400 });
-  }
 
   const r = getRedis();
-  const typedTier = tier as "free" | "pro" | "terminal";
+  const typedTier: "free" | "pro" | "terminal" = tier;
 
   // IP-keyed rate limiting. Trust Vercel's canonical `x-real-ip` header first
   // (set by the Vercel CDN, not forwardable from a client). Fall back to the
@@ -128,7 +85,7 @@ export async function POST(req: Request) {
     // `after` defers the Resend round-trip until *after* the JSON response
     // has been flushed, so dev clients don't eat 800-1500ms of email latency.
     after(async () => {
-      await sendWelcome(email, typedTier, null);
+      await sendWelcomeEmail(email, typedTier, null);
     });
     return NextResponse.json({
       ok: true,
@@ -165,7 +122,7 @@ export async function POST(req: Request) {
   // local dev (Node) the event loop holds the promise to completion.
   // Pass `r` through so the welcome's metric counter can be bumped.
   after(async () => {
-    await sendWelcome(email, typedTier, r);
+    await sendWelcomeEmail(email, typedTier, r);
   });
 
   // `emailed: "scheduled"` reflects that the send is queued to run after
