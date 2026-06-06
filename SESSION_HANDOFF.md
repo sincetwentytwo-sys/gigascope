@@ -20,10 +20,13 @@
 - **SPCX 6/12 IPO 팩트 확인됨**(CNBC/SEC, $135/$1.77T) — 6일 뒤. 시간제한 어텐션 창.
 - **검증 지표 읽기**: `GET https://gigascope.xyz/api/charter-intent` → {count,distinct}.
 
-### ⚠ 오너 액션 (코드로 못 하는 것)
-1. **(권장) Vercel에서 `LEMONSQUEEZY_CHECKOUT_URL` 제거 → 재배포** = 결제 OFF/waitlist 복귀 →
-   /pro가 fake-door 수요프로브가 됨. 신호 나면 env 다시 넣으면 10초 만에 재라이브. (안 빼고 둬도
-   무해 — 트래픽 0이라; 대신 fake-door 측정은 안 돎.)
+### 현재 상태: 결제 OFF / 수요 프로브 가동 중
+- ✅ **`LEMONSQUEEZY_CHECKOUT_URL`(월간) 제거 + 재배포 완료** → /pro = fake-door
+  ("Lock the $9 charter rate — pay nothing today"). 의향 카운터 `charter:intent:count`=0(깨끗).
+- env 잔존: `LEMONSQUEEZY_CHECKOUT_URL_ANNUAL`(무해, 월간 없으면 미사용) + `LEMONSQUEEZY_WEBHOOK_SECRET`.
+- **재라이브 방법**: Vercel에 `LEMONSQUEEZY_CHECKOUT_URL` = `https://gigascope.lemonsqueezy.com/checkout/buy/99c77739-cdab-4652-ad2e-1c83cb531699` 다시 넣고 재배포(10초).
+
+### ⚠ 남은 오너 액션 (코드로 못 하는 것)
 2. **이번 주 permit/capex 단독 1건**을 카운티 포털에서 찾아(Starbase/Memphis 등 비공개사) 날짜 박힌
    카드+X 1포스트(앰플리파이어 1명 @멘션, Tegtmeyer/Teslarati/Merritt) CTA=무료가입. r/teslainvestorsclub
    permit 글 모드 협의 후 부활.
