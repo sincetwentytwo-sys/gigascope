@@ -13,11 +13,12 @@ import { unsubHeaders } from "@/lib/unsubscribe";
 import { isTelegramConfigured, sendTelegramMessage } from "@/lib/telegram";
 import { isCronAuthorized } from "@/lib/cronAuth";
 import { emailTags, recordEmailSent } from "@/lib/emailMetrics";
+import { getCharterRecipients } from "@/lib/charterMembership";
 
 // Daily cron — checks the timelapse index for new satellite frames per
-// site, fans out per-site alert emails (+ Telegram when linked) to all
-// subscribers, then HSETs the new "last known" dates so the next run is
-// idempotent.
+// site, fans out per-site alert emails (+ Telegram when linked) to active
+// charter (paying) members, then HSETs the new "last known" dates so the
+// next run is idempotent.
 //
 // Scheduling: vercel.json — daily at 15:30 UTC, offset from the other
 // daily crons so we don't pile on Resend at peak minutes. Cadence is daily
@@ -91,11 +92,10 @@ async function handle(req: Request): Promise<NextResponse> {
     return NextResponse.json({ ok: true, drops: 0 });
   }
 
-  // 3) Pull subscriber list. For now: ALL subscribers receive ALL drops.
-  //    TODO(watchlist): once the per-site watchlist feature exists, filter
-  //    here — e.g. `subscribers:watchlist:<slug>` smembers, falling back to
-  //    `subscribers:emails` for the "all sites" tier. Voting on this lives
-  //    on /roadmap.
+  // 3) Pull recipients. Satellite-drop alerts are a charter-only feature
+  //    (/pro sells them as "charter only"; the Free card says "No drop
+  //    alerts"), so we gate to active paying members. Per-site watchlist
+  //    filtering is a future refinement (voting lives on /roadmap).
   const resendKey = process.env.RESEND_API_KEY;
   if (!resendKey) {
     return NextResponse.json(
@@ -104,10 +104,10 @@ async function handle(req: Request): Promise<NextResponse> {
     );
   }
 
-  const subscribers = await r.smembers("subscribers:emails");
+  const subscribers = await getCharterRecipients(r);
   if (!Array.isArray(subscribers) || subscribers.length === 0) {
-    // No subscribers to alert — but we still want to update the last-known
-    // map so the FIRST subscriber to ever sign up isn't blasted with months
+    // No charter members to alert — but we still want to update the last-known
+    // map so the FIRST member to ever pay isn't blasted with months
     // of backlog drops on the next cron tick.
     await persistLastKnown(r, drops);
     return NextResponse.json({

@@ -8,6 +8,7 @@ import { factories } from "@/data/factories";
 import { isTelegramConfigured, sendTelegramMessage } from "@/lib/telegram";
 import { isCronAuthorized } from "@/lib/cronAuth";
 import { emailTags, recordEmailSent } from "@/lib/emailMetrics";
+import { getCharterRecipients } from "@/lib/charterMembership";
 
 export const runtime = "nodejs";
 
@@ -170,9 +171,10 @@ export async function POST(req: Request) {
     });
   }
 
-  // 2) Pull subscribers.
-  //    TODO: gate to charterMember tier once Stripe billing is live.
-  const subscribers = await r.smembers("subscribers:emails");
+  // 2) Pull recipients — catalyst alerts are a charter (paid) feature, so gate
+  //    to active paying members (subscribers:charter, maintained by the payment
+  //    webhooks). Empty before any paid signup → alerts go to nobody, correct.
+  const subscribers = await getCharterRecipients(r);
   if (!Array.isArray(subscribers) || subscribers.length === 0) {
     return NextResponse.json({
       ok: true,

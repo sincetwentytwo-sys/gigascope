@@ -5,6 +5,7 @@ import WeeklyRecapEmail from "@/emails/weekly-recap";
 import { unsubHeaders } from "@/lib/unsubscribe";
 import { isCronAuthorized } from "@/lib/cronAuth";
 import { emailTags, recordEmailSent } from "@/lib/emailMetrics";
+import { getCharterRecipients } from "@/lib/charterMembership";
 import { factories } from "@/data/factories";
 import {
   getRecentAnalyses,
@@ -47,9 +48,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "redis_not_configured" }, { status: 503 });
   }
 
-  const subscribers = await r.smembers("subscribers:emails");
+  // Charter-only feature — /pro sells the weekly recap as a paid benefit and
+  // the Free card says "No weekly recap". Gate delivery to active paying
+  // members (the subscribers:charter set maintained by the payment webhooks).
+  // Before any paid signup this is empty → the recap goes to nobody, which is
+  // correct.
+  const subscribers = await getCharterRecipients(r);
   if (!Array.isArray(subscribers) || subscribers.length === 0) {
-    return NextResponse.json({ ok: true, sent: 0, skipped: 0, note: "no_subscribers" });
+    return NextResponse.json({ ok: true, sent: 0, skipped: 0, note: "no_charter_members" });
   }
 
   // Build the three feeds ONCE, not per-subscriber. The recap body is
