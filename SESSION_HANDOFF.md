@@ -12,8 +12,18 @@ GIGASCOPE 유료 구독 **가동 중**. Vercel Production env 3개 설정 완료
 `LEMONSQUEEZY_WEBHOOK_SECRET`, `LEMONSQUEEZY_CHECKOUT_URL`(월 $9, buy/99c77739…),
 `LEMONSQUEEZY_CHECKOUT_URL_ANNUAL`(연 $90, buy/85aa7bd5…). webhook 서명검증 200 확인됨.
 /pro = "Subscribe — $90/year" + 월/연 토글(기본 연간). LS: dunning 14일+cancel, confirmation
-모달 버튼→`/pro/success`. **남은 선택사항만**: support@gigascope.xyz 개설, Test mode 실결제
-1건으로 카운터+환영메일 end-to-end 확인. 상세 = `GOLIVE_CHECKLIST.md`.
+모달 버튼→`/pro/success`. 상세 = `GOLIVE_CHECKLIST.md`.
+
+**✅ END-TO-END 검증됨 (실결제)**: 오너가 실제 $9.90(=$9+10% 한국VAT) 결제(직접카드는
+한국 체크카드 해외결제 거절 → **PayPal로 통과**) → confirmation 모달 → `/pro/success`(동적
+"21 sites" + Connect Telegram) → webhook `subscription_created` 수신 → `subscribers:charter:count`
+= **1** → /pro 배지 "1 of 100 charter spots claimed". 즉 결제→webhook→Redis→UI 풀체인 작동.
+그 뒤 오너가 **구독 취소**(월 청구 중단). 카운터는 HWM라 **1로 유지**(=오너가 charter #1,
+의도적으로 둠). test_mode 이벤트는 webhook이 무시하도록 가드 추가됨(prod 오염 방지).
+
+**남은 선택사항만**: support@gigascope.xyz 개설(약관 명시, gmail이 fallback이라 안 깨짐).
+(참고: /pro 체크아웃 버튼 기본값=연간 $90/yr — 카드 헤드라인 $9/mo와 다름, 바꾸려면 InvestorCheckout
+useState 기본값 monthly로 1줄. 미결정.)
 
 (아래는 그 직전 "go-live만 남음" 상태 — 이제 위로 대체됨)
 
