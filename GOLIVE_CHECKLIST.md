@@ -3,8 +3,9 @@
 > 🟢 **2026-06-06 결제 라이브됨.** Vercel Production에 `LEMONSQUEEZY_WEBHOOK_SECRET`,
 > `LEMONSQUEEZY_CHECKOUT_URL`(월 $9), `LEMONSQUEEZY_CHECKOUT_URL_ANNUAL`(연 $90) 설정 완료.
 > webhook 서명검증 200 확인, /pro = "Subscribe" + 월/연 토글. LS dunning 14일·confirmation
-> 모달(버튼→/pro/success) 설정 완료. **남은 선택사항**: support@gigascope.xyz 메일박스 개설,
-> Test mode 실결제 1건으로 카운터/환영메일 end-to-end 확인.
+> 모달(버튼→/pro/success) 설정 완료. **실결제로 end-to-end 검증됨**(결제→webhook→카운터 "1 of 100";
+> 직접카드 거절→PayPal 통과; 이후 구독 취소, 카운터 1 유지). **support@gigascope.xyz 개설+연동 완료**
+> (ImprovMX 포워딩, 전 페이지 연락처 support@로). ✅ **필수 항목 전부 끝 — 운영 중.**
 
 > 코드는 전부 끝났다(아래 "완료된 것"). 남은 건 **오너만 할 수 있는 설정**
 > (Lemon Squeezy 대시보드 + Vercel 환경변수) — Claude는 LS 대시보드/Vercel env를

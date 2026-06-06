@@ -21,9 +21,13 @@ GIGASCOPE 유료 구독 **가동 중**. Vercel Production env 3개 설정 완료
 그 뒤 오너가 **구독 취소**(월 청구 중단). 카운터는 HWM라 **1로 유지**(=오너가 charter #1,
 의도적으로 둠). test_mode 이벤트는 webhook이 무시하도록 가드 추가됨(prod 오염 방지).
 
-**남은 선택사항만**: support@gigascope.xyz 개설(약관 명시, gmail이 fallback이라 안 깨짐).
-(참고: /pro 체크아웃 버튼 기본값=연간 $90/yr — 카드 헤드라인 $9/mo와 다름, 바꾸려면 InvestorCheckout
-useState 기본값 monthly로 1줄. 미결정.)
+**✅ support@gigascope.xyz 개설+연동 완료**: ImprovMX 무료 포워딩(catch-all `*@gigascope.xyz`
+→ sincetwentytwo@gmail.com), Vercel DNS에 MX×2(mx1/mx2.improvmx.com)+SPF TXT 자동추가,
+전파+실수신 검증됨. 전 공개페이지(약관/환불/개인정보/서비스약관/푸터) 연락처를 support@로 교체
+(내부 알림용 OWNER_EMAIL/POC만 gmail 유지). catch-all이라 digest@ 답장도 inbox로 들어옴.
+
+**더 남은 필수사항 없음.** (참고 미결정 1개: /pro 체크아웃 버튼 기본값=연간 $90/yr — 카드 헤드라인
+$9/mo와 다름. 바꾸려면 InvestorCheckout useState 기본값 monthly로 1줄.)
 
 (아래는 그 직전 "go-live만 남음" 상태 — 이제 위로 대체됨)
 
