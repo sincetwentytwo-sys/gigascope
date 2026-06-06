@@ -14,16 +14,24 @@ export default function InvestorCheckout({
   stripeLive = false,
   emailInputId,
   lsCheckoutUrl,
+  lsCheckoutUrlAnnual,
 }: {
   stripeLive?: boolean;
   emailInputId?: string;
   /**
    * Lemon Squeezy hosted-checkout URL for the $9/mo charter. When set, this
    * takes precedence over both the Stripe path and the waitlist — the button
-   * sends the user straight to LS's MoR-hosted checkout. Monthly-only for now
-   * (annual is a future second product); LS collects the email on its page.
+   * sends the user straight to LS's MoR-hosted checkout. LS collects the email
+   * on its page.
    */
   lsCheckoutUrl?: string;
+  /**
+   * Lemon Squeezy hosted-checkout URL for the $90/yr annual charter product.
+   * When provided alongside `lsCheckoutUrl`, the widget shows a monthly/annual
+   * toggle (each links to its own LS checkout). When absent, checkout is
+   * monthly-only.
+   */
+  lsCheckoutUrlAnnual?: string;
 }) {
   const [plan, setPlan] = useState<"monthly" | "annual">("annual");
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
@@ -88,17 +96,43 @@ export default function InvestorCheckout({
   };
 
   // ── Lemon Squeezy live mode (MoR hosted checkout) ──────────────────────
-  // Highest-precedence path. Monthly-only $9 for now. The button is a plain
-  // link to LS's hosted checkout — LS handles email capture, payment, tax,
-  // and the subscription. No toggle (annual is a future second product).
+  // Highest-precedence path. The button is a plain link to LS's hosted
+  // checkout — LS handles email capture, payment, tax, and the subscription.
+  // When an annual LS product URL is also provided, show a monthly/annual
+  // toggle; otherwise monthly-only.
   if (lsCheckoutUrl) {
+    const hasAnnual = !!lsCheckoutUrlAnnual;
+    const activeUrl =
+      hasAnnual && plan === "annual" ? lsCheckoutUrlAnnual! : lsCheckoutUrl;
+    const buttonLabel =
+      hasAnnual && plan === "annual"
+        ? "Subscribe — $90 / year"
+        : "Subscribe — $9 / month";
     return (
       <div className="flex flex-col items-center gap-3">
+        {hasAnnual && (
+          <div className="inline-flex p-1 rounded-full border border-border-custom bg-surface text-sm">
+            <button
+              type="button"
+              onClick={() => setPlan("annual")}
+              className={`px-4 py-1.5 rounded-full transition-colors ${plan === "annual" ? "bg-text text-bg font-bold" : "text-dim"}`}
+            >
+              Annual <span className="text-[10px] ml-1">$90/yr · save 17%</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setPlan("monthly")}
+              className={`px-4 py-1.5 rounded-full transition-colors ${plan === "monthly" ? "bg-text text-bg font-bold" : "text-dim"}`}
+            >
+              Monthly $9
+            </button>
+          </div>
+        )}
         <a
-          href={lsCheckoutUrl}
+          href={activeUrl}
           className="px-8 py-3 rounded-full bg-text text-bg text-base font-bold hover:opacity-85 transition-opacity shadow-sm"
         >
-          Subscribe — $9 / month
+          {buttonLabel}
         </a>
         <div className="text-[11px] text-dim text-center max-w-md">
           Secure checkout by Lemon Squeezy (Merchant of Record) · charter price

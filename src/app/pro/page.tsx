@@ -14,12 +14,12 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: "Charter membership — $9/mo for life — GIGASCOPE",
   description:
-    "GIGASCOPE charter: daily digest, satellite-drop alerts, weekly recap, and bulk data exports. First 100 charters lock $9/mo forever — public launch at $29 in Jun 2026.",
+    "GIGASCOPE charter: daily digest, satellite-drop alerts, and the Saturday weekly recap. First 100 charters lock $9/mo forever — public launch at $29 in Jun 2026.",
   alternates: { canonical: "https://gigascope.xyz/pro" },
   openGraph: {
     title: "Charter membership — $9/mo for life — GIGASCOPE",
     description:
-      "GIGASCOPE charter: daily digest, satellite-drop alerts, weekly recap, bulk data exports. First 100 charters lock $9/mo for life.",
+      "GIGASCOPE charter: daily digest, satellite-drop alerts, and the Saturday weekly recap. First 100 charters lock $9/mo for life.",
     url: "https://gigascope.xyz/pro",
     type: "website",
   },
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "GIGASCOPE Charter — $9/mo for life",
     description:
-      "Daily digest, satellite-drop alerts, weekly recap, bulk data exports. First 100 lock $9 forever.",
+      "Daily digest, satellite-drop alerts, weekly recap. First 100 lock $9 forever.",
   },
 };
 
@@ -78,6 +78,10 @@ export default async function ProPage() {
   // the owner explicitly flips it on in Vercel — no surprise charges.
   // To go live: set LEMONSQUEEZY_CHECKOUT_URL to the buy link in Vercel.
   const lsCheckoutUrl = process.env.LEMONSQUEEZY_CHECKOUT_URL || undefined;
+  // Optional annual ($90/yr) LS product. When set alongside the monthly URL,
+  // InvestorCheckout renders a monthly/annual toggle; until then the checkout
+  // is monthly-only. Create the annual LS product, then set this in Vercel.
+  const lsCheckoutUrlAnnual = process.env.LEMONSQUEEZY_CHECKOUT_URL_ANNUAL || undefined;
 
   return (
     <div className="bg-bg text-text">
@@ -96,8 +100,8 @@ export default async function ProPage() {
             For retail investors tracking Tesla / SpaceX / xAI capex velocity without paying $30K for Planet Labs.
           </p>
           <p className="text-dim text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-            A paid subscription to GIGASCOPE. Daily digest, satellite-drop alerts, weekly
-            recap, and bulk data exports. Public launches at $29 in June 2026. Charter pricing
+            A paid subscription to GIGASCOPE. Daily digest, satellite-drop alerts, and the
+            Saturday weekly recap. Public launches at $29 in June 2026. Charter pricing
             is grandfathered for as long as your subscription stays active.
           </p>
           {showCount && remaining !== null && (
@@ -147,7 +151,7 @@ export default async function ProPage() {
                     Charter spots remaining: <span className="text-text font-bold">{remaining}</span> / {cap}
                   </div>
                 )}
-                <InvestorCheckout stripeLive={stripeLive} lsCheckoutUrl={lsCheckoutUrl} />
+                <InvestorCheckout stripeLive={stripeLive} lsCheckoutUrl={lsCheckoutUrl} lsCheckoutUrlAnnual={lsCheckoutUrlAnnual} />
               </div>
             </div>
 
@@ -166,7 +170,7 @@ export default async function ProPage() {
                 <Bullet>Compare imagery + product cutaways</Bullet>
                 <Bullet muted>No drop alerts</Bullet>
                 <Bullet muted>No weekly recap</Bullet>
-                <Bullet muted>No data exports</Bullet>
+                <Bullet>CSV / JSON data exports (free)</Bullet>
               </ul>
               <div className="mt-auto">
                 <EmailSignup tier="free" source="pro:free-card" variant="inline" />
@@ -228,6 +232,12 @@ export default async function ProPage() {
                 imagery so you can see what changed on the ground. No "TSLA is up 2%" market
                 noise. This fires on new pictures of the site, not stock ticks.
               </p>
+              <p className="text-xs text-dim mb-5">
+                Charter member?{" "}
+                <Link href="/account" className="underline hover:text-text">
+                  Connect Telegram →
+                </Link>
+              </p>
               <TelegramAlertPreview />
             </div>
           </div>
@@ -258,6 +268,7 @@ export default async function ProPage() {
                 "Compare imagery slider",
                 "Product cutaway hotspots",
                 "Methodology + sources cited",
+                "CSV / JSON data exports (free)",
                 "Satellite-drop alerts (charter)",
                 "Saturday weekly recap (charter)",
               ]}
@@ -266,7 +277,6 @@ export default async function ProPage() {
               title="Charter unlocks at launch"
               tone="text"
               items={[
-                "CSV / JSON bulk exports",
                 "Account-level alert filters",
                 "Founding member badge",
               ]}
@@ -307,7 +317,7 @@ export default async function ProPage() {
               can verify everything yourself.
             </FaqRow>
             <FaqRow q="Why $9, locked for life?">
-              Charter members fund the build of the alert system, exports, and the next
+              Charter members fund the build of the alert system and the next
               cohort of company pages. Locking your rate means you pay $9 even when the
               public price is $29 (June 2026) and likely $49-79 long-term, as long as your
               subscription stays active.
