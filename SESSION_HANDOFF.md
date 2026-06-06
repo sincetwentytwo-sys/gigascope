@@ -6,6 +6,17 @@
 
 ---
 
+## 🟢 2026-06-06 — 결제 라이브됨 (go-live 완료)
+
+GIGASCOPE 유료 구독 **가동 중**. Vercel Production env 3개 설정 완료:
+`LEMONSQUEEZY_WEBHOOK_SECRET`, `LEMONSQUEEZY_CHECKOUT_URL`(월 $9, buy/99c77739…),
+`LEMONSQUEEZY_CHECKOUT_URL_ANNUAL`(연 $90, buy/85aa7bd5…). webhook 서명검증 200 확인됨.
+/pro = "Subscribe — $90/year" + 월/연 토글(기본 연간). LS: dunning 14일+cancel, confirmation
+모달 버튼→`/pro/success`. **남은 선택사항만**: support@gigascope.xyz 개설, Test mode 실결제
+1건으로 카운터+환영메일 end-to-end 확인. 상세 = `GOLIVE_CHECKLIST.md`.
+
+(아래는 그 직전 "go-live만 남음" 상태 — 이제 위로 대체됨)
+
 ## 🔖 2026-06-06 업데이트 — "charter 강화" 완료, go-live만 남음
 
 오너 선택(옵션 B): 기능 2개 재배포 → charter 강화 → 라이브. 재배포 + 강화 **코드 끝**.

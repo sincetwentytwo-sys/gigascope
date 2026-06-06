@@ -1,5 +1,11 @@
 # GIGASCOPE 결제 Go-Live 체크리스트
 
+> 🟢 **2026-06-06 결제 라이브됨.** Vercel Production에 `LEMONSQUEEZY_WEBHOOK_SECRET`,
+> `LEMONSQUEEZY_CHECKOUT_URL`(월 $9), `LEMONSQUEEZY_CHECKOUT_URL_ANNUAL`(연 $90) 설정 완료.
+> webhook 서명검증 200 확인, /pro = "Subscribe" + 월/연 토글. LS dunning 14일·confirmation
+> 모달(버튼→/pro/success) 설정 완료. **남은 선택사항**: support@gigascope.xyz 메일박스 개설,
+> Test mode 실결제 1건으로 카운터/환영메일 end-to-end 확인.
+
 > 코드는 전부 끝났다(아래 "완료된 것"). 남은 건 **오너만 할 수 있는 설정**
 > (Lemon Squeezy 대시보드 + Vercel 환경변수) — Claude는 LS 대시보드/Vercel env를
 > 직접 못 만진다. 이 문서대로 누르면 결제가 안전하게 켜진다.
