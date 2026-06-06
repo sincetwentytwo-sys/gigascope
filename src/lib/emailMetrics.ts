@@ -36,7 +36,8 @@ export type EmailType =
   | "catalyst-alert"
   | "permit-alert"
   | "weekly-recap"
-  | "x-reminder";
+  | "x-reminder"
+  | "satellite-drop";
 
 /** UTC YYYY-MM-DD string for a given millisecond timestamp. */
 export function utcDateKey(now: number): string {
