@@ -72,6 +72,13 @@ export default async function ProPage() {
   // Server-only env, can't be probed from the client — exactly the point.
   const stripeLive = !!process.env.STRIPE_SECRET_KEY;
 
+  // Lemon Squeezy (Merchant of Record) checkout. The store + product are
+  // live; this is the hosted checkout URL for the $9/mo charter. Gated
+  // behind an env var so the public site keeps showing the waitlist until
+  // the owner explicitly flips it on in Vercel — no surprise charges.
+  // To go live: set LEMONSQUEEZY_CHECKOUT_URL to the buy link in Vercel.
+  const lsCheckoutUrl = process.env.LEMONSQUEEZY_CHECKOUT_URL || undefined;
+
   return (
     <div className="bg-bg text-text">
       {/* ── Hero ──────────────────────────────────────────────────────── */}
@@ -141,7 +148,7 @@ export default async function ProPage() {
                     Charter spots remaining: <span className="text-text font-bold">{remaining}</span> / {cap}
                   </div>
                 )}
-                <InvestorCheckout stripeLive={stripeLive} />
+                <InvestorCheckout stripeLive={stripeLive} lsCheckoutUrl={lsCheckoutUrl} />
               </div>
             </div>
 
