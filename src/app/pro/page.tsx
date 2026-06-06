@@ -64,7 +64,11 @@ export default async function ProPage() {
   const cap = 100;
   const taken = paidCharter === null ? null : Math.min(paidCharter, cap);
   const remaining = taken === null ? null : Math.max(cap - taken, 0);
-  const showCount = taken !== null && taken >= 1;
+  // Only surface the "N of 100 claimed" scarcity bar once it's actual social
+  // proof. Below this it reads as anti-proof ("smart money already passed") —
+  // a 1/100 bar (e.g. just the founder's own test) actively hurts conversion.
+  const CHARTER_PROOF_THRESHOLD = 15;
+  const showCount = taken !== null && taken >= CHARTER_PROOF_THRESHOLD;
   const FREE_PROOF_THRESHOLD = 10;
   const showFreeCount = freeDigest !== null && freeDigest >= FREE_PROOF_THRESHOLD;
 
@@ -97,12 +101,13 @@ export default async function ProPage() {
             $9 for the empire,<br />locked for life.
           </h1>
           <p className="text-base sm:text-lg text-text font-medium max-w-2xl mx-auto mb-4 leading-snug">
-            For retail investors tracking Tesla / SpaceX / xAI capex velocity without paying $30K for Planet Labs.
+            County permits and capex filings are the earliest hard signal on Tesla / SpaceX / xAI
+            build-out &mdash; months before the imagery, weeks before the trade press. We track them first.
           </p>
           <p className="text-dim text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-            A paid subscription to GIGASCOPE. Daily digest, satellite-drop alerts, and the
-            Saturday weekly recap. Public launches at $29 in June 2026. Charter pricing
-            is grandfathered for as long as your subscription stays active.
+            Charter gets you the alert the day a new permit or frame lands, plus the Saturday recap.
+            Public launches at $29 in June 2026; charter pricing is grandfathered for as long as your
+            subscription stays active.
           </p>
           {showCount && remaining !== null && (
             <div className="max-w-md mx-auto mt-7">

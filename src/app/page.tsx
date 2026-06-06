@@ -139,12 +139,12 @@ export default async function Home({
             <span className="text-white/85">{hero.headlineTail}</span>
           </h1>
           <p className="text-sm sm:text-base text-white/80 max-w-xl mb-6">
-            The satellite scoreboard for the Musk-orbit empire.
+            The earliest verifiable signal on Musk&rsquo;s buildout &mdash; county permits and capex filings, tracked first.
             {/* Visible space on mobile (where the <br /> is hidden) — without
-                it the two sentences smash together as "empire.16 sites". */}
+                it the two sentences smash together. */}
             <span className="sm:hidden"> </span>
             <br className="hidden sm:block" />
-            {stats.sites} sites · {stats.satelliteFrames} captures · {stats.milestonesTracked} milestones, all cited.
+            {stats.sites} sites · {stats.milestonesTracked} milestones · every figure sourced.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <Link

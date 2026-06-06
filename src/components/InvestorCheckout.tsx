@@ -33,7 +33,9 @@ export default function InvestorCheckout({
    */
   lsCheckoutUrlAnnual?: string;
 }) {
-  const [plan, setPlan] = useState<"monthly" | "annual">("annual");
+  // Default to MONTHLY: $9 is an impulse "fine, I'll try it"; $90 up front from
+  // a cold prospect over data they know is public is a close-the-tab number.
+  const [plan, setPlan] = useState<"monthly" | "annual">("monthly");
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [msg, setMsg] = useState("");
   const focusFallbackRef = useRef<HTMLDivElement | null>(null);
