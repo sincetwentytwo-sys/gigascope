@@ -100,8 +100,8 @@ export default function RefundPolicyPage() {
           </li>
           <li>
             <strong>Or email</strong>{" "}
-            <a href="mailto:sincetwentytwo@gmail.com" className="underline hover:text-dim">
-              sincetwentytwo@gmail.com
+            <a href="mailto:support@gigascope.xyz" className="underline hover:text-dim">
+              support@gigascope.xyz
             </a>{" "}
             from the address associated with the subscription. Subject line: &ldquo;Refund request&rdquo;. Include
             the order ID from your receipt if you have it.
@@ -144,8 +144,8 @@ export default function RefundPolicyPage() {
         <h2 className="text-2xl font-bold mt-12 mb-3">9. Contact</h2>
         <p className="text-text leading-relaxed mb-4">
           GIGASCOPE, business registration 568-24-02193, Seoul, Republic of Korea. Email:{" "}
-          <a href="mailto:sincetwentytwo@gmail.com" className="underline hover:text-dim">
-            sincetwentytwo@gmail.com
+          <a href="mailto:support@gigascope.xyz" className="underline hover:text-dim">
+            support@gigascope.xyz
           </a>
           .
         </p>

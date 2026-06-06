@@ -209,13 +209,12 @@ export default function CharterTermsPage() {
         <p className="text-text leading-relaxed mb-4">
           For questions about these terms, billing, cancellation, or refunds, email{" "}
           <a
-            href="mailto:sincetwentytwo@gmail.com"
+            href="mailto:support@gigascope.xyz"
             className="underline hover:text-dim"
           >
-            sincetwentytwo@gmail.com
+            support@gigascope.xyz
           </a>
-          . A dedicated support@gigascope.xyz address comes online the day billing opens; the founder address
-          above remains an official contact channel.
+          . Founder-led support — a real person reads every message.
         </p>
       </section>
 

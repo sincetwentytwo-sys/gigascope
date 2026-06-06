@@ -32,8 +32,8 @@ export default function PrivacyPolicyPage() {
           GIGASCOPE is operated as a Korean sole proprietorship by Jaebin Kim, registered as GIGASCOPE,
           business registration number 568-24-02193, based at 42, Hongik-ro 5an-gil, Mapo-gu,
           Seoul 04039, Republic of Korea. Contact:{" "}
-          <a href="mailto:sincetwentytwo@gmail.com" className="underline hover:text-dim">
-            sincetwentytwo@gmail.com
+          <a href="mailto:support@gigascope.xyz" className="underline hover:text-dim">
+            support@gigascope.xyz
           </a>
           .
         </p>
@@ -275,8 +275,8 @@ export default function PrivacyPolicyPage() {
         </ul>
         <p className="text-text leading-relaxed mb-4">
           To exercise any of these, email{" "}
-          <a href="mailto:sincetwentytwo@gmail.com" className="underline hover:text-dim">
-            sincetwentytwo@gmail.com
+          <a href="mailto:support@gigascope.xyz" className="underline hover:text-dim">
+            support@gigascope.xyz
           </a>{" "}
           from the address associated with your subscription with subject line &ldquo;Privacy request&rdquo;.
           We respond within 30 days (GDPR) or 45 days (CCPA). Identity is verified by sending a one-click
@@ -321,8 +321,8 @@ export default function PrivacyPolicyPage() {
         </ul>
         <p className="text-text leading-relaxed mb-4">
           <strong>Personal-information manager (개인정보 보호책임자):</strong> Jaebin Kim, contact{" "}
-          <a href="mailto:sincetwentytwo@gmail.com" className="underline hover:text-dim">
-            sincetwentytwo@gmail.com
+          <a href="mailto:support@gigascope.xyz" className="underline hover:text-dim">
+            support@gigascope.xyz
           </a>
           . Korean-language requests are accepted and answered in Korean.
         </p>
@@ -381,8 +381,8 @@ export default function PrivacyPolicyPage() {
         <h2 className="text-2xl font-bold mt-12 mb-3">14. Contact</h2>
         <p className="text-text leading-relaxed mb-4">
           For privacy questions, data-subject requests, or complaints:{" "}
-          <a href="mailto:sincetwentytwo@gmail.com" className="underline hover:text-dim">
-            sincetwentytwo@gmail.com
+          <a href="mailto:support@gigascope.xyz" className="underline hover:text-dim">
+            support@gigascope.xyz
           </a>
           . Mark the subject line &ldquo;Privacy request&rdquo; for fastest handling. You may write in English
           or Korean.

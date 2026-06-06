@@ -192,8 +192,8 @@ export default function RootLayout({
             <div>Address: 42, Hongik-ro 5an-gil, Mapo-gu, Seoul 04039, Republic of Korea</div>
             <div>
               Email:{" "}
-              <a href="mailto:sincetwentytwo@gmail.com" className="hover:text-text transition-colors">
-                sincetwentytwo@gmail.com
+              <a href="mailto:support@gigascope.xyz" className="hover:text-text transition-colors">
+                support@gigascope.xyz
               </a>
             </div>
           </div>

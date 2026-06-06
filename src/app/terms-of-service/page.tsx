@@ -210,8 +210,8 @@ export default function TermsOfServicePage() {
           <li>Address: 42, Hongik-ro 5an-gil, Mapo-gu, Seoul 04039, Republic of Korea</li>
           <li>
             Email:{" "}
-            <a href="mailto:sincetwentytwo@gmail.com" className="underline hover:text-dim">
-              sincetwentytwo@gmail.com
+            <a href="mailto:support@gigascope.xyz" className="underline hover:text-dim">
+              support@gigascope.xyz
             </a>
           </li>
         </ul>
