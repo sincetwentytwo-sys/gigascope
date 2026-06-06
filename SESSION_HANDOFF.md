@@ -6,6 +6,36 @@
 
 ---
 
+## 🧭 2026-06-06 (저녁) — GTM 피벗: 수요 먼저, 결제는 신호 나면
+
+5-렌즈 브루탈 GTM 감사(Elon 관점, 웹근거) 결론에 오너 동의 → 코드로 고칠 건 다 반영:
+- **냉정한 진단**: 비타민을 비타민 가격에, 공개·무료·복제가능 데이터를 더 신선한 무료 경쟁자
+  (buildingtesla.com 일일/Tegtmeyer 드론/LabPadre·NASASpaceflight 24-7)가 이미 주는 청중에
+  팖. Q75 실패. 유일한 비-범용 자산 = **permit/capex-inference**(서류가 착공보다 몇 달 선행).
+- **반영된 커밋**: `aabf362`(홈/‌pro를 permit·capex-first로 재포지셔닝, "$30K Planet Labs"
+  허수아비 제거; 스카시티 바 ≥15에서만 노출 = `CHARTER_PROOF_THRESHOLD`, 1/100 안티-프루프 제거;
+  체크아웃 기본값 monthly) + `d79eccf`(퍼널 윗물: /site·/compare 무료가입 CTA; **fake-door**
+  `/api/charter-intent` INCR `charter:intent:count`+distinct emails, 게이트 모드 CTA="Lock the $9
+  charter rate — pay nothing today" → 의향 클릭 측정).
+- **SPCX 6/12 IPO 팩트 확인됨**(CNBC/SEC, $135/$1.77T) — 6일 뒤. 시간제한 어텐션 창.
+- **검증 지표 읽기**: `GET https://gigascope.xyz/api/charter-intent` → {count,distinct}.
+
+### ⚠ 오너 액션 (코드로 못 하는 것)
+1. **(권장) Vercel에서 `LEMONSQUEEZY_CHECKOUT_URL` 제거 → 재배포** = 결제 OFF/waitlist 복귀 →
+   /pro가 fake-door 수요프로브가 됨. 신호 나면 env 다시 넣으면 10초 만에 재라이브. (안 빼고 둬도
+   무해 — 트래픽 0이라; 대신 fake-door 측정은 안 돎.)
+2. **이번 주 permit/capex 단독 1건**을 카운티 포털에서 찾아(Starbase/Memphis 등 비공개사) 날짜 박힌
+   카드+X 1포스트(앰플리파이어 1명 @멘션, Tegtmeyer/Teslarati/Merritt) CTA=무료가입. r/teslainvestorsclub
+   permit 글 모드 협의 후 부활.
+3. **30일 go/no-go**: 단독 1건이 무료가입 25+ 또는 앰플리파이어 리포스트 1, **그리고** fake-door
+   의향클릭 10-15+. 미달 시 thesis-call 피벗 or 무료 자산화. (환불된 파운더 테스트는 0으로 침.)
+
+### STOP
+결제/카운터/가격카피 폴리싱, "위성 사이트" 포지셔닝, 유튜브/build-in-public 반사, 날짜 기반 결제ON.
+다음 30일 유효 작업 = 스쿱 1건 → 앰플리파이어 1명 → 무료가입 측정. 끝.
+
+---
+
 ## 🟢 2026-06-06 — 결제 라이브됨 (go-live 완료)
 
 GIGASCOPE 유료 구독 **가동 중**. Vercel Production env 3개 설정 완료:
