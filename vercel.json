@@ -8,6 +8,6 @@
     { "path": "/api/cron/permit-check", "schedule": "0 15 * * *" },
     { "path": "/api/cron/x-post-reminder", "schedule": "0 9 * * *" },
     { "path": "/api/cron/weekly-recap", "schedule": "0 17 * * 6" },
-    { "path": "/api/cron/satellite-check", "schedule": "15 * * * *" }
+    { "path": "/api/cron/satellite-check", "schedule": "30 15 * * *" }
   ]
 }

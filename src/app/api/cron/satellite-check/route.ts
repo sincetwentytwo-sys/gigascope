@@ -14,15 +14,18 @@ import { isTelegramConfigured, sendTelegramMessage } from "@/lib/telegram";
 import { isCronAuthorized } from "@/lib/cronAuth";
 import { emailTags, recordEmailSent } from "@/lib/emailMetrics";
 
-// Hourly cron — checks the timelapse index for new satellite frames per
+// Daily cron — checks the timelapse index for new satellite frames per
 // site, fans out per-site alert emails (+ Telegram when linked) to all
 // subscribers, then HSETs the new "last known" dates so the next run is
 // idempotent.
 //
-// Scheduling: vercel.json — every hour at :15 past, offset from the daily
-// :00 / :15 / :30 / :45 crons so we don't pile on Resend at peak minutes.
-// Same dedup pattern as catalyst-alerts: the per-site "latest" date stored
-// in Redis acts as the natural idempotency key.
+// Scheduling: vercel.json — daily at 15:30 UTC, offset from the other
+// daily crons so we don't pile on Resend at peak minutes. Cadence is daily
+// (not hourly) on purpose: TIMELAPSE_INDEX is baked at build time, so it
+// can only change on a deploy — there is nothing for a sub-daily check to
+// catch, and Vercel's Hobby plan rejects sub-daily cron cadence at deploy
+// time anyway. Same dedup pattern as catalyst-alerts: the per-site "latest"
+// date stored in Redis acts as the natural idempotency key.
 
 export const runtime = "nodejs";
 
