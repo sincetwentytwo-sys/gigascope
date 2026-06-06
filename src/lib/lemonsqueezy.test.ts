@@ -4,6 +4,7 @@ import {
   verifyLemonSignature,
   planFromVariantName,
   emailFromLemonPayload,
+  isTestModePayload,
 } from "./lemonsqueezy";
 
 const SECRET = "test_signing_secret_123";
@@ -66,5 +67,14 @@ describe("emailFromLemonPayload", () => {
     expect(emailFromLemonPayload({})).toBeNull();
     expect(emailFromLemonPayload({ data: { attributes: {} } })).toBeNull();
     expect(emailFromLemonPayload({ data: { attributes: { user_email: "nope" } } })).toBeNull();
+  });
+});
+
+describe("isTestModePayload", () => {
+  it("is true only when test_mode === true", () => {
+    expect(isTestModePayload({ data: { attributes: { test_mode: true } } })).toBe(true);
+    expect(isTestModePayload({ data: { attributes: { test_mode: false } } })).toBe(false);
+    expect(isTestModePayload({ data: { attributes: {} } })).toBe(false);
+    expect(isTestModePayload({})).toBe(false);
   });
 });

@@ -29,8 +29,15 @@ export interface LemonWebhookPayload {
       product_name?: string;
       customer_id?: number | string;
       status?: string;
+      /** LS marks test-mode objects so we can skip them in production. */
+      test_mode?: boolean;
     };
   };
+}
+
+/** True when the LS payload is a test-mode object (test card / test store). */
+export function isTestModePayload(payload: LemonWebhookPayload): boolean {
+  return payload?.data?.attributes?.test_mode === true;
 }
 
 /**

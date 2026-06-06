@@ -25,6 +25,7 @@ import {
   verifyLemonSignature,
   planFromVariantName,
   emailFromLemonPayload,
+  isTestModePayload,
   type LemonWebhookPayload,
 } from "@/lib/lemonsqueezy";
 import {
@@ -69,6 +70,14 @@ export async function POST(req: Request) {
 
   const eventName = payload.meta?.event_name ?? "";
   const email = emailFromLemonPayload(payload);
+
+  // Test-mode events (LS test card / test store) must NOT touch production:
+  // no charter record, no spot-counter bump, no welcome email. Signature is
+  // already verified, so we ack 200 and skip — lets the owner click through
+  // the test checkout freely without polluting the live "100 spots" counter.
+  if (isTestModePayload(payload)) {
+    return NextResponse.json({ ok: true, event: eventName, skipped: "test_mode" });
+  }
 
   const r = getRedis();
   if (!r) {
