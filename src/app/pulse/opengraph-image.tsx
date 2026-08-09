@@ -74,7 +74,7 @@ export default function PulseOG() {
           What the Musk empire is building, right now.
         </div>
         <div style={{ display: "flex", fontSize: 22, color: "#86868b", marginBottom: 36 }}>
-          {`${stats.sites} sites · ${stats.countries} countries · five companies · refreshed as new captures land`}
+          {`${stats.sites} sites · ${stats.countries} countries · four companies · refreshed as new captures land`}
         </div>
 
         {/* Scoreboard cells — Satori (next/og) doesn't support display:grid,

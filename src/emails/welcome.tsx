@@ -43,7 +43,7 @@ export default function WelcomeEmail({ email, tier = "free" }: WelcomeEmailProps
             <>
               <Text style={text}>
                 Your <strong>$9/month rate is locked for life</strong> — even when public
-                pricing moves to $29 in June 2026, then $49-79 long-term. You're in the first 100.
+                pricing moves to $29 when billing opens, then $49-79 long-term. You're in the first 100.
               </Text>
               <Text style={text}>What unlocks the moment billing goes live:</Text>
             </>
@@ -56,7 +56,7 @@ export default function WelcomeEmail({ email, tier = "free" }: WelcomeEmailProps
               <Text style={text}>
                 Charter membership ($9/mo charter rate, first 100 subscribers) is still
                 open if you want satellite-drop alerts, interactive component breakdowns,
-                and CSV/JSON data exports. Price grandfathered when it moves to $29 in June 2026, then $49-79 long-term.
+                and CSV/JSON data exports. Price grandfathered when it moves to $29, then $49-79 long-term.
               </Text>
             </>
           )}

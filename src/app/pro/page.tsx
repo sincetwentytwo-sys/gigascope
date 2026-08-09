@@ -14,7 +14,7 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: "Charter membership — $9/mo for life — GIGASCOPE",
   description:
-    "GIGASCOPE charter: daily digest, satellite-drop alerts, and the Saturday weekly recap. First 100 charters lock $9/mo forever — public launch at $29 in Jun 2026.",
+    "GIGASCOPE charter: daily digest, satellite-drop alerts, and the Saturday weekly recap. First 100 charters lock $9/mo forever — public rate is $29 when billing opens.",
   alternates: { canonical: "https://gigascope.xyz/pro" },
   openGraph: {
     title: "Charter membership — $9/mo for life — GIGASCOPE",
@@ -106,7 +106,7 @@ export default async function ProPage() {
           </p>
           <p className="text-dim text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
             Charter gets you the alert the day a new permit or frame lands, plus the Saturday recap.
-            Public launches at $29 in June 2026; charter pricing is grandfathered for as long as your
+            The public rate is $29 when billing opens; charter pricing is grandfathered for as long as your
             subscription stays active.
           </p>
           {showCount && remaining !== null && (
@@ -324,7 +324,7 @@ export default async function ProPage() {
             <FaqRow q="Why $9, locked for life?">
               Charter members fund the build of the alert system and the next
               cohort of company pages. Locking your rate means you pay $9 even when the
-              public price is $29 (June 2026) and likely $49-79 long-term, as long as your
+              public price is $29 and likely $49-79 long-term, as long as your
               subscription stays active.
             </FaqRow>
             <FaqRow q="What if I cancel and come back?">

@@ -16,11 +16,16 @@ export const COMPANIES: CompanyMeta[] = [
     description: "Rockets & Starlink",
   },
   {
+    // xAI is no longer an independent company — SpaceX acquired it in an
+    // all-stock merger (Feb 2026), and the combined entity IPO'd as SPCX in
+    // June 2026. We keep xAI as its own grouping because the compute sites
+    // (Colossus et al.) are physically and operationally distinct, but the
+    // description must not imply independence.
     id: "xai",
     name: "xAI",
     color: "#7b2dbd",
     icon: "🧠",
-    description: "Artificial intelligence",
+    description: "AI compute · SpaceX division since Feb 2026",
   },
   {
     id: "neuralink",

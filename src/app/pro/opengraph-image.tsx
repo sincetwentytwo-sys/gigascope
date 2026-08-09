@@ -82,7 +82,7 @@ export default function ProOG() {
             marginBottom: 36,
           }}
         >
-          Daily digest. Satellite-drop alerts. Weekly recap. Bulk data exports. Public launches at $29 in June 2026 — charter pricing is grandfathered as long as your subscription stays active.
+          Daily digest. Satellite-drop alerts. Weekly recap. Bulk data exports. Public rate is $29 when billing opens — charter pricing is grandfathered as long as your subscription stays active.
         </div>
 
         {/* Two pricing cards side by side */}

@@ -7,9 +7,9 @@ import type { Factory, Milestone } from "@/data/types";
 export const revalidate = 1800;
 
 export const metadata: Metadata = {
-  title: "SpaceX Financial Tracker — capex, sites, catalysts | Gigascope",
+  title: "SpaceX (Nasdaq: SPCX) Financial Tracker — capex, sites, catalysts | Gigascope",
   description:
-    "Capex, segment revenue, 4 ground sites, peer P/S comparison, and catalyst dates — sourced from S-1 filings and primary citations, not rumors.",
+    "SpaceX went public 2026-06-12 at $135/share. Capex, segment revenue, 4 ground sites, peer P/S comparison, and catalyst dates — sourced from S-1 filings and primary citations, not rumors.",
   alternates: { canonical: "https://gigascope.xyz/spacex-ipo" },
   openGraph: {
     title: "SpaceX Financial Tracker — capex, sites, catalysts",
@@ -79,16 +79,18 @@ const S1_SEGMENTS: { name: string; rev: string; share: string; op: string; note:
   },
 ];
 
+// The offering is DONE — these are settled historical facts, not targets.
+// Priced 2026-06-11, first trade 2026-06-12 on Nasdaq as SPCX. Do not
+// re-introduce future-tense "target" language here.
 const S1_OFFERING: S1Row[] = [
-  { label: "Target valuation", value: "$1.75T – $2T", source: "REPORTING", note: "Reuters / Bloomberg range; not yet priced" },
-  { label: "Capital raise", value: "$50B – $80B", source: "REPORTING", note: "Reuters; final at pricing" },
-  { label: "Primary listing", value: "Nasdaq", source: "S-1" },
-  { label: "Proposed ticker", value: "SPCX", source: "S-1" },
+  { label: "IPO price", value: "$135.00 / share", source: "REPORTING", note: "Priced 2026-06-11; company pricing announcement" },
+  { label: "Shares offered", value: "555,555,555", source: "REPORTING" },
+  { label: "Capital raised", value: "~$75B", source: "REPORTING", note: "555.6M shares × $135 — largest IPO on record" },
+  { label: "Valuation at IPO", value: "~$1.77T", source: "REPORTING", note: "At the $135 offer price" },
+  { label: "Listing", value: "Nasdaq — SPCX", source: "S-1" },
   { label: "Lead underwriter", value: "Goldman Sachs", source: "S-1", note: "21-bank syndicate; BofA, Citi, JPM, MS co-lead" },
-  { label: "Roadshow start", value: "2026-06-04 (target)", source: "REPORTING" },
-  { label: "Pricing target", value: "2026-06-11", source: "REPORTING" },
-  { label: "First trade target", value: "2026-06-12", source: "REPORTING" },
-  { label: "Lockup period", value: "TBD on prospectus amendment", source: "TBD", note: "Standard 180-day not yet confirmed in public S-1 excerpts" },
+  { label: "First trade", value: "2026-06-12", source: "REPORTING" },
+  { label: "Lockup", value: "First tranche expired Aug 2026", source: "REPORTING", note: "~900M shares unlocked 2026-08-06" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -108,12 +110,12 @@ const VAL_COMP: {
   note: string;
 }[] = [
   {
-    ticker: "SPCX*",
-    name: "SpaceX (rumored)",
+    ticker: "SPCX",
+    name: "SpaceX (public)",
     ttmRevB: "$18.7B (FY25)",
-    evRev: "~94x – ~107x",
-    ps: "~94x – ~107x",
-    note: "$1.75T-$2T target ÷ $18.7B S-1 revenue. Pre-IPO; not market-tested.",
+    evRev: "~95x at IPO",
+    ps: "~95x at IPO",
+    note: "$1.77T ÷ $18.7B FY25 revenue, at the $135 IPO price. Now market-traded — check SPCX for the live multiple.",
   },
   {
     ticker: "RKLB",
@@ -366,7 +368,7 @@ export default function SpaceXIPOPage() {
 
         <div className="relative h-full flex flex-col justify-end px-6 sm:px-12 pb-10 sm:pb-16 text-white">
           <div className="text-[11px] sm:text-xs uppercase tracking-widest text-white/70 mb-3 font-mono">
-            S-1 filed 2026-05-20 · Starbase · Boca Chica, TX · Sentinel-2
+            Public since 2026-06-12 (Nasdaq: SPCX) · Starbase · Boca Chica, TX · Sentinel-2
           </div>
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-3 max-w-3xl leading-[1.05]">
             SpaceX Financial Tracker.
@@ -526,9 +528,10 @@ export default function SpaceXIPOPage() {
           <div className="mb-6">
             <h2 className="text-2xl font-bold">Valuation comparables — P/S and EV/Revenue</h2>
             <p className="text-sm text-dim mt-2 max-w-2xl">
-              Public-market multiples for the most-cited peers as of late April – May 2026. SpaceX row derives P/S from
-              the reported $1.75T–$2T target valuation against S-1 FY2025 revenue ($18.7B). All non-SPCX multiples are
-              from Macrotrends / GuruFocus / Stock Analysis (linked below).
+              Public-market multiples for the most-cited peers as of late April – May 2026. The SpaceX row derives P/S
+              from the ~$1.77T valuation at the $135 IPO price (2026-06-11) against S-1 FY2025 revenue ($18.7B) — SPCX
+              has traded publicly since 2026-06-12, so the live multiple moves with the price. All non-SPCX multiples
+              are from Macrotrends / GuruFocus / Stock Analysis (linked below).
             </p>
           </div>
 
@@ -548,7 +551,7 @@ export default function SpaceXIPOPage() {
                 {VAL_COMP.map((c) => (
                   <tr
                     key={c.ticker}
-                    className={`border-b border-border-custom last:border-b-0 ${c.ticker === "SPCX*" ? "bg-[#005288]/5" : ""}`}
+                    className={`border-b border-border-custom last:border-b-0 ${c.ticker === "SPCX" ? "bg-[#005288]/5" : ""}`}
                   >
                     <td className="py-3 pl-4 font-mono font-bold">{c.ticker}</td>
                     <td className="py-3">{c.name}</td>
@@ -705,7 +708,7 @@ export default function SpaceXIPOPage() {
             <p className="text-sm text-dim mb-5 max-w-xl">
               We update this page when SpaceX files an S-1 amendment, when one of the four ground sites moves, and when
               a launch lands a new primary-source citation. Charter members get the email digest the same day. Standard
-              launch $29/mo (Jun 2026); long-term target $49–79/mo. Charter rate locks for the life of the subscription.
+              launch $29/mo when billing opens; long-term target $49–79/mo. Charter rate locks for the life of the subscription.
             </p>
             <div className="flex flex-wrap gap-3 mb-6">
               <Link

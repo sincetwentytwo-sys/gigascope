@@ -106,8 +106,8 @@ export default function PulsePage() {
             What the Musk empire is building, right now.
           </h1>
           <p className="text-dim text-base sm:text-lg max-w-2xl leading-relaxed">
-            {stats.sites} sites. {stats.countries} countries. Five operating companies plus
-            joint ventures. Every Sentinel-2 frame and primary-source filing we have, rolled
+            {stats.sites} sites. {stats.countries} countries. Four operating companies (SpaceX
+            absorbed xAI in Feb 2026) plus joint ventures. Every Sentinel-2 frame and primary-source filing we have, rolled
             up into one scoreboard. Page rebuilds every 30 minutes as captures and filings land.
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] font-mono text-dim">

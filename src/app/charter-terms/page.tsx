@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Charter terms — price-lock — GIGASCOPE",
   description:
-    "The Charter promise: first 100 paid subscribers get $9/month locked for life of subscription. Standard launches at $29 (June 2026), long-term target $49-79. Plain-English terms, no legalese.",
+    "The Charter promise: first 100 paid subscribers get $9/month locked for life of subscription. Standard rate is $29 once public billing opens; long-term target $49-79. Plain-English terms, no legalese.",
   alternates: { canonical: "https://gigascope.xyz/charter-terms" },
   robots: { index: true, follow: true },
 };
@@ -75,7 +75,7 @@ export default function CharterTermsPage() {
               <tr className="border-b border-border-custom">
                 <td className="py-2.5 px-3 font-medium">Standard</td>
                 <td className="py-2.5 px-3">$29</td>
-                <td className="py-2.5 px-3 text-dim">From June 2026 (when billing opens for non-charter signups)</td>
+                <td className="py-2.5 px-3 text-dim">When public billing opens (non-charter signups)</td>
               </tr>
               <tr>
                 <td className="py-2.5 px-3 font-medium">Long-term target</td>

@@ -48,8 +48,8 @@ export default function AboutPage() {
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-3">Why this site exists</h2>
         <p className="text-sm leading-relaxed text-dim max-w-prose">
-          Five companies inside one founder's orbit are reshaping cars, launch, AI compute, neural interfaces, and tunnels — at the same time, in public, on dirt you can see from space.
-          Nobody is tracking the physical build-out of all five together on a continuous cadence. Bloomberg covers the earnings. Visible Alpha models the revenue. Aggregators churn the headlines.
+          Four companies inside one founder's orbit are reshaping cars, launch, AI compute, neural interfaces, and tunnels — at the same time, in public, on dirt you can see from space.
+          Nobody is tracking the physical build-out of all of them together on a continuous cadence. Bloomberg covers the earnings. Visible Alpha models the revenue. Aggregators churn the headlines.
           GIGASCOPE watches the construction sites — Sentinel-2 captures, manually traced polygons, milestones logged against permits and FAA filings. That's the entire job.
         </p>
       </section>
@@ -58,7 +58,7 @@ export default function AboutPage() {
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-3">What we track</h2>
         <p className="text-sm text-dim mb-4">
-          {factories.length} sites across the five companies, refreshed against Copernicus Sentinel-2 (10 m/pixel, annual cloudless composite via EOX) and ESRI World Imagery (~3–6 month refresh) — in practice, each site picks up a fresh capture every 2-3 months on average.
+          {factories.length} sites across those companies, refreshed against Copernicus Sentinel-2 (10 m/pixel, annual cloudless composite via EOX) and ESRI World Imagery (~3–6 month refresh) — in practice, each site picks up a fresh capture every 2-3 months on average.
         </p>
         <ul className="flex flex-col gap-2.5 mb-4">
           {TRACKED.map((t) => (

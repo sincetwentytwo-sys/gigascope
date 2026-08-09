@@ -44,7 +44,7 @@ export default function DripD14({ email }: DripProps) {
               → <strong>$9/month</strong> today — charter rate, first 100 subscribers, locked for life
             </Text>
             <Text style={listItem}>
-              → <strong>$29/month</strong> standard launch — from June 2026, subscriber #101 onwards
+              → <strong>$29/month</strong> standard rate — when billing opens, subscriber #101 onwards
             </Text>
             <Text style={listItem}>
               → <strong>$49-79/month</strong> long-term target — depends on validation
