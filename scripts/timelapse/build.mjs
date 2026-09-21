@@ -202,6 +202,20 @@ async function main() {
     built++;
   }
 
+  // Prune orphans: the index is merged into on every run, so a slug that was
+  // renamed/removed from factories.json (e.g. the old `starbase`) would sit
+  // there forever, permanently "stale". Only prune on a full (non-ONLY_SLUG)
+  // run so a single-site rebuild can't wipe the others.
+  if (!onlySlug) {
+    const live = new Set(data.factories.map((f) => f.slug));
+    for (const slug of Object.keys(index)) {
+      if (!live.has(slug)) {
+        delete index[slug];
+        console.log(`  - pruned orphan index entry: ${slug}`);
+      }
+    }
+  }
+
   writeFileSync(indexPath, JSON.stringify(index, null, 2));
   console.log(`Done: ${built} built, ${skipped} skipped (of ${sites.length})`);
   if (process.env.GITHUB_OUTPUT) {

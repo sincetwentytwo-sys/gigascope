@@ -5,7 +5,8 @@
  * (640x360 cover-cropped, ~q5 JPEG). Surfaced by FactoryCard + /site/[slug]
  * as a before/after band so visitors see "2020 vs 2026" at a glance.
  *
- * Idempotent — skips slugs whose pair already exists.
+ * Idempotent — skips slugs whose pair is at least as new as the MP4;
+ * regenerates when the weekly rebuild produced a newer MP4.
  *
  * Run: node scripts/generate-site-thumbnails.mjs
  */
@@ -133,10 +134,19 @@ function main() {
     const firstPath = join(TIMELAPSE_DIR, `${slug}-first.jpg`);
     const lastPath = join(TIMELAPSE_DIR, `${slug}-last.jpg`);
 
+    // Refresh when the MP4 is newer than the existing pair. The old check
+    // skipped forever once a pair existed, so the "Now" frame on /site pages
+    // froze at whatever week this was first run (it sat at 2026-05 for four
+    // months while the weekly MP4 kept updating).
     if (existsSync(firstPath) && existsSync(lastPath)) {
-      console.log(`  [skip] ${slug} — pair already exists`);
-      skipped++;
-      continue;
+      const mp4Mtime = statSync(mp4Path).mtimeMs;
+      const pairMtime = Math.min(statSync(firstPath).mtimeMs, statSync(lastPath).mtimeMs);
+      if (pairMtime >= mp4Mtime) {
+        console.log(`  [skip] ${slug} — pair is current`);
+        skipped++;
+        continue;
+      }
+      console.log(`  [refresh] ${slug} — MP4 newer than thumbnails`);
     }
 
     try {

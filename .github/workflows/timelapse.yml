@@ -49,6 +49,11 @@ jobs:
           ONLY_SLUG: ${{ inputs.only_slug }}
         run: node scripts/timelapse/build.mjs
 
+      # Refresh the before/after JPG pair (FactoryCard + /site "Before / Now"
+      # band). Previously only ever run by hand, so "Now" silently froze.
+      - name: Generate before/after thumbnails
+        run: node scripts/generate-site-thumbnails.mjs
+
       - name: Commit videos
         id: commit
         run: |
