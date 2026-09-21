@@ -16,33 +16,49 @@
       "id": "terafab",
       "slug": "terafab",
       "name": "TERAFAB",
-      "aka": "Tesla × SpaceX × xAI Chip Fab (announced, no groundbreaking)",
+      "aka": "Tesla × SpaceX research chip fab (groundbreaking Apr 2026)",
       "flag": "🇺🇸",
       "location": "Austin, TX (Giga Texas North Campus)",
       "lat": 30.228,
       "lng": -97.612,
       "company": "joint",
-      "status": "announced",
-      "progress": 0,
+      "status": "construction",
+      "progress": 8,
       "area": "Est. 10M+ sqft (planned)",
       "capacity": "1 TW compute/yr",
       "products": "AI5 chip, 2nm process, Memory, Packaging",
-      "investment": "$20-25B",
+      "investment": "$16.8B phase 1 (Aug 2026) · $20-25B+ total est.",
       "employees": "Est. 10,000+",
       "color": "#c4a000",
       "featured": true,
       "extras": {
-        "Partners": "Tesla, SpaceX, xAI",
-        "Process Node": "2nm (TSMC-class)"
+        "Partners": "Tesla, SpaceX (xAI folded into SpaceX Feb 2026)",
+        "Process Node": "2nm (TSMC-class)",
+        "Production site": "Grimes County, TX (see terafab-grimes)"
       },
-      "lastUpdated": "2026-05-20",
-      "confidence": "speculative",
-      "lastVerified": "2026-05-20",
+      "lastUpdated": "2026-09-22",
+      "confidence": "medium",
+      "lastVerified": "2026-09-22",
       "sources": [
         {
           "url": "https://x.ai/",
           "label": "xAI / Tesla / SpaceX announcements (Musk statements)",
           "date": "2026-03-21"
+        },
+        {
+          "url": "https://techcrunch.com/2026/08/06/tesla-and-spacex-will-invest-16-8b-to-start-building-terafab-chip-factory-in-texas/",
+          "label": "TechCrunch — Tesla and SpaceX to invest $16.8B to start building Terafab",
+          "date": "2026-08-06"
+        },
+        {
+          "url": "https://fortune.com/2026/08/10/elon-musk-chip-factory-spacex-tesla-texas/",
+          "label": "Fortune — Musk's $16.8B chip factory, five times the world's largest building",
+          "date": "2026-08-10"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Terafab",
+          "label": "Wikipedia — Terafab (groundbreaking Apr 2026; construction underway Jul 2026)",
+          "date": "2026-09-22"
         }
       ],
       "milestones": [
@@ -53,15 +69,21 @@
         },
         {
           "date": "2026-04",
-          "text": "Site selection & environmental review",
-          "done": false,
-          "confidence": "speculative"
+          "text": "Groundbreaking at Giga Texas North Campus (research fab)",
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Terafab"
         },
         {
-          "date": "2026-Q3",
-          "text": "Pilot fab site prep begins",
-          "done": false,
-          "confidence": "speculative"
+          "date": "2026-07",
+          "text": "Foundation work underway — excavation, GeoPiers, gravel base (satellite-confirmed site prep)",
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Terafab"
+        },
+        {
+          "date": "2026-08-06",
+          "text": "Tesla + SpaceX commit $16.8B phase 1; Grimes County production complex announced",
+          "done": true,
+          "sourceUrl": "https://techcrunch.com/2026/08/06/tesla-and-spacex-will-invest-16-8b-to-start-building-terafab-chip-factory-in-texas/"
         },
         {
           "date": "2026-H2",
@@ -83,9 +105,10 @@
         0,
         0,
         0,
-        0
+        8
       ],
-      "halfKm": 3
+      "halfKm": 3,
+      "_progressNote": "8% = earthworks + foundations underway (excavation, GeoPiers, gravel base). Site prep north of the main Giga Texas building is visible in Sentinel-2 May->Sep 2026. Estimate; no official % disclosed."
     },
     {
       "id": "giga-texas",
@@ -1632,6 +1655,78 @@
       "halfKm": 1,
       "confidence": "speculative",
       "lastVerified": "2026-05-20"
+    },
+    {
+      "id": "terafab-grimes",
+      "slug": "terafab-grimes",
+      "name": "TERAFAB — Grimes County",
+      "aka": "Tesla × SpaceX chip production complex (Gibbons Creek, ex-coal plant site)",
+      "flag": "🇺🇸",
+      "location": "Grimes County, TX (Gibbons Creek Reservoir, ~20 mi E of College Station)",
+      "lat": 30.63,
+      "lng": -96.06,
+      "company": "joint",
+      "status": "announced",
+      "progress": 0,
+      "area": "100M+ sqft planned on a ~6,000-acre site",
+      "capacity": "Full-scale AI5 / 2nm chip production (phase 1)",
+      "products": "AI5 chip, 2nm process",
+      "investment": "$16.8B (phase 1, Tesla + SpaceX)",
+      "employees": "TBD",
+      "color": "#c4a000",
+      "featured": false,
+      "extras": {
+        "Partners": "Tesla, SpaceX",
+        "Construction start": "2026-12-01 (Texas government filing)",
+        "Target completion": "end of 2028 (phase 1)",
+        "Site": "Decommissioned Gibbons Creek coal plant, existing water storage"
+      },
+      "lastUpdated": "2026-09-22",
+      "lastVerified": "2026-09-22",
+      "confidence": "medium",
+      "_progressNote": "Announced; construction filed to start 2026-12-01. Coordinates = Gibbons Creek Reservoir/plant center; the fab footprint within the 6,000-acre property is not yet public, so the capture box is set wide (halfKm 4).",
+      "sources": [
+        {
+          "url": "https://techcrunch.com/2026/08/06/tesla-and-spacex-will-invest-16-8b-to-start-building-terafab-chip-factory-in-texas/",
+          "label": "TechCrunch — $16.8B to start building Terafab in Texas",
+          "date": "2026-08-06"
+        },
+        {
+          "url": "https://fortune.com/2026/08/10/elon-musk-chip-factory-spacex-tesla-texas/",
+          "label": "Fortune — five times bigger than the world's largest building",
+          "date": "2026-08-10"
+        }
+      ],
+      "timeline": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "halfKm": 4,
+      "timelapseSlug": null,
+      "milestones": [
+        {
+          "date": "2026-08-06",
+          "text": "Tesla + SpaceX announce $16.8B phase-1 investment; Grimes County site named",
+          "done": true,
+          "sourceUrl": "https://techcrunch.com/2026/08/06/tesla-and-spacex-will-invest-16-8b-to-start-building-terafab-chip-factory-in-texas/"
+        },
+        {
+          "date": "2026-12-01",
+          "text": "Construction start (per Texas government filing)",
+          "done": false
+        },
+        {
+          "date": "2028",
+          "text": "Phase-1 completion target",
+          "done": false,
+          "confidence": "speculative"
+        }
+      ]
     }
   ]
 }

@@ -54,6 +54,12 @@ jobs:
       - name: Generate before/after thumbnails
         run: node scripts/generate-site-thumbnails.mjs
 
+      # Hero <video> plays the -mobile/.av1 variants FIRST; they were made by
+      # hand once and never refreshed, so the homepage showed May footage all
+      # summer. Rebuild them from the fresh MP4s every week.
+      - name: Regenerate hero video variants
+        run: node scripts/timelapse/variants.mjs
+
       - name: Commit videos
         id: commit
         run: |

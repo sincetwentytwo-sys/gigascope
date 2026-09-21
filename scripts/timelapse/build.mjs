@@ -207,7 +207,13 @@ async function main() {
   // there forever, permanently "stale". Only prune on a full (non-ONLY_SLUG)
   // run so a single-site rebuild can't wipe the others.
   if (!onlySlug) {
-    const live = new Set(data.factories.map((f) => f.slug));
+    // "Live" = every factory slug PLUS every `timelapseSlug` alias. A site may
+    // point at legacy assets under a different name (starbase-launch ->
+    // "starbase" since the 2026-05-27 split), and that aliased index entry
+    // must survive or captureFreshness() goes null for that site.
+    const live = new Set(
+      data.factories.flatMap((f) => (f.timelapseSlug ? [f.slug, f.timelapseSlug] : [f.slug])),
+    );
     for (const slug of Object.keys(index)) {
       if (!live.has(slug)) {
         delete index[slug];
