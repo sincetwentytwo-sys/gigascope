@@ -10,7 +10,8 @@
 //   ONLY_SLUG=<slug>   — build a single site
 //   FPS=4              — frames per second (default 4)
 //
-// Requires `gh` CLI and `ffmpeg` on PATH (both preinstalled on ubuntu-latest).
+// Requires `gh` CLI and `ffmpeg` on PATH. `gh` is preinstalled on ubuntu-latest;
+// ffmpeg is NOT (dropped in ubuntu-24.04) — the workflow apt-installs it first.
 import { readFileSync, mkdirSync, existsSync, readdirSync, rmSync, statSync, writeFileSync, copyFileSync } from "node:fs";
 import { relative } from "node:path";
 import { fileURLToPath } from "node:url";

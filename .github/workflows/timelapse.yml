@@ -35,6 +35,12 @@ jobs:
           ONLY_SLUG: ${{ inputs.only_slug }}
         run: node scripts/timelapse/capture.mjs
 
+      # ubuntu-latest (24.04) no longer ships ffmpeg; build.mjs shells out to
+      # it, so every weekly run from 2026-05-26 onward died here with
+      # `spawnSync ffmpeg ENOENT` while frames kept piling up in Releases.
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq --no-install-recommends ffmpeg
+
       - name: Build MP4 timelapses
         id: build
         env:
