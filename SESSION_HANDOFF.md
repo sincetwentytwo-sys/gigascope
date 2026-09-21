@@ -6,6 +6,36 @@
 
 ---
 
+## 🛰 2026-09-22 — 위성 파이프라인 4개월 정지 복구 + Terafab 공사중 반영
+
+**증상**: 전 사이트 타임랩스가 5/15 프레임에서 멈춤. Terafab은 `announced/progress 0/"no groundbreaking"`.
+**원인 (3겹)**: ① 주간 Action이 매주 돌긴 했으나 `spawnSync ffmpeg ENOENT` — ubuntu-24.04 러너에 ffmpeg가
+빠졌는데 build.mjs가 "기본 설치"로 가정. 캡처는 매주 성공해 Release에 프레임만 쌓임(terafab 52장).
+② 썸네일 스크립트가 "있으면 스킵"이고 어느 워크플로우에도 안 물려 → /site "Now"가 5/23에 동결.
+③ 홈 히어로 `<video>`는 `-mobile/.av1` 변형을 **먼저** 재생하는데 그 변형은 5월 수동 생성 후 재생성 안 됨
+→ **홈 첫 화면이 여름 내내 5월 영상.** + starbase-launch가 legacy `starbase.*`를 alias로 참조해 동결.
+**수정 (커밋 80507aa→1abc6c5, Actions 3회 성공)**:
+- timelapse.yml: ffmpeg apt 설치 스텝 / 썸네일 스텝 / 변형 재생성 스텝(`scripts/timelapse/variants.mjs`, hero
+  2곳: giga-texas·starbase-launch, libsvtav1 best-effort) 추가.
+- build.mjs: 릴리즈 다운로드 **재시도**(5/15/45s — 첫 재실행이 GitHub 500으로 죽어서 넣음, 다음 실행에서
+  giga-shanghai 500을 바로 살림) / index 고아 prune(단 `timelapseSlug` alias는 live 취급).
+- thumbnails: mp4가 더 새로우면 재생성, 변형 mp4는 스킵.
+- **Starbase 풀히스토리**: legacy 35프레임(2018-02→2026-05)을 `timelapse-frames-starbase-launch` 릴리즈에
+  합침(날짜 겹침 0) → starbase-launch.mp4 = 8년 히스토리+주간 갱신. alias 제거, 히어로/spacex-ipo/x-queue
+  repoint, legacy `starbase.*`·`colossus-mobile.mp4`·잡 썸네일 13개 삭제.
+- **데이터**: terafab → `construction`, progress 8(추정, 주석), 4월 착공·7월 기초공사(위성으로 5→9월 정지작업
+  확인)·8월 $16.8B 1단계, 출처 TechCrunch/Fortune/Wikipedia. **신규 `terafab-grimes`**(Gibbons Creek 6,000에이커,
+  착공 2026-12-01 신고, 30.63/-96.06 halfKm 4, `timelapseSlug:null` — 첫 프레임 캡처됨, 2장 되면 자동 빌드).
+**남은 오너 액션**: "Factories Data Update" Action이 PR 생성에서 `GitHub Actions is not permitted to create or
+approve pull requests` → 레포 Settings → Actions → General → Workflow permissions → **"Allow GitHub Actions to
+create and approve pull requests" 체크** (권한 설정이라 오너만). ⚠ 파이프라인 복구로 "Post video tweet"
+스텝이 오늘 2회 success — `X_VIDEO_AUTOPOST` 켜져 있으면 @gigascopehq에 영상이 올라갔을 수 있음, 확인 요.
+**내 실수 기록**: 재시도 헬퍼를 heredoc→Python으로 넣다 `
+`이 진짜 개행이 돼 build.mjs가 깨진 채
+커밋·푸시·실행됨(`node --check` 실패가 다음 줄과 `&&`로 안 묶임). 즉시 취소·수정. 교훈: 검증→커밋은 반드시 `&&` 체인.
+
+---
+
 ## 🔴 2026-08-09 — 30일 go/no-go 결과: **NO-GO** (+ 뉴스 최신화 반영)
 
 6/7 스쿱 발사 후 **2개월 경과. 지표 완전 정지**:
