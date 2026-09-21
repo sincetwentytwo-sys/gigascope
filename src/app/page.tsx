@@ -25,9 +25,9 @@ type Hero = {
   slug: string;
   /**
    * Optional override for the `/timelapses/<x>.{mp4,jpg,av1.mp4}` asset slug.
-   * Used after the 2026-05-27 starbase split: `starbase-launch` is the new
-   * site slug, but the existing video files are still named `starbase.*`.
-   * Defaults to `slug` when omitted.
+   * Defaults to `slug` when omitted. (The 2026-05-27 starbase split briefly
+   * aliased starbase-launch -> legacy `starbase.*`; retired 2026-09-22 once
+   * the legacy frames were merged into the starbase-launch release.)
    */
   videoSlug?: string;
   kicker: string;
@@ -52,11 +52,10 @@ const HEROES: Hero[] = [
     headlineTail: "bare farmland to megafactory in six years.",
   },
   {
-    // 2026-05-27 split: `starbase` site → `starbase-launch` + `starbase-build`.
-    // Video files remain on disk as `starbase.*` (renaming would invalidate
-    // CDN cache for no win), so we keep the old asset slug via `videoSlug`.
+    // 2026-05-27 split: `starbase` → `starbase-launch` + `starbase-build`.
+    // Uses its own `starbase-launch.*` assets (2018→ full history since the
+    // legacy frames were merged into its release on 2026-09-22).
     slug: "starbase-launch",
-    videoSlug: "starbase",
     kicker: "SpaceX Starbase · Sentinel-2 + ESRI timelapse",
     headlineLead: "Starbase —",
     headlineTail: "from sand to Starship pad in five years.",
@@ -80,9 +79,8 @@ export default async function Home({
 }) {
   const params = await searchParams;
   const hero = pickHero(params?.hero);
-  // Asset slug — `videoSlug` lets us reuse legacy timelapse files (named
-  // `starbase.*`) for a renamed factory (`starbase-launch`) without
-  // rewriting the CDN cache key.
+  // Asset slug — `videoSlug` is an optional override; every current hero
+  // uses its own slug-named files.
   const heroVideoSlug = hero.videoSlug ?? hero.slug;
   const stats = getEmpireStats();
   const captures = getLatestCaptures(3);

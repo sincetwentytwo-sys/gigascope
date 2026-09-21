@@ -92,8 +92,8 @@ OLM tower, Mechazilla, the orbital ring — all built on what was mudflats.`,
     replyText: `Tracked here:
 gigascope.xyz/site/starbase`,
     mediaHint: "Starbase 5-year timelapse (1.7MB mp4)",
-    mediaUrl: `${BASE}/timelapses/starbase.mp4`,
-    previewImageUrl: `${BASE}/timelapses/starbase-first.jpg`,
+    mediaUrl: `${BASE}/timelapses/starbase-launch.mp4`,
+    previewImageUrl: `${BASE}/timelapses/starbase-launch-first.jpg`,
     notes: "SpaceX audience > Tesla audience for satellite content. Day 2 might outperform Day 1.",
     reddit: {
       subreddits: ["r/SpaceXLounge", "r/space", "r/MapPorn"],

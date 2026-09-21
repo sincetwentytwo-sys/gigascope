@@ -359,10 +359,10 @@ export default function SpaceXIPOPage() {
           loop
           playsInline
           preload="metadata"
-          poster="/timelapses/starbase.jpg"
+          poster="/timelapses/starbase-launch.jpg"
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/timelapses/starbase.mp4" type="video/mp4" />
+          <source src="/timelapses/starbase-launch.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/50" />
 

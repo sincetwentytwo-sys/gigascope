@@ -129,6 +129,10 @@ function main() {
   let totalBytesAdded = 0;
 
   for (const file of mp4s) {
+    // Skip the hero-only encoded variants (<slug>-mobile.mp4, <slug>.av1.mp4,
+    // <slug>-mobile.av1.mp4): nothing renders thumbnails for those, and
+    // treating them as sites produced 13 junk jpgs on 2026-09-21.
+    if (/-mobile\.mp4$|\.av1\.mp4$/i.test(file)) continue;
     const slug = file.replace(/\.mp4$/i, "");
     const mp4Path = join(TIMELAPSE_DIR, file);
     const firstPath = join(TIMELAPSE_DIR, `${slug}-first.jpg`);
