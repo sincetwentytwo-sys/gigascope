@@ -61,8 +61,7 @@ function downloadAssets(tag, dir, attempts = 4) {
       gh(["release", "download", tag, "--repo", repo, "--dir", dir, "--pattern", "*.png"]);
       return;
     } catch (e) {
-      const msg = (e.stderr ?? e.message ?? "").toString().split("
-")[0].slice(0, 160);
+      const msg = (e.stderr ?? e.message ?? "").toString().split(String.fromCharCode(10))[0].slice(0, 160);
       if (i === attempts) throw e;
       const wait = 5000 * 3 ** (i - 1);
       console.log(`  ! ${tag}: download failed (${msg}) — retry ${i}/${attempts - 1} in ${wait / 1000}s`);
