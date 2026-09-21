@@ -30,9 +30,10 @@
 approve pull requests` → 레포 Settings → Actions → General → Workflow permissions → **"Allow GitHub Actions to
 create and approve pull requests" 체크** (권한 설정이라 오너만). ⚠ 파이프라인 복구로 "Post video tweet"
 스텝이 오늘 2회 success — `X_VIDEO_AUTOPOST` 켜져 있으면 @gigascopehq에 영상이 올라갔을 수 있음, 확인 요.
-**내 실수 기록**: 재시도 헬퍼를 heredoc→Python으로 넣다 `
-`이 진짜 개행이 돼 build.mjs가 깨진 채
-커밋·푸시·실행됨(`node --check` 실패가 다음 줄과 `&&`로 안 묶임). 즉시 취소·수정. 교훈: 검증→커밋은 반드시 `&&` 체인.
+**내 실수 기록**: 재시도 헬퍼를 heredoc→Python으로 넣다 역슬래시-n 이스케이프가 진짜 개행으로 변해
+build.mjs가 깨진 채 커밋·푸시·실행됨(`node --check` 실패가 다음 줄과 `&&`로 안 묶임). 즉시 취소·수정.
+교훈 2개: ① 검증→커밋은 반드시 `&&` 체인, ② heredoc+Python 층을 거치는 문자열에 이스케이프 넣지 말 것
+(이 문단 자체도 처음엔 같은 함정에 걸렸다 — Edit 툴로 직접 고침).
 
 ---
 
