@@ -46,10 +46,29 @@ function listReleaseAssets(tag) {
   }
 }
 
-function downloadAssets(tag, dir) {
-  rmSync(dir, { recursive: true, force: true });
-  mkdirSync(dir, { recursive: true });
-  gh(["release", "download", tag, "--repo", repo, "--dir", dir, "--pattern", "*.png"]);
+// Retry the asset download: a single transient api.github.com 5xx on one of
+// ~50 PNGs used to abort the entire multi-site build (2026-09-21 run died on
+// an HTTP 500 for neuralink-austin after 20 sites had already built). The
+// job runs unattended weekly, so it must ride out flakes. Backoff 5s/15s/45s.
+function sleepSync(ms) {
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+}
+function downloadAssets(tag, dir, attempts = 4) {
+  for (let i = 1; i <= attempts; i++) {
+    rmSync(dir, { recursive: true, force: true });
+    mkdirSync(dir, { recursive: true });
+    try {
+      gh(["release", "download", tag, "--repo", repo, "--dir", dir, "--pattern", "*.png"]);
+      return;
+    } catch (e) {
+      const msg = (e.stderr ?? e.message ?? "").toString().split("
+")[0].slice(0, 160);
+      if (i === attempts) throw e;
+      const wait = 5000 * 3 ** (i - 1);
+      console.log(`  ! ${tag}: download failed (${msg}) — retry ${i}/${attempts - 1} in ${wait / 1000}s`);
+      sleepSync(wait);
+    }
+  }
 }
 
 const FONT_CANDIDATES = [
