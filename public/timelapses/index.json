@@ -2,12 +2,12 @@
   "terafab": {
     "frames": 50,
     "latest": "2026-09-21",
-    "builtAt": "2026-09-21T15:43:14.254Z"
+    "builtAt": "2026-09-21T16:08:58.376Z"
   },
   "giga-texas": {
     "frames": 50,
     "latest": "2026-09-21",
-    "builtAt": "2026-09-21T15:43:32.012Z"
+    "builtAt": "2026-09-21T16:09:11.533Z"
   },
   "giga-nevada": {
     "frames": 51,
@@ -17,12 +17,12 @@
   "giga-shanghai": {
     "frames": 49,
     "latest": "2026-09-21",
-    "builtAt": "2026-09-21T15:44:12.112Z"
+    "builtAt": "2026-09-21T16:09:52.921Z"
   },
   "giga-berlin": {
     "frames": 45,
     "latest": "2026-09-21",
-    "builtAt": "2026-09-21T15:44:28.281Z"
+    "builtAt": "2026-09-21T16:10:04.592Z"
   },
   "giga-mexico": {
     "frames": 52,
@@ -32,12 +32,12 @@
   "fremont": {
     "frames": 47,
     "latest": "2026-09-21",
-    "builtAt": "2026-09-21T15:45:03.075Z"
+    "builtAt": "2026-09-21T16:10:17.523Z"
   },
   "giga-buffalo": {
     "frames": 45,
     "latest": "2026-09-21",
-    "builtAt": "2026-09-21T15:45:19.438Z"
+    "builtAt": "2026-09-21T16:10:29.676Z"
   },
   "starbase": {
     "frames": 26,
@@ -47,32 +47,32 @@
   "spacex-hawthorne": {
     "frames": 50,
     "latest": "2026-09-21",
-    "builtAt": "2026-09-21T15:45:56.908Z"
+    "builtAt": "2026-09-21T16:10:55.712Z"
   },
   "cape-canaveral": {
     "frames": 45,
     "latest": "2026-09-21",
-    "builtAt": "2026-09-21T15:46:14.991Z"
+    "builtAt": "2026-09-21T16:11:09.892Z"
   },
   "vandenberg": {
     "frames": 51,
     "latest": "2026-09-21",
-    "builtAt": "2026-09-21T15:46:33.041Z"
+    "builtAt": "2026-09-21T16:11:23.020Z"
   },
   "colossus": {
     "frames": 48,
     "latest": "2026-09-21",
-    "builtAt": "2026-09-21T15:46:50.155Z"
+    "builtAt": "2026-09-21T16:11:35.492Z"
   },
   "neuralink-fremont": {
     "frames": 47,
     "latest": "2026-09-21",
-    "builtAt": "2026-09-21T15:47:18.167Z"
+    "builtAt": "2026-09-21T16:11:51.350Z"
   },
   "neuralink-austin": {
     "frames": 50,
     "latest": "2026-09-21",
-    "builtAt": "2026-09-21T15:47:33.839Z"
+    "builtAt": "2026-09-21T16:12:03.117Z"
   },
   "vegas-loop": {
     "frames": 52,
@@ -82,12 +82,12 @@
   "cortex": {
     "frames": 16,
     "latest": "2026-09-21",
-    "builtAt": "2026-09-21T15:43:37.992Z"
+    "builtAt": "2026-09-21T16:09:15.776Z"
   },
   "starbase-launch": {
-    "frames": 17,
+    "frames": 44,
     "latest": "2026-09-21",
-    "builtAt": "2026-09-21T15:45:26.664Z"
+    "builtAt": "2026-09-21T16:10:43.592Z"
   },
   "starbase-build": {
     "frames": 17,
@@ -102,7 +102,7 @@
   "colossus-2": {
     "frames": 15,
     "latest": "2026-09-21",
-    "builtAt": "2026-09-21T15:46:56.082Z"
+    "builtAt": "2026-09-21T16:11:40.018Z"
   },
   "xai-humain-saudi": {
     "frames": 17,
