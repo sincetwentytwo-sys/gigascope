@@ -192,7 +192,8 @@ async function main() {
     const unchanged = prev?.sig
       ? prev.sig === sig
       : prev && prev.frames === dates.length && prev.latest === dates[dates.length - 1];
-    if (unchanged) {
+    // An explicit ONLY_SLUG run is a deliberate rebuild request — never skip it.
+    if (unchanged && !onlySlug) {
       console.log(`  = ${site.slug}: unchanged (${dates.length} frames)`);
       skipped++;
       continue;
