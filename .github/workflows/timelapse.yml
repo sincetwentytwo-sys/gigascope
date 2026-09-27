@@ -11,6 +11,10 @@ on:
         description: "Capture/build a single slug only (optional)"
         required: false
         default: ""
+      frame_date:
+        description: "Backfill: capture the clearest scene as of YYYY-MM-DD (optional)"
+        required: false
+        default: ""
       tweet:
         description: "Also post the rotation video tweet (manual runs default to NO)"
         type: boolean
@@ -38,6 +42,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           ONLY_SLUG: ${{ inputs.only_slug }}
+          FRAME_DATE: ${{ inputs.frame_date }}
         run: node scripts/timelapse/capture.mjs
 
       # ubuntu-latest (24.04) no longer ships ffmpeg; build.mjs shells out to

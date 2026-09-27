@@ -8,7 +8,8 @@
 //
 // Optional env:
 //   ONLY_SLUG=<slug>   — capture a single site (for local testing)
-//   FRAME_DATE=<YYYY-MM-DD> — override frame date (default: today UTC)
+//   FRAME_DATE=<YYYY-MM-DD> — backfill: pick the scene "as of" this date instead
+//                             of today (frame is still named by acquisition date)
 //   DRY_RUN=1          — fetch but do not upload to releases
 import { readFileSync, mkdirSync, writeFileSync, existsSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -38,7 +39,8 @@ const CLOUD_MAX = 30;
 const WINDOW_DAYS = 30;
 
 const FRAME_DATE_FORCED = Boolean(process.env.FRAME_DATE);
-const frameDate = process.env.FRAME_DATE ?? new Date().toISOString().slice(0, 10);
+// `||` not `??`: an empty workflow_dispatch input arrives as "".
+const frameDate = process.env.FRAME_DATE || new Date().toISOString().slice(0, 10);
 const onlySlug = process.env.ONLY_SLUG ?? null;
 const dryRun = process.env.DRY_RUN === "1";
 const repo = process.env.GITHUB_REPOSITORY ?? null;
@@ -215,7 +217,7 @@ async function main() {
     const tag = `timelapse-frames-${site.slug}`;
     try {
       const bbox = bboxAround(site.lat, site.lng, site.halfKm ?? DEFAULT_HALF_KM);
-      const scene = FRAME_DATE_FORCED ? null : await pickScene(token, bbox);
+      const scene = await pickScene(token, bbox);
       if (scene && !scene.day) {
         results.push({ slug: site.slug, status: "skip" });
         console.log(`  - ${site.slug}: no scene <= ${CLOUD_MAX}% cloud in the last ${WINDOW_DAYS} days`);
@@ -224,7 +226,9 @@ async function main() {
       const label = scene?.day ?? frameDate;
       // Never add a frame that isn't newer than what's stored: re-picking the
       // same (or an older) clear pass would duplicate or reorder the timelapse.
-      const latestStored = dryRun ? null : latestAsset(tag);
+      // FRAME_DATE is an explicit backfill ("as of" that date), so it may
+      // legitimately land before the stored frames.
+      const latestStored = dryRun || FRAME_DATE_FORCED ? null : latestAsset(tag);
       if (scene && latestStored && label <= latestStored) {
         results.push({ slug: site.slug, status: "skip" });
         console.log(`  = ${site.slug}: freshest clear scene ${label} (${scene.cloud}% cloud) not newer than stored ${latestStored}`);

@@ -1662,28 +1662,28 @@
       "aka": "Tesla × SpaceX chip production complex (Gibbons Creek, ex-coal plant site)",
       "flag": "🇺🇸",
       "location": "Grimes County, TX (Gibbons Creek Reservoir, ~20 mi E of College Station)",
-      "lat": 30.63,
-      "lng": -96.06,
+      "lat": 30.6165,
+      "lng": -96.0233,
       "company": "joint",
-      "status": "announced",
-      "progress": 0,
+      "status": "construction",
+      "progress": 2,
       "area": "100M+ sqft planned on a ~6,000-acre site",
       "capacity": "Full-scale AI5 / 2nm chip production (phase 1)",
       "products": "AI5 chip, 2nm process",
-      "investment": "$16.8B (phase 1, Tesla + SpaceX)",
+      "investment": "$16.8B phase 1 (Tesla + SpaceX) · up to $119B all phases",
       "employees": "TBD",
       "color": "#c4a000",
       "featured": false,
       "extras": {
         "Partners": "Tesla, SpaceX",
-        "Construction start": "2026-12-01 (Texas government filing)",
+        "Construction start": "Land clearing since Aug 2026; formal start 2026-12-01 (Texas filing)",
         "Target completion": "end of 2028 (phase 1)",
         "Site": "Decommissioned Gibbons Creek coal plant, existing water storage"
       },
-      "lastUpdated": "2026-09-22",
-      "lastVerified": "2026-09-22",
+      "lastUpdated": "2026-09-27",
+      "lastVerified": "2026-09-27",
       "confidence": "medium",
-      "_progressNote": "Announced; construction filed to start 2026-12-01. Coordinates = Gibbons Creek Reservoir/plant center; the fab footprint within the 6,000-acre property is not yet public, so the capture box is set wide (halfKm 4).",
+      "_progressNote": "Site prep only: land clearing/burning on the south side of Gibbons Creek Reservoir since early Aug 2026 (KBTX 2026-08-11, fire dept confirmed it is the Terafab site); Sentinel-2 2026-09-22 shows a large cleared pad SE of the reservoir. Vertical construction is filed to start 2026-12-01, so progress is a nominal 2%. Capture box recentred on the clearing 2026-09-27 (was reservoir centre).",
       "sources": [
         {
           "url": "https://techcrunch.com/2026/08/06/tesla-and-spacex-will-invest-16-8b-to-start-building-terafab-chip-factory-in-texas/",
@@ -1694,6 +1694,16 @@
           "url": "https://fortune.com/2026/08/10/elon-musk-chip-factory-spacex-tesla-texas/",
           "label": "Fortune — five times bigger than the world's largest building",
           "date": "2026-08-10"
+        },
+        {
+          "url": "https://www.kbtx.com/2026/08/11/land-clearing-already-underway-near-terefab-site-grimes-county/",
+          "label": "KBTX — land clearing already underway near Terafab site",
+          "date": "2026-08-11"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Terafab",
+          "label": "Wikipedia — Terafab (100M sq ft, up to $119B across phases)",
+          "date": "2026-09-27"
         }
       ],
       "timeline": [
@@ -1703,7 +1713,7 @@
         0,
         0,
         0,
-        0
+        2
       ],
       "halfKm": 4,
       "timelapseSlug": null,
@@ -1713,6 +1723,12 @@
           "text": "Tesla + SpaceX announce $16.8B phase-1 investment; Grimes County site named",
           "done": true,
           "sourceUrl": "https://techcrunch.com/2026/08/06/tesla-and-spacex-will-invest-16-8b-to-start-building-terafab-chip-factory-in-texas/"
+        },
+        {
+          "date": "2026-08",
+          "text": "Land clearing begins on the south side of Gibbons Creek Reservoir",
+          "done": true,
+          "sourceUrl": "https://www.kbtx.com/2026/08/11/land-clearing-already-underway-near-terefab-site-grimes-county/"
         },
         {
           "date": "2026-12-01",
