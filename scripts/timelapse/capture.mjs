@@ -115,9 +115,15 @@ async function pickScene(token, bbox) {
   }
 }
 
+// The capture box is centred on `captureCenter` when set, so moving a site's
+// pin (lat/lng) to its real footprint doesn't re-frame years of stored frames.
+function siteBbox(site) {
+  const c = site.captureCenter ?? site;
+  return bboxAround(c.lat, c.lng, site.halfKm ?? DEFAULT_HALF_KM);
+}
+
 async function captureSite(token, site, sceneDay) {
-  const halfKm = site.halfKm ?? DEFAULT_HALF_KM;
-  const bbox = bboxAround(site.lat, site.lng, halfKm);
+  const bbox = siteBbox(site);
   const toDate = new Date((sceneDay ?? frameDate) + "T23:59:59Z");
   const fromDate = new Date(toDate);
   if (sceneDay) fromDate.setUTCHours(0, 0, 0, 0);
@@ -216,7 +222,7 @@ async function main() {
   for (const site of sites) {
     const tag = `timelapse-frames-${site.slug}`;
     try {
-      const bbox = bboxAround(site.lat, site.lng, site.halfKm ?? DEFAULT_HALF_KM);
+      const bbox = siteBbox(site);
       const scene = await pickScene(token, bbox);
       if (scene && !scene.day) {
         results.push({ slug: site.slug, status: "skip" });

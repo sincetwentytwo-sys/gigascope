@@ -63,6 +63,15 @@ export interface Factory {
 
   /** 타임랩스 캡처용 (빌드 스크립트 전용) */
   halfKm?: number;
+  /**
+   * Centre of the timelapse capture box when it differs from the site pin
+   * (lat/lng). Lets the pin move to the real footprint without re-framing
+   * years of existing frames. capture.mjs uses this; the site page uses it to
+   * place the "site" marker on the timelapse/before-after images.
+   */
+  captureCenter?: { lat: number; lng: number };
+  /** How the pin position was determined (shown under the map). */
+  locationNote?: string;
 
   /**
    * Timelapse asset slug — overrides `slug` when looking up

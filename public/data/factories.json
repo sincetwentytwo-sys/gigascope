@@ -18,9 +18,9 @@
       "name": "TERAFAB",
       "aka": "Tesla × SpaceX research chip fab (groundbreaking Apr 2026)",
       "flag": "🇺🇸",
-      "location": "Austin, TX (Giga Texas North Campus)",
-      "lat": 30.228,
-      "lng": -97.612,
+      "location": "Austin, TX (Giga Texas North Campus, east of the Optimus factory)",
+      "lat": 30.2372,
+      "lng": -97.5966,
       "company": "joint",
       "status": "construction",
       "progress": 8,
@@ -108,7 +108,12 @@
         8
       ],
       "halfKm": 3,
-      "_progressNote": "8% = earthworks + foundations underway (excavation, GeoPiers, gravel base). Site prep north of the main Giga Texas building is visible in Sentinel-2 May->Sep 2026. Estimate; no official % disclosed."
+      "_progressNote": "8% = earthworks + foundations underway (excavation, GeoPiers, gravel base). Site prep north of the main Giga Texas building is visible in Sentinel-2 May->Sep 2026. Estimate; no official % disclosed.",
+      "captureCenter": {
+        "lat": 30.228,
+        "lng": -97.612
+      },
+      "locationNote": "Estimated position: the gravel foundation pad that appeared in Sentinel-2 between May and late Jul 2026, matching drone reports of the chip fab's rectangular foundation with gravel base + GeoPiers (Joe Tegtmeyer, late Jul 2026). The large blue-roofed building just west is the Optimus factory. Tesla has not published the exact footprint. Base map imagery predates construction."
     },
     {
       "id": "giga-texas",
@@ -1896,7 +1901,8 @@
           "done": false,
           "confidence": "speculative"
         }
-      ]
+      ],
+      "locationNote": "Pin = centre of the cleared pad SE of Gibbons Creek Reservoir (Sentinel-2, 2026-09-22); KBTX and the local fire department confirm the clearing is the Terafab site. Base map imagery predates the clearing."
     }
   ]
 }

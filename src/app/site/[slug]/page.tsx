@@ -12,6 +12,8 @@ import CommunityFeed from "@/components/CommunityFeed";
 import ShareButtons from "@/components/ShareButtons";
 import EmailSignup from "@/components/EmailSignup";
 import { TIMELAPSE_INDEX } from "@/lib/timelapseIndex";
+import { framePinPosition, shouldShowFramePin } from "@/lib/framePin";
+import FramePin from "@/components/FramePin";
 
 function hasBeforeAfterThumbnails(slug: string | null): boolean {
   if (!slug) return false;
@@ -87,6 +89,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
 
   const company = getCompanyMeta(factory.company);
   const imageryDate = await getESRIImageryDate(factory.lat, factory.lng);
+  const framePin = shouldShowFramePin(factory) ? framePinPosition(factory) : null;
   const newsKeywords = SITE_KEYWORDS[factory.slug] ?? [factory.name.toLowerCase()];
   const pageUrl = `${SITE_URL}/site/${factory.slug}`;
   const accent = company.color;
@@ -206,7 +209,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
         {showBeforeAfter && (
           <div className="mb-6 border border-border-custom overflow-hidden">
             <div className="grid grid-cols-2 gap-px bg-border-custom">
-              <div className="relative">
+              <div className="relative overflow-hidden">
                 {/* width/height reserve aspect-correct space — kills CLS
                     when the timelapse thumb hydrates after page paint. */}
                 <img
@@ -215,21 +218,23 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                   loading="lazy"
                   width={1600}
                   height={900}
-                  className="w-full aspect-video object-cover"
+                  className="block w-full aspect-video object-cover"
                 />
+                {framePin && <FramePin x={framePin.x} y={framePin.y} color={accent} />}
                 <span className="absolute top-2 left-2 px-2 py-1 text-[10px] font-mono uppercase tracking-wider bg-black/65 text-white/90 rounded">
                   Before
                 </span>
               </div>
-              <div className="relative">
+              <div className="relative overflow-hidden">
                 <img
                   src={`/timelapses/${tlSlug}-last.jpg`}
                   alt={`${factory.name} — recent satellite view`}
                   loading="lazy"
                   width={1600}
                   height={900}
-                  className="w-full aspect-video object-cover"
+                  className="block w-full aspect-video object-cover"
                 />
+                {framePin && <FramePin x={framePin.x} y={framePin.y} color={accent} label={factory.name} />}
                 <span className="absolute top-2 right-2 px-2 py-1 text-[10px] font-mono uppercase tracking-wider bg-black/65 text-white/90 rounded">
                   Now
                 </span>
@@ -237,6 +242,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
             </div>
             <p className="px-3 py-2 text-[10px] font-mono text-dim border-t border-border-custom bg-surface">
               First and most-recent frames from the Sentinel-2 timelapse.
+              {framePin && " Ring = tracked site location."}
             </p>
           </div>
         )}
@@ -301,6 +307,11 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                 factoryColor={accent}
               />
             </div>
+            {factory.locationNote && (
+              <p className="mt-1 font-mono text-[10px] text-dim leading-relaxed">
+                📍 {factory.locationNote}
+              </p>
+            )}
 
             {tlSlug && TIMELAPSE_INDEX[tlSlug] && (() => {
               const tl = TIMELAPSE_INDEX[tlSlug];
@@ -326,6 +337,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                       preload="metadata"
                       className="w-full h-full object-cover"
                     />
+                    {framePin && <FramePin x={framePin.x} y={framePin.y} color={accent} label={factory.name} />}
                   </div>
                   <p className="mt-1 font-mono text-[9px] text-dim">
                     Latest: {tl.latest} · Source: Sentinel-2 L2A (Copernicus)
