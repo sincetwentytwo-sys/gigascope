@@ -1,0 +1,46 @@
+name: Scheduled X post (one-off)
+
+# One-off, owner-approved scheduled post: 2026-09-27-atcf-scale at ~10:00 ET
+# Sunday (13:47 UTC; GitHub cron can lag). The 14:17 UTC run is a backup in
+# case GitHub drops the first trigger. posted.json + the serialized
+# concurrency group + `git pull` before posting make the second run a no-op
+# once the first has posted. Remove this file after it has fired.
+on:
+  schedule:
+    - cron: "47 13 27 9 *"
+    - cron: "17 14 27 9 *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: x-post-scheduled
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Sync to latest main (sees posted.json from an earlier run)
+        run: git pull --ff-only origin main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Post
+        env:
+          X_CONSUMER_KEY: ${{ secrets.X_CONSUMER_KEY }}
+          X_CONSUMER_SECRET: ${{ secrets.X_CONSUMER_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+          POST_DIR: marketing/posts/2026-09-27-atcf-scale
+          CONFIRM_POST: "1"
+        run: node scripts/marketing/post-thread.mjs
+      - name: Record posted ids
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add marketing/posts/
+          git diff --cached --quiet || (git commit -m "marketing: posted 2026-09-27-atcf-scale" && git push)
