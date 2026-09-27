@@ -4,6 +4,13 @@
 > 더 깊은 비즈니스/컴플라이언스 맥락: `G:\jb\gigascope-session-context-2026-05-27.md`
 > (섹션 10에 2026-06-01 비즈니스 상태 업데이트 있음).
 
+## 🐦 2026-09-27 — X 게시 (오너 명시 승인)
+
+- **게시물①** 게시 완료 2026-09-27 09:43 UTC: https://x.com/i/status/2104144851897917636 (+ 링크 답글 2104144853462327462). `marketing/posts/2026-09-27-terafab-clearing/posted.json`.
+- **게시물②**(ATCF 규모 비교, 이미지 2장) 예약: `.github/workflows/x-post-scheduled.yml` cron 13:47 UTC(+14:17 백업) = 일 10시 ET 전후(월요일은 Starship Flight 14 발사라 회피). 안전장치: 데스크톱 예약작업 `gigascope-x-post2-failsafe`(23:50 KST)가 posted.json 확인 → 없으면 수동 게시 → 게시 후 예약 워크플로우 삭제.
+- 수동 게시 도구: `x-post.yml`(workflow_dispatch, confirm 체크) + `scripts/marketing/post-thread.mjs`(posted.json 있으면 재게시 거부).
+- 틀린 Vandenberg 트윗 삭제는 오너가 직접(에이전트는 게시물 삭제 불가).
+
 ## 📣 2026-09-27 — X 유입용 준비 (commit 8f29fc2)
 
 - **OG 링크 카드 개편**: `/site/<slug>/opengraph-image`가 위성 Before/Now + 윤곽/링 마커를 보여줌(썸네일 없는 사이트는 기존 텍스트 카드, % 잘림 수정).
