@@ -14,6 +14,7 @@
 import { execFileSync } from "node:child_process";
 import { readdirSync, existsSync, statSync } from "node:fs";
 import { resolve, join } from "node:path";
+import { needsRegen } from "./timelapse/freshness.mjs";
 
 const TIMELAPSE_DIR = resolve(process.cwd(), "public", "timelapses");
 const WIDTH = 640;
@@ -142,15 +143,15 @@ function main() {
     // skipped forever once a pair existed, so the "Now" frame on /site pages
     // froze at whatever week this was first run (it sat at 2026-05 for four
     // months while the weekly MP4 kept updating).
+    // (mtime is random in a CI checkout; needsRegen asks git whether this run
+    // rewrote the MP4 instead — see scripts/timelapse/freshness.mjs.)
     if (existsSync(firstPath) && existsSync(lastPath)) {
-      const mp4Mtime = statSync(mp4Path).mtimeMs;
-      const pairMtime = Math.min(statSync(firstPath).mtimeMs, statSync(lastPath).mtimeMs);
-      if (pairMtime >= mp4Mtime) {
+      if (!needsRegen(mp4Path, [firstPath, lastPath])) {
         console.log(`  [skip] ${slug} — pair is current`);
         skipped++;
         continue;
       }
-      console.log(`  [refresh] ${slug} — MP4 newer than thumbnails`);
+      console.log(`  [refresh] ${slug} — MP4 rebuilt this run`);
     }
 
     try {

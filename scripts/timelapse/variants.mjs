@@ -10,13 +10,14 @@
 // homepage actually shows.
 //
 // Only hero-rotation slugs need variants (VARIANT_SLUGS, default matches
-// HEROES in src/app/page.tsx). Regenerates only when <slug>.mp4 is newer
-// than the variant. AV1 (libsvtav1) is best-effort: if the encoder is
+// HEROES in src/app/page.tsx). Regenerates only when this run rewrote
+// <slug>.mp4 (or a variant is missing) — see freshness.mjs. AV1 (libsvtav1) is best-effort: if the encoder is
 // missing, the AV1 variants are skipped and the browser falls through to
 // H.264 — a size regression, never a freshness one.
 import { execFileSync } from "node:child_process";
 import { existsSync, statSync } from "node:fs";
 import { resolve, join } from "node:path";
+import { needsRegen } from "./freshness.mjs";
 
 const DIR = resolve(process.cwd(), "public", "timelapses");
 const SLUGS = (process.env.VARIANT_SLUGS ?? "giga-texas,starbase-launch")
@@ -30,7 +31,7 @@ function hasEncoder(name) {
   } catch { return false; }
 }
 function stale(src, dst) {
-  return !existsSync(dst) || statSync(dst).mtimeMs < statSync(src).mtimeMs;
+  return needsRegen(src, [dst]);
 }
 function run(args) {
   execFileSync("ffmpeg", ["-y", "-hide_banner", "-loglevel", "error", ...args], { stdio: ["ignore", "ignore", "inherit"] });
