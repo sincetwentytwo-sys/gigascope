@@ -1,7 +1,7 @@
 // Pure-function tweet templates. Each returns { text, suggestedImage, url }
 // All text strings stay under 270 chars to leave room for link expansion.
 
-const SITE_URL = "https://gigascope-ten.vercel.app";
+const SITE_URL = "https://gigascope.xyz";
 
 function withUtm(url, campaign) {
   const sep = url.includes("?") ? "&" : "?";

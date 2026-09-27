@@ -37,6 +37,7 @@ const IMG_SIZE = 1024;
 const CLOUD_MAX = 30;
 const WINDOW_DAYS = 30;
 
+const FRAME_DATE_FORCED = Boolean(process.env.FRAME_DATE);
 const frameDate = process.env.FRAME_DATE ?? new Date().toISOString().slice(0, 10);
 const onlySlug = process.env.ONLY_SLUG ?? null;
 const dryRun = process.env.DRY_RUN === "1";
@@ -65,12 +66,60 @@ async function fetchToken() {
   return j.access_token;
 }
 
-async function captureSite(token, site) {
-  const halfKm = site.halfKm ?? DEFAULT_HALF_KM;
-  const bbox = bboxAround(site.lat, site.lng, halfKm);
+// Pick the actual Sentinel-2 acquisition to render. The old request mosaicked
+// "leastCC" over the whole 30-day window, so a frame labelled with the run
+// date could really be a 3-4 week old scene (2026-09-21's Terafab frame lost
+// to an older 0%-cloud pass while a 1%-cloud 09-22 pass followed). Now: the
+// most recent scene at <= FRESH_CLOUD_MAX cloud, else the least cloudy one,
+// and the frame is named by its real acquisition date. Returns null if the
+// catalog is unreachable (caller falls back to the old window mosaic).
+const CATALOG_URL = "https://sh.dataspace.copernicus.eu/api/v1/catalog/1.0.0/search";
+const FRESH_CLOUD_MAX = 10;
+
+async function pickScene(token, bbox) {
   const toDate = new Date(frameDate + "T23:59:59Z");
   const fromDate = new Date(toDate);
   fromDate.setUTCDate(fromDate.getUTCDate() - WINDOW_DAYS);
+  try {
+    const res = await fetch(CATALOG_URL, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        collections: ["sentinel-2-l2a"],
+        bbox,
+        datetime: `${fromDate.toISOString()}/${toDate.toISOString()}`,
+        limit: 100,
+      }),
+      signal: AbortSignal.timeout(30000),
+    });
+    if (!res.ok) throw new Error(`Catalog ${res.status}: ${(await res.text()).slice(0, 200)}`);
+    const j = await res.json();
+    // A site can straddle several tiles; judge each day by its clearest tile.
+    const byDay = new Map();
+    for (const f of j.features ?? []) {
+      const day = String(f.properties?.datetime ?? "").slice(0, 10);
+      const cc = Number(f.properties?.["eo:cloud_cover"]);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || !Number.isFinite(cc)) continue;
+      byDay.set(day, Math.min(cc, byDay.get(day) ?? Infinity));
+    }
+    const days = [...byDay].filter(([, cc]) => cc <= CLOUD_MAX).sort((a, b) => b[0].localeCompare(a[0]));
+    if (days.length === 0) return { day: null, cloud: null };
+    const fresh = days.find(([, cc]) => cc <= FRESH_CLOUD_MAX);
+    const [day, cloud] = fresh ?? [...days].sort((a, b) => a[1] - b[1])[0];
+    return { day, cloud };
+  } catch (err) {
+    console.log(`  ! catalog lookup failed (${err instanceof Error ? err.message : err}) — falling back to ${WINDOW_DAYS}-day mosaic`);
+    return null;
+  }
+}
+
+async function captureSite(token, site, sceneDay) {
+  const halfKm = site.halfKm ?? DEFAULT_HALF_KM;
+  const bbox = bboxAround(site.lat, site.lng, halfKm);
+  const toDate = new Date((sceneDay ?? frameDate) + "T23:59:59Z");
+  const fromDate = new Date(toDate);
+  if (sceneDay) fromDate.setUTCHours(0, 0, 0, 0);
+  else fromDate.setUTCDate(fromDate.getUTCDate() - WINDOW_DAYS);
   const reqBody = {
     input: {
       bounds: {
@@ -128,6 +177,19 @@ function ensureRelease(tag, title) {
   }
 }
 
+function latestAsset(tag) {
+  try {
+    const names = JSON.parse(gh(["release", "view", tag, "--repo", repo, "--json", "assets"])).assets
+      .map((a) => a.name)
+      .filter((n) => /^\d{4}-\d{2}-\d{2}\.png$/.test(n))
+      .map((n) => n.slice(0, 10))
+      .sort();
+    return names.at(-1) ?? null;
+  } catch {
+    return null; // no release yet
+  }
+}
+
 function uploadFrame(tag, filePath, assetName) {
   gh(["release", "upload", tag, `${filePath}#${assetName}`, "--repo", repo, "--clobber"]);
 }
@@ -151,10 +213,27 @@ async function main() {
   const results = [];
   for (const site of sites) {
     const tag = `timelapse-frames-${site.slug}`;
-    const assetName = `${frameDate}.png`;
-    const localPath = join(outDir, site.slug, `${frameDate}.png`);
     try {
-      const buf = await captureSite(token, site);
+      const bbox = bboxAround(site.lat, site.lng, site.halfKm ?? DEFAULT_HALF_KM);
+      const scene = FRAME_DATE_FORCED ? null : await pickScene(token, bbox);
+      if (scene && !scene.day) {
+        results.push({ slug: site.slug, status: "skip" });
+        console.log(`  - ${site.slug}: no scene <= ${CLOUD_MAX}% cloud in the last ${WINDOW_DAYS} days`);
+        continue;
+      }
+      const label = scene?.day ?? frameDate;
+      // Never add a frame that isn't newer than what's stored: re-picking the
+      // same (or an older) clear pass would duplicate or reorder the timelapse.
+      const latestStored = dryRun ? null : latestAsset(tag);
+      if (scene && latestStored && label <= latestStored) {
+        results.push({ slug: site.slug, status: "skip" });
+        console.log(`  = ${site.slug}: freshest clear scene ${label} (${scene.cloud}% cloud) not newer than stored ${latestStored}`);
+        continue;
+      }
+      const assetName = `${label}.png`;
+      const localPath = join(outDir, site.slug, assetName);
+      if (scene) console.log(`  · ${site.slug}: scene ${label} (${scene.cloud}% cloud)`);
+      const buf = await captureSite(token, site, scene?.day ?? null);
       mkdirSync(dirname(localPath), { recursive: true });
       writeFileSync(localPath, buf);
       const kb = (buf.length / 1024).toFixed(0);

@@ -11,6 +11,11 @@ on:
         description: "Capture/build a single slug only (optional)"
         required: false
         default: ""
+      tweet:
+        description: "Also post the rotation video tweet (manual runs default to NO)"
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -76,7 +81,9 @@ jobs:
           fi
 
       - name: Post video tweet (rotation)
-        if: steps.commit.outputs.changed == 'true'
+        # Scheduled runs post; manual reruns/backfills don't unless asked, so a
+        # repair dispatch can't fire public tweets as a side effect.
+        if: steps.commit.outputs.changed == 'true' && (github.event_name == 'schedule' || inputs.tweet)
         env:
           X_CONSUMER_KEY: ${{ secrets.X_CONSUMER_KEY }}
           X_CONSUMER_SECRET: ${{ secrets.X_CONSUMER_SECRET }}

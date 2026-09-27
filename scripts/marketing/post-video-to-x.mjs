@@ -21,7 +21,7 @@ const indexPath = resolve(root, "public", "timelapses", "index.json");
 const factoriesPath = resolve(root, "public", "data", "factories.json");
 const timelapseDir = resolve(root, "public", "timelapses");
 
-const SITE_URL = "https://gigascope-ten.vercel.app";
+const SITE_URL = "https://gigascope.xyz";
 
 const COMPANY_TAGS = {
   tesla: "#Tesla #Gigafactory",
@@ -211,10 +211,15 @@ function withUtm(url, campaign) {
 
 function buildTweetText(site, indexEntry) {
   const tags = COMPANY_TAGS[site.company] ?? "#MuskEmpire";
-  const latestYear = indexEntry.latest.slice(0, 4);
-  const earliestYear = String(Number(latestYear) - indexEntry.frames + 1);
+  // Frames are weekly captures, not years. The old text did
+  // `latestYear - frames + 1` and tweeted "50 years … 1976 → 2026" for a
+  // 50-frame Vandenberg timelapse (2026-09-21). Use the real first frame date
+  // from the index; without it, don't claim a span at all.
   const url = withUtm(`${SITE_URL}/site/${site.slug}`, "timelapse");
-  return `${site.flag} ${site.name} — ${indexEntry.frames} years of construction in seconds.\n\n${earliestYear} → ${latestYear} (Sentinel-2)\n\n${tags}\n\n${url}`;
+  const span = indexEntry.first
+    ? `${indexEntry.first.slice(0, 7)} → ${indexEntry.latest.slice(0, 7)} · ${indexEntry.frames} Sentinel-2 frames`
+    : `${indexEntry.frames} Sentinel-2 frames, latest ${indexEntry.latest}`;
+  return `${site.flag} ${site.name} — construction from orbit, in seconds.\n\n${span}\n\n${tags}\n\n${url}`;
 }
 
 async function main() {

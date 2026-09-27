@@ -159,7 +159,8 @@ function buildVideo(framesDir, outFile) {
 
   const lastBurned = burnedFiles[burnedFiles.length - 1];
   const latest = lastBurned.replace(/^_burned_/, "").replace(/\.(png|jpg)$/, "");
-  return { ok: true, frames: burnedFiles.length, dropped, latest };
+  const first = burnedFiles[0].replace(/^_burned_/, "").replace(/\.(png|jpg)$/, "");
+  return { ok: true, frames: burnedFiles.length, dropped, first, latest };
 }
 
 async function main() {
@@ -212,6 +213,7 @@ async function main() {
     }
     index[site.slug] = {
       frames: result.frames,
+      first: result.first,
       latest: result.latest,
       builtAt: new Date().toISOString(),
     };
