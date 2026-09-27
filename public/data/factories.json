@@ -1883,13 +1883,13 @@
       "name": "TERAFAB — Grimes County",
       "aka": "Tesla × SpaceX chip production complex (Gibbons Creek, ex-coal plant site)",
       "flag": "🇺🇸",
-      "location": "Grimes County, TX (Gibbons Creek Reservoir, ~20 mi E of College Station)",
-      "lat": 30.6165,
-      "lng": -96.0233,
+      "location": "Grimes County, TX (SE of Gibbons Creek Reservoir, ~20 mi E of College Station)",
+      "lat": 30.6189,
+      "lng": -96.0246,
       "company": "joint",
       "status": "construction",
       "progress": 2,
-      "area": "100M+ sqft planned on a ~6,000-acre site",
+      "area": "~555 acres cleared for phase 1 (Sep 2026) · 22,429-acre JETI project boundary · up to 100M sq ft planned",
       "capacity": "Full-scale AI5 / 2nm chip production (phase 1)",
       "products": "AI5 chip, 2nm process",
       "investment": "$16.8B phase 1 (Tesla + SpaceX) · up to $119B all phases",
@@ -1926,6 +1926,21 @@
           "url": "https://en.wikipedia.org/wiki/Terafab",
           "label": "Wikipedia — Terafab (100M sq ft, up to $119B across phases)",
           "date": "2026-09-27"
+        },
+        {
+          "url": "https://comptroller.texas.gov/economy/development/prop-tax/jeti/application-details.php?id=J0035",
+          "label": "Texas Comptroller — JETI J0035 TeraFab AI, LLC (application, maps, agreement)",
+          "date": "2026-08-25"
+        },
+        {
+          "url": "https://x.com/JoeTegtmeyer/status/2091948855600283662",
+          "label": "Joe Tegtmeyer — phase 1 clearing on the western side near the reservoir",
+          "date": "2026-08-23"
+        },
+        {
+          "url": "https://www.openstreetmap.org/way/1549483610",
+          "label": "OpenStreetMap — Terafab construction area",
+          "date": "2026-08-17"
         }
       ],
       "timeline": [
@@ -1940,16 +1955,28 @@
       "halfKm": 4,
       "milestones": [
         {
-          "date": "2026-08-06",
-          "text": "Tesla + SpaceX announce $16.8B phase-1 investment; Grimes County site named",
+          "date": "2026-06-08",
+          "text": "JETI applications posted: TeraFab AI, LLC — 4 phases per school district, $55–119B, 22,429-acre boundary",
           "done": true,
-          "sourceUrl": "https://techcrunch.com/2026/08/06/tesla-and-spacex-will-invest-16-8b-to-start-building-terafab-chip-factory-in-texas/"
+          "sourceUrl": "https://comptroller.texas.gov/economy/development/prop-tax/jeti/application-details.php?id=J0035"
         },
         {
           "date": "2026-07",
           "text": "Land clearing begins SE of Gibbons Creek Reservoir — visible in Sentinel-2 by 2026-07-31 (forest on 06-29); first press report KBTX 2026-08-11",
           "done": true,
           "sourceUrl": "https://www.kbtx.com/2026/08/11/land-clearing-already-underway-near-terefab-site-grimes-county/"
+        },
+        {
+          "date": "2026-08-06",
+          "text": "Tesla + SpaceX announce $16.8B phase-1 investment; Grimes County site named",
+          "done": true,
+          "sourceUrl": "https://techcrunch.com/2026/08/06/tesla-and-spacex-will-invest-16-8b-to-start-building-terafab-chip-factory-in-texas/"
+        },
+        {
+          "date": "2026-08-25",
+          "text": "JETI agreement posted (Anderson-Shiro CISD, phase 1: $10.4B eligible investment 2026–2028)",
+          "done": true,
+          "sourceUrl": "https://comptroller.texas.gov/economy/development/prop-tax/jeti/application-details.php?id=J0035"
         },
         {
           "date": "2026-12-01",
@@ -1963,7 +1990,45 @@
           "confidence": "speculative"
         }
       ],
-      "locationNote": "Pin = centre of the cleared pad SE of Gibbons Creek Reservoir (Sentinel-2, 2026-09-22); KBTX and the local fire department confirm the clearing is the Terafab site. Base map imagery predates the clearing."
+      "locationNote": "Outline = phase-1 land clearing measured from Sentinel-2 on 2026-09-22 (~555 acres; a separate ~60-acre pad sits just south). It falls inside the area mapped as 'Terafab' on OpenStreetMap from drone footage and inside the 22,429-acre JETI project boundary SpaceX filed with the Texas Comptroller, and matches drone reports of phase 1 (of up to 10) on the western side of the site near Gibbons Creek Reservoir (Joe Tegtmeyer, 2026-08-23). SpaceX hasn't published building footprints; the outline will grow as clearing continues. Base map imagery predates the clearing.",
+      "captureCenter": {
+        "lat": 30.6165,
+        "lng": -96.0233
+      },
+      "footprint": [
+        [
+          30.61242,
+          -96.02248
+        ],
+        [
+          30.61333,
+          -96.03475
+        ],
+        [
+          30.62122,
+          -96.03516
+        ],
+        [
+          30.62544,
+          -96.02935
+        ],
+        [
+          30.62572,
+          -96.0161
+        ],
+        [
+          30.61826,
+          -96.01479
+        ],
+        [
+          30.61368,
+          -96.01561
+        ],
+        [
+          30.61249,
+          -96.01913
+        ]
+      ]
     }
   ]
 }
