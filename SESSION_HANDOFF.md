@@ -4,6 +4,15 @@
 > 더 깊은 비즈니스/컴플라이언스 맥락: `G:\jb\gigascope-session-context-2026-05-27.md`
 > (섹션 10에 2026-06-01 비즈니스 상태 업데이트 있음).
 
+## 🔍 2026-09-27 — 사이트 전체 점검 (commit 043ecad)
+
+- 22개 사이트 사실 재검증(에이전트 3개, 2026-09 출처) → 고신뢰 항목만 반영. 핵심: giga-mexico(중단인데 가짜 공사 마일스톤 ✓ → paused/0%), colossus(Colossus 2 수치 오기재 → ~220K GPU·Anthropic 임대), colossus-2(1월 가동 → expanding 45%), neuralink-austin(기존 캠퍼스 확장), vandenberg(SLC-6은 Falcon 패드), cape(Starship 승인), starbase(Flight 13/14), vegas-loop(2021년부터 운행), Tesla Q1/Q2-26 수치. terafab Austin의 $16.8B는 Grimes 것(9/22 내 오류) 정정.
+- `update-factories.mjs`가 `sources` 배열 자리에 객체를 써서 11개 사이트 출처가 안 떴음 → 스크립트 수정 + 데이터 복구.
+- 홈 그리드에 `joint`(Terafab 2곳) 누락 → 추가. 없는 slug가 200(소프트 404) → `dynamicParams=false`로 404. `DATA_LAST_UPDATED`는 사이트별 최신값에서 계산. /spacex-ipo 모바일 넘침 + IPO 전 문구 정리.
+- **미반영(중간 신뢰도, 추후 확인)**: giga-buffalo "Solar Roof v4" 마일스톤 출처 없음, vegas-loop 터널 길이(2.2 vs ~4 mi), colossus-2 좌표 미검증, starship 제품 "Raptor 2" 표기(V3는 Raptor 3), mcgregor 15 test stands.
+- **다음**: Starship Flight 14(2026-09-28) 결과 나오면 starbase-launch 마일스톤 done 처리. Cape 첫 Starship(NET 10-30).
+- 검증: tsc·vitest 166·build OK, Vercel success, 전 페이지 크롤 깨진 링크 0, 모바일 가로 넘침 0.
+
 ## 🛰 2026-09-27 — 캡처 신선도 수정 + Terafab Grimes 개간 반영
 
 - **캡처가 오래된 장면을 골랐음**: `capture.mjs`가 30일 창 전체를 `leastCC` 모자이크 → 라벨은 실행일인데 실제는 수주 전 장면일 수 있었음. 이제 CDSE catalog로 실제 촬영일을 조회해 **≤10% 구름 중 최신**(없으면 ≤30% 중 최소 구름) 1일만 렌더, **프레임 이름 = 실제 촬영일**. 저장된 최신보다 새롭지 않으면 스킵. catalog 실패 시 옛 방식 폴백. `FRAME_DATE`(dispatch 입력 `frame_date`) = 그 날짜 기준 백필.
