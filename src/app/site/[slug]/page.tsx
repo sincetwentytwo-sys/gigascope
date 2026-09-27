@@ -1,4 +1,5 @@
 import { existsSync } from "node:fs";
+import { notFound } from "next/navigation";
 import { resolve } from "node:path";
 import { factories, getFactory, getTimelapseSlug, TIMELINE_YEARS } from "@/data/factories";
 import { getCompanyMeta } from "@/data/companies";
@@ -23,6 +24,10 @@ function hasBeforeAfterThumbnails(slug: string | null): boolean {
 const SITE_URL = "https://gigascope.xyz";
 
 export const revalidate = 1800;
+// Unknown slugs 404 at routing time. notFound() alone still answers 200
+// here because loading.tsx makes the segment streamed (Next 16 docs:
+// not-found.md "Status Codes").
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return factories.map((f) => ({ slug: f.slug }));
@@ -47,6 +52,12 @@ const SITE_KEYWORDS: Record<string, string[]> = {
   "neuralink-fremont": ["neuralink", "brain computer", "bci", "n1 implant", "neural"],
   "neuralink-austin": ["neuralink austin", "implant manufacturing", "neuralink production"],
   "vegas-loop": ["vegas loop", "boring company", "lvcc", "tunnel", "las vegas transit"],
+  // Sites added after the map was written fell back to their full display
+  // name (e.g. "terafab — grimes county"), which never matches a headline.
+  "terafab-grimes": ["terafab", "grimes county", "gibbons creek", "navasota", "chip fab"],
+  "colossus-2": ["colossus 2", "colossus ii", "xai", "memphis", "southaven", "tulane road"],
+  cortex: ["cortex", "tesla ai cluster", "dojo", "giga texas supercomputer", "training cluster"],
+  "xai-humain-saudi": ["humain", "saudi", "xai", "data center", "riyadh"],
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -71,9 +82,8 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const factory = getFactory(slug);
 
-  if (!factory) {
-    return <div className="flex items-center justify-center h-[60vh] text-dim">Site not found</div>;
-  }
+  // Real 404 (was a 200 "Site not found" div — a soft 404 search engines index).
+  if (!factory) notFound();
 
   const company = getCompanyMeta(factory.company);
   const imageryDate = await getESRIImageryDate(factory.lat, factory.lng);

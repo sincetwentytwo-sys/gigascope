@@ -10,9 +10,15 @@ interface FactoryData {
 
 const data: FactoryData = localData as FactoryData;
 
-export const DATA_LAST_UPDATED = data.lastUpdated;
 export const TIMELINE_YEARS = data.timelineYears;
 export const factories: Factory[] = data.factories;
+// Newest of the file-level stamp and every site's own lastUpdated. The
+// file-level field alone sat at 2026-05-27 for four months while individual
+// sites were refreshed, so /methodology and /spacex-ipo showed a stale date.
+export const DATA_LAST_UPDATED = factories.reduce(
+  (max, f) => (f.lastUpdated && f.lastUpdated > max ? f.lastUpdated : max),
+  data.lastUpdated,
+);
 
 export function getFactory(slug: string): Factory | undefined {
   return factories.find((f) => f.slug === slug);

@@ -43,7 +43,7 @@ export const COMPANIES: CompanyMeta[] = [
   },
   {
     id: "joint",
-    name: "Joint Ventures",
+    name: "Tesla × SpaceX",
     color: "#c4a000",
     icon: "🤝",
     description: "Cross-company projects",

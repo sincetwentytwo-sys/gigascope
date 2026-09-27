@@ -57,6 +57,9 @@ export interface Factory {
   confidence?: 'high' | 'medium' | 'low' | 'speculative';
   /** 사람이 마지막으로 전체 데이터를 검증한 날짜 */
   lastVerified?: string;
+  /** update-factories.mjs 가 기록하는 위키 문서 최신 리비전 날짜/제목 */
+  wikipediaRevision?: string;
+  wikipediaTitle?: string;
 
   /** 타임랩스 캡처용 (빌드 스크립트 전용) */
   halfKm?: number;

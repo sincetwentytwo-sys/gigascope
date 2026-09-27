@@ -134,10 +134,12 @@ async function updateFactory(factory) {
   if (wpTitle) {
     const revDate = await getWikipediaRevisionDate(wpTitle);
     if (revDate) {
-      factory.sources = factory.sources || {};
-      if (factory.sources.wikipediaRevision !== revDate) {
-        factory.sources.wikipediaRevision = revDate;
-        factory.sources.wikipediaTitle = wpTitle;
+      // Top-level fields, NOT inside `sources`: `sources` is the Source[]
+      // array the UI renders. Writing an object into it (as this did until
+      // 2026-09-27) wiped the citation list of every site it touched.
+      if (factory.wikipediaRevision !== revDate) {
+        factory.wikipediaRevision = revDate;
+        factory.wikipediaTitle = wpTitle;
         changes.push(`wp-rev=${revDate}`);
       }
     }

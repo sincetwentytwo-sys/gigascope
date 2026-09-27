@@ -30,6 +30,9 @@ const CATEGORY_COLORS: Record<ProductCategory, string> = {
   reactor: "#22c55e",
 };
 
+// Unknown slugs 404 at routing time (notFound() under loading.tsx streams a 200).
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return listProducts().map((p) => ({ slug: p.slug }));
 }

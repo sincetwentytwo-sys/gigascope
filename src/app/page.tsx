@@ -18,7 +18,9 @@ import type { Company } from "@/data/types";
 
 export const revalidate = 1800;
 
-const COMPANY_ORDER: Company[] = ["tesla", "spacex", "xai", "neuralink", "boring"];
+// "joint" (Terafab Austin + Grimes) was missing here, so the two most active
+// builds never appeared in the grid. Same order as CompareSlider/TimelineContent.
+const COMPANY_ORDER: Company[] = ["joint", "tesla", "spacex", "xai", "neuralink", "boring"];
 
 type Hero = {
   /** factory.slug used for the link target + scoreboard lookups */

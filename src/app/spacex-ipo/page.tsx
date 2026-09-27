@@ -429,7 +429,7 @@ export default function SpaceXIPOPage() {
                   {S1_REVENUE.map((r) => (
                     <tr key={r.label} className="border-b border-border-custom last:border-b-0">
                       <td className="py-2 pr-2 text-dim text-[12px] leading-snug">{r.label}</td>
-                      <td className="py-2 text-right font-mono tabular-nums whitespace-nowrap">{r.value}</td>
+                      <td className="py-2 text-right font-mono tabular-nums sm:whitespace-nowrap">{r.value}</td>
                       <td className="py-2 pl-2 text-right">
                         <span
                           className="text-[9px] uppercase tracking-wider font-mono px-1.5 py-0.5 rounded"
@@ -462,7 +462,7 @@ export default function SpaceXIPOPage() {
                   {S1_OFFERING.map((r) => (
                     <tr key={r.label} className="border-b border-border-custom last:border-b-0">
                       <td className="py-2 pr-2 text-dim text-[12px] leading-snug">{r.label}</td>
-                      <td className="py-2 text-right font-mono tabular-nums whitespace-nowrap">{r.value}</td>
+                      <td className="py-2 text-right font-mono tabular-nums sm:whitespace-nowrap">{r.value}</td>
                       <td className="py-2 pl-2 text-right">
                         <span
                           className="text-[9px] uppercase tracking-wider font-mono px-1.5 py-0.5 rounded"
@@ -479,10 +479,7 @@ export default function SpaceXIPOPage() {
                 </tbody>
               </table>
               <p className="text-[11px] text-dim mt-3 leading-relaxed">
-                {/* TODO: Once an S-1/A amendment publishes the lockup schedule + share count, replace TBD rows.
-                    Triggering condition: SEC EDGAR shows an S-1/A under CIK 0001181412 after 2026-05-24. */}
-                Lockup, share count, and pricing range typically arrive in the S-1/A amendment 1-2 weeks ahead of pricing.
-                We update this table when EDGAR posts the amendment.
+                Offering priced and closed — SpaceX has traded on Nasdaq as SPCX since 2026-06-12.
               </p>
             </div>
           </div>

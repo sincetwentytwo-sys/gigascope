@@ -24,11 +24,11 @@
       "company": "joint",
       "status": "construction",
       "progress": 8,
-      "area": "Est. 10M+ sqft (planned)",
-      "capacity": "1 TW compute/yr",
+      "area": "Undisclosed (North Campus parcel)",
+      "capacity": "Prototype / research fab (low-volume wafers); volume at Grimes County",
       "products": "AI5 chip, 2nm process, Memory, Packaging",
-      "investment": "$16.8B phase 1 (Aug 2026) · $20-25B+ total est.",
-      "employees": "Est. 10,000+",
+      "investment": "Undisclosed (research fab) · program: $16.8B phase 1 at Grimes County",
+      "employees": "TBD",
       "color": "#c4a000",
       "featured": true,
       "extras": {
@@ -36,9 +36,9 @@
         "Process Node": "2nm (TSMC-class)",
         "Production site": "Grimes County, TX (see terafab-grimes)"
       },
-      "lastUpdated": "2026-09-22",
+      "lastUpdated": "2026-09-27",
       "confidence": "medium",
-      "lastVerified": "2026-09-22",
+      "lastVerified": "2026-09-27",
       "sources": [
         {
           "url": "https://x.ai/",
@@ -124,11 +124,11 @@
       "progress": 78,
       "area": "10M sqft",
       "capacity": "500K+",
-      "products": "Model Y, Cybertruck, Cybercab",
+      "products": "Model Y, Cybertruck, Cybercab, 4680 cells (Optimus factory under construction)",
       "investment": "$10B+",
       "employees": "20,000+",
       "color": "#e31937",
-      "lastUpdated": "2026-05-27",
+      "lastUpdated": "2026-09-27",
       "milestones": [
         {
           "date": "2020-07",
@@ -169,7 +169,7 @@
           "text": "Cybercab small-batch production began (first unit off line)",
           "done": true,
           "confidence": "medium",
-          "sourceUrl": "https://electrek.co/2026/04/23/"
+          "sourceUrl": "https://electrek.co/2026/04/23/tesla-cybercab-production-starts-no-nhtsa-2500-vehicle-cap/"
         },
         {
           "date": "2026-03",
@@ -189,18 +189,32 @@
           "sourceUrl": "https://data.austintexas.gov/resource/3syk-w9eu"
         },
         {
-          "date": "2026-05",
-          "text": "~70 Cybercabs staged in outbound lots (no customer deliveries confirmed)",
+          "date": "2026-04",
+          "text": "Cybercab volume production starts (Musk, Q1 call); Q2 update lists >125K/yr installed",
           "done": true,
-          "confidence": "medium"
+          "sourceUrl": "https://electrek.co/2026/04/23/tesla-cybercab-production-starts-no-nhtsa-2500-vehicle-cap/"
         },
         {
-          "date": "2026-H2",
-          "text": "Phase 3 expansion complete",
-          "done": false
+          "date": "2026-05",
+          "text": "Optimus factory (5.2M+ sq ft, North Campus) — first steel up",
+          "done": true,
+          "sourceUrl": "https://www.teslarati.com/tesla-dedicated-optimus-factory-construction-officially-underway-giga-texas/"
+        },
+        {
+          "date": "2026-09-04",
+          "text": "Cybercab paid public rides open in Austin",
+          "done": true,
+          "sourceUrl": "https://teslanorth.com/2026/09/03/tesla-cybercab-public-rides-austin/"
+        },
+        {
+          "date": "2027-Q3",
+          "text": "Optimus factory high-volume production target (summer 2027)",
+          "done": false,
+          "sourceUrl": "https://www.teslarati.com/tesla-dedicated-optimus-factory-construction-officially-underway-giga-texas/",
+          "confidence": "speculative"
         }
       ],
-      "_progressNote": "78% reflects Giga Texas SHELL + Phase 2 expansion. Cybercab-specific production is small-batch only — Musk-stated 'hundreds/week' is unverified.",
+      "_progressNote": "78% reflects the Giga Texas shell + phase-2 expansion. Cybercab moved to volume production in Apr 2026 (Q2 2026 update: >125K/yr installed, 'Production'); paid public rides in Austin since 2026-09-04. The separate Optimus factory on the North Campus is under construction (steel from 2026-05).",
       "timeline": [
         10,
         25,
@@ -210,11 +224,22 @@
         72,
         78
       ],
-      "sources": {
-        "wikipediaRevision": "2026-05-15",
-        "wikipediaTitle": "Gigafactory_Texas"
-      },
-      "halfKm": 2.5
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Gigafactory_Texas",
+          "label": "Wikipedia — Gigafactory Texas",
+          "date": "2026-05-15"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/0001318605/000162828026049213/exhibit991.htm",
+          "label": "Tesla Q2 2026 update (capacity table)",
+          "date": "2026-07-22"
+        }
+      ],
+      "halfKm": 2.5,
+      "wikipediaTitle": "Gigafactory_Texas",
+      "wikipediaRevision": "2026-05-15",
+      "lastVerified": "2026-09-27"
     },
     {
       "id": "cortex",
@@ -227,23 +252,23 @@
       "lng": -97.61691,
       "company": "tesla",
       "status": "expanding",
-      "progress": 55,
+      "progress": 60,
       "area": "Est. 500K+ sqft (Cortex 2.0 datacenter buildings)",
-      "capacity": "~150K GPU target (Cortex 1: ~50K H100 operational + Cortex 2.0: ~100K H100/H200 under buildout)",
+      "capacity": "Cortex 1: >100K H100-eq (>90 MW) · Cortex 2: >130K H100-eq (>115 MW), both in production (Q2 2026)",
       "products": "FSD training, Optimus AI, Tesla in-house AI compute",
       "investment": "—",
       "employees": "—",
       "color": "#e31937",
       "timelapseSlug": null,
       "extras": {
-        "Cortex 1": "~50K H100 (operational since 2024)",
-        "Cortex 2.0": "~100K H100/H200 target, 500MW total power, phased rollout",
-        "Power": "500MW (Cortex 2.0), ~150 Megapacks installed",
+        "Cortex 1": ">100K H100-equivalent, >90 MW, production (Tesla Q1/Q2 2026 updates)",
+        "Cortex 2.0": ">130K H100-equivalent, >115 MW as of 2026-06-30; online since Apr 2026, ramping through 2026",
+        "Power": ">205 MW combined as of 2026-06-30 (Tesla Q2 2026 update); ~150 Megapacks on site",
         "Note": "Physically inside the Giga Texas parcel (TCAD 0315410104). Tracked separately for AI-cluster-specific milestones."
       },
-      "lastUpdated": "2026-05-27",
+      "lastUpdated": "2026-09-27",
       "confidence": "medium",
-      "lastVerified": "2026-05-27",
+      "lastVerified": "2026-09-27",
       "sources": [
         {
           "url": "https://www.teslaoracle.com/2025/06/27/tesla-fsd-cortex-ai-supercluster-is-running-at-full-capacity-confirms-elon-musk/",
@@ -269,6 +294,11 @@
           "url": "https://techcrunch.com/2025/09/02/teslas-dojo-a-timeline/",
           "label": "TechCrunch — Tesla Dojo timeline (Dojo discontinued, Cortex takes over)",
           "date": "2025-09-02"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/0001318605/000162828026049213/exhibit991.htm",
+          "label": "Tesla Q2 2026 update (compute table)",
+          "date": "2026-07-22"
         }
       ],
       "milestones": [
@@ -304,17 +334,21 @@
         },
         {
           "date": "2026-04",
-          "text": "Cortex 2.0 phase 1 (250MW) activation target",
-          "done": false,
-          "confidence": "medium",
-          "sourceUrl": "https://www.financespotnews.com/tech/tesla-expands-megapack-deployment-at-giga-texas-to-power-cortex-2-gpu-cluster"
+          "text": "Cortex 2 online and running training workloads",
+          "done": true,
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/0001318605/000162828026026551/exhibit991.htm"
         },
         {
-          "date": "2026-mid",
-          "text": "Cortex 2.0 full 500MW activation target (~100K H100/H200 online)",
+          "date": "2026-06",
+          "text": "Cortex 1 >90 MW + Cortex 2 >115 MW in production; Texas onsite compute more than doubled in H1",
+          "done": true,
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/0001318605/000162828026049213/exhibit991.htm"
+        },
+        {
+          "date": "2026-H2",
+          "text": "Cortex 2 continued ramp (Tesla: 'will ramp further over the rest of the year')",
           "done": false,
-          "confidence": "medium",
-          "sourceUrl": "https://www.tweaktown.com/news/99714/teslas-supercomputing-cluster-at-giga-texas-100k-h100-h200-for-video-training-fsd-optimus/index.html"
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/0001318605/000162828026049213/exhibit991.htm"
         }
       ],
       "timeline": [
@@ -324,9 +358,9 @@
         0,
         25,
         45,
-        55
+        60
       ],
-      "_progressNote": "Cortex 1 (50K H100) fully operational. Cortex 2.0 (100K H100/H200, 500MW) under construction with phased activation targeting April 2026 (250MW) and mid-2026 (500MW). 'progress' reflects estimated capacity online vs the combined ~150K GPU target.",
+      "_progressNote": "Cortex 2 came online in Apr 2026 and runs training workloads (Tesla Q1 2026 update). As of 2026-06-30 Tesla reports Cortex 1 >90 MW and Cortex 2 >115 MW, both 'Production', with Cortex 2 ramping further through 2026. The earlier 500 MW-by-mid-2026 target is not confirmed by Tesla, so progress is held at 60%.",
       "halfKm": 0.4
     },
     {
@@ -342,12 +376,12 @@
       "status": "expanding",
       "progress": 65,
       "area": "5.3M sqft",
-      "capacity": "100 GWh",
+      "capacity": "Semi 50K/yr (new factory) · LFP 7 GWh · 100 GWh 4680 (2023 plan)",
       "products": "Battery Cells, Powerpacks, Semi",
       "investment": "$6.2B",
       "employees": "11,000+",
       "color": "#e31937",
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-09-27",
       "milestones": [
         {
           "date": "2014-06",
@@ -371,19 +405,16 @@
           "sourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=8-K&dateb=20230301&owner=include&count=10"
         },
         {
-          "date": "2024-12",
-          "text": "Semi production ramp",
-          "done": true
+          "date": "2026-04",
+          "text": "First Semi off the high-volume line (Semi factory, ~1.7M sq ft)",
+          "done": true,
+          "sourceUrl": "https://electrek.co/2026/09/25/tesla-semi-volume-production-launch-nevada-factory/"
         },
         {
-          "date": "2025-Q3",
-          "text": "4680 pilot line operational",
-          "done": true
-        },
-        {
-          "date": "2026-Q4",
-          "text": "4680 cell mass production",
-          "done": false
+          "date": "2026-09",
+          "text": "Semi volume-production launch + customer deliveries",
+          "done": true,
+          "sourceUrl": "https://www.cnbc.com/2026/09/24/tesla-aims-to-scale-semi-truck-production-with-nevada-factory-opening.html"
         }
       ],
       "timeline": [
@@ -395,10 +426,17 @@
         55,
         65
       ],
-      "sources": {
-        "wikipediaRevision": "2026-05-16",
-        "wikipediaTitle": "Gigafactory_Nevada"
-      }
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Gigafactory_Nevada",
+          "label": "Wikipedia — Gigafactory Nevada",
+          "date": "2026-05-16"
+        }
+      ],
+      "wikipediaTitle": "Gigafactory_Nevada",
+      "wikipediaRevision": "2026-05-16",
+      "_progressNote": "Semi factory reached volume production in Sep 2026. Nevada's 4680 line remains the Jan-2023 100 GWh plan; Tesla's 2026 tables place 4680 output in Texas and list Nevada cells as LFP (7 GWh, early ramp).",
+      "lastVerified": "2026-09-27"
     },
     {
       "id": "giga-shanghai",
@@ -418,7 +456,7 @@
       "investment": "$7B+",
       "employees": "20,000+",
       "color": "#e31937",
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-09-27",
       "milestones": [
         {
           "date": "2019-01",
@@ -447,14 +485,21 @@
           "done": true
         },
         {
+          "date": "2025-02-18",
+          "text": "Facelifted Model Y production starts",
+          "done": true,
+          "sourceUrl": "https://cnevpost.com/2025/02/18/tesla-begins-production-facelifted-model-y-shanghai/"
+        },
+        {
+          "date": "2025-08-19",
+          "text": "Model Y L (6-seat) launched",
+          "done": true,
+          "sourceUrl": "https://www.globalchinaev.com/post/tesla-begins-nationwide-deliveries-of-all-new-model-y-l-and-830-km-model-3-lr"
+        },
+        {
           "date": "2025-12",
           "text": "Megapack production ramp",
           "done": true
-        },
-        {
-          "date": "2026-Q2",
-          "text": "Refreshed Model Y ramp",
-          "done": false
         }
       ],
       "timeline": [
@@ -466,10 +511,16 @@
         92,
         95
       ],
-      "sources": {
-        "wikipediaRevision": "2026-03-22",
-        "wikipediaTitle": "Gigafactory_Shanghai"
-      }
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Gigafactory_Shanghai",
+          "label": "Wikipedia — Gigafactory Shanghai",
+          "date": "2026-03-22"
+        }
+      ],
+      "wikipediaTitle": "Gigafactory_Shanghai",
+      "wikipediaRevision": "2026-03-22",
+      "lastVerified": "2026-09-27"
     },
     {
       "id": "giga-berlin",
@@ -484,12 +535,12 @@
       "status": "operational",
       "progress": 82,
       "area": "3.2M sqft",
-      "capacity": "500K",
-      "products": "Model Y, Battery Cells",
+      "capacity": "375K+ Model Y (Q2 2026)",
+      "products": "Model Y (4680 cells from 2027-H1)",
       "investment": "$5.8B",
-      "employees": "12,500+",
+      "employees": "~11,000",
       "color": "#e31937",
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-09-27",
       "milestones": [
         {
           "date": "2020-01",
@@ -523,6 +574,12 @@
           "done": true
         },
         {
+          "date": "2026-05",
+          "text": "+$250M cell investment; cell target raised to 18 GWh, production 2027-H1",
+          "done": true,
+          "sourceUrl": "https://electrek.co/2026/05/12/tesla-giga-berlin-250-million-battery-cell-investment-18-gwh/"
+        },
+        {
           "date": "2027-H1",
           "text": "Phase 2 complete",
           "done": false
@@ -537,10 +594,16 @@
         78,
         82
       ],
-      "sources": {
-        "wikipediaRevision": "2026-01-04",
-        "wikipediaTitle": "Gigafactory_Berlin-Brandenburg"
-      }
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Gigafactory_Berlin-Brandenburg",
+          "label": "Wikipedia — Gigafactory Berlin-Brandenburg",
+          "date": "2026-01-04"
+        }
+      ],
+      "wikipediaTitle": "Gigafactory_Berlin-Brandenburg",
+      "wikipediaRevision": "2026-01-04",
+      "lastVerified": "2026-09-27"
     },
     {
       "id": "giga-mexico",
@@ -552,22 +615,27 @@
       "lat": 25.7042,
       "lng": -100.5722,
       "company": "tesla",
-      "status": "announced",
-      "progress": 25,
+      "status": "paused",
+      "progress": 0,
       "area": "4.2M sqft (planned)",
-      "capacity": "1M+ (planned)",
+      "capacity": "1M+ vehicles/yr (original 2023 plan)",
       "products": "Next-gen affordable EV",
       "investment": "$5B (est)",
       "employees": "Est. 5,000+",
       "color": "#e31937",
-      "lastUpdated": "2026-05-20",
+      "lastUpdated": "2026-09-27",
       "confidence": "speculative",
-      "lastVerified": "2026-05-20",
+      "lastVerified": "2026-09-27",
       "sources": [
         {
           "url": "https://en.wikipedia.org/wiki/Gigafactory_Mexico",
           "label": "Wikipedia",
           "date": "2026-05-16"
+        },
+        {
+          "url": "https://mexiconewsdaily.com/business/musk-says-tesla-gigafactory-in-mexico-paused-because-of-potential-trump-tariffs/",
+          "label": "Mexico News Daily — Musk says Gigafactory Mexico paused",
+          "date": "2024-07"
         }
       ],
       "milestones": [
@@ -578,34 +646,16 @@
           "sourceUrl": "https://en.wikipedia.org/wiki/Gigafactory_Mexico"
         },
         {
-          "date": "2024-06",
-          "text": "Permits approved",
+          "date": "2023-09",
+          "text": "Environmental permits granted (Nuevo León)",
           "done": true,
           "sourceUrl": "https://en.wikipedia.org/wiki/Gigafactory_Mexico"
         },
         {
-          "date": "2025-03",
-          "text": "Site prep & grading",
+          "date": "2024-07",
+          "text": "Musk: Mexico factory paused pending US tariff outcome",
           "done": true,
-          "sourceUrl": "https://en.wikipedia.org/wiki/Gigafactory_Mexico"
-        },
-        {
-          "date": "2025-09",
-          "text": "Foundation work begins",
-          "done": true,
-          "sourceUrl": "https://en.wikipedia.org/wiki/Gigafactory_Mexico"
-        },
-        {
-          "date": "2026-01",
-          "text": "Structural steel phase",
-          "done": true,
-          "sourceUrl": "https://en.wikipedia.org/wiki/Gigafactory_Mexico"
-        },
-        {
-          "date": "2027-H1",
-          "text": "Production start (target)",
-          "done": false,
-          "confidence": "speculative"
+          "sourceUrl": "https://mexiconewsdaily.com/business/musk-says-tesla-gigafactory-in-mexico-paused-because-of-potential-trump-tariffs/"
         }
       ],
       "timeline": [
@@ -617,7 +667,8 @@
         0,
         0
       ],
-      "halfKm": 3
+      "halfKm": 3,
+      "_progressNote": "Paused indefinitely since Musk's July 2024 comments (tariff uncertainty). No construction beyond early access-road work in Aug 2023; Tesla's Q1/Q2 2026 capacity tables list no Mexico site. Earlier site-prep/foundation/steel milestones were unsupported and were removed 2026-09-27."
     },
     {
       "id": "fremont",
@@ -632,12 +683,12 @@
       "status": "operational",
       "progress": 100,
       "area": "5.3M sqft",
-      "capacity": "600K",
-      "products": "Model S, Model X, Model 3, Model Y",
+      "capacity": "550K+ Model 3/Y (Q2 2026)",
+      "products": "Model 3, Model Y (Optimus line under construction in former S/X space)",
       "investment": "$2B+",
       "employees": "22,000",
       "color": "#e31937",
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-09-27",
       "milestones": [
         {
           "date": "2010-05",
@@ -667,9 +718,16 @@
           "done": true
         },
         {
-          "date": "2025-06",
-          "text": "Model S/X end of production",
-          "done": true
+          "date": "2026-05-09",
+          "text": "Last Model S/X built (end announced 2026-01-28)",
+          "done": true,
+          "sourceUrl": "https://www.electrive.com/2026/05/11/final-tesla-model-s-rolls-off-the-production-line/"
+        },
+        {
+          "date": "2026-H2",
+          "text": "Optimus Gen-1 line start in former S/X space (designed for 1M/yr)",
+          "done": false,
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/0001318605/000162828026049213/exhibit991.htm"
         }
       ],
       "timeline": [
@@ -681,10 +739,21 @@
         95,
         100
       ],
-      "sources": {
-        "wikipediaRevision": "2026-05-15",
-        "wikipediaTitle": "Tesla_Fremont_Factory"
-      }
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Tesla_Fremont_Factory",
+          "label": "Wikipedia — Tesla Fremont Factory",
+          "date": "2026-05-15"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/0001318605/000162828026049213/exhibit991.htm",
+          "label": "Tesla Q2 2026 update",
+          "date": "2026-07-22"
+        }
+      ],
+      "wikipediaTitle": "Tesla_Fremont_Factory",
+      "wikipediaRevision": "2026-05-15",
+      "lastVerified": "2026-09-27"
     },
     {
       "id": "giga-buffalo",
@@ -702,9 +771,9 @@
       "capacity": "10K Solar Roof/yr",
       "products": "Solar Roof, Supercharger, Solar Panels (TSP-420)",
       "investment": "$959M",
-      "employees": "1,500+",
+      "employees": "2,399 at the plant (end-2025)",
       "color": "#e31937",
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-09-27",
       "milestones": [
         {
           "date": "2017-08",
@@ -742,10 +811,16 @@
         85,
         90
       ],
-      "sources": {
-        "wikipediaRevision": "2026-05-16",
-        "wikipediaTitle": "Gigafactory_New_York"
-      }
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Gigafactory_New_York",
+          "label": "Wikipedia — Gigafactory New York",
+          "date": "2026-05-16"
+        }
+      ],
+      "wikipediaTitle": "Gigafactory_New_York",
+      "wikipediaRevision": "2026-05-16",
+      "lastVerified": "2026-09-27"
     },
     {
       "id": "starbase-launch",
@@ -760,16 +835,16 @@
       "status": "expanding",
       "progress": 75,
       "area": "200+ acres (pads + roads)",
-      "capacity": "12 Starship flights/yr",
+      "capacity": "Up to 25 Starship launches/yr (FAA, May 2025)",
       "products": "Starship flights, Super Heavy reuse",
       "investment": "$1.8B+ (launch-side allocation)",
       "employees": "1,800+",
       "color": "#005288",
       "extras": {
-        "Launch Pads": "OLM-A (Pad 1, IFT-1 through IFT-11) + OLM-B (Pad 2, operational 2026-05)",
+        "Launch Pads": "Pad 1: retired after Flight 11, mount rebuilt for V3 · Pad 2: sole active pad (Flights 12–14)",
         "Tower": "Mechazilla catch tower (Pad 1)"
       },
-      "lastUpdated": "2026-05-27",
+      "lastUpdated": "2026-09-27",
       "milestones": [
         {
           "date": "2019-08",
@@ -810,9 +885,16 @@
           "sourceUrl": "https://en.wikipedia.org/wiki/Starship_flight_test_12"
         },
         {
-          "date": "2026-H2",
-          "text": "Starship Block 3 cadence ramp across both pads",
-          "done": false
+          "date": "2026-07-24",
+          "text": "Flight 13 from Pad 2 (first Starlink V3 sats, suborbital)",
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Starship_flight_test_13"
+        },
+        {
+          "date": "2026-09-28",
+          "text": "Flight 14: first orbital Starship (Pad 2)",
+          "done": false,
+          "sourceUrl": "https://spaceflightnow.com/2026/09/21/spacexs-super-heavy-booster-arrives-at-pad-ahead-of-first-orbital-starship-launch/"
         }
       ],
       "timeline": [
@@ -824,11 +906,22 @@
         60,
         75
       ],
-      "sources": {
-        "wikipediaRevision": "2026-05-13",
-        "wikipediaTitle": "SpaceX_Starbase"
-      },
-      "halfKm": 4
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/SpaceX_Starbase",
+          "label": "Wikipedia — SpaceX Starbase",
+          "date": "2026-05-13"
+        },
+        {
+          "url": "https://www.cnbc.com/2025/05/06/spacex-gets-faa-permission-for-fivefold-increase-in-launches-in-texas.html",
+          "label": "CNBC — FAA approves up to 25 Starbase launches/yr",
+          "date": "2025-05-06"
+        }
+      ],
+      "halfKm": 4,
+      "wikipediaTitle": "SpaceX_Starbase",
+      "wikipediaRevision": "2026-05-13",
+      "lastVerified": "2026-09-27"
     },
     {
       "id": "starbase-build",
@@ -850,13 +943,12 @@
       "color": "#005288",
       "extras": {
         "Star Factory": "Mass-production hall for Ship + Booster (operational 2024-2025 ramp)",
-        "High Bay": "Super Heavy Booster stacking",
-        "Mid Bay": "Starship upper-stage stacking",
-        "Paint shop": "Surface coating & QA"
+        "Paint shop": "Surface coating & QA",
+        "Gigabay": "85 m vehicles, 24 work cells; ~$250M (TDLR), completion target 2026-12-31"
       },
-      "lastUpdated": "2026-05-27",
+      "lastUpdated": "2026-09-27",
       "confidence": "medium",
-      "lastVerified": "2026-05-27",
+      "lastVerified": "2026-09-27",
       "timelapseSlug": null,
       "milestones": [
         {
@@ -884,6 +976,12 @@
           "text": "Star Factory partial occupancy / first Ship rolled out (operator estimate)",
           "done": true,
           "confidence": "medium"
+        },
+        {
+          "date": "2026-12",
+          "text": "Gigabay completion target (TDLR filing)",
+          "done": false,
+          "sourceUrl": "https://www.tdlr.texas.gov/TABS/Search/Print/TABS2025022205"
         },
         {
           "date": "2026-H2",
@@ -984,8 +1082,8 @@
     {
       "id": "spacex-hawthorne",
       "slug": "spacex-hawthorne",
-      "name": "SpaceX HQ",
-      "aka": "Hawthorne Rocket Factory",
+      "name": "SpaceX Hawthorne",
+      "aka": "Original factory (HQ moved to Starbase, TX)",
       "flag": "🇺🇸",
       "location": "Hawthorne, California",
       "lat": 33.9207,
@@ -994,12 +1092,12 @@
       "status": "operational",
       "progress": 95,
       "area": "550K sqft",
-      "capacity": "40+ Falcon 9/yr",
-      "products": "Falcon 9, Falcon Heavy, Dragon capsule",
+      "capacity": "Every Falcon upper stage + Dragon (165 Falcon launches in 2025)",
+      "products": "Falcon 9 / Heavy stages, Dragon, Merlin + Raptor engines, Starlink terminals",
       "investment": "$1B+",
       "employees": "6,000+",
       "color": "#005288",
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-09-27",
       "milestones": [
         {
           "date": "2002-05",
@@ -1044,11 +1142,22 @@
         92,
         95
       ],
-      "sources": {
-        "wikipediaRevision": "2026-05-16",
-        "wikipediaTitle": "SpaceX_headquarters"
-      },
-      "halfKm": 0.5
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/SpaceX_headquarters",
+          "label": "Wikipedia — SpaceX headquarters",
+          "date": "2026-05-16"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026036936/spaceexplorationtechnologi.htm",
+          "label": "SpaceX S-1 (HQ: 1 Rocket Road, Starbase TX)",
+          "date": "2026-05-20"
+        }
+      ],
+      "halfKm": 0.5,
+      "wikipediaTitle": "SpaceX_headquarters",
+      "wikipediaRevision": "2026-05-16",
+      "lastVerified": "2026-09-27"
     },
     {
       "id": "cape-canaveral",
@@ -1060,15 +1169,15 @@
       "lat": 28.562,
       "lng": -80.5772,
       "company": "spacex",
-      "status": "operational",
+      "status": "expanding",
       "progress": 90,
       "area": "2 launch pads",
-      "capacity": "50+ launches/yr",
+      "capacity": "~100 Falcon launches from Florida (2025) · Starship: 44/yr LC-39A + 76/yr SLC-37 approved",
       "products": "Falcon 9 launches, Dragon missions, Starlink deploys",
       "investment": "$500M+",
       "employees": "2,500+",
       "color": "#005288",
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-09-27",
       "milestones": [
         {
           "date": "2010-06",
@@ -1100,15 +1209,28 @@
           "done": true
         },
         {
+          "date": "2025-11",
+          "text": "SLC-37 Starship record of decision (up to 76 launches/yr)",
+          "done": true,
+          "sourceUrl": "https://www.federalregister.gov/documents/2025/12/18/2025-23314/notice-of-record-of-decision-for-the-environmental-impact-statement-for-spacex-starship-super-heavy"
+        },
+        {
+          "date": "2026-01",
+          "text": "FAA approves up to 44 Starship launches/yr from LC-39A",
+          "done": true,
+          "sourceUrl": "https://www.faa.gov/sites/faa.gov/files/20260123-SSH-LC-39A-ROD-Final.pdf"
+        },
+        {
           "date": "2026-05-15",
           "text": "Launch: Dragon CRS-2 SpX-34",
           "done": true,
           "sourceUrl": "https://www.nasa.gov/commercial-resupply/"
         },
         {
-          "date": "2026-Q2",
-          "text": "Starship launch tower at 39A",
-          "done": false
+          "date": "2026-Q4",
+          "text": "First Florida Starship launch (LC-39A, NET 2026-10-30)",
+          "done": false,
+          "sourceUrl": "https://en.wikipedia.org/wiki/List_of_Starship_launches"
         }
       ],
       "timeline": [
@@ -1120,11 +1242,17 @@
         85,
         90
       ],
-      "sources": {
-        "wikipediaRevision": "2026-05-09",
-        "wikipediaTitle": "Space_Launch_Complex_40"
-      },
-      "halfKm": 4
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Space_Launch_Complex_40",
+          "label": "Wikipedia — Space Launch Complex 40",
+          "date": "2026-05-09"
+        }
+      ],
+      "halfKm": 4,
+      "wikipediaTitle": "Space_Launch_Complex_40",
+      "wikipediaRevision": "2026-05-09",
+      "lastVerified": "2026-09-27"
     },
     {
       "id": "vandenberg",
@@ -1136,15 +1264,15 @@
       "lat": 34.633,
       "lng": -120.613,
       "company": "spacex",
-      "status": "operational",
+      "status": "expanding",
       "progress": 85,
-      "area": "1 launch pad",
-      "capacity": "20+ launches/yr",
+      "area": "SLC-4E + SLC-6 (under construction)",
+      "capacity": "64 Falcon launches in 2025; up to 100/yr approved",
       "products": "Polar orbit launches, Starlink, national security",
       "investment": "$200M+",
       "employees": "500+",
       "color": "#005288",
-      "lastUpdated": "2026-05-19",
+      "lastUpdated": "2026-09-27",
       "milestones": [
         {
           "date": "2013-09",
@@ -1169,15 +1297,29 @@
           "done": true
         },
         {
+          "date": "2025-10",
+          "text": "SLC-6 redevelopment approved for Falcon 9/Heavy (up to 100 launches/yr at base)",
+          "done": true,
+          "sourceUrl": "https://www.kclu.org/2025-10-15/spacex-is-doubling-the-number-of-annual-rocket-launches-from-vandenberg-space-force-base"
+        },
+        {
           "date": "2026-05-12",
           "text": "Launch: NROL-172",
           "done": true,
           "sourceUrl": "https://www.faa.gov/space"
         },
         {
-          "date": "2026-Q3",
-          "text": "SLC-6 Starship pad construction",
-          "done": false
+          "date": "2026-06-16",
+          "text": "Legacy SLC-6 towers demolished",
+          "done": true,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Vandenberg_Space_Launch_Complex_6"
+        },
+        {
+          "date": "2026-Q4",
+          "text": "First Falcon launch from SLC-6 (late 2026 – early 2027)",
+          "done": false,
+          "sourceUrl": "https://en.wikipedia.org/wiki/Vandenberg_Space_Launch_Complex_6",
+          "confidence": "speculative"
         }
       ],
       "timeline": [
@@ -1189,11 +1331,17 @@
         80,
         85
       ],
-      "sources": {
-        "wikipediaRevision": "2026-05-19",
-        "wikipediaTitle": "Vandenberg_Space_Launch_Complex_4"
-      },
-      "halfKm": 3
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Vandenberg_Space_Launch_Complex_4",
+          "label": "Wikipedia — Vandenberg Space Launch Complex 4",
+          "date": "2026-05-19"
+        }
+      ],
+      "halfKm": 3,
+      "wikipediaTitle": "Vandenberg_Space_Launch_Complex_4",
+      "wikipediaRevision": "2026-05-19",
+      "lastVerified": "2026-09-27"
     },
     {
       "id": "colossus",
@@ -1205,28 +1353,32 @@
       "lat": 35.0592,
       "lng": -90.1557,
       "company": "xai",
-      "status": "expanding",
-      "progress": 60,
+      "status": "operational",
+      "progress": 100,
       "area": "500K+ sqft",
-      "capacity": "~555K mixed GPUs · 1M target moved to Colossus 2",
+      "capacity": "~220K+ GPUs (H100/H200/GB200) · ~300 MW",
       "products": "Grok training, AI research compute",
-      "investment": "~$18B (cumulative spend)",
+      "investment": "—",
       "employees": "500+",
       "color": "#7b2dbd",
       "extras": {
-        "Grok Version": "Grok-4 (training, started 2026-03)",
-        "Active Serving": "Grok-3",
-        "GPU Mix": "~100K H100 · ~50K H200 · ~30K+ GB200 · GB300 (added late 2025/early 2026)",
-        "Power": "~2 GW (campus, incl. dedicated natural-gas plant)"
+        "Tenant": "Anthropic — all compute leased from May 2026 ($1.25B/month through May 2029)",
+        "GPU Mix": "H100 · H200 · GB200",
+        "Power": "~300 MW"
       },
-      "lastUpdated": "2026-05-27",
+      "lastUpdated": "2026-09-27",
       "confidence": "medium",
-      "lastVerified": "2026-05-20",
+      "lastVerified": "2026-09-27",
       "sources": [
         {
           "url": "https://en.wikipedia.org/wiki/Colossus_(supercomputer)",
           "label": "Wikipedia",
           "date": "2026-05-17"
+        },
+        {
+          "url": "https://www.cnbc.com/2026/05/06/anthropic-spacex-data-center-capacity.html",
+          "label": "CNBC — Anthropic to rent all of Colossus 1",
+          "date": "2026-05-06"
         }
       ],
       "milestones": [
@@ -1255,15 +1407,10 @@
           "sourceUrl": "https://en.wikipedia.org/wiki/Colossus_(supercomputer)"
         },
         {
-          "date": "2026-03",
-          "text": "Grok-4 training begins",
-          "done": true
-        },
-        {
-          "date": "2026-Q4",
-          "text": "Phase 3: 1M GPU target",
-          "done": false,
-          "confidence": "speculative"
+          "date": "2026-05-06",
+          "text": "Anthropic leases all Colossus 1 compute ($1.25B/month through May 2029)",
+          "done": true,
+          "sourceUrl": "https://www.cnbc.com/2026/05/06/anthropic-spacex-data-center-capacity.html"
         }
       ],
       "timeline": [
@@ -1273,9 +1420,9 @@
         0,
         30,
         50,
-        60
+        100
       ],
-      "_progressNote": "Building shell complete in 2024; 'progress' reflects GPU racks installed against the 1M-GPU plan. Indoor work is invisible from orbit — % is operator-estimated from announced GPU count, not from polygon trace.",
+      "_progressNote": "Fully built and operational; since May 2026 its entire capacity is leased to Anthropic. The 555K-GPU / 2 GW / $18B figures shown here until 2026-09-27 belonged to Colossus 2 and were moved there.",
       "halfKm": 1.2
     },
     {
@@ -1284,29 +1431,30 @@
       "name": "Colossus 2",
       "aka": "xAI Southaven Gigawatt Datacenter",
       "flag": "🇺🇸",
-      "location": "Southaven, Mississippi (also Memphis warehouse acq.)",
+      "location": "Memphis, TN (Tulane Rd data halls) + Southaven, MS (turbine plant)",
       "lat": 34.989,
       "lng": -90.0126,
       "company": "xai",
-      "status": "construction",
-      "progress": 30,
+      "status": "expanding",
+      "progress": 45,
       "area": "1M+ sqft (Memphis warehouse) + Southaven build-out",
-      "capacity": "350K-550K GPUs target · 1-2 GW",
+      "capacity": "~550K GPUs operating (110K GB200 + 440K GB300) · Musk target ~1.2M by end-2026",
       "products": "Grok next-gen training, frontier model compute",
       "investment": "$20B+ (largest econ-dev project in Mississippi history)",
       "employees": "—",
       "color": "#7b2dbd",
       "extras": {
         "GPU Plan": "Blackwell GB200/GB300 + NVIDIA Rubin (Rubin portion analyst-stated, not xAI-confirmed)",
-        "Power": "1-2 GW target"
+        "Power": "1 GW+ online (2026-01); 41 gas turbines (~1.2 GW) permitted at Southaven",
+        "Tenants": "Google renting ~110K GPUs from Oct 2026 ($920M/month through Jun 2029)"
       },
-      "lastUpdated": "2026-05-27",
+      "lastUpdated": "2026-09-27",
       "confidence": "medium",
-      "lastVerified": "2026-05-27",
+      "lastVerified": "2026-09-27",
       "sources": [
         {
-          "url": "https://mississippitoday.org/2025/12/31/",
-          "label": "Mississippi Today — xAI Southaven announcement",
+          "url": "https://governorreeves.ms.gov/tech-leader-xai-investing-more-than-20-billion-in-southaven/",
+          "label": "Gov. Reeves — xAI investing $20B+ in Southaven",
           "date": "2025-12-31"
         },
         {
@@ -1325,24 +1473,37 @@
           "date": "2025-12",
           "text": "Southaven expansion announced ($20B+, MS econ-dev record)",
           "done": true,
-          "sourceUrl": "https://mississippitoday.org/2025/12/31/"
+          "sourceUrl": "https://governorreeves.ms.gov/tech-leader-xai-investing-more-than-20-billion-in-southaven/"
         },
         {
-          "date": "2026-02",
-          "text": "Operational milestone (partial GPU racks online)",
+          "date": "2026-01-17",
+          "text": "Colossus 2 goes live — first gigawatt-scale training cluster",
           "done": true,
-          "confidence": "medium"
+          "sourceUrl": "https://www.teslarati.com/elon-musk-xai-brings-1gw-colossus-2-ai-training-cluster-online/"
         },
         {
-          "date": "2026-H2",
-          "text": "Blackwell GB200/GB300 ramp",
-          "done": false,
-          "confidence": "medium"
+          "date": "2026-03-10",
+          "text": "Mississippi permit board approves 41 permanent gas turbines (~1.2 GW) at Southaven",
+          "done": true,
+          "sourceUrl": "https://mississippitoday.org/2026/03/10/xai-permit-approved-southaven/"
         },
         {
-          "date": "2027",
-          "text": "1M GPU target (Rubin-class compute)",
+          "date": "2026-06-05",
+          "text": "Google agrees to rent ~110K GPUs from Oct 2026 ($920M/month)",
+          "done": true,
+          "sourceUrl": "https://techcrunch.com/2026/06/05/google-will-pay-spacex-920m-per-month-for-compute/"
+        },
+        {
+          "date": "2026-09",
+          "text": "~550K GPUs operating (110K GB200 + 440K GB300)",
+          "done": true,
+          "sourceUrl": "https://finance.yahoo.com/technology/ai/articles/elon-musk-aims-double-colossus-060447907.html"
+        },
+        {
+          "date": "2026-Q4",
+          "text": "~1.2M GPU target (Musk: '+220K next week, Nov, late Dec if we get lucky')",
           "done": false,
+          "sourceUrl": "https://finance.yahoo.com/technology/ai/articles/elon-musk-aims-double-colossus-060447907.html",
           "confidence": "speculative"
         }
       ],
@@ -1353,9 +1514,9 @@
         0,
         0,
         5,
-        30
+        45
       ],
-      "_progressNote": "Construction-phase site. Progress reflects building shell + initial rack install against the multi-year gigawatt target. Like Colossus 1, GPU-count is operator-estimated, not polygon-traced.",
+      "_progressNote": "Operational since 2026-01-17 ('first gigawatt training cluster'). ~550K GPUs vs Musk's ~1.2M end-2026 target ≈ 45%. GPU counts are company-stated, not satellite-measured.",
       "halfKm": 1.5
     },
     {
@@ -1371,7 +1532,7 @@
       "status": "announced",
       "progress": 5,
       "area": "TBD (500 MW power footprint)",
-      "capacity": "~600K NVIDIA GPUs (announced)",
+      "capacity": "500 MW+ · first cluster ~18,000 GB300",
       "products": "Grok training capacity, regional compute",
       "investment": "—",
       "employees": "—",
@@ -1379,15 +1540,15 @@
       "extras": {
         "Partner": "HUMAIN (PIF sovereign-wealth-backed)",
         "Announced": "2025-11-19 at U.S.–Saudi Investment Forum",
-        "Status": "Announced, groundbreaking reported. Specific city not finalized in public sources."
+        "Status": "Announced. No site or groundbreaking disclosed as of Sep 2026."
       },
-      "lastUpdated": "2026-05-27",
+      "lastUpdated": "2026-09-27",
       "confidence": "speculative",
-      "lastVerified": "2026-05-27",
+      "lastVerified": "2026-09-27",
       "sources": [
         {
-          "url": "https://www.cnbc.com/2025/11/19/",
-          "label": "CNBC — xAI / HUMAIN 500 MW announcement",
+          "url": "https://www.prnewswire.com/news-releases/humain-expands-strategic-partnership-with-nvidia-advancing-global-ai-infrastructure-with-xai-global-ai-and-aws-at-the-us-saudi-investment-forum-302620854.html",
+          "label": "PR Newswire — HUMAIN × NVIDIA × xAI (500 MW)",
           "date": "2025-11-19"
         }
       ],
@@ -1396,19 +1557,24 @@
           "date": "2025-11",
           "text": "xAI × HUMAIN 500 MW deal announced (Musk + Jensen Huang)",
           "done": true,
-          "sourceUrl": "https://www.cnbc.com/2025/11/19/"
+          "sourceUrl": "https://www.prnewswire.com/news-releases/humain-expands-strategic-partnership-with-nvidia-advancing-global-ai-infrastructure-with-xai-global-ai-and-aws-at-the-us-saudi-investment-forum-302620854.html"
         },
         {
-          "date": "2026",
-          "text": "Site selection + groundbreaking",
-          "done": false,
-          "confidence": "speculative"
+          "date": "2026-02",
+          "text": "HUMAIN invests $3B in xAI Series E",
+          "done": true,
+          "sourceUrl": "https://www.cnbc.com/2026/02/19/saudis-humain-invested-3-billion-in-xais-series-e-funding-round.html"
         },
         {
           "date": "2027",
           "text": "First GPU racks online (target)",
           "done": false,
           "confidence": "speculative"
+        },
+        {
+          "date": "TBD",
+          "text": "Site selection + groundbreaking (not disclosed as of 2026-09)",
+          "done": false
         }
       ],
       "timeline": [
@@ -1438,14 +1604,14 @@
       "area": "65K sqft",
       "capacity": "R&D + limited implant production",
       "products": "N1 implant, R1 robot, BCI research",
-      "investment": "$680M+",
+      "investment": "~$1.3B+ raised ($650M Series E, Jun 2025)",
       "employees": "400+",
       "color": "#00875a",
       "extras": {
         "Implant": "N1 (1024 electrodes)",
-        "Patients": "8+ (as of 2026-05, PRIME study NCT06429735)"
+        "Patients": "21 participants worldwide (Feb 2026)"
       },
-      "lastUpdated": "2026-05-24",
+      "lastUpdated": "2026-09-27",
       "milestones": [
         {
           "date": "2017-03",
@@ -1476,15 +1642,10 @@
           "sourceUrl": "https://clinicaltrials.gov/study/NCT06429735"
         },
         {
-          "date": "2026-04",
-          "text": "PRIME study expands to 8+ implanted patients",
+          "date": "2026-02",
+          "text": "21 participants implanted worldwide (US, Canada, UK, UAE)",
           "done": true,
-          "sourceUrl": "https://clinicaltrials.gov/study/NCT06429735"
-        },
-        {
-          "date": "2026-H1",
-          "text": "10-patient expanded trial",
-          "done": false
+          "sourceUrl": "https://thedebrief.org/neuralink-reaches-21-patients-as-elon-musk-continues-push-for-high-volume-brain-chip-production/"
         }
       ],
       "timeline": [
@@ -1496,11 +1657,17 @@
         70,
         80
       ],
-      "sources": {
-        "wikipediaRevision": "2026-05-18",
-        "wikipediaTitle": "Neuralink"
-      },
-      "halfKm": 0.5
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Neuralink",
+          "label": "Wikipedia — Neuralink",
+          "date": "2026-05-18"
+        }
+      ],
+      "halfKm": 0.5,
+      "wikipediaTitle": "Neuralink",
+      "wikipediaRevision": "2026-05-18",
+      "lastVerified": "2026-09-27"
     },
     {
       "id": "neuralink-austin",
@@ -1508,56 +1675,49 @@
       "name": "Neuralink Austin",
       "aka": "Neuralink Manufacturing & Clinical",
       "flag": "🇺🇸",
-      "location": "Austin, Texas",
+      "location": "Del Valle, Austin, TX (2200 Caldwell Ln)",
       "lat": 30.1926,
       "lng": -97.5515,
       "company": "neuralink",
-      "status": "announced",
+      "status": "expanding",
       "progress": 30,
-      "area": "100K sqft (planned)",
+      "area": "~112K sqft on a 37-acre campus",
       "capacity": "Mass implant production",
       "products": "N1 implant manufacturing, clinical ops",
-      "investment": "$200M (est)",
+      "investment": "$14.7M buildout (2024) + $8.2M expansion (2026)",
       "employees": "Est. 200+",
       "color": "#00875a",
-      "lastUpdated": "2026-05-20",
-      "confidence": "speculative",
-      "lastVerified": "2026-05-20",
+      "lastUpdated": "2026-09-27",
+      "confidence": "medium",
+      "lastVerified": "2026-09-27",
       "sources": [
         {
-          "url": "https://neuralink.com/",
-          "label": "Neuralink official announcements",
-          "date": "2026-05-18"
+          "url": "https://finance.yahoo.com/news/elon-musks-neuralink-expand-austin-110000203.html",
+          "label": "Austin American-Statesman — Neuralink to expand Austin campus",
+          "date": "2026-02-27"
+        },
+        {
+          "url": "https://www.teslarati.com/elon-musk-neuralink-site-14-7-million-texas/",
+          "label": "Teslarati — Neuralink $14.7M Texas site",
+          "date": "2024-07-19"
         }
       ],
       "milestones": [
         {
-          "date": "2025-01",
-          "text": "Austin facility announced",
+          "date": "2024-07-15",
+          "text": "$14.7M campus construction begins (machine shop + cleanroom)",
           "done": true,
-          "sourceUrl": "https://neuralink.com/"
+          "sourceUrl": "https://www.teslarati.com/elon-musk-neuralink-site-14-7-million-texas/"
         },
         {
-          "date": "2025-06",
-          "text": "Buildout begins",
+          "date": "2026-03",
+          "text": "$8.2M expansion begins (37,607 sqft office + manufacturing)",
           "done": true,
-          "sourceUrl": "https://neuralink.com/"
-        },
-        {
-          "date": "2026-01",
-          "text": "Cleanroom installation",
-          "done": true,
-          "sourceUrl": "https://neuralink.com/"
-        },
-        {
-          "date": "2026-Q3",
-          "text": "Pilot production line",
-          "done": false,
-          "confidence": "speculative"
+          "sourceUrl": "https://finance.yahoo.com/news/elon-musks-neuralink-expand-austin-110000203.html"
         },
         {
           "date": "2027",
-          "text": "Full-scale manufacturing",
+          "text": "High-volume implant manufacturing (Musk goal)",
           "done": false,
           "confidence": "speculative"
         }
@@ -1571,7 +1731,8 @@
         0,
         0
       ],
-      "halfKm": 0.5
+      "halfKm": 0.5,
+      "_progressNote": "Existing campus (machine shop + cleanroom, 2024) now expanding with 37.6K sqft office/manufacturing space (from Mar 2026)."
     },
     {
       "id": "vegas-loop",
@@ -1583,8 +1744,8 @@
       "lat": 36.1331,
       "lng": -115.1598,
       "company": "boring",
-      "status": "announced",
-      "progress": 35,
+      "status": "expanding",
+      "progress": 10,
       "area": "68 miles (planned)",
       "capacity": "57,000 passengers/hr (full build)",
       "products": "Underground Tesla transit system",
@@ -1592,11 +1753,11 @@
       "employees": "200+",
       "color": "#bf5600",
       "extras": {
-        "Stations": "55 planned (9 open)",
-        "Tunnel Miles": "2.2 mi open",
+        "Stations": "10 open (Sahara, 2026-08-06) of 100+ approved",
+        "Tunnel Miles": "~4 mi operational (Review-Journal, Sep 2026)",
         "sourceUrl": "https://en.wikipedia.org/wiki/Vegas_Loop"
       },
-      "lastUpdated": "2026-05-20",
+      "lastUpdated": "2026-09-27",
       "milestones": [
         {
           "date": "2021-06",
@@ -1605,28 +1766,22 @@
           "sourceUrl": "https://www.boringcompany.com/vegas-loop"
         },
         {
-          "date": "2023-06",
+          "date": "2022-07",
           "text": "Resorts World station opens",
           "done": true,
-          "sourceUrl": "https://en.wikipedia.org/wiki/Vegas_Loop"
+          "sourceUrl": "https://www.fox5vegas.com/2022/07/12/you-can-now-try-out-elon-musks-vegas-loop-resorts-world-during-convention-days/"
         },
         {
-          "date": "2024-11",
-          "text": "City-wide expansion approved (68mi)",
+          "date": "2026-08-06",
+          "text": "Sahara station opens (10th station)",
           "done": true,
-          "sourceUrl": "https://en.wikipedia.org/wiki/Vegas_Loop"
+          "sourceUrl": "https://www.fox5vegas.com/2026/08/06/vegas-loop-station-now-open-sahara-las-vegas/"
         },
         {
-          "date": "2025-09",
-          "text": "Strip tunnel boring begins",
-          "done": true,
-          "sourceUrl": "https://www.boringcompany.com/vegas-loop"
-        },
-        {
-          "date": "2026-Q2",
-          "text": "Strip segment Phase 1 open",
+          "date": "2026-Q4",
+          "text": "Paradise Rd twin tunnels (Westgate → Virgin Hotels) targeted before the Nov F1 race",
           "done": false,
-          "confidence": "speculative"
+          "sourceUrl": "https://www.fox5vegas.com/2026/09/15/boring-company-expansion-pushes-vegas-loop-toward-paradise-road/"
         },
         {
           "date": "2028",
@@ -1642,7 +1797,7 @@
         0,
         0,
         0,
-        0
+        10
       ],
       "sources": [
         {
@@ -1653,7 +1808,8 @@
       ],
       "halfKm": 1,
       "confidence": "speculative",
-      "lastVerified": "2026-05-20"
+      "lastVerified": "2026-09-27",
+      "_progressNote": "Carrying passengers since 2021. Progress = open stations vs the approved network (10 of 100+)."
     },
     {
       "id": "terafab-grimes",
