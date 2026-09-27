@@ -1898,14 +1898,14 @@
       "featured": false,
       "extras": {
         "Partners": "Tesla, SpaceX",
-        "Construction start": "Land clearing since late Jul 2026 (Sentinel-2); formal start 2026-12-01 (Texas filing)",
+        "Construction start": "Land clearing since early Jul 2026 (Sentinel-2, 07-09); formal start 2026-12-01 (Texas filing)",
         "Target completion": "end of 2028 (phase 1)",
         "Site": "Decommissioned Gibbons Creek coal plant, existing water storage"
       },
       "lastUpdated": "2026-09-27",
       "lastVerified": "2026-09-27",
       "confidence": "medium",
-      "_progressNote": "Site prep only: land clearing/burning SE of Gibbons Creek Reservoir, first visible in Sentinel-2 2026-07-31 (forest on 06-29); KBTX 2026-08-11 + fire dept confirmed it is the Terafab site. Sentinel-2 2026-09-22 shows a large cleared pad SE of the reservoir. Vertical construction is filed to start 2026-12-01, so progress is a nominal 2%. Capture box recentred on the clearing 2026-09-27 (was reservoir centre).",
+      "_progressNote": "Site prep only: land clearing SE of Gibbons Creek Reservoir, first visible in Sentinel-2 on 2026-07-09 (~16 acres) and growing to ~155 acres by 07-31 and ~520 acres by 09-22 — a month before the first press report (KBTX 2026-08-11; fire dept confirmed it is the Terafab site). Vertical construction is filed to start 2026-12-01, so progress is a nominal 2%.",
       "sources": [
         {
           "url": "https://techcrunch.com/2026/08/06/tesla-and-spacex-will-invest-16-8b-to-start-building-terafab-chip-factory-in-texas/",
@@ -1961,8 +1961,8 @@
           "sourceUrl": "https://comptroller.texas.gov/economy/development/prop-tax/jeti/application-details.php?id=J0035"
         },
         {
-          "date": "2026-07",
-          "text": "Land clearing begins SE of Gibbons Creek Reservoir — visible in Sentinel-2 by 2026-07-31 (forest on 06-29); first press report KBTX 2026-08-11",
+          "date": "2026-07-09",
+          "text": "Land clearing begins SE of Gibbons Creek Reservoir — first cleared strip visible in Sentinel-2 on 2026-07-09; ~155 acres by 07-31, ~520 acres by 09-22. First press report: KBTX 2026-08-11",
           "done": true,
           "sourceUrl": "https://www.kbtx.com/2026/08/11/land-clearing-already-underway-near-terefab-site-grimes-county/"
         },

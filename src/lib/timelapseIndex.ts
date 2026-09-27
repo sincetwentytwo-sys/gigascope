@@ -15,6 +15,8 @@ import { resolve } from "node:path";
 
 export type TimelapseMeta = {
   frames: number;
+  /** First frame date — written by build.mjs since 2026-09-27; absent on older entries. */
+  first?: string;
   latest: string;
   builtAt: string;
 };
