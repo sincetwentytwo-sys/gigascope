@@ -77,6 +77,11 @@ export interface Factory {
    * radius (km) around lat/lng instead of a precise pin.
    */
   zoneRadiusKm?: number;
+  /**
+   * Construction-footprint outline as [lat, lng] vertices, drawn on the map and
+   * on the satellite frames. Takes precedence over zoneRadiusKm.
+   */
+  footprint?: [number, number][];
 
   /**
    * Timelapse asset slug — overrides `slug` when looking up

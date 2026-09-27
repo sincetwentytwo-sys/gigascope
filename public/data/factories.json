@@ -16,15 +16,15 @@
       "id": "terafab",
       "slug": "terafab",
       "name": "TERAFAB",
-      "aka": "Tesla × SpaceX research chip fab (groundbreaking Apr 2026)",
+      "aka": "Advanced Technology Chip Fab (ATCF) — Tesla × SpaceX development fab",
       "flag": "🇺🇸",
-      "location": "Austin, TX (Giga Texas North Campus)",
-      "lat": 30.2385,
-      "lng": -97.601,
+      "location": "Austin, TX (Giga Texas main campus, east of the vehicle factory)",
+      "lat": 30.22356,
+      "lng": -97.60843,
       "company": "joint",
       "status": "construction",
       "progress": 8,
-      "area": "Undisclosed (North Campus parcel)",
+      "area": "489,600 sq ft building (TDLR) on a ~500 m × 175 m construction site",
       "capacity": "Prototype / research fab (low-volume wafers); volume at Grimes County",
       "products": "AI5 chip, 2nm process, Memory, Packaging",
       "investment": "Undisclosed (research fab) · program: $16.8B phase 1 at Grimes County",
@@ -59,6 +59,21 @@
           "url": "https://en.wikipedia.org/wiki/Terafab",
           "label": "Wikipedia — Terafab (groundbreaking Apr 2026; construction underway Jul 2026)",
           "date": "2026-09-22"
+        },
+        {
+          "url": "https://www.tdlr.texas.gov/TABS/Search/Print/TABS2026028764",
+          "label": "TDLR TABS2026028764 — Austin Semiconductor Fab (489,600 sq ft)",
+          "date": "2026-08-25"
+        },
+        {
+          "url": "https://www.tomshardware.com/tech-industry/semiconductors/drone-flyover-reveals-rapid-progress-at-elon-musks-atcf-chip-fab-texas-site-prepares-for-all-in-one-logic-memory-and-packaging-facility",
+          "label": "Tom's Hardware — drone flyover of the ATCF foundation",
+          "date": "2026-08-03"
+        },
+        {
+          "url": "https://www.openstreetmap.org/way/1553482280",
+          "label": "OpenStreetMap — Advanced Technology Chip Fab construction outline",
+          "date": "2026-08-29"
         }
       ],
       "milestones": [
@@ -69,21 +84,27 @@
         },
         {
           "date": "2026-04",
-          "text": "Groundbreaking at Giga Texas North Campus (research fab)",
+          "text": "Groundbreaking at Giga Texas, east of the vehicle factory (ATCF)",
           "done": true,
           "sourceUrl": "https://en.wikipedia.org/wiki/Terafab"
         },
         {
           "date": "2026-07",
-          "text": "Foundation work underway — excavation, GeoPiers, gravel base (drone-observed)",
+          "text": "Foundation work underway — rectangular foundation, GeoPiers, gravel base (drone-observed; visible in Sentinel-2)",
           "done": true,
-          "sourceUrl": "https://en.wikipedia.org/wiki/Terafab"
+          "sourceUrl": "https://www.tomshardware.com/tech-industry/semiconductors/drone-flyover-reveals-rapid-progress-at-elon-musks-atcf-chip-fab-texas-site-prepares-for-all-in-one-logic-memory-and-packaging-facility"
         },
         {
           "date": "2026-08-06",
           "text": "Tesla + SpaceX commit $16.8B phase 1; Grimes County production complex announced",
           "done": true,
           "sourceUrl": "https://techcrunch.com/2026/08/06/tesla-and-spacex-will-invest-16-8b-to-start-building-terafab-chip-factory-in-texas/"
+        },
+        {
+          "date": "2026-08-25",
+          "text": "TDLR registration 'Austin Semiconductor Fab' — 489,600 sq ft new construction, completion 2029-12-31",
+          "done": true,
+          "sourceUrl": "https://www.tdlr.texas.gov/TABS/Search/Print/TABS2026028764"
         },
         {
           "date": "2026-09",
@@ -114,13 +135,46 @@
         8
       ],
       "halfKm": 3,
-      "_progressNote": "8% = foundation stage: site work from Apr 2026, GeoPiers + gravel base in Jul, main slab concrete in Sep (drone observations, Joe Tegtmeyer). Estimate; no official % disclosed.",
+      "_progressNote": "8% = foundation stage: site cleared by May 2026, GeoPiers + gravel base in Jul, main slab concrete in Sep (drone observations; visible in Sentinel-2). TDLR completion date 2029-12-31. Estimate; no official % disclosed.",
       "captureCenter": {
         "lat": 30.228,
         "lng": -97.612
       },
-      "locationNote": "Dashed circle = the Giga Texas North Campus construction zone, where the Advanced Technology Chip Fab is being built alongside the Optimus factory (large blue-roofed building). Tesla hasn't published the fab's footprint, and at Sentinel-2's 10 m resolution its foundation can't be told apart from nearby earthworks and laydown yards, so we mark the zone rather than a single pad. Base map imagery predates construction.",
-      "zoneRadiusKm": 0.75
+      "locationNote": "Outline = the ATCF construction site east of the Giga Texas vehicle factory, south of Tesla Road (OpenStreetMap way 1553482280). Cross-checked against Sentinel-2: the rectangle is cleared by late May 2026, a bevel-cornered foundation appears by early July and slab work by late September — matching drone reports (Joe Tegtmeyer via Tom's Hardware) of a rectangular foundation extending south with beveled corners. Tesla's TDLR filing (TABS2026028764, 'Austin Semiconductor Fab') lists a 489,600 sq ft building. Base map imagery predates construction.",
+      "footprint": [
+        [
+          30.22161,
+          -97.60933
+        ],
+        [
+          30.22127,
+          -97.60888
+        ],
+        [
+          30.22127,
+          -97.60802
+        ],
+        [
+          30.22158,
+          -97.60753
+        ],
+        [
+          30.22559,
+          -97.60758
+        ],
+        [
+          30.22577,
+          -97.60794
+        ],
+        [
+          30.22578,
+          -97.60887
+        ],
+        [
+          30.22561,
+          -97.60926
+        ]
+      ]
     },
     {
       "id": "giga-texas",

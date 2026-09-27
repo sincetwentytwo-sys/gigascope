@@ -15,6 +15,7 @@ export default function SatelliteMapWrapper(props: {
   zoom?: number;
   factoryColor?: string;
   zoneRadiusM?: number;
+  footprint?: [number, number][];
 }) {
   return <SatelliteMap {...props} />;
 }

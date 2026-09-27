@@ -30,6 +30,24 @@ describe("framePinPosition", () => {
     expect(p.radius).toBeCloseTo(0.125, 6);
   });
 
+  it("maps a footprint outline into frame fractions", () => {
+    const p = framePinPosition({
+      lat: 30.2235,
+      lng: -97.6084,
+      halfKm: 3,
+      captureCenter: { lat: 30.228, lng: -97.612 },
+      footprint: [
+        [30.22127, -97.60888],
+        [30.22578, -97.60887],
+        [30.22578, -97.60753],
+      ],
+    })!;
+    expect(p.outline).toHaveLength(3);
+    expect(p.radius).toBeUndefined();
+    // southern vertex sits lower in the frame than the northern one
+    expect(p.outline![0].y).toBeGreaterThan(p.outline![1].y);
+  });
+
   it("returns null when the pin falls outside the capture box", () => {
     expect(
       framePinPosition({ lat: 31, lng: -97.6, halfKm: 3, captureCenter: { lat: 30.228, lng: -97.612 } }),
