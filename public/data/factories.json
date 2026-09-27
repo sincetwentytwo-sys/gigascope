@@ -18,9 +18,9 @@
       "name": "TERAFAB",
       "aka": "Tesla × SpaceX research chip fab (groundbreaking Apr 2026)",
       "flag": "🇺🇸",
-      "location": "Austin, TX (Giga Texas North Campus, east of the Optimus factory)",
-      "lat": 30.2372,
-      "lng": -97.5966,
+      "location": "Austin, TX (Giga Texas North Campus)",
+      "lat": 30.2385,
+      "lng": -97.601,
       "company": "joint",
       "status": "construction",
       "progress": 8,
@@ -75,7 +75,7 @@
         },
         {
           "date": "2026-07",
-          "text": "Foundation work underway — excavation, GeoPiers, gravel base (satellite-confirmed site prep)",
+          "text": "Foundation work underway — excavation, GeoPiers, gravel base (drone-observed)",
           "done": true,
           "sourceUrl": "https://en.wikipedia.org/wiki/Terafab"
         },
@@ -84,6 +84,12 @@
           "text": "Tesla + SpaceX commit $16.8B phase 1; Grimes County production complex announced",
           "done": true,
           "sourceUrl": "https://techcrunch.com/2026/08/06/tesla-and-spacex-will-invest-16-8b-to-start-building-terafab-chip-factory-in-texas/"
+        },
+        {
+          "date": "2026-09",
+          "text": "Main slab concrete pour connecting the reinforced footings (drone-observed)",
+          "done": true,
+          "sourceUrl": "https://x.com/JoeTegtmeyer/status/2102383381916930554"
         },
         {
           "date": "2026-H2",
@@ -108,12 +114,13 @@
         8
       ],
       "halfKm": 3,
-      "_progressNote": "8% = earthworks + foundations underway (excavation, GeoPiers, gravel base). Site prep north of the main Giga Texas building is visible in Sentinel-2 May->Sep 2026. Estimate; no official % disclosed.",
+      "_progressNote": "8% = foundation stage: site work from Apr 2026, GeoPiers + gravel base in Jul, main slab concrete in Sep (drone observations, Joe Tegtmeyer). Estimate; no official % disclosed.",
       "captureCenter": {
         "lat": 30.228,
         "lng": -97.612
       },
-      "locationNote": "Estimated position: the gravel foundation pad that appeared in Sentinel-2 between May and late Jul 2026, matching drone reports of the chip fab's rectangular foundation with gravel base + GeoPiers (Joe Tegtmeyer, late Jul 2026). The large blue-roofed building just west is the Optimus factory. Tesla has not published the exact footprint. Base map imagery predates construction."
+      "locationNote": "Dashed circle = the Giga Texas North Campus construction zone, where the Advanced Technology Chip Fab is being built alongside the Optimus factory (large blue-roofed building). Tesla hasn't published the fab's footprint, and at Sentinel-2's 10 m resolution its foundation can't be told apart from nearby earthworks and laydown yards, so we mark the zone rather than a single pad. Base map imagery predates construction.",
+      "zoneRadiusKm": 0.75
     },
     {
       "id": "giga-texas",

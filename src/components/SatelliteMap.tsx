@@ -9,6 +9,8 @@ interface SatelliteMapProps {
   lng: number;
   zoom?: number;
   factoryColor?: string;
+  /** Draw a dashed zone of this radius instead of claiming a precise point. */
+  zoneRadiusM?: number;
 }
 
 export default function SatelliteMap({
@@ -16,6 +18,7 @@ export default function SatelliteMap({
   lng,
   zoom = 15,
   factoryColor = "#3a86ff",
+  zoneRadiusM,
 }: SatelliteMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const leafletMap = useRef<L.Map | null>(null);
@@ -72,12 +75,22 @@ export default function SatelliteMap({
         iconAnchor: [14, 14],
       });
 
-      L.marker([lat, lng], { icon }).addTo(map);
+      if (zoneRadiusM) {
+        L.circle([lat, lng], {
+          radius: zoneRadiusM,
+          color: factoryColor,
+          weight: 3,
+          dashArray: "8 6",
+          fillOpacity: 0.08,
+        }).addTo(map);
+      } else {
+        L.marker([lat, lng], { icon }).addTo(map);
+      }
 
       leafletMap.current = map;
       tileLayerRef.current = tile;
     });
-  }, [lat, lng, zoom, factoryColor]);
+  }, [lat, lng, zoom, factoryColor, zoneRadiusM]);
 
   const cycleTile = () => {
     const nextIdx = (tileIdx + 1) % tileSources.length;

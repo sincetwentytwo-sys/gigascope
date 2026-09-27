@@ -19,6 +19,17 @@ describe("framePinPosition", () => {
     expect(p.y).toBeCloseTo(0.330, 2); // north of centre (smaller y)
   });
 
+  it("returns the zone radius as a fraction of the frame width", () => {
+    const p = framePinPosition({
+      lat: 30.2385,
+      lng: -97.601,
+      halfKm: 3,
+      zoneRadiusKm: 0.75,
+      captureCenter: { lat: 30.228, lng: -97.612 },
+    })!;
+    expect(p.radius).toBeCloseTo(0.125, 6);
+  });
+
   it("returns null when the pin falls outside the capture box", () => {
     expect(
       framePinPosition({ lat: 31, lng: -97.6, halfKm: 3, captureCenter: { lat: 30.228, lng: -97.612 } }),

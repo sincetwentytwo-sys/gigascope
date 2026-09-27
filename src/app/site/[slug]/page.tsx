@@ -220,7 +220,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                   height={900}
                   className="block w-full aspect-video object-cover"
                 />
-                {framePin && <FramePin x={framePin.x} y={framePin.y} color={accent} />}
+                {framePin && <FramePin x={framePin.x} y={framePin.y} radius={framePin.radius} color={accent} />}
                 <span className="absolute top-2 left-2 px-2 py-1 text-[10px] font-mono uppercase tracking-wider bg-black/65 text-white/90 rounded">
                   Before
                 </span>
@@ -234,7 +234,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                   height={900}
                   className="block w-full aspect-video object-cover"
                 />
-                {framePin && <FramePin x={framePin.x} y={framePin.y} color={accent} label={factory.name} />}
+                {framePin && <FramePin x={framePin.x} y={framePin.y} radius={framePin.radius} color={accent} label={factory.name} />}
                 <span className="absolute top-2 right-2 px-2 py-1 text-[10px] font-mono uppercase tracking-wider bg-black/65 text-white/90 rounded">
                   Now
                 </span>
@@ -242,7 +242,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
             </div>
             <p className="px-3 py-2 text-[10px] font-mono text-dim border-t border-border-custom bg-surface">
               First and most-recent frames from the Sentinel-2 timelapse.
-              {framePin && " Ring = tracked site location."}
+              {framePin && (framePin.radius ? " Dashed circle = construction zone (exact footprint not public)." : " Ring = tracked site location.")}
             </p>
           </div>
         )}
@@ -305,6 +305,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                 lng={factory.lng}
                 zoom={15}
                 factoryColor={accent}
+                zoneRadiusM={factory.zoneRadiusKm ? factory.zoneRadiusKm * 1000 : undefined}
               />
             </div>
             {factory.locationNote && (
@@ -337,7 +338,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                       preload="metadata"
                       className="w-full h-full object-cover"
                     />
-                    {framePin && <FramePin x={framePin.x} y={framePin.y} color={accent} label={factory.name} />}
+                    {framePin && <FramePin x={framePin.x} y={framePin.y} radius={framePin.radius} color={accent} label={factory.name} />}
                   </div>
                   <p className="mt-1 font-mono text-[9px] text-dim">
                     Latest: {tl.latest} · Source: Sentinel-2 L2A (Copernicus)

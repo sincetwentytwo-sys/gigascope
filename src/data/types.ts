@@ -72,6 +72,11 @@ export interface Factory {
   captureCenter?: { lat: number; lng: number };
   /** How the pin position was determined (shown under the map). */
   locationNote?: string;
+  /**
+   * When the exact footprint isn't public/resolvable, mark a zone of this
+   * radius (km) around lat/lng instead of a precise pin.
+   */
+  zoneRadiusKm?: number;
 
   /**
    * Timelapse asset slug — overrides `slug` when looking up

@@ -9,8 +9,8 @@ const DEFAULT_HALF_KM = 2.0;
  * the frame. With no `captureCenter` the pin is the frame centre (0.5, 0.5).
  */
 export function framePinPosition(
-  f: Pick<Factory, "lat" | "lng" | "halfKm" | "captureCenter">,
-): { x: number; y: number } | null {
+  f: Pick<Factory, "lat" | "lng" | "halfKm" | "captureCenter" | "zoneRadiusKm">,
+): { x: number; y: number; radius?: number } | null {
   const c = f.captureCenter ?? { lat: f.lat, lng: f.lng };
   const halfKm = f.halfKm ?? DEFAULT_HALF_KM;
   const dLat = halfKm / 111;
@@ -18,13 +18,16 @@ export function framePinPosition(
   const x = (f.lng - (c.lng - dLng)) / (2 * dLng);
   const y = (c.lat + dLat - f.lat) / (2 * dLat);
   if (x < 0 || x > 1 || y < 0 || y > 1) return null;
-  return { x, y };
+  // Zone radius as a fraction of the frame width.
+  return f.zoneRadiusKm ? { x, y, radius: f.zoneRadiusKm / (2 * halfKm) } : { x, y };
 }
 
 /**
  * Only mark sites whose footprint is hard to pick out of a multi-km frame:
  * off-centre pins, and projects still at the earthworks stage.
  */
-export function shouldShowFramePin(f: Pick<Factory, "status" | "captureCenter">): boolean {
-  return Boolean(f.captureCenter) || f.status === "construction";
+export function shouldShowFramePin(
+  f: Pick<Factory, "status" | "captureCenter" | "zoneRadiusKm">,
+): boolean {
+  return Boolean(f.captureCenter || f.zoneRadiusKm) || f.status === "construction";
 }
