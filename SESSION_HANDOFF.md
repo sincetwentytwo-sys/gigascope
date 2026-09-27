@@ -4,6 +4,17 @@
 > 더 깊은 비즈니스/컴플라이언스 맥락: `G:\jb\gigascope-session-context-2026-05-27.md`
 > (섹션 10에 2026-06-01 비즈니스 상태 업데이트 있음).
 
+## 🛰 2026-09-27 — 캡처 신선도 수정 + Terafab Grimes 개간 반영
+
+- **캡처가 오래된 장면을 골랐음**: `capture.mjs`가 30일 창 전체를 `leastCC` 모자이크 → 라벨은 실행일인데 실제는 수주 전 장면일 수 있었음. 이제 CDSE catalog로 실제 촬영일을 조회해 **≤10% 구름 중 최신**(없으면 ≤30% 중 최소 구름) 1일만 렌더, **프레임 이름 = 실제 촬영일**. 저장된 최신보다 새롭지 않으면 스킵. catalog 실패 시 옛 방식 폴백. `FRAME_DATE`(dispatch 입력 `frame_date`) = 그 날짜 기준 백필.
+- ⚠ 구름 판정은 타일 단위라 부지 위에 구름이 걸릴 수 있음(Grimes 08-28이 그랬고 수동 삭제 후 08-20으로 교체). 부지 bbox 단위 구름 판정(SCL)은 미구현.
+- `build.mjs`: index에 `first`, `sig`(전체 프레임 목록 해시) 기록 → 중간 프레임 교체도 재빌드. `ONLY_SLUG` 실행은 항상 재빌드.
+- `freshness.mjs`(신규): variants/썸네일 재생성 판정을 mtime(CI 체크아웃에선 무작위) → **git 상 소스 MP4 변경 여부**로. 변화 없는 실행에서 모바일 영상 재인코딩·무의미 커밋 → (스케줄 실행 시) 트윗 발동되던 것 차단.
+- **트윗 버그**: `post-video-to-x.mjs`가 주간 프레임 수를 '년'으로 계산 → 2026-09-21 실제 게시물 "Vandenberg SFB — 50 years of construction… 1976 → 2026" (틀린 내용, 오너가 삭제 판단). 문구 수정 + 링크 gigascope.xyz. **수동 dispatch는 `tweet=true` 없으면 트윗 안 함.**
+- Terafab Austin: 2026-09-22 장면(구름 ~1%) 반영, 51프레임.
+- **terafab-grimes**: 좌표를 저수지 중심 → 개간 부지(30.6165, -96.0233)로 이동, 옛 크롭 프레임 삭제 후 백필 4장(06-29 숲 → 07-31 개간 시작 → 08-20 → 09-22). status construction / 2%(부지 조성만, 정식 착공 12-01 신고). Sentinel-2상 개간은 **7/31에 이미 보임 — 첫 보도(KBTX 8/11)보다 빠름**. `timelapseSlug: null` 제거(영상 표시).
+- 검증: vitest 166, next build OK, Vercel success, `/site/terafab`·`/site/terafab-grimes` Latest 2026-09-22 라이브.
+
 ---
 
 ## 🛰 2026-09-22 — 위성 파이프라인 4개월 정지 복구 + Terafab 공사중 반영
