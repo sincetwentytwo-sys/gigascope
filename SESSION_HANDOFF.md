@@ -4,6 +4,12 @@
 > 더 깊은 비즈니스/컴플라이언스 맥락: `G:\jb\gigascope-session-context-2026-05-27.md`
 > (섹션 10에 2026-06-01 비즈니스 상태 업데이트 있음).
 
+## 📍 2026-09-27 — Terafab Austin 핀 위치 수정 (commit e36dd42)
+
+- 기존 핀(30.228, -97.612)은 기존 셀/양극재 건물 위 — Terafab 공사와 ~2km 떨어져 있었음. Sentinel-2 비교로 **5월엔 없고 7월 말 생긴 자갈 기초 패드(30.2372, -97.5966)** 를 Terafab 연구 팹으로 추정(Tegtmeyer 7월 말 "직사각형 기초+자갈+GeoPier" 묘사와 일치). 바로 서쪽 파란 지붕 대형 건물(30.2388, -97.6020)은 Optimus 공장. **공식 좌표 미공개 → 추정**이라고 `locationNote`에 명시.
+- 신규 필드 `captureCenter`(타임랩스 촬영 중심, 핀과 분리 — 51프레임 구도 유지), `locationNote`(지도 아래 표시). `FramePin`이 Before/Now·타임랩스 위에 위치 링 표시(construction 또는 captureCenter 있는 사이트).
+- ⚠ 위치 추정이 틀렸다는 새 보도가 나오면 terafab lat/lng만 바꾸면 됨(캡처는 captureCenter 기준이라 영향 없음).
+
 ## 🔍 2026-09-27 — 사이트 전체 점검 (commit 043ecad)
 
 - 22개 사이트 사실 재검증(에이전트 3개, 2026-09 출처) → 고신뢰 항목만 반영. 핵심: giga-mexico(중단인데 가짜 공사 마일스톤 ✓ → paused/0%), colossus(Colossus 2 수치 오기재 → ~220K GPU·Anthropic 임대), colossus-2(1월 가동 → expanding 45%), neuralink-austin(기존 캠퍼스 확장), vandenberg(SLC-6은 Falcon 패드), cape(Starship 승인), starbase(Flight 13/14), vegas-loop(2021년부터 운행), Tesla Q1/Q2-26 수치. terafab Austin의 $16.8B는 Grimes 것(9/22 내 오류) 정정.
