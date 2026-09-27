@@ -17,6 +17,7 @@ import { relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve, join } from "node:path";
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..", "..");
@@ -184,7 +185,14 @@ async function main() {
       .map((a) => a.name.replace(".png", ""))
       .sort();
     const prev = index[site.slug];
-    if (prev && prev.frames === dates.length && prev.latest === dates[dates.length - 1]) {
+    // Signature over the full source-frame list, so replacing a mid-series
+    // frame (e.g. swapping a cloud-covered pass) still triggers a rebuild.
+    // Falls back to count+latest for entries written before `sig` existed.
+    const sig = createHash("sha1").update(dates.join(",")).digest("hex").slice(0, 12);
+    const unchanged = prev?.sig
+      ? prev.sig === sig
+      : prev && prev.frames === dates.length && prev.latest === dates[dates.length - 1];
+    if (unchanged) {
       console.log(`  = ${site.slug}: unchanged (${dates.length} frames)`);
       skipped++;
       continue;
@@ -215,6 +223,7 @@ async function main() {
       frames: result.frames,
       first: result.first,
       latest: result.latest,
+      sig,
       builtAt: new Date().toISOString(),
     };
     const stat = statSync(outFile);
