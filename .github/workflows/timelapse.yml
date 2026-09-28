@@ -86,9 +86,11 @@ jobs:
           fi
 
       - name: Post video tweet (rotation)
-        # Scheduled runs post; manual reruns/backfills don't unless asked, so a
-        # repair dispatch can't fire public tweets as a side effect.
-        if: steps.commit.outputs.changed == 'true' && (github.event_name == 'schedule' || inputs.tweet)
+        # Manual only (2026-09-29): the weekly rotation picked sites by progress
+        # %, not by visible change, and auto-posted a Colossus 2 timelapse with
+        # no before/after difference — the owner deleted it. Curated posts go
+        # through x-post.yml instead; set tweet=true on a dispatch to use this.
+        if: steps.commit.outputs.changed == 'true' && inputs.tweet
         env:
           X_CONSUMER_KEY: ${{ secrets.X_CONSUMER_KEY }}
           X_CONSUMER_SECRET: ${{ secrets.X_CONSUMER_SECRET }}
