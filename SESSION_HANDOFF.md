@@ -4,6 +4,14 @@
 > 더 깊은 비즈니스/컴플라이언스 맥락: `G:\jb\gigascope-session-context-2026-05-27.md`
 > (섹션 10에 2026-06-01 비즈니스 상태 업데이트 있음).
 
+## 🛠 2026-09-29 — 위치 오류 2건 + 자동 영상 트윗 중단
+
+- **xai-humain-saudi**: 부지 미공개인데 리야드 도심 좌표(placeholder)를 매주 촬영해 Before/Now로 노출 → 신규 `siteUndisclosed`(지도 대신 "Site not yet disclosed", JSON-LD geo 제거) + `timelapseSlug: null`. capture/build는 이제 `timelapseSlug: null` 사이트를 건너뜀(commit 51745c4).
+- FactoryCard 라벨 "ESRI Wayback/World Imagery" → 실제는 Sentinel-2 프레임이라 "Sentinel-2"로 수정.
+- **colossus-2**: 핀(34.989,-90.0126)+halfKm 1.5 → Colossus 2 건물(Tulane Rd)이 프레임 밖이었음. 6/1 이후 17프레임 전부 엉뚱한 곳 → 삭제. footprint = OSM way 1513177952(~124에이커), captureCenter 34.991,-90.037, halfKm 1.8(MACROHARDRR·터빈 발전소 포함). 2024-06~현재 백필(commit 146d66d).
+- **자동 영상 트윗 중단**: 9/28 정기 실행이 colossus-2 영상(변화 없음)을 자동 게시 → 오너가 삭제. `timelapse.yml` 트윗 스텝은 이제 수동 dispatch `tweet=true`일 때만(commit 07c3a7b). 게시는 `x-post.yml`로 큐레이션.
+- ⚠ 다른 사이트도 핀이 실제 시설과 어긋났을 수 있음 → OSM/인허가와 대조하는 전수 점검 필요(미실시).
+
 ## 🐦 2026-09-27 — X 게시 (오너 명시 승인)
 
 - **게시물①** 게시 완료 2026-09-27 09:43 UTC: https://x.com/i/status/2104144851897917636 (+ 링크 답글 2104144853462327462). `marketing/posts/2026-09-27-terafab-clearing/posted.json`.
