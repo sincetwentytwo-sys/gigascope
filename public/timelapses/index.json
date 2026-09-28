@@ -126,13 +126,6 @@
     "sig": "5e17d61561c4",
     "builtAt": "2026-09-28T15:18:20.581Z"
   },
-  "colossus-2": {
-    "frames": 15,
-    "first": "2026-06-01",
-    "latest": "2026-09-21",
-    "sig": "cc961ccaa0ff",
-    "builtAt": "2026-09-28T15:19:34.163Z"
-  },
   "xai-humain-saudi": {
     "frames": 18,
     "first": "2026-06-01",

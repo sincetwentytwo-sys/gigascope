@@ -1498,8 +1498,8 @@
       "aka": "xAI Southaven Gigawatt Datacenter",
       "flag": "🇺🇸",
       "location": "Memphis, TN (Tulane Rd data halls) + Southaven, MS (turbine plant)",
-      "lat": 34.989,
-      "lng": -90.0126,
+      "lat": 34.9986,
+      "lng": -90.03672,
       "company": "xai",
       "status": "expanding",
       "progress": 45,
@@ -1514,9 +1514,9 @@
         "Power": "1 GW+ online (2026-01); 41 gas turbines (~1.2 GW) permitted at Southaven",
         "Tenants": "Google renting ~110K GPUs from Oct 2026 ($920M/month through Jun 2029)"
       },
-      "lastUpdated": "2026-09-27",
+      "lastUpdated": "2026-09-29",
       "confidence": "medium",
-      "lastVerified": "2026-09-27",
+      "lastVerified": "2026-09-29",
       "sources": [
         {
           "url": "https://governorreeves.ms.gov/tech-leader-xai-investing-more-than-20-billion-in-southaven/",
@@ -1527,6 +1527,11 @@
           "url": "https://newsletter.semianalysis.com/p/xais-colossus-2-first-gigawatt-datacenter",
           "label": "SemiAnalysis — Colossus 2 gigawatt analysis",
           "date": "2026-01"
+        },
+        {
+          "url": "https://www.openstreetmap.org/way/1513177952",
+          "label": "OpenStreetMap — Colossus 2 site outline",
+          "date": "2026-05-13"
         }
       ],
       "milestones": [
@@ -1583,7 +1588,46 @@
         45
       ],
       "_progressNote": "Operational since 2026-01-17 ('first gigawatt training cluster'). ~550K GPUs vs Musk's ~1.2M end-2026 target ≈ 45%. GPU counts are company-stated, not satellite-measured.",
-      "halfKm": 1.5
+      "halfKm": 1.8,
+      "footprint": [
+        [
+          34.99511,
+          -90.03686
+        ],
+        [
+          34.99512,
+          -90.03297
+        ],
+        [
+          34.99933,
+          -90.03297
+        ],
+        [
+          35.0007,
+          -90.03356
+        ],
+        [
+          35.00117,
+          -90.03685
+        ],
+        [
+          35.00122,
+          -90.03765
+        ],
+        [
+          35.00103,
+          -90.04152
+        ],
+        [
+          34.99511,
+          -90.04135
+        ]
+      ],
+      "captureCenter": {
+        "lat": 34.991,
+        "lng": -90.037
+      },
+      "locationNote": "Outline = the Colossus 2 data-hall site on Tulane Rd, Memphis (OpenStreetMap way 1513177952, ~124 acres). The frame also covers xAI's MACROHARDRR building and the gas-turbine plant just south in Southaven, MS. Satellite frames before 2026-09-29 were captured ~2 km east of the site by mistake and were replaced."
     },
     {
       "id": "xai-humain-saudi",
