@@ -1,0 +1,15 @@
+{
+  "posts": [
+    {
+      "text": "xAI's Colossus 2 in Memphis, from orbit:\n\nJun 2024 — one warehouse and empty land\nSep 2026 — data halls across the ~124-acre site, plus a gas-turbine plant next door in Southaven, MS\n\n~550K GPUs now running, per Musk.",
+      "media": ["colossus2_before_after.jpg"]
+    },
+    {
+      "text": "The whole build, frame by frame (Sentinel-2, Jun 2024 → Sep 2026):",
+      "media": ["colossus2_timelapse.mp4"]
+    },
+    {
+      "text": "Satellite timelapse + filings → gigascope.xyz/site/colossus-2"
+    }
+  ]
+}
