@@ -209,7 +209,10 @@ async function main() {
   if (!dryRun && !repo) throw new Error("GITHUB_REPOSITORY required for upload");
 
   const data = JSON.parse(readFileSync(factoriesPath, "utf8"));
-  const sites = onlySlug ? data.factories.filter((f) => f.slug === onlySlug) : data.factories;
+  // timelapseSlug: null = "no satellite assets" (undisclosed site, or a sub-site
+  // that reuses its parent's frames) — don't spend captures on it.
+  const sites = (onlySlug ? data.factories.filter((f) => f.slug === onlySlug) : data.factories)
+    .filter((f) => f.timelapseSlug !== null);
   if (sites.length === 0) {
     console.log(`No sites match ONLY_SLUG=${onlySlug}`);
     return;

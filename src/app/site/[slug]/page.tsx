@@ -101,11 +101,10 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
     alternateName: factory.aka,
     description: `${factory.name} progress: ${factory.progress}% — ${factory.products}`,
     url: pageUrl,
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: factory.lat,
-      longitude: factory.lng,
-    },
+    // No coordinates for an undisclosed site — lat/lng is only a placeholder.
+    ...(factory.siteUndisclosed
+      ? {}
+      : { geo: { "@type": "GeoCoordinates", latitude: factory.lat, longitude: factory.lng } }),
     address: { "@type": "PostalAddress", addressLocality: factory.location },
     additionalProperty: [
       { "@type": "PropertyValue", name: "Construction progress", value: `${factory.progress}%` },
@@ -294,11 +293,24 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                   {factory.name}
                 </span>
               </div>
-              <div className="bg-bg/80  px-3 py-1 border-l-2 border-border-custom font-mono text-[10px] text-dim">
-                {latStr}, {lngStr}
-              </div>
+              {!factory.siteUndisclosed && (
+                <div className="bg-bg/80  px-3 py-1 border-l-2 border-border-custom font-mono text-[10px] text-dim">
+                  {latStr}, {lngStr}
+                </div>
+              )}
             </div>
 
+            {factory.siteUndisclosed ? (
+              // No map for an undisclosed site: a pin on a placeholder city
+              // (and weekly imagery of it) would read as "this is the site".
+              <div className="aspect-video w-full bg-surface border border-border-custom flex flex-col items-center justify-center gap-2 px-6 text-center">
+                <span className="font-mono text-[11px] uppercase tracking-widest text-dim">Site not yet disclosed</span>
+                <span className="text-sm text-dim max-w-md">
+                  No location has been published for this project, so there is nothing to track from orbit yet.
+                  We&apos;ll add the map and satellite captures once a site is confirmed.
+                </span>
+              </div>
+            ) : (
             <div className="aspect-video w-full bg-surface relative overflow-hidden border border-border-custom">
               <SatelliteMapWrapper
                 lat={factory.lat}
@@ -309,6 +321,7 @@ export default async function SitePage({ params }: { params: Promise<{ slug: str
                 footprint={factory.footprint}
               />
             </div>
+            )}
             {factory.locationNote && (
               <p className="mt-1 font-mono text-[10px] text-dim leading-relaxed">
                 📍 {factory.locationNote}

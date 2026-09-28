@@ -70,6 +70,12 @@ export interface Factory {
    * place the "site" marker on the timelapse/before-after images.
    */
   captureCenter?: { lat: number; lng: number };
+  /**
+   * The project's site hasn't been disclosed: lat/lng is only a regional
+   * placeholder, so the page shows a notice instead of a map and no satellite
+   * imagery is captured (pair with timelapseSlug: null).
+   */
+  siteUndisclosed?: boolean;
   /** How the pin position was determined (shown under the map). */
   locationNote?: string;
   /**

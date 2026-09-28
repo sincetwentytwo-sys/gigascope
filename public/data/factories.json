@@ -1591,7 +1591,7 @@
       "name": "xAI × HUMAIN (Saudi)",
       "aka": "500 MW xAI datacenter — Saudi Arabia",
       "flag": "🇸🇦",
-      "location": "Saudi Arabia (specific city TBD)",
+      "location": "Saudi Arabia (site not yet disclosed)",
       "lat": 24.7136,
       "lng": 46.6753,
       "company": "xai",
@@ -1608,13 +1608,18 @@
         "Announced": "2025-11-19 at U.S.–Saudi Investment Forum",
         "Status": "Announced. No site or groundbreaking disclosed as of Sep 2026."
       },
-      "lastUpdated": "2026-09-27",
+      "lastUpdated": "2026-09-29",
       "confidence": "speculative",
-      "lastVerified": "2026-09-27",
+      "lastVerified": "2026-09-29",
       "sources": [
         {
           "url": "https://www.prnewswire.com/news-releases/humain-expands-strategic-partnership-with-nvidia-advancing-global-ai-infrastructure-with-xai-global-ai-and-aws-at-the-us-saudi-investment-forum-302620854.html",
           "label": "PR Newswire — HUMAIN × NVIDIA × xAI (500 MW)",
+          "date": "2025-11-19"
+        },
+        {
+          "url": "https://www.datacenterdynamics.com/en/news/xai-humain-data-center-elon-musk/",
+          "label": "DCD — xAI and Humain to build 500MW Saudi data center (location not revealed)",
           "date": "2025-11-19"
         }
       ],
@@ -1652,8 +1657,10 @@
         0,
         5
       ],
-      "_progressNote": "First xAI site outside the US. Most data points are Musk-stated or partner-stated. No groundbreaking image yet — speculative until satellite confirms ground disturbance.",
-      "halfKm": 2
+      "_progressNote": "Announced only. No site has been disclosed as of Sep 2026, so there is nothing to track by satellite yet; the map and captures will be added once a location is confirmed. Most data points are company-stated.",
+      "halfKm": 2,
+      "siteUndisclosed": true,
+      "timelapseSlug": null
     },
     {
       "id": "neuralink-fremont",

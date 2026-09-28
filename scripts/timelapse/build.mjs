@@ -166,7 +166,8 @@ function buildVideo(framesDir, outFile) {
 
 async function main() {
   const data = JSON.parse(readFileSync(factoriesPath, "utf8"));
-  const sites = onlySlug ? data.factories.filter((f) => f.slug === onlySlug) : data.factories;
+  const sites = (onlySlug ? data.factories.filter((f) => f.slug === onlySlug) : data.factories)
+    .filter((f) => f.timelapseSlug !== null); // null = no satellite assets
 
   const index = existsSync(indexPath) ? JSON.parse(readFileSync(indexPath, "utf8")) : {};
   let built = 0;
