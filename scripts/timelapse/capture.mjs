@@ -8,7 +8,7 @@
 //
 // Optional env:
 //   ONLY_SLUG=<slug>   — capture a single site (for local testing)
-//   FRAME_DATE=<YYYY-MM-DD> — backfill: pick the scene "as of" this date instead
+//   FRAME_DATE=<YYYY-MM-DD[,...]> — backfill: pick the scene "as of" each date instead
 //                             of today (frame is still named by acquisition date)
 //   DRY_RUN=1          — fetch but do not upload to releases
 import { readFileSync, mkdirSync, writeFileSync, existsSync, statSync } from "node:fs";
@@ -40,7 +40,10 @@ const WINDOW_DAYS = 30;
 
 const FRAME_DATE_FORCED = Boolean(process.env.FRAME_DATE);
 // `||` not `??`: an empty workflow_dispatch input arrives as "".
-const frameDate = process.env.FRAME_DATE || new Date().toISOString().slice(0, 10);
+// FRAME_DATE may be a comma-separated list for a multi-date backfill in one
+// run (one Actions run per date took ~2.5 min each).
+const FRAME_DATES = (process.env.FRAME_DATE || "").split(",").map((s) => s.trim()).filter(Boolean);
+let frameDate = FRAME_DATES[0] || new Date().toISOString().slice(0, 10);
 const onlySlug = process.env.ONLY_SLUG ?? null;
 const dryRun = process.env.DRY_RUN === "1";
 const repo = process.env.GITHUB_REPOSITORY ?? null;
@@ -218,10 +221,12 @@ async function main() {
     return;
   }
 
-  console.log(`Capturing ${sites.length} site(s) for ${frameDate}${dryRun ? " (DRY-RUN)" : ""}`);
   const token = await fetchToken();
 
   const results = [];
+  for (const fd of FRAME_DATES.length ? FRAME_DATES : [frameDate]) {
+  frameDate = fd;
+  console.log(`Capturing ${sites.length} site(s) for ${frameDate}${dryRun ? " (DRY-RUN)" : ""}`);
   for (const site of sites) {
     const tag = `timelapse-frames-${site.slug}`;
     try {
@@ -264,6 +269,7 @@ async function main() {
       results.push({ slug: site.slug, status: "fail", error: msg });
       console.error(`  ✗ ${site.slug}: ${msg}`);
     }
+  }
   }
 
   const ok = results.filter((r) => r.status === "ok" || r.status === "dry-run").length;

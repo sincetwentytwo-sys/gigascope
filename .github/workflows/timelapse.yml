@@ -12,7 +12,7 @@ on:
         required: false
         default: ""
       frame_date:
-        description: "Backfill: capture the clearest scene as of YYYY-MM-DD (optional)"
+        description: "Backfill: clearest scene as of YYYY-MM-DD; comma-separate for several (optional)"
         required: false
         default: ""
       tweet:
