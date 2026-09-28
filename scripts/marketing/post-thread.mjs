@@ -3,7 +3,8 @@
 //
 //   marketing/posts/<name>/post.json
 //     { "posts": [ { "text": "...", "media": ["img.png"] }, { "text": "reply" } ] }
-//   Each post after the first is a reply to the previous one.
+//   Each post after the first is a reply to the previous one. An optional
+//   top-level "inReplyTo": "<tweet id>" makes the first post a reply too.
 //
 // Required env: X_CONSUMER_KEY, X_CONSUMER_SECRET, X_ACCESS_TOKEN,
 //   X_ACCESS_TOKEN_SECRET, POST_DIR=marketing/posts/<name>
@@ -139,7 +140,8 @@ async function main() {
     console.log(`already posted (${donePath}) — refusing to post again`);
     return;
   }
-  const { posts } = JSON.parse(readFileSync(specPath, "utf8"));
+  const { posts, inReplyTo = null } = JSON.parse(readFileSync(specPath, "utf8"));
+  if (inReplyTo) console.log(`(first post replies to ${inReplyTo})`);
   for (const [i, p] of posts.entries()) {
     console.log(`--- post ${i + 1}/${posts.length} (${[...p.text].length} chars, media: ${(p.media ?? []).join(", ") || "none"})`);
     console.log(p.text);
@@ -152,7 +154,7 @@ async function main() {
   if (!creds.consumerKey || !creds.accessToken) throw new Error("X credentials missing");
 
   const ids = [];
-  let prev = null;
+  let prev = inReplyTo;
   for (const p of posts) {
     const media = [];
     for (const m of p.media ?? []) media.push(await upload(join(dir, m)));
