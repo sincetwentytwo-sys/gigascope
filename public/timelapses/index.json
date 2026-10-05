@@ -54,11 +54,11 @@
     "builtAt": "2026-09-28T15:17:55.019Z"
   },
   "spacex-hawthorne": {
-    "frames": 51,
+    "frames": 52,
     "first": "2018-02-15",
-    "latest": "2026-09-26",
-    "sig": "4dd9ea71e7e2",
-    "builtAt": "2026-09-28T15:18:36.328Z"
+    "latest": "2026-10-04",
+    "sig": "36fdf2f50da6",
+    "builtAt": "2026-10-05T15:50:08.421Z"
   },
   "cape-canaveral": {
     "frames": 45,
@@ -96,9 +96,11 @@
     "builtAt": "2026-09-28T15:20:11.456Z"
   },
   "vegas-loop": {
-    "frames": 52,
-    "latest": "2026-09-21",
-    "builtAt": "2026-09-21T15:47:50.517Z"
+    "frames": 53,
+    "first": "2018-02-15",
+    "latest": "2026-10-03",
+    "sig": "35523f429549",
+    "builtAt": "2026-10-05T15:50:25.634Z"
   },
   "cortex": {
     "frames": 17,
@@ -108,11 +110,11 @@
     "builtAt": "2026-09-28T15:16:32.417Z"
   },
   "starbase-launch": {
-    "frames": 44,
+    "frames": 45,
     "first": "2018-05-15",
-    "latest": "2026-09-21",
-    "sig": "976342361486",
-    "builtAt": "2026-09-28T15:18:12.519Z"
+    "latest": "2026-09-27",
+    "sig": "789cbc730be5",
+    "builtAt": "2026-10-05T15:49:53.371Z"
   },
   "starbase-build": {
     "frames": 17,
