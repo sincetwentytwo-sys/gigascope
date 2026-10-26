@@ -1,17 +1,17 @@
 {
   "terafab": {
-    "frames": 53,
+    "frames": 54,
     "first": "2018-02-15",
-    "latest": "2026-10-17",
-    "sig": "64fa3624acfd",
-    "builtAt": "2026-10-19T14:34:25.877Z"
+    "latest": "2026-10-22",
+    "sig": "3cbf88b1ad39",
+    "builtAt": "2026-10-26T14:32:36.182Z"
   },
   "giga-texas": {
-    "frames": 53,
+    "frames": 54,
     "first": "2018-02-15",
-    "latest": "2026-10-17",
-    "sig": "64fa3624acfd",
-    "builtAt": "2026-10-19T14:34:43.438Z"
+    "latest": "2026-10-22",
+    "sig": "3cbf88b1ad39",
+    "builtAt": "2026-10-26T14:32:55.143Z"
   },
   "giga-nevada": {
     "frames": 54,
@@ -35,9 +35,11 @@
     "builtAt": "2026-09-28T15:17:22.228Z"
   },
   "giga-mexico": {
-    "frames": 52,
-    "latest": "2026-09-21",
-    "builtAt": "2026-09-21T15:44:46.491Z"
+    "frames": 53,
+    "first": "2018-02-15",
+    "latest": "2026-10-10",
+    "sig": "ccc15ab166d8",
+    "builtAt": "2026-10-26T14:33:15.459Z"
   },
   "fremont": {
     "frames": 49,
@@ -47,25 +49,25 @@
     "builtAt": "2026-10-19T14:35:35.291Z"
   },
   "giga-buffalo": {
-    "frames": 47,
+    "frames": 48,
     "first": "2018-05-15",
-    "latest": "2026-10-17",
-    "sig": "8275037177ae",
-    "builtAt": "2026-10-19T14:35:51.337Z"
+    "latest": "2026-10-24",
+    "sig": "be667608c67b",
+    "builtAt": "2026-10-26T14:33:33.193Z"
   },
   "spacex-hawthorne": {
-    "frames": 54,
+    "frames": 55,
     "first": "2018-02-15",
-    "latest": "2026-10-16",
-    "sig": "16324417813e",
-    "builtAt": "2026-10-19T14:36:34.575Z"
+    "latest": "2026-10-24",
+    "sig": "41f6b37a24f3",
+    "builtAt": "2026-10-26T14:33:59.830Z"
   },
   "cape-canaveral": {
     "frames": 46,
     "first": "2018-02-15",
     "latest": "2026-09-26",
-    "sig": "4dd9ea71e7e2",
-    "builtAt": "2026-10-19T14:36:51.785Z"
+    "sig": "9e7509ebffe1",
+    "builtAt": "2026-10-26T14:34:17.721Z"
   },
   "vandenberg": {
     "frames": 53,
@@ -89,11 +91,11 @@
     "builtAt": "2026-10-19T14:37:25.689Z"
   },
   "neuralink-austin": {
-    "frames": 53,
+    "frames": 54,
     "first": "2018-02-15",
-    "latest": "2026-10-17",
-    "sig": "64fa3624acfd",
-    "builtAt": "2026-10-19T14:37:41.359Z"
+    "latest": "2026-10-22",
+    "sig": "3cbf88b1ad39",
+    "builtAt": "2026-10-26T14:34:36.627Z"
   },
   "vegas-loop": {
     "frames": 55,
@@ -122,11 +124,11 @@
     "builtAt": "2026-09-21T15:45:32.882Z"
   },
   "mcgregor": {
-    "frames": 20,
+    "frames": 21,
     "first": "2026-06-01",
-    "latest": "2026-10-15",
-    "sig": "5023a9a92bce",
-    "builtAt": "2026-10-19T14:36:18.282Z"
+    "latest": "2026-10-22",
+    "sig": "c8402b4fa0a7",
+    "builtAt": "2026-10-26T14:33:42.535Z"
   },
   "xai-humain-saudi": {
     "frames": 18,
@@ -136,11 +138,11 @@
     "builtAt": "2026-09-28T15:19:40.761Z"
   },
   "terafab-grimes": {
-    "frames": 8,
+    "frames": 9,
     "first": "2026-06-29",
-    "latest": "2026-10-17",
-    "sig": "c629336b14e8",
-    "builtAt": "2026-10-19T14:38:01.836Z"
+    "latest": "2026-10-22",
+    "sig": "f300952ed7cf",
+    "builtAt": "2026-10-26T14:34:41.564Z"
   },
   "colossus-2": {
     "frames": 9,
