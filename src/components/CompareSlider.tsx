@@ -100,9 +100,13 @@ export default function CompareSlider() {
 
   useEffect(() => {
     if (!leftMapRef.current || !rightMapRef.current || leftMap.current) return;
+    // The import is async, so a dev StrictMode re-run (or Fast Refresh remount)
+    // could reach L.map() twice on the same node -> "Map container is already
+    // initialized". The cleanup cancels the pending init and tears down a built one.
+    let cancelled = false;
 
     import("leaflet").then((L) => {
-      if (!leftMapRef.current || !rightMapRef.current) return;
+      if (cancelled || !leftMapRef.current || !rightMapRef.current) return;
       const center: [number, number] = [selectedRef.current.lat, selectedRef.current.lng];
 
       const lMap = L.map(leftMapRef.current, {
@@ -156,6 +160,14 @@ export default function CompareSlider() {
       leftMap.current = lMap;
       rightMap.current = rMap;
     });
+
+    return () => {
+      cancelled = true;
+      leftMap.current?.remove();
+      rightMap.current?.remove();
+      leftMap.current = null;
+      rightMap.current = null;
+    };
   }, []);
 
   const selectFactory = (f: Factory) => {

@@ -32,8 +32,14 @@ Tesla, SpaceX, xAI, Neuralink, The Boring Company 5개사의 건설/생산 사�
 | `/factory/[slug]` | `/site/[slug]` 리다이렉트/별칭 |
 | `/products` + `/products/[slug]` | 13개 제품 2D 분해도 (Product2DViewer) |
 | `/compare` | Sentinel-2 2019 baseline ↔ ESRI 최신 드래그 슬라이더 |
-| `/timeline` | 전체 사이트 통합 마일스톤 타임라인 |
-| `/news`, `/calendar`, `/methodology`, `/about`, `/investor`, `/pro`, `/downloads` | 보조 페이지 |
+| `/pulse`, `/spacex-ipo`, `/pro`, `/investor`, `/methodology`, `/sources`, `/about`, `/roadmap` | 보조 페이지 |
+
+⚠ `/news`·`/timeline`·`/calendar`·`/downloads` 는 2026-05-25 삭제 — `next.config.ts` 308 리다이렉트만 남음. 다시 만들지 말 것.
+정식 페이지 목록은 `src/app/sitemap.ts` 가 기준이다.
+
+## 검증
+변경 후·머지 전에는 `.claude/skills/verify-gigascope/SKILL.md` 절차를 실제로 돌린다
+(`node scripts/verify/smoke.mjs` → `py scripts/verify/browser_check.py` → `npx vitest run`).
 
 ## 핵심 파일
 - `public/data/factories.json` — 16개 사이트 정의 (canonical)

@@ -31,9 +31,13 @@ export default function SatelliteMap({
 
   useEffect(() => {
     if (!mapRef.current || leafletMap.current) return;
+    // Async import: without this a dev StrictMode re-run (or Fast Refresh
+    // remount) calls L.map() twice on the same node -> "Map container is
+    // already initialized". Cleanup cancels a pending init / removes a built map.
+    let cancelled = false;
 
     import("leaflet").then((L) => {
-      if (!mapRef.current) return;
+      if (cancelled || !mapRef.current) return;
 
       // Fix default icon paths — point at locally-bundled markers under
       // /public/leaflet/ instead of unpkg CDN (avoids supply-chain risk
@@ -99,6 +103,13 @@ export default function SatelliteMap({
       leafletMap.current = map;
       tileLayerRef.current = tile;
     });
+
+    return () => {
+      cancelled = true;
+      leafletMap.current?.remove();
+      leafletMap.current = null;
+      tileLayerRef.current = null;
+    };
   }, [lat, lng, zoom, factoryColor, zoneRadiusM, footprint]);
 
   const cycleTile = () => {
