@@ -91,11 +91,11 @@
     "builtAt": "2026-10-19T14:37:25.689Z"
   },
   "neuralink-austin": {
-    "frames": 54,
-    "first": "2018-02-15",
+    "frames": 49,
+    "first": "2018-02-04",
     "latest": "2026-10-22",
-    "sig": "3cbf88b1ad39",
-    "builtAt": "2026-10-26T14:34:36.627Z"
+    "sig": "c429da7e062a",
+    "builtAt": "2026-10-28T16:51:53.489Z"
   },
   "vegas-loop": {
     "frames": 55,
