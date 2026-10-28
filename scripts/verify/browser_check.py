@@ -60,6 +60,12 @@ with sync_playwright() as p:
         if tiles:
             break
         pg.wait_for_timeout(500)
+    # one loaded tile is enough to pass, but wait for the rest before the screenshot —
+    # otherwise half the map is grey and the picture can't be judged (2026-10-29)
+    t1 = time.time()
+    while time.time() - t1 < 10 and pg.evaluate(
+            "[...document.querySelectorAll('img.leaflet-tile')].some(i => !i.classList.contains('leaflet-tile-loaded'))"):
+        pg.wait_for_timeout(300)
     check("site: leaflet map mounted", pg.locator(".leaflet-container").count() > 0)
     check("site: satellite tiles loaded", tiles > 0, f"{tiles} tiles in {time.time() - t0:.1f}s")
     check("site: attribution visible", pg.locator(".leaflet-control-attribution").count() > 0)
