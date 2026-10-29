@@ -1,11 +1,4 @@
 {
-  "terafab": {
-    "frames": 54,
-    "first": "2018-02-15",
-    "latest": "2026-10-22",
-    "sig": "3cbf88b1ad39",
-    "builtAt": "2026-10-26T14:32:36.182Z"
-  },
   "giga-texas": {
     "frames": 54,
     "first": "2018-02-15",
@@ -137,18 +130,25 @@
     "sig": "bf472c26eae7",
     "builtAt": "2026-09-28T15:19:40.761Z"
   },
-  "terafab-grimes": {
-    "frames": 9,
-    "first": "2026-06-29",
-    "latest": "2026-10-22",
-    "sig": "f300952ed7cf",
-    "builtAt": "2026-10-26T14:34:41.564Z"
-  },
   "colossus-2": {
     "frames": 9,
     "first": "2024-06-13",
     "latest": "2026-10-11",
     "sig": "00f6f2d0efae",
     "builtAt": "2026-10-12T16:42:56.425Z"
+  },
+  "atcf-austin": {
+    "frames": 54,
+    "first": "2018-02-15",
+    "latest": "2026-10-22",
+    "sig": "3cbf88b1ad39",
+    "builtAt": "2026-10-26T14:32:36.182Z"
+  },
+  "terafab": {
+    "frames": 9,
+    "first": "2026-06-29",
+    "latest": "2026-10-22",
+    "sig": "f300952ed7cf",
+    "builtAt": "2026-10-26T14:34:41.564Z"
   }
 }

@@ -15,8 +15,178 @@
     {
       "id": "terafab",
       "slug": "terafab",
-      "name": "TERAFAB — Austin ATCF",
-      "aka": "Advanced Technology Chip Fab (ATCF) — Tesla × SpaceX development fab",
+      "name": "TERAFAB — Grimes County",
+      "aka": "Tesla × SpaceX chip production complex (Gibbons Creek, ex-coal plant site)",
+      "flag": "🇺🇸",
+      "location": "Grimes County, TX (SE of Gibbons Creek Reservoir, ~20 mi E of College Station)",
+      "lat": 30.6189,
+      "lng": -96.0246,
+      "company": "joint",
+      "status": "construction",
+      "progress": 3,
+      "area": "~555 acres cleared for phase 1 by Sep 2026 and still growing (Oct) · 22,429-acre JETI project boundary · 100M+ sq ft planned",
+      "capacity": "Full-scale chip production (logic, memory, packaging) — phase 1",
+      "products": "AI chips for Tesla/SpaceX (process: Intel 14A planned per Musk, TSMC talks undecided)",
+      "investment": "$16.8B phase 1 (Tesla + SpaceX) · up to $119B all phases",
+      "employees": "TBD",
+      "color": "#c4a000",
+      "featured": true,
+      "extras": {
+        "Partners": "Tesla, SpaceX",
+        "Construction start": "Land clearing since early Jul 2026 (Sentinel-2, 07-09); foundation work on the first structure by late Sep (drone); filed construction period 2026-12-01 → 2028-12-31 (JETI)",
+        "Target completion": "end of 2028 (phase 1)",
+        "Site": "Decommissioned Gibbons Creek coal plant, existing water storage",
+        "Austin research fab": "Small R&D precursor (ATCF) at Giga Texas, ~490K sq ft — gigascope.xyz/site/atcf-austin"
+      },
+      "lastUpdated": "2026-10-29",
+      "lastVerified": "2026-10-29",
+      "confidence": "medium",
+      "_progressNote": "3% = site prep + first foundations: land clearing SE of Gibbons Creek Reservoir first visible in Sentinel-2 on 2026-07-09, ~155 acres by 07-31 and ~520 acres by 09-22; foundation work on the first of four major structures by 2026-09-27 (drone). Sentinel-2 on 2026-10-22: main clearing grew ~14% and the separate south pad from ~60 to ~90 acres since 09-22. Filed construction period 2026-12-01 → 2028-12-31. Estimate; no official % disclosed.",
+      "sources": [
+        {
+          "url": "https://techcrunch.com/2026/08/06/tesla-and-spacex-will-invest-16-8b-to-start-building-terafab-chip-factory-in-texas/",
+          "label": "TechCrunch — $16.8B to start building Terafab in Texas",
+          "date": "2026-08-06"
+        },
+        {
+          "url": "https://fortune.com/2026/08/10/elon-musk-chip-factory-spacex-tesla-texas/",
+          "label": "Fortune — five times bigger than the world's largest building",
+          "date": "2026-08-10"
+        },
+        {
+          "url": "https://www.kbtx.com/2026/08/11/land-clearing-already-underway-near-terefab-site-grimes-county/",
+          "label": "KBTX — land clearing already underway near Terafab site",
+          "date": "2026-08-11"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Terafab",
+          "label": "Wikipedia — Terafab (100M sq ft, up to $119B across phases)",
+          "date": "2026-09-27"
+        },
+        {
+          "url": "https://comptroller.texas.gov/economy/development/prop-tax/jeti/application-details.php?id=J0035",
+          "label": "Texas Comptroller — JETI J0035 TeraFab AI, LLC (application, maps, agreement)",
+          "date": "2026-08-25"
+        },
+        {
+          "url": "https://x.com/JoeTegtmeyer/status/2091948855600283662",
+          "label": "Joe Tegtmeyer — phase 1 clearing on the western side near the reservoir",
+          "date": "2026-08-23"
+        },
+        {
+          "url": "https://www.openstreetmap.org/way/1549483610",
+          "label": "OpenStreetMap — Terafab construction area",
+          "date": "2026-08-17"
+        },
+        {
+          "url": "https://x.com/JoeTegtmeyer/status/2104203762961174589",
+          "label": "Joe Tegtmeyer — foundation construction of the 1st of the 4 major structures",
+          "date": "2026-09-27"
+        },
+        {
+          "url": "https://spectrumlocalnews.com/tx/austin/news/2026/09/28/terafab-semiconductor-plant-takes-shape-in-grimes-county",
+          "label": "Spectrum News — Terafab semiconductor plant takes shape in Grimes County",
+          "date": "2026-09-28"
+        }
+      ],
+      "timeline": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3
+      ],
+      "halfKm": 4,
+      "milestones": [
+        {
+          "date": "2026-06-08",
+          "text": "JETI applications posted: TeraFab AI, LLC — 4 phases per school district, $55–119B, 22,429-acre boundary",
+          "done": true,
+          "sourceUrl": "https://comptroller.texas.gov/economy/development/prop-tax/jeti/application-details.php?id=J0035"
+        },
+        {
+          "date": "2026-07-09",
+          "text": "Land clearing begins SE of Gibbons Creek Reservoir — first cleared strip visible in Sentinel-2 on 2026-07-09; ~155 acres by 07-31, ~520 acres by 09-22. First press report: KBTX 2026-08-11",
+          "done": true,
+          "sourceUrl": "https://www.kbtx.com/2026/08/11/land-clearing-already-underway-near-terefab-site-grimes-county/"
+        },
+        {
+          "date": "2026-08-06",
+          "text": "Tesla + SpaceX announce $16.8B phase-1 investment; Grimes County site named",
+          "done": true,
+          "sourceUrl": "https://techcrunch.com/2026/08/06/tesla-and-spacex-will-invest-16-8b-to-start-building-terafab-chip-factory-in-texas/"
+        },
+        {
+          "date": "2026-08-25",
+          "text": "JETI agreement posted (Anderson-Shiro CISD, phase 1: $10.4B eligible investment 2026–2028)",
+          "done": true,
+          "sourceUrl": "https://comptroller.texas.gov/economy/development/prop-tax/jeti/application-details.php?id=J0035"
+        },
+        {
+          "date": "2026-09-27",
+          "text": "Foundation construction under way on the first of four major structures (drone-observed) — ahead of the filed Dec 1 start",
+          "done": true,
+          "sourceUrl": "https://x.com/JoeTegtmeyer/status/2104203762961174589"
+        },
+        {
+          "date": "2026-12-01",
+          "text": "Filed construction period begins (JETI agreement: 2026-12-01 → 2028-12-31)",
+          "done": false
+        },
+        {
+          "date": "2028",
+          "text": "Phase-1 completion target",
+          "done": false,
+          "confidence": "speculative"
+        }
+      ],
+      "locationNote": "Outline = phase-1 land clearing measured from Sentinel-2 on 2026-09-22 (~555 acres; a separate ~60-acre pad sits just south). It falls inside the area mapped as 'Terafab' on OpenStreetMap from drone footage and inside the 22,429-acre JETI project boundary SpaceX filed with the Texas Comptroller, and matches drone reports of phase 1 (of up to 10) on the western side of the site near Gibbons Creek Reservoir (Joe Tegtmeyer, 2026-08-23). SpaceX hasn't published building footprints; the outline will grow as clearing continues. Base map imagery predates the clearing.",
+      "captureCenter": {
+        "lat": 30.6165,
+        "lng": -96.0233
+      },
+      "footprint": [
+        [
+          30.61242,
+          -96.02248
+        ],
+        [
+          30.61333,
+          -96.03475
+        ],
+        [
+          30.62122,
+          -96.03516
+        ],
+        [
+          30.62544,
+          -96.02935
+        ],
+        [
+          30.62572,
+          -96.0161
+        ],
+        [
+          30.61826,
+          -96.01479
+        ],
+        [
+          30.61368,
+          -96.01561
+        ],
+        [
+          30.61249,
+          -96.01913
+        ]
+      ]
+    },
+    {
+      "id": "atcf-austin",
+      "slug": "atcf-austin",
+      "name": "ATCF — Austin research fab",
+      "aka": "Tesla × SpaceX Advanced Technology Chip Fab — R&D precursor to Terafab (Terafab itself is the Grimes County plant)",
       "flag": "🇺🇸",
       "location": "Austin, TX (Giga Texas North Campus per Tesla; east of the vehicle factory)",
       "lat": 30.22356,
@@ -30,12 +200,13 @@
       "investment": "~$3B (Musk, Apr 2026) · program: $16.8B phase 1 at Grimes County",
       "employees": "TBD",
       "color": "#c4a000",
-      "featured": true,
+      "featured": false,
       "extras": {
         "Partners": "Tesla, SpaceX (xAI folded into SpaceX Feb 2026)",
         "Process Node": "2nm-class target; Intel 14A (1.4nm-class) planned per Musk (Apr 2026), TSMC talks undecided",
-        "Production site": "Grimes County, TX (see terafab-grimes)",
-        "AI5": "Made by TSMC and Samsung, not at Terafab; Optimus integration ~Apr 2027"
+        "Production site": "Terafab, Grimes County, TX — ~100 miles east (gigascope.xyz/site/terafab)",
+        "AI5": "Made by TSMC and Samsung, not at Terafab; Optimus integration ~Apr 2027",
+        "Scale": "~490K sq ft — about 1/200 of Terafab's planned 100M+ sq ft"
       },
       "lastUpdated": "2026-10-29",
       "confidence": "medium",
@@ -2039,175 +2210,6 @@
       "confidence": "speculative",
       "lastVerified": "2026-10-29",
       "_progressNote": "Carrying passengers since 2021. Progress = open stations vs the approved network (10 of 100+)."
-    },
-    {
-      "id": "terafab-grimes",
-      "slug": "terafab-grimes",
-      "name": "TERAFAB — Grimes County",
-      "aka": "Tesla × SpaceX chip production complex (Gibbons Creek, ex-coal plant site)",
-      "flag": "🇺🇸",
-      "location": "Grimes County, TX (SE of Gibbons Creek Reservoir, ~20 mi E of College Station)",
-      "lat": 30.6189,
-      "lng": -96.0246,
-      "company": "joint",
-      "status": "construction",
-      "progress": 3,
-      "area": "~555 acres cleared for phase 1 by Sep 2026 and still growing (Oct) · 22,429-acre JETI project boundary · 100M+ sq ft planned",
-      "capacity": "Full-scale chip production (logic, memory, packaging) — phase 1",
-      "products": "AI chips for Tesla/SpaceX (process: Intel 14A planned per Musk, TSMC talks undecided)",
-      "investment": "$16.8B phase 1 (Tesla + SpaceX) · up to $119B all phases",
-      "employees": "TBD",
-      "color": "#c4a000",
-      "featured": false,
-      "extras": {
-        "Partners": "Tesla, SpaceX",
-        "Construction start": "Land clearing since early Jul 2026 (Sentinel-2, 07-09); foundation work on the first structure by late Sep (drone); filed construction period 2026-12-01 → 2028-12-31 (JETI)",
-        "Target completion": "end of 2028 (phase 1)",
-        "Site": "Decommissioned Gibbons Creek coal plant, existing water storage"
-      },
-      "lastUpdated": "2026-10-29",
-      "lastVerified": "2026-10-29",
-      "confidence": "medium",
-      "_progressNote": "3% = site prep + first foundations: land clearing SE of Gibbons Creek Reservoir first visible in Sentinel-2 on 2026-07-09, ~155 acres by 07-31 and ~520 acres by 09-22; foundation work on the first of four major structures by 2026-09-27 (drone). Sentinel-2 on 2026-10-22: main clearing grew ~14% and the separate south pad from ~60 to ~90 acres since 09-22. Filed construction period 2026-12-01 → 2028-12-31. Estimate; no official % disclosed.",
-      "sources": [
-        {
-          "url": "https://techcrunch.com/2026/08/06/tesla-and-spacex-will-invest-16-8b-to-start-building-terafab-chip-factory-in-texas/",
-          "label": "TechCrunch — $16.8B to start building Terafab in Texas",
-          "date": "2026-08-06"
-        },
-        {
-          "url": "https://fortune.com/2026/08/10/elon-musk-chip-factory-spacex-tesla-texas/",
-          "label": "Fortune — five times bigger than the world's largest building",
-          "date": "2026-08-10"
-        },
-        {
-          "url": "https://www.kbtx.com/2026/08/11/land-clearing-already-underway-near-terefab-site-grimes-county/",
-          "label": "KBTX — land clearing already underway near Terafab site",
-          "date": "2026-08-11"
-        },
-        {
-          "url": "https://en.wikipedia.org/wiki/Terafab",
-          "label": "Wikipedia — Terafab (100M sq ft, up to $119B across phases)",
-          "date": "2026-09-27"
-        },
-        {
-          "url": "https://comptroller.texas.gov/economy/development/prop-tax/jeti/application-details.php?id=J0035",
-          "label": "Texas Comptroller — JETI J0035 TeraFab AI, LLC (application, maps, agreement)",
-          "date": "2026-08-25"
-        },
-        {
-          "url": "https://x.com/JoeTegtmeyer/status/2091948855600283662",
-          "label": "Joe Tegtmeyer — phase 1 clearing on the western side near the reservoir",
-          "date": "2026-08-23"
-        },
-        {
-          "url": "https://www.openstreetmap.org/way/1549483610",
-          "label": "OpenStreetMap — Terafab construction area",
-          "date": "2026-08-17"
-        },
-        {
-          "url": "https://x.com/JoeTegtmeyer/status/2104203762961174589",
-          "label": "Joe Tegtmeyer — foundation construction of the 1st of the 4 major structures",
-          "date": "2026-09-27"
-        },
-        {
-          "url": "https://spectrumlocalnews.com/tx/austin/news/2026/09/28/terafab-semiconductor-plant-takes-shape-in-grimes-county",
-          "label": "Spectrum News — Terafab semiconductor plant takes shape in Grimes County",
-          "date": "2026-09-28"
-        }
-      ],
-      "timeline": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        3
-      ],
-      "halfKm": 4,
-      "milestones": [
-        {
-          "date": "2026-06-08",
-          "text": "JETI applications posted: TeraFab AI, LLC — 4 phases per school district, $55–119B, 22,429-acre boundary",
-          "done": true,
-          "sourceUrl": "https://comptroller.texas.gov/economy/development/prop-tax/jeti/application-details.php?id=J0035"
-        },
-        {
-          "date": "2026-07-09",
-          "text": "Land clearing begins SE of Gibbons Creek Reservoir — first cleared strip visible in Sentinel-2 on 2026-07-09; ~155 acres by 07-31, ~520 acres by 09-22. First press report: KBTX 2026-08-11",
-          "done": true,
-          "sourceUrl": "https://www.kbtx.com/2026/08/11/land-clearing-already-underway-near-terefab-site-grimes-county/"
-        },
-        {
-          "date": "2026-08-06",
-          "text": "Tesla + SpaceX announce $16.8B phase-1 investment; Grimes County site named",
-          "done": true,
-          "sourceUrl": "https://techcrunch.com/2026/08/06/tesla-and-spacex-will-invest-16-8b-to-start-building-terafab-chip-factory-in-texas/"
-        },
-        {
-          "date": "2026-08-25",
-          "text": "JETI agreement posted (Anderson-Shiro CISD, phase 1: $10.4B eligible investment 2026–2028)",
-          "done": true,
-          "sourceUrl": "https://comptroller.texas.gov/economy/development/prop-tax/jeti/application-details.php?id=J0035"
-        },
-        {
-          "date": "2026-09-27",
-          "text": "Foundation construction under way on the first of four major structures (drone-observed) — ahead of the filed Dec 1 start",
-          "done": true,
-          "sourceUrl": "https://x.com/JoeTegtmeyer/status/2104203762961174589"
-        },
-        {
-          "date": "2026-12-01",
-          "text": "Filed construction period begins (JETI agreement: 2026-12-01 → 2028-12-31)",
-          "done": false
-        },
-        {
-          "date": "2028",
-          "text": "Phase-1 completion target",
-          "done": false,
-          "confidence": "speculative"
-        }
-      ],
-      "locationNote": "Outline = phase-1 land clearing measured from Sentinel-2 on 2026-09-22 (~555 acres; a separate ~60-acre pad sits just south). It falls inside the area mapped as 'Terafab' on OpenStreetMap from drone footage and inside the 22,429-acre JETI project boundary SpaceX filed with the Texas Comptroller, and matches drone reports of phase 1 (of up to 10) on the western side of the site near Gibbons Creek Reservoir (Joe Tegtmeyer, 2026-08-23). SpaceX hasn't published building footprints; the outline will grow as clearing continues. Base map imagery predates the clearing.",
-      "captureCenter": {
-        "lat": 30.6165,
-        "lng": -96.0233
-      },
-      "footprint": [
-        [
-          30.61242,
-          -96.02248
-        ],
-        [
-          30.61333,
-          -96.03475
-        ],
-        [
-          30.62122,
-          -96.03516
-        ],
-        [
-          30.62544,
-          -96.02935
-        ],
-        [
-          30.62572,
-          -96.0161
-        ],
-        [
-          30.61826,
-          -96.01479
-        ],
-        [
-          30.61368,
-          -96.01561
-        ],
-        [
-          30.61249,
-          -96.01913
-        ]
-      ]
     }
   ]
 }

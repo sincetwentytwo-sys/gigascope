@@ -11,6 +11,7 @@ const USER_AGENT = "gigascope-data-bot/1.0 (+https://github.com/sincetwentytwo-s
 
 const WIKIPEDIA_TITLES = {
   "terafab": null,
+  "atcf-austin": null,
   "giga-texas": "Gigafactory_Texas",
   "giga-nevada": "Gigafactory_Nevada",
   "giga-shanghai": "Gigafactory_Shanghai",

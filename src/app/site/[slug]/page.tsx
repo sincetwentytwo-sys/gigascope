@@ -36,7 +36,8 @@ export function generateStaticParams() {
 }
 
 const SITE_KEYWORDS: Record<string, string[]> = {
-  terafab: ["terafab", "chip fab", "ai5", "semiconductor", "2nm", "tsmc", "chip", "fab", "xai"],
+  terafab: ["terafab", "grimes county", "gibbons creek", "navasota", "chip fab", "semiconductor"],
+  "atcf-austin": ["atcf", "research fab", "advanced technology chip fab", "austin fab", "giga texas fab"],
   "giga-texas": ["texas", "austin", "cybertruck", "cybercab", "giga texas", "travis"],
   "giga-nevada": ["nevada", "sparks", "4680", "semi", "battery", "panasonic", "cell production"],
   "giga-shanghai": ["shanghai", "china", "megafactory", "byd", "chinese"],
@@ -56,7 +57,6 @@ const SITE_KEYWORDS: Record<string, string[]> = {
   "vegas-loop": ["vegas loop", "boring company", "lvcc", "tunnel", "las vegas transit"],
   // Sites added after the map was written fell back to their full display
   // name (e.g. "terafab — grimes county"), which never matches a headline.
-  "terafab-grimes": ["terafab", "grimes county", "gibbons creek", "navasota", "chip fab"],
   "colossus-2": ["colossus 2", "colossus ii", "xai", "memphis", "southaven", "tulane road"],
   cortex: ["cortex", "tesla ai cluster", "dojo", "giga texas supercomputer", "training cluster"],
   "xai-humain-saudi": ["humain", "saudi", "xai", "data center", "riyadh"],

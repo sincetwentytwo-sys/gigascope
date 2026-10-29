@@ -45,6 +45,10 @@ const nextConfig: NextConfig = {
     // the legacy timelapse + most of the public mindshare).
     { source: "/site/starbase",           destination: "/site/starbase-launch", permanent: true },
     { source: "/factory/starbase",        destination: "/site/starbase-launch", permanent: true },
+    // 2026-10-29 — "Terafab" is the Grimes County plant. It took over the
+    // /site/terafab slug; the small Austin research fab moved to /site/atcf-austin.
+    { source: "/site/terafab-grimes",     destination: "/site/terafab", permanent: true },
+    { source: "/factory/terafab-grimes",  destination: "/site/terafab", permanent: true },
   ],
 };
 

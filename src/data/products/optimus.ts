@@ -460,7 +460,7 @@ export const optimus: ProductSpec = {
       cutawayHotspot: { x: 0.2500, y: 0.8270 },
     },
   ],
-  relatedSites: ["fremont", "giga-texas", "terafab"],
+  relatedSites: ["fremont", "giga-texas", "atcf-austin"],
   galleryPhotos: [
     {
       src: "/products/photos/optimus/1.jpg",
