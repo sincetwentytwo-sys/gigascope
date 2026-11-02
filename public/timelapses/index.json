@@ -7,25 +7,25 @@
     "builtAt": "2026-10-26T14:32:55.143Z"
   },
   "giga-nevada": {
-    "frames": 54,
+    "frames": 55,
     "first": "2018-05-15",
-    "latest": "2026-10-17",
-    "sig": "b6557ec37e8e",
-    "builtAt": "2026-10-19T14:35:00.791Z"
+    "latest": "2026-10-27",
+    "sig": "fabf288c169a",
+    "builtAt": "2026-11-02T16:58:47.199Z"
   },
   "giga-shanghai": {
-    "frames": 51,
+    "frames": 52,
     "first": "2018-02-15",
-    "latest": "2026-10-14",
-    "sig": "61a7570d7149",
-    "builtAt": "2026-10-19T14:35:17.541Z"
+    "latest": "2026-10-31",
+    "sig": "4133845c6138",
+    "builtAt": "2026-11-02T16:59:04.813Z"
   },
   "giga-berlin": {
-    "frames": 46,
+    "frames": 47,
     "first": "2018-02-15",
-    "latest": "2026-09-27",
-    "sig": "789cbc730be5",
-    "builtAt": "2026-09-28T15:17:22.228Z"
+    "latest": "2026-10-27",
+    "sig": "2790fc15ddb4",
+    "builtAt": "2026-11-02T16:59:21.231Z"
   },
   "giga-mexico": {
     "frames": 53,
@@ -42,11 +42,11 @@
     "builtAt": "2026-10-19T14:35:35.291Z"
   },
   "giga-buffalo": {
-    "frames": 48,
+    "frames": 49,
     "first": "2018-05-15",
-    "latest": "2026-10-24",
-    "sig": "be667608c67b",
-    "builtAt": "2026-10-26T14:33:33.193Z"
+    "latest": "2026-10-29",
+    "sig": "9f02f6ca29fe",
+    "builtAt": "2026-11-02T16:59:39.329Z"
   },
   "spacex-hawthorne": {
     "frames": 55,
@@ -63,11 +63,11 @@
     "builtAt": "2026-10-26T14:34:17.721Z"
   },
   "vandenberg": {
-    "frames": 53,
+    "frames": 54,
     "first": "2018-02-15",
-    "latest": "2026-10-17",
-    "sig": "8a9aff5ee98d",
-    "builtAt": "2026-10-19T14:37:09.556Z"
+    "latest": "2026-10-27",
+    "sig": "2547f56c93c2",
+    "builtAt": "2026-11-02T17:00:00.380Z"
   },
   "colossus": {
     "frames": 49,
@@ -91,11 +91,11 @@
     "builtAt": "2026-10-28T16:51:53.489Z"
   },
   "vegas-loop": {
-    "frames": 55,
+    "frames": 56,
     "first": "2018-02-15",
-    "latest": "2026-10-16",
-    "sig": "25f70f41412b",
-    "builtAt": "2026-10-19T14:37:57.805Z"
+    "latest": "2026-10-26",
+    "sig": "8782e4480cb1",
+    "builtAt": "2026-11-02T17:00:20.074Z"
   },
   "cortex": {
     "frames": 17,
