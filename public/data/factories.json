@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-10-29",
-  "lastChecked": "2026-10-29",
+  "lastUpdated": "2026-11-02",
+  "lastChecked": "2026-11-02",
   "totalInvestment": "$80B+",
   "timelineYears": [
     2020,
@@ -395,7 +395,7 @@
       "investment": "$10B+",
       "employees": "20,000+",
       "color": "#e31937",
-      "lastUpdated": "2026-10-29",
+      "lastUpdated": "2026-11-02",
       "milestones": [
         {
           "date": "2020-07",
@@ -510,7 +510,7 @@
       ],
       "halfKm": 2.5,
       "wikipediaTitle": "Gigafactory_Texas",
-      "wikipediaRevision": "2026-05-15",
+      "wikipediaRevision": "2026-10-27",
       "lastVerified": "2026-10-29"
     },
     {
@@ -670,7 +670,7 @@
       "investment": "$6.2B through Jan 2023 + $3.6B expansion announced 2023",
       "employees": "11,000+ (2023 figure)",
       "color": "#e31937",
-      "lastUpdated": "2026-10-29",
+      "lastUpdated": "2026-11-02",
       "milestones": [
         {
           "date": "2014-06",
@@ -728,7 +728,7 @@
         }
       ],
       "wikipediaTitle": "Gigafactory_Nevada",
-      "wikipediaRevision": "2026-05-16",
+      "wikipediaRevision": "2026-10-04",
       "_progressNote": "Semi factory reached volume production in Sep 2026. Nevada's 4680 line remains the Jan-2023 100 GWh plan; Tesla's 2026 tables place 4680 output in Texas and list Nevada cells as LFP (7 GWh, early ramp).",
       "lastVerified": "2026-10-29"
     },
@@ -841,7 +841,7 @@
       "investment": "$5.8B",
       "employees": "~12,000 (Oct 2026)",
       "color": "#e31937",
-      "lastUpdated": "2026-10-29",
+      "lastUpdated": "2026-11-02",
       "milestones": [
         {
           "date": "2020-01",
@@ -913,7 +913,7 @@
         }
       ],
       "wikipediaTitle": "Gigafactory_Berlin-Brandenburg",
-      "wikipediaRevision": "2026-01-04",
+      "wikipediaRevision": "2026-10-08",
       "lastVerified": "2026-10-29"
     },
     {
@@ -934,7 +934,7 @@
       "investment": "$5B (est)",
       "employees": "Est. 5,000+",
       "color": "#e31937",
-      "lastUpdated": "2026-09-27",
+      "lastUpdated": "2026-11-02",
       "confidence": "speculative",
       "lastVerified": "2026-09-27",
       "sources": [
@@ -979,7 +979,9 @@
         0
       ],
       "halfKm": 3,
-      "_progressNote": "Paused indefinitely since Musk's July 2024 comments (tariff uncertainty). No construction beyond early access-road work in Aug 2023; Tesla's Q1/Q2 2026 capacity tables list no Mexico site. Earlier site-prep/foundation/steel milestones were unsupported and were removed 2026-09-27."
+      "_progressNote": "Paused indefinitely since Musk's July 2024 comments (tariff uncertainty). No construction beyond early access-road work in Aug 2023; Tesla's Q1/Q2 2026 capacity tables list no Mexico site. Earlier site-prep/foundation/steel milestones were unsupported and were removed 2026-09-27.",
+      "wikipediaRevision": "2026-07-13",
+      "wikipediaTitle": "Gigafactory_Mexico"
     },
     {
       "id": "fremont",
@@ -999,7 +1001,7 @@
       "investment": "$2B+",
       "employees": "20,000+ (2023)",
       "color": "#e31937",
-      "lastUpdated": "2026-10-29",
+      "lastUpdated": "2026-11-02",
       "milestones": [
         {
           "date": "2010-05",
@@ -1069,7 +1071,7 @@
         }
       ],
       "wikipediaTitle": "Tesla_Fremont_Factory",
-      "wikipediaRevision": "2026-05-15",
+      "wikipediaRevision": "2026-11-02",
       "lastVerified": "2026-10-29"
     },
     {
@@ -1090,7 +1092,7 @@
       "investment": "$959M",
       "employees": "2,399 at the plant (end-2025)",
       "color": "#e31937",
-      "lastUpdated": "2026-09-27",
+      "lastUpdated": "2026-11-02",
       "milestones": [
         {
           "date": "2017-08",
@@ -1136,7 +1138,7 @@
         }
       ],
       "wikipediaTitle": "Gigafactory_New_York",
-      "wikipediaRevision": "2026-05-16",
+      "wikipediaRevision": "2026-05-20",
       "lastVerified": "2026-09-27"
     },
     {
@@ -1161,7 +1163,7 @@
         "Launch Pads": "Pad 1: retired after Flight 11, still being rebuilt for V3 (return expected 2027) · Pad 2: sole active pad (Flights 12–14)",
         "Tower": "Mechazilla catch towers at Pad 1 and Pad 2 (Pad 2 active)"
       },
-      "lastUpdated": "2026-10-29",
+      "lastUpdated": "2026-11-02",
       "milestones": [
         {
           "date": "2019-08",
@@ -1212,6 +1214,11 @@
           "text": "Flight 14 from Pad 2: first Starship to reach orbit — 26 Starlink V3 deployed, booster Gulf splashdown, ship splashed down in the North Pacific after an early deorbit",
           "done": true,
           "sourceUrl": "https://en.wikipedia.org/wiki/Starship_flight_14"
+        },
+        {
+          "date": "2026-09-28",
+          "text": "Launch: Starlink Group 31-1 (Starship Flight 14)",
+          "done": true
         }
       ],
       "timeline": [
@@ -1237,7 +1244,7 @@
       ],
       "halfKm": 4,
       "wikipediaTitle": "SpaceX_Starbase",
-      "wikipediaRevision": "2026-05-13",
+      "wikipediaRevision": "2026-10-22",
       "lastVerified": "2026-10-29"
     },
     {
@@ -1263,7 +1270,7 @@
         "Paint shop": "Surface coating & QA",
         "Gigabay": "At least 24 stations; ~$250M, 700,000 sq ft (TDLR), completion target 2026-12-31"
       },
-      "lastUpdated": "2026-10-29",
+      "lastUpdated": "2026-11-02",
       "confidence": "medium",
       "lastVerified": "2026-10-29",
       "timelapseSlug": null,
@@ -1329,7 +1336,9 @@
         }
       ],
       "halfKm": 2,
-      "locationNote": "Pin = Starbase Build Site between the Starfactory (OSM 25.9876, -97.1864) and the Gigabay under construction (OSM 25.9857, -97.1875). Moved 2026-10-29 from 25.997, -97.157, which was the launch site ~3.2 km east."
+      "locationNote": "Pin = Starbase Build Site between the Starfactory (OSM 25.9876, -97.1864) and the Gigabay under construction (OSM 25.9857, -97.1875). Moved 2026-10-29 from 25.997, -97.157, which was the launch site ~3.2 km east.",
+      "wikipediaRevision": "2026-10-22",
+      "wikipediaTitle": "SpaceX_Starbase"
     },
     {
       "id": "mcgregor",
@@ -1349,7 +1358,7 @@
       "investment": "—",
       "employees": "500+",
       "color": "#005288",
-      "lastUpdated": "2026-10-29",
+      "lastUpdated": "2026-11-02",
       "confidence": "medium",
       "lastVerified": "2026-10-29",
       "sources": [
@@ -1411,7 +1420,9 @@
         "lat": 31.3839,
         "lng": -97.3961
       },
-      "locationNote": "Pin = test-stand area around the SpaceX Central Shop (OSM 31.3890, -97.4593) and the Rocket Development and Test Facility (OSM 31.4037, -97.4618). Moved 2026-10-29 from 31.3839, -97.3961, which was farmland ~6 km east; the satellite timelapse keeps its original framing (captureCenter), which already contains the facility."
+      "locationNote": "Pin = test-stand area around the SpaceX Central Shop (OSM 31.3890, -97.4593) and the Rocket Development and Test Facility (OSM 31.4037, -97.4618). Moved 2026-10-29 from 31.3839, -97.3961, which was farmland ~6 km east; the satellite timelapse keeps its original framing (captureCenter), which already contains the facility.",
+      "wikipediaRevision": "2026-09-30",
+      "wikipediaTitle": "SpaceX_Rocket_Development_and_Test_Facility"
     },
     {
       "id": "spacex-hawthorne",
@@ -1431,7 +1442,7 @@
       "investment": "$1B+",
       "employees": "6,000+",
       "color": "#005288",
-      "lastUpdated": "2026-10-29",
+      "lastUpdated": "2026-11-02",
       "milestones": [
         {
           "date": "2002-05",
@@ -1491,7 +1502,7 @@
       ],
       "halfKm": 0.5,
       "wikipediaTitle": "SpaceX_headquarters",
-      "wikipediaRevision": "2026-05-16",
+      "wikipediaRevision": "2026-10-28",
       "lastVerified": "2026-10-29"
     },
     {
@@ -1512,7 +1523,7 @@
       "investment": "$500M+",
       "employees": "2,500+",
       "color": "#005288",
-      "lastUpdated": "2026-10-29",
+      "lastUpdated": "2026-11-02",
       "milestones": [
         {
           "date": "2010-06",
@@ -1563,6 +1574,11 @@
           "sourceUrl": "https://www.nasa.gov/commercial-resupply/"
         },
         {
+          "date": "2026-10-20",
+          "text": "Launch: Bandwagon 5 (Dedicated Mid-Inclination Rideshare)",
+          "done": true
+        },
+        {
           "date": "2026-Q4",
           "text": "First Florida Starship launch from LC-39A (expected Flight 16) — no official date or FAA license yet; tentative NET Dec 2026",
           "done": false,
@@ -1588,7 +1604,7 @@
       ],
       "halfKm": 4,
       "wikipediaTitle": "Space_Launch_Complex_40",
-      "wikipediaRevision": "2026-05-09",
+      "wikipediaRevision": "2026-10-20",
       "lastVerified": "2026-10-29"
     },
     {
@@ -1609,7 +1625,7 @@
       "investment": "$200M+",
       "employees": "500+",
       "color": "#005288",
-      "lastUpdated": "2026-10-29",
+      "lastUpdated": "2026-11-02",
       "milestones": [
         {
           "date": "2013-09",
@@ -1653,6 +1669,11 @@
           "sourceUrl": "https://en.wikipedia.org/wiki/Vandenberg_Space_Launch_Complex_6"
         },
         {
+          "date": "2026-10-31",
+          "text": "Launch: Starlink Group 15-18",
+          "done": true
+        },
+        {
           "date": "2027",
           "text": "First Falcon launch from SLC-6 (~18 months of pad work after the June 2026 tower demolition)",
           "done": false,
@@ -1678,7 +1699,7 @@
       ],
       "halfKm": 3,
       "wikipediaTitle": "Vandenberg_Space_Launch_Complex_4",
-      "wikipediaRevision": "2026-05-19",
+      "wikipediaRevision": "2026-10-31",
       "lastVerified": "2026-10-29"
     },
     {
@@ -1704,7 +1725,7 @@
         "GPU Mix": "H100 · H200 · GB200",
         "Power": "~300 MW"
       },
-      "lastUpdated": "2026-10-29",
+      "lastUpdated": "2026-11-02",
       "confidence": "medium",
       "lastVerified": "2026-10-29",
       "sources": [
@@ -1761,7 +1782,9 @@
         100
       ],
       "_progressNote": "Fully built and operational; since May 2026 its entire capacity is leased to Anthropic. The 555K-GPU / 2 GW / $18B figures shown here until 2026-09-27 belonged to Colossus 2 and were moved there.",
-      "halfKm": 1.2
+      "halfKm": 1.2,
+      "wikipediaRevision": "2026-10-27",
+      "wikipediaTitle": "Colossus_(supercomputer)"
     },
     {
       "id": "colossus-2",
@@ -2000,7 +2023,7 @@
         "Implant": "N1 (1024 electrodes)",
         "Patients": "21 participants (Neuralink, Jan 2026)"
       },
-      "lastUpdated": "2026-10-29",
+      "lastUpdated": "2026-11-02",
       "milestones": [
         {
           "date": "2017-03",
@@ -2055,7 +2078,7 @@
       ],
       "halfKm": 0.5,
       "wikipediaTitle": "Neuralink",
-      "wikipediaRevision": "2026-05-18",
+      "wikipediaRevision": "2026-11-01",
       "lastVerified": "2026-10-29"
     },
     {
@@ -2152,7 +2175,7 @@
         "Tunnel Miles": "~4 mi operational (Review-Journal, Sep 2026)",
         "sourceUrl": "https://en.wikipedia.org/wiki/Vegas_Loop"
       },
-      "lastUpdated": "2026-10-29",
+      "lastUpdated": "2026-11-02",
       "milestones": [
         {
           "date": "2021-06",
@@ -2209,7 +2232,9 @@
       "halfKm": 1,
       "confidence": "speculative",
       "lastVerified": "2026-10-29",
-      "_progressNote": "Carrying passengers since 2021. Progress = open stations vs the approved network (10 of 100+)."
+      "_progressNote": "Carrying passengers since 2021. Progress = open stations vs the approved network (10 of 100+).",
+      "wikipediaRevision": "2026-10-21",
+      "wikipediaTitle": "Vegas_Loop"
     }
   ]
 }
