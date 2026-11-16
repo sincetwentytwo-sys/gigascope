@@ -7,11 +7,11 @@
     "builtAt": "2026-11-09T17:23:11.970Z"
   },
   "giga-nevada": {
-    "frames": 55,
+    "frames": 56,
     "first": "2018-05-15",
-    "latest": "2026-10-27",
-    "sig": "fabf288c169a",
-    "builtAt": "2026-11-02T16:58:47.199Z"
+    "latest": "2026-11-11",
+    "sig": "f168ad81adcc",
+    "builtAt": "2026-11-16T16:56:30.606Z"
   },
   "giga-shanghai": {
     "frames": 52,
@@ -21,11 +21,11 @@
     "builtAt": "2026-11-02T16:59:04.813Z"
   },
   "giga-berlin": {
-    "frames": 48,
+    "frames": 49,
     "first": "2018-02-15",
-    "latest": "2026-11-05",
-    "sig": "aae11dc42c4d",
-    "builtAt": "2026-11-09T17:23:27.171Z"
+    "latest": "2026-11-15",
+    "sig": "1c6e1cf25484",
+    "builtAt": "2026-11-16T16:56:43.308Z"
   },
   "giga-mexico": {
     "frames": 54,
@@ -35,11 +35,11 @@
     "builtAt": "2026-11-09T17:23:43.675Z"
   },
   "fremont": {
-    "frames": 50,
+    "frames": 51,
     "first": "2018-02-15",
-    "latest": "2026-11-04",
-    "sig": "73e524c820dc",
-    "builtAt": "2026-11-09T17:23:59.201Z"
+    "latest": "2026-11-11",
+    "sig": "9bae0347fcde",
+    "builtAt": "2026-11-16T16:56:56.064Z"
   },
   "giga-buffalo": {
     "frames": 49,
@@ -63,25 +63,25 @@
     "builtAt": "2026-11-09T17:24:39.564Z"
   },
   "vandenberg": {
-    "frames": 54,
+    "frames": 55,
     "first": "2018-02-15",
-    "latest": "2026-10-27",
-    "sig": "2547f56c93c2",
-    "builtAt": "2026-11-02T17:00:00.380Z"
+    "latest": "2026-11-11",
+    "sig": "42d6d7a8eb6d",
+    "builtAt": "2026-11-16T16:57:19.205Z"
   },
   "colossus": {
-    "frames": 49,
-    "first": "2018-02-15",
-    "latest": "2026-10-11",
-    "sig": "ae61417bd323",
-    "builtAt": "2026-10-12T16:42:52.617Z"
-  },
-  "neuralink-fremont": {
     "frames": 50,
     "first": "2018-02-15",
-    "latest": "2026-11-04",
-    "sig": "73e524c820dc",
-    "builtAt": "2026-11-09T17:24:55.097Z"
+    "latest": "2026-11-10",
+    "sig": "40b994f9433d",
+    "builtAt": "2026-11-16T16:57:31.134Z"
+  },
+  "neuralink-fremont": {
+    "frames": 51,
+    "first": "2018-02-15",
+    "latest": "2026-11-11",
+    "sig": "9bae0347fcde",
+    "builtAt": "2026-11-16T16:57:44.982Z"
   },
   "neuralink-austin": {
     "frames": 50,
@@ -91,11 +91,11 @@
     "builtAt": "2026-11-09T17:25:07.944Z"
   },
   "vegas-loop": {
-    "frames": 56,
+    "frames": 57,
     "first": "2018-02-15",
-    "latest": "2026-10-26",
-    "sig": "8782e4480cb1",
-    "builtAt": "2026-11-02T17:00:20.074Z"
+    "latest": "2026-11-12",
+    "sig": "be2d926ddbd5",
+    "builtAt": "2026-11-16T16:57:57.430Z"
   },
   "cortex": {
     "frames": 17,
@@ -117,11 +117,11 @@
     "builtAt": "2026-09-21T15:45:32.882Z"
   },
   "mcgregor": {
-    "frames": 22,
+    "frames": 23,
     "first": "2026-06-01",
-    "latest": "2026-11-04",
-    "sig": "7ba134ecb936",
-    "builtAt": "2026-11-09T17:24:08.094Z"
+    "latest": "2026-11-11",
+    "sig": "d5fe2f513b08",
+    "builtAt": "2026-11-16T16:57:04.323Z"
   },
   "xai-humain-saudi": {
     "frames": 18,
@@ -131,11 +131,11 @@
     "builtAt": "2026-09-28T15:19:40.761Z"
   },
   "colossus-2": {
-    "frames": 9,
+    "frames": 10,
     "first": "2024-06-13",
-    "latest": "2026-10-11",
-    "sig": "00f6f2d0efae",
-    "builtAt": "2026-10-12T16:42:56.425Z"
+    "latest": "2026-11-10",
+    "sig": "32f467fd298d",
+    "builtAt": "2026-11-16T16:57:34.028Z"
   },
   "atcf-austin": {
     "frames": 55,
